@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+NACCADRC.Rproj
+data
+*.zip
+*.csv
+*.xlsx
+*.docx
+*.xpt
