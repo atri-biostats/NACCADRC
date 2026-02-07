@@ -1,0 +1,135 @@
+# NACCADRC
+
+`NACCADRC` is an R data package (R Core Team 2025; Donohue et al. 2026)
+containing data and R code for the **National Alzheimer’s Coordinating
+Center (NACC)** (Beekly et al. 2007) Alzheimer’s Disease Research
+Centers (ADRC) data. `NACCADRC` is a bundle of data, analysis code
+examples, and documentation. Data, including the R package are available
+from the [NACC](https://www.naccdata.org/).
+
+## Installation
+
+To install the package locally, run
+`install.packages("path/to/NACCADRC_72.1.0.tar.gz", repos = NULL, type = "source")`.
+
+## Usage
+
+Learn more about `NACCADRC` at
+[`Get Started`](https://atri-biostats.github.io/NACCADRC/articles/NACCADRC.html)
+page
+
+## Publishing with NACC Data
+
+Authors must comply with the [NACC data use
+agreement](https://www.naccdata.org/requesting-data/dua). See the
+[author
+checklist](https://www.naccdata.org/about-nacc-data/publish-with-nacc-data/)
+for more information. If you use the `NACCADRC` R data package, please
+also cite (Donohue et al. 2026).
+
+## Funding
+
+Work on this `R` package was funded by CLARiTI (NIH U01 AG082350). The
+NACC database is funded by NIA/NIH Grant U24 AG072122. SCAN was funded
+by NIA/NIH U24 AG067418. For funding of clinical sites, see [NACC data
+use agreement](https://www.naccdata.org/requesting-data/dua), also
+copied
+[here](https://atri-biostats.github.io/NACCADRC/%22../articles/NACCADRC-Publishing-with-NACCADRC-Data.html%22).
+
+## References
+
+Beekly, Duane L, Erin M Ramos, William W Lee, et al. 2007. “The National
+Alzheimer’s Coordinating Center (NACC) Database: The Uniform Data Set.”
+*Alzheimer Disease & Associated Disorders* 21 (3): 249–58.
+
+Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
+“Alzheimer’s Clinical Research Data via r Packages: The Alzverse.”
+*Alzheimer’s & Dementia* 22 (2): e71152.
+<https://doi.org/10.1002/alz.71152>.
+
+R Core Team. 2025. *R: A Language and Environment for Statistical
+Computing*. R Foundation for Statistical Computing.
+<https://www.R-project.org/>.
+
+# Package index
+
+## SCAN Datasets
+
+Standardized, Centralized AD/ADRD Neuroimaging (SCAN).
+
+- [`scan_amyloidpetgaain`](https://atri-biostats.github.io/NACCADRC/reference/scan_amyloidpetgaain.md)
+  : scan_amyloidpetgaain
+- [`scan_amyloidpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_amyloidpetnpdka.md)
+  : scan_amyloidpetnpdka
+- [`scan_fdgpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_fdgpetnpdka.md)
+  : scan_fdgpetnpdka
+- [`scan_mp_amyloidpetgaain`](https://atri-biostats.github.io/NACCADRC/reference/scan_mp_amyloidpetgaain.md)
+  : scan_mp_amyloidpetgaain
+- [`scan_mp_amyloidpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_mp_amyloidpetnpdka.md)
+  : scan_mp_amyloidpetnpdka
+- [`scan_mp_taupetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_mp_taupetnpdka.md)
+  : scan_mp_taupetnpdka
+- [`scan_mriqc`](https://atri-biostats.github.io/NACCADRC/reference/scan_mriqc.md)
+  : scan_mriqc
+- [`scan_mrisbm`](https://atri-biostats.github.io/NACCADRC/reference/scan_mrisbm.md)
+  : scan_mrisbm
+- [`scan_petqc`](https://atri-biostats.github.io/NACCADRC/reference/scan_petqc.md)
+  : scan_petqc
+- [`scan_taupetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_taupetnpdka.md)
+  : scan_taupetnpdka
+
+## UDS Datasets
+
+Uniform Data Set (UDS)
+
+- [`uds_fcsf`](https://atri-biostats.github.io/NACCADRC/reference/uds_fcsf.md)
+  : uds_fcsf
+- [`uds_ftldlbd`](https://atri-biostats.github.io/NACCADRC/reference/uds_ftldlbd.md)
+  : uds_ftldlbd
+- [`uds_mri`](https://atri-biostats.github.io/NACCADRC/reference/uds_mri.md)
+  : uds_mri
+
+## PHC Datasets
+
+Alzheimer’s Disease Sequencing Project–Phenotype Harmonization
+Consortium (ADSP-PHC)
+
+- [`phc_amyloid_detailed`](https://atri-biostats.github.io/NACCADRC/reference/phc_amyloid_detailed.md)
+  : phc_amyloid_detailed
+- [`phc_amyloid_simple`](https://atri-biostats.github.io/NACCADRC/reference/phc_amyloid_simple.md)
+  : phc_amyloid_simple
+- [`phc_biomarker`](https://atri-biostats.github.io/NACCADRC/reference/phc_biomarker.md)
+  : phc_biomarker
+- [`phc_cognition`](https://atri-biostats.github.io/NACCADRC/reference/phc_cognition.md)
+  : phc_cognition
+- [`phc_dti`](https://atri-biostats.github.io/NACCADRC/reference/phc_dti.md)
+  : phc_dti
+- [`phc_flair`](https://atri-biostats.github.io/NACCADRC/reference/phc_flair.md)
+  : phc_flair
+- [`phc_neuropath`](https://atri-biostats.github.io/NACCADRC/reference/phc_neuropath.md)
+  : phc_neuropath
+- [`phc_t1_freesurfer`](https://atri-biostats.github.io/NACCADRC/reference/phc_t1_freesurfer.md)
+  : phc_t1_freesurfer
+- [`phc_t1_muse`](https://atri-biostats.github.io/NACCADRC/reference/phc_t1_muse.md)
+  : phc_t1_muse
+- [`phc_tau_detailed`](https://atri-biostats.github.io/NACCADRC/reference/phc_tau_detailed.md)
+  : phc_tau_detailed
+- [`phc_tau_simple`](https://atri-biostats.github.io/NACCADRC/reference/phc_tau_simple.md)
+  : phc_tau_simple
+- [`phc_vascularrisk`](https://atri-biostats.github.io/NACCADRC/reference/phc_vascularrisk.md)
+  : phc_vascularrisk
+
+## Functions
+
+- [`ComBat()`](https://atri-biostats.github.io/NACCADRC/reference/ComBat.md)
+  : ComBat Harmonization of Location and Scale
+
+# Articles
+
+### All vignettes
+
+- [NACCADRC Basic
+  Summaries](https://atri-biostats.github.io/NACCADRC/articles/NACCADRC-basic-summaries.md):
+- [Publishing with NACCADRC
+  data](https://atri-biostats.github.io/NACCADRC/articles/NACCADRC-publishing-with-NACCADRC-data.md):
+- [NACCADRC](https://atri-biostats.github.io/NACCADRC/articles/NACCADRC.md):
