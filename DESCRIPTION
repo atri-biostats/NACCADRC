@@ -1,0 +1,33 @@
+Package: NACCADRC
+Type: Package
+Title: NACCADRC Study Package
+Description: National Alzheimer’s Coordinating Center (NACC) Uniform Data Set (UDS)
+Version: 72.1.0
+Authors@R: person("ATRI Biostatistics", email = "biostat_request@atrihub.io",
+  role = c("aut", "cre"))
+URL: 
+    https:https://www.naccdata.org/about-nacc-data/,
+    https://atri-biostats.github.io/NACCADRC,
+    https://github.com/atri-biostats/NACCADRC
+License: https://www.naccdata.org/about-nacc-data/
+Encoding: UTF-8
+LazyData: true
+LazyDataCompression: bzip2
+RoxygenNote: 7.3.3
+Collate:
+    'ComBat.R'
+    'data.R'
+    'NACCADRC-package.R'
+Imports:
+    rmarkdown
+Suggests: 
+    knitr,
+    tidyverse,
+    arsenal,
+    ggplot2,
+    ggsci,
+    tidyr,
+    dplyr
+VignetteBuilder: knitr
+Depends: 
+    R (>= 3.5.0)

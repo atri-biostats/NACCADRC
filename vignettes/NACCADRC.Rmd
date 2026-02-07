@@ -1,0 +1,118 @@
+---
+title: "NACCADRC"
+output: 
+   rmarkdown::html_vignette:
+     toc: true
+     toc_depth: 3
+     code_folding: show
+date: "Last Updated: `r format(Sys.Date(), '%B %d, %Y')`"
+bibliography: references.bib  
+vignette: >
+  %\VignetteIndexEntry{NACCADRC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- R package version convention: first two digits are for code; last digit is data release number  -->
+
+```{r, include = FALSE}
+library(NACCADRC)
+library(arsenal)
+library(ggplot2)
+library(tidyverse)
+library(nlme)
+library(data.table)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8, 
+  fig.height = 4, 
+  out.width = "100%",
+  class.source = "fold-show",
+  warning = FALSE,
+  message = FALSE
+)
+
+options(digits = 2, width = 150)
+
+theme_set(theme_minimal())
+
+scale_colour_discrete <-
+    function(...) ggsci::scale_color_lancet()
+scale_fill_discrete <-
+    function(...) ggsci::scale_fill_lancet()
+
+# Package Versions
+pkgName <- "NACCADRC"
+pkgFilename <- paste0('NACCADRC_', packageVersion('NACCADRC'), '.tar.gz')
+
+# Data print function
+datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ...) {
+  DT::datatable(
+    data = data, ...,
+    options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...)
+  )
+}
+```
+
+# Overview 
+
+`NACCADRC` is an R data package [@R; @donohue2026alzheimer] containing data and R code for the **National Alzheimer’s Coordinating Center (NACC)** [@beekly2007national] Alzheimer's Disease Research Centers (ADRC) data. `NACCADRC` is a bundle of data, analysis code examples, and documentation. Data, including the R package are available from the [NACC](https://www.naccdata.org/).
+
+`NACCADRC` includes data from:
+
+* [**The Uniform Data Set (UDS)**](https://www.naccdata.org/collect-and-submit-nacc-data/forms/udsv4-forms-and-documentation/) [@beekly2007national]
+  * Dataset names that start with `uds_`.
+* [**Standardized, Centralized AD/ADRD Neuroimaging (SCAN)**](https://scan.naccdata.org) (U24 AG067418 PIs William Jagust, MD and Clifford Jack, MD)
+  * Dataset names that start with `scan_`.
+* [**Alzheimer's Disease Sequencing Project–Phenotype Harmonization Consortium (ADSP-PHC)**](https://adsp.niagads.org/funded-programs/phenotype-harmonization/) (U24 AG074855, PI Timothy J. Hohman, PhD). The ADSP-PHC focuses on post hoc harmonization of genetic ADRD datasets and is currently evaluating the ability to combine imaging phenotypes across studies implementing different acquisition protocols
+  * Dataset names that start with `phc_`.
+
+## ADRC program components
+
+(adapted from [@mormino2025consortium])
+
+* [**Alzheimer's Disease Research Centers (ADRCs):**](https://www.nia.nih.gov/health/clinical-trials-and-studies/find-alzheimers-disease-research-center) Individual centers throughout the United States, funded via a project grant by the National Institute on Aging (NIA). Each ADRC enrolls a Clinical Core cohort relevant for AD and related dementias (ADRD). Inclusion is determined based on center expertise.
+* [**National Alzheimer's Coordinating Center (NACC):**](https://www.naccdata.org)	NACC is the centralized data repository for the ADRC program, and additionally provides infrastructure for collaboration and communication across sites. NACC is directed by Drs. Walter Kukull and Sarah Biber at the University of Washington.
+* [**National Centralized Repository for Alzheimer's Disease and Related Dementias (NCRAD):**](https://ncrad.iu.edu) NCRAD supports the ADRCs with a fluid biorepository, genome-wide panels, and standard blood collection procedures. NCRAD is directed by Dr. Tatiana Foroud at Indiana University.
+* [**Standardized, Centralized AD/ADRD Neuroimaging (SCAN):**](https://scan.naccdata.org) SCAN implements multi-site workflows for standardized acquisition and analysis of PET and MRI data across ADRC sites. The SCAN PET Core is led by Bill Jagust at University of California Berkeley and the SCAN MRI Core is led by Clifford Jack at Mayo.
+* [**The Laboratory of Neuroimaging (LONI):**](https://loni.usc.edu) LONI acts as the repository for PET and MRI image data collected with SCAN standardized protocols across the ADRC sites. LONI is directed by Dr. Arthur Toga at the University of Southern California.
+* **[The Consortium for Clarity in ADRD Research Through Imaging (CLARiTI)](https://clariti.naccdata.org)** (U01 AG082350) [@mormino2025consortium] This initiative aims to strengthen the Alzheimer's Disease Research Center (ADRC) program by providing standardized, comprehensive in vivo biomarker data to improve understanding of mixed pathologies in Alzheimer's disease and related dementias (ADRD). Building on existing ADRC infrastructure, CLARiTI incorporates standardized imaging and plasma collection to characterize mixed pathologies and applies community‑engaged research methods to enhance diversity in ADRD research..
+
+# Installation
+
+To install the package locally, run ``r paste0("install.packages(\"path/to/", pkgFilename, "\", repos = NULL, type = \"source\")")``.
+
+# Package usage and key meta data
+
+```{r study-pkg}
+library(NACCADRC)
+```
+
+## Package source data release date 
+
+The `r pkgName` package contains a data stamped date of which the raw data was downloaded to build the package. For instance, the current package contains data that downloaded from the [NACC](https://www.naccdata.org/) as of `r NACCADRC::data_release_date`.
+
+```{r data-date}
+# Data source downloaded date
+NACCADRC::data_release_date
+```
+
+## Data dictionary
+
+The separate data dictionaries provide by NACC have been merged into one data dictionary file (`NACCADRC::data_dictionary`):
+
+```{r data-dictionary-print}
+head(NACCADRC::data_dictionary, 6)
+```
+
+## File manifest
+
+A complete file manifest of all the source files used to build the package is also stored in the package (`NACCADRC::file_manifest`):
+
+```{r file-manifest-print, eval = TRUE, echo = FALSE}
+file_manifest %>%
+  datatable(., paging = TRUE)
+```

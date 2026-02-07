@@ -1,0 +1,59 @@
+url: https://atri-biostats.github.io/NACCADRC
+template:
+  bootstrap: 5
+  light-switch: true
+
+reference:
+  - title: SCAN Datasets
+    desc: > 
+       Standardized, Centralized AD/ADRD Neuroimaging (SCAN).
+    contents:
+    - starts_with("scan_")
+    
+  - title: UDS Datasets
+    desc: > 
+         Uniform Data Set (UDS)
+    contents:
+    - starts_with("uds_")
+
+  - title: PHC Datasets
+    desc: > 
+         Alzheimer's Disease Sequencing Project–Phenotype Harmonization Consortium (ADSP-PHC)
+    contents:
+    - starts_with("phc_")
+
+  - title: Functions
+    contents:
+    - starts_with("ComBat")
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github, lightswitch]
+  components:
+    intro:
+      text: Get Started
+      href: articles/NACCADRC.html
+    news: 
+      one_page: true
+      text: Versions
+      href: news/index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/atri-biostats/NACCADRC/
+      aria-label: github
+    articles:
+      text: Articles
+      menu:
+      - text: Basic summaries
+        href: articles/NACCADRC-basic-summaries.html
+      - text: -------
+      - text: Publishing with NACCADRC data
+        href: articles/NACCADRC-publishing-with-NACCADRC-data.html
+footer:
+  structure: 
+    left: developed_by
+    right: built_with

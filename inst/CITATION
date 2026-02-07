@@ -1,0 +1,12 @@
+bibentry(
+  bibtype = "Article",
+  title = "{Alzheimer's Clinical Research Data via R Packages: the alzverse}",
+  author = "{Donohue, Michael C and Hussen, Kedir and Langford, Oliver and Gallardo, Richard and Jimenez-Maggiora, Gustavo and Aisen, Paul S}",
+  journal = "{Alzheimer's \\& Dementia}",
+  year = 2026,
+  volume = 22,
+  number = 2,
+  pages = "e71152",
+  doi = "10.1002/alz.71152",
+  publisher = "Wiley Online Library"
+)
