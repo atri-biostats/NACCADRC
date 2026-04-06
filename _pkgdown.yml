@@ -8,7 +8,6 @@ reference:
     contents:
     - starts_with("data_dictionary")
 
-reference:
   - title: Combined imaging datasets
     desc: > 
        Mixed-Protocol, SCAN, and CLARiTI imaging data.
