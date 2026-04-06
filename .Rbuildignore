@@ -10,3 +10,8 @@
 ^docs$
 ^pkgdown$
 ^LICENSE\.md$
+^_quarto\.yml$
+^\.quarto$
+^.*_cache$
+\.rdb$
+\.rdx$

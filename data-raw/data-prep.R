@@ -24,15 +24,19 @@ file.remove(file.path('..', 'data', list.files('../data')))
 
 # Store release number and date ----
 # These need to be manually updated with each data release
-data_release_date <- as.Date("2025-12-01")
+data_release_date <- as.Date("2026-03-23")
 uds_version <- "72"
-package_version <- "2026.01.31"
+minor_update <- '1'
+package_version <- paste(
+  uds_version, 
+  format(data_release_date, "%Y%m%d"), 
+  minor_update, sep = '.')
 phc_version <- "2024"
 phc_manifest_file <- "NACC_ADSP-PHC_Dec2024_Return-to-Cohort.xlsx"
+use_data(phc_version, overwrite = TRUE)
 use_data(data_release_date, overwrite = TRUE)
 use_data(uds_version, overwrite = TRUE)
 use_data(package_version, overwrite = TRUE)
-use_data(phc_version, overwrite = TRUE)
 
 # Gather file names ----
 csv_files <- list.files(pattern = "\\.csv$", full.names = TRUE, recursive = TRUE)
@@ -74,8 +78,9 @@ file_manifest <- tibble(
       TRUE ~ "UDS")) %>%
   left_join(phc_manifest, by = 'FileName') %>%
   mutate(
+    Domain = NA,
     Domain = case_when(
-      !is.na(Domain) ~ Domain,
+      grepl("_edc_", FileName) ~ "Electronic Data Capture (EDC)",
       grepl("mri", FileName) ~ "Imaging MRI",
       grepl("amyloidpet", FileName) ~ "Imaging Amyloid PET",
       grepl("fdgpet", FileName) ~ "Imaging FDG PET",
@@ -96,8 +101,11 @@ file_manifest <- tibble(
     DataName = gsub(paste0("_nacc", uds_version), "", DataName, fixed = TRUE),
     DataName = gsub(paste0("_", phc_version), "", DataName, fixed = TRUE),
     DataName = gsub("investigator_scan_", "scan_", DataName, fixed = TRUE),
+    DataName = gsub("investigator_clariti_", "clariti_", DataName, fixed = TRUE),
     DataName = gsub("investigator_", "uds_", DataName, fixed = TRUE),
     DataName = gsub("_dd", "", DataName, fixed = TRUE),
+    DataName = gsub("uds_uds_", "uds_", DataName, fixed = TRUE),
+    DataName = gsub("_naccfreeze", "", DataName, fixed = TRUE),
     AssociatedData = case_when(
       FileType != 'data' & FileSource == "ADSP PHC" ~ DataName,
       TRUE ~ ''),
@@ -129,7 +137,7 @@ data_dictionary_uds <- lapply(dict_files_uds, function(file_name) {
     gsub(pattern = "\\.csv$", replacement = "") %>%
     gsub(pattern = ' ', replacement = '_') %>%
     gsub(pattern = '-', replacement = '_')
-  fread(file_name, encoding = "Latin-1") %>% 
+  fread(file_name, encoding = "Latin-1") %>%
     mutate(Source = df_name,
       AllowableCodes = gsub("\u0096", "-", AllowableCodes),
       ShortDescriptor = gsub("\u0097", "-", ShortDescriptor))
@@ -145,17 +153,17 @@ data_dictionary_phc <- lapply(dictionary_files_phc, function(file_name) {
   man.sub <- file_manifest %>%
     filter(FileName == file_name)
   tmp <- readxl::read_excel(file.path(man.sub %>% pull(FilePath),
-    file_name), sheet = 1) 
+    file_name), sheet = 1)
   if("Variables" %in% colnames(tmp))
     tmp <- tmp %>% rename(Variable = Variables)
   if(any(grepl("...", colnames(tmp), fixed = TRUE)))
-    tmp <- tmp %>% 
+    tmp <- tmp %>%
     unite(
       col = "merged_unnamed",  # Targets columns named ...1, ...2, etc.
       starts_with("..."), sep = " ", na.rm = TRUE, remove = TRUE) %>%
-    unite("Values", all_of(c("Values", "merged_unnamed")), na.rm = TRUE, 
+    unite("Values", all_of(c("Values", "merged_unnamed")), na.rm = TRUE,
       sep = " ")
-  tmp %>% 
+  tmp %>%
     rename(VariableName = Variable,
       ShortDescriptor = Description,
       AllowableCodes = Values) %>%
@@ -173,7 +181,7 @@ data_files <- file_manifest %>%
 data_dictionary <- NULL
 for (file_name in data_files) {
   message(file_name)
-  man.sub <- file_manifest %>% 
+  man.sub <- file_manifest %>%
     filter(FileName == file_name)
   df <- NULL
   if(tools::file_ext(file_name) == "csv"){
@@ -188,7 +196,7 @@ for (file_name in data_files) {
   # using defaults from use_data
   save(list = df_name, file = file.path("..", "data", paste0(df_name, ".rda")),
     compress = "bzip2", version = 2)
-  
+
   if(man.sub$FileSource %in% c("UDS", "SCAN")){
     tmp <- data_dictionary_uds %>%
       filter(VariableName %in% colnames(df)) %>%
@@ -205,10 +213,12 @@ for (file_name in data_files) {
 }
 
 data_dictionary <- data_dictionary %>%
-  # mutate(AllowableCodes = case_when(
-  #   AllowableCodes == '' ~ NA_character_,
-  #   TRUE ~ AllowableCodes)) %>%
+  mutate(AllowableCodes = case_when(
+    AllowableCodes == '' ~ NA_character_,
+    TRUE ~ AllowableCodes)) %>%
   select(DataName, everything())
+
+View(data_dictionary)
 
 if(any(duplicated(with(data_dictionary, paste(DataName, VariableName)))))
   warning("Duplicate variable names in data sets")
@@ -249,6 +259,124 @@ for(file_name in data_files){
   save(list = df_name, file = file.path("..", "data", paste0(df_name, ".rda")),
     compress = "bzip2", version = 2)
 }
+
+# bind_rows for SCAN, CLARiIT ----
+
+# Combine files from SCAN, SCAN MP, and CLARiTI for PET data, if they exist.
+for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
+  'taupetnpdka', 'petqc')){
+  
+  SCAN <- get(paste0('scan_', df_name))
+  SCAN_MP <- try(get(paste0('scan_mp_', df_name)), silent = TRUE)
+  CLARiTI <- get(paste0('clariti_', df_name))
+  
+  if(!'try-error' %in% class(SCAN_MP)){
+    all_source <- bind_rows(
+      SCAN %>% 
+        mutate(SOURCE = 'SCAN', LONIUID = as.character(LONIUID)),
+      SCAN_MP %>% 
+        mutate(SOURCE = 'SCAN MP', LONIUID = as.character(LONIUID)),
+      CLARiTI %>% 
+        mutate(SOURCE = 'CLARiTI', LONIUID = as.character(LONIUID))) %>%
+      select(SOURCE, everything())
+  }
+
+  if('try-error' %in% class(SCAN_MP)){
+    all_source <- bind_rows(
+      SCAN %>% 
+        mutate(SOURCE = 'SCAN', LONIUID = as.character(LONIUID)),
+      CLARiTI %>% 
+        mutate(SOURCE = 'CLARiTI', LONIUID = as.character(LONIUID))) %>%
+      select(SOURCE, everything())
+  }
+  
+  assign(df_name, all_source)
+  save(list = df_name, file = file.path("..", "data", paste0(df_name, ".rda")),
+    compress = "bzip2", version = 2)
+}
+
+# Combine files from SCAN, SCAN MP, and CLARiTI for MRI data, if they exist.
+for(df_name in c('mriqc', 'mrisbm')){
+  
+  SCAN <- get(paste0('scan_', df_name))
+  SCAN_MP <- try(get(paste0('scan_mp_', df_name)), silent = TRUE)
+  CLARiTI <- get(paste0('clariti_', df_name))
+  
+  if('try-error' %in% class(SCAN_MP)){
+    all_source <- bind_rows(
+      SCAN %>% 
+        mutate(SOURCE = 'SCAN'),
+      CLARiTI %>% 
+        mutate(SOURCE = 'CLARiTI')) %>%
+      select(SOURCE, everything())
+  }
+  
+  if(!'try-error' %in% class(SCAN_MP)){
+    all_source <- bind_rows(
+      SCAN %>% 
+        mutate(SOURCE = 'SCAN'),
+      SCAN_MP %>% 
+        mutate(SOURCE = 'SCAN MP'),
+      CLARiTI %>% 
+        mutate(SOURCE = 'CLARiTI')) %>%
+      select(SOURCE, everything())
+  }
+
+  assign(df_name, all_source)
+  save(list = df_name, file = file.path("..", "data", paste0(df_name, ".rda")),
+    compress = "bzip2", version = 2)
+}
+
+## remove individual files that have been combined ----
+for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
+  'taupetnpdka', 'mriqc', 'mrisbm')){
+  
+  for(x in c("scan_", "scan_mp_", "clariti_")){
+    df_name1 <- paste0(x, df_name)
+    if(exists(df_name1)){
+      rm(list = df_name1)
+      file.remove(file.path("..", "data", paste0(df_name1, ".rda")))
+    }}
+}
+
+## relabel manifest ----
+file_manifest <- file_manifest %>%
+  mutate(
+    DataName = case_when(
+      grepl('amyloidpetgaain', DataName) ~ 'amyloidpetgaain',
+      grepl('amyloidpetnpdka', DataName) ~ 'amyloidpetnpdka',
+      grepl('fdgpetnpdka', DataName) ~ 'fdgpetnpdka',
+      grepl('taupetnpdka', DataName) ~ 'taupetnpdka',
+      grepl('mriqc', DataName) ~ 'mriqc',
+      grepl('mrisbm', DataName) ~ 'mrisbm',
+      grepl('petqc', DataName) ~ 'petqc',
+      TRUE ~ DataName))
+
+View(file_manifest)
+save(file_manifest, file = file.path("..", "data", "file_manifest.rda"),
+  compress = "bzip2", version = 2)
+
+## relabel data dictionary ----
+data_dictionary1 <- data_dictionary %>%
+  mutate(
+    DataName = case_when(
+      grepl('amyloidpetgaain', DataName) ~ 'amyloidpetgaain',
+      grepl('amyloidpetnpdka', DataName) ~ 'amyloidpetnpdka',
+      grepl('fdgpetnpdka', DataName) ~ 'fdgpetnpdka',
+      grepl('taupetnpdka', DataName) ~ 'taupetnpdka',
+      grepl('mriqc', DataName) ~ 'mriqc',
+      grepl('mrisbm', DataName) ~ 'mrisbm',
+      grepl('petqc', DataName) ~ 'petqc',
+      TRUE ~ DataName))
+
+View(data_dictionary)
+
+if(any(duplicated(with(data_dictionary, paste(DataName, VariableName)))))
+  warning("Duplicate variable names in data sets")
+
+# using defaults from use_data
+save(data_dictionary, file = file.path("..", "data", "data_dictionary.rda"),
+  compress = "bzip2", version = 2)
 
 # Add vignettes for static docx documents ----
 dir.create(file.path("..", "vignettes"))
@@ -297,10 +425,21 @@ cat("#' @keywords internal",
 # Document datasets ----
 
 cat('', file = file.path("..", "R", "data.R"))
-for (file_name in data_files) {
+for (tt in setdiff(unique(file_manifest$DataName),'')) {
   man.sub <- file_manifest %>% 
-    filter(FileName == file_name)
-  tt <- man.sub$DataName
+    filter(DataName == tt)
+  if(nrow(man.sub)>0){
+    man.sub <- as.data.frame(man.sub)
+    man.sub[is.na(man.sub)] <- ''
+    man.sub <- tibble(
+      DataName = tt,
+      FileSource = paste(unique(man.sub$FileSource), collapse = ', '),
+      Domain = man.sub$Domain[1],
+      FileDescription = paste(unique(man.sub$FileDescription), collapse = ', '),
+      FileName = paste(unique(man.sub$FileName), collapse = ', '))
+    man.sub[man.sub == ''] <- NA
+    man.sub[man.sub == ", , "] <- NA
+  }
   dd <- get(tt)
   message('Documenting ', tt)
   vignette <- grep(tt, docx_files, value = TRUE)
@@ -334,7 +473,7 @@ for (file_name in data_files) {
       paste0(man.sub$FileDescription, ". "),
       ''),
     ifelse(!is.na(man.sub$FileName), 
-      paste0("The data is sourced from the file ", man.sub$FileName, ". "),
+      paste0("The data is sourced from the file(s) ", man.sub$FileName, ". "),
       '')),
     paste("#' @format A data frame with", nrow(dd), "rows and", ncol(dd),
       "variables:"),
@@ -360,7 +499,7 @@ for (file_name in data_files) {
 # Manual data cleaning ----
 ## scan_taupetnpdka ----
 # from SCAN-PET-Imaging-RDD.pdf
-scan_taupetnpdka <- scan_taupetnpdka %>%
+taupetnpdka <- taupetnpdka %>%
   mutate(TRACER = case_when(
     TRACER == 1 ~ 'FDG',
     TRACER == 2 ~ 'PIB',
@@ -373,12 +512,12 @@ scan_taupetnpdka <- scan_taupetnpdka %>%
     TRACER == 9 ~ 'GTP1',
     TRACER == 10 ~ 'Flutemetamol',
     TRACER == 99 ~ 'Unknown') %>% as.factor())
-save(scan_taupetnpdka, 
-  file = file.path("..", "data", "scan_taupetnpdka.rda"),
+save(taupetnpdka, 
+  file = file.path("..", "data", "taupetnpdka.rda"),
   compress = "bzip2", version = 2)
 
-## scan_amyloidpetgaain ----
-scan_amyloidpetgaain <- scan_amyloidpetgaain %>%
+## amyloidpetgaain ----
+amyloidpetgaain <- amyloidpetgaain %>%
   mutate(TRACER = case_when(
     TRACER == 1 ~ 'FDG',
     TRACER == 2 ~ 'PIB',
@@ -390,8 +529,8 @@ scan_amyloidpetgaain <- scan_amyloidpetgaain %>%
     TRACER == 8 ~ 'PI2620',
     TRACER == 9 ~ 'GTP1',
     TRACER == 99 ~ 'Unknown') %>% as.factor())
-save(scan_amyloidpetgaain, 
-  file = file.path("..", "data", "scan_amyloidpetgaain.rda"),
+save(amyloidpetgaain, 
+  file = file.path("..", "data", "amyloidpetgaain.rda"),
   compress = "bzip2", version = 2)
 
 ## uds_ftldlbd ----

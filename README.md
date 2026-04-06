@@ -15,7 +15,7 @@ R package are available from the [NACC](https://www.naccdata.org/).
 ## Installation
 
 To install the package locally, run
-`install.packages("path/to/NACCADRC_72.1.0.tar.gz", repos = NULL, type = "source")`.
+`install.packages("path/to/NACCADRC_72.20260323.1.tar.gz", repos = NULL, type = "source")`.
 
 ## Usage
 
@@ -48,26 +48,26 @@ copied
 <div id="ref-beekly2007national" class="csl-entry">
 
 <span class="nocase">Beekly, Duane L, Erin M Ramos, William W Lee, et
-al.</span> 2007. “The National Alzheimer’s Coordinating Center (NACC)
-Database: The Uniform Data Set.” *Alzheimer Disease & Associated
-Disorders* 21 (3): 249–58.
+al.</span> 2007. “<span class="nocase">The National Alzheimer’s
+Coordinating Center (NACC) database: the uniform data set</span>.”
+*Alzheimer Disease & Associated Disorders* 21 (3): 249–58.
 
 </div>
 
 <div id="ref-donohue2026alzheimer" class="csl-entry">
 
 Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
-“Alzheimer’s Clinical Research Data via r Packages: The Alzverse.”
-*Alzheimer’s & Dementia* 22 (2): e71152.
+“<span class="nocase">Alzheimer’s clinical research data via R packages:
+The alzverse</span>.” *Alzheimer’s & Dementia* 22 (2): e71152.
 <https://doi.org/10.1002/alz.71152>.
 
 </div>
 
 <div id="ref-R" class="csl-entry">
 
-R Core Team. 2025. *R: A Language and Environment for Statistical
-Computing*. R Foundation for Statistical Computing.
-<https://www.R-project.org/>.
+R Core Team. 2025. *<span class="nocase">R: A Language and Environment
+for Statistical Computing</span>*. R Foundation for Statistical
+Computing. <https://www.R-project.org/>.
 
 </div>
 

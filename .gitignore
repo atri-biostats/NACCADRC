@@ -8,3 +8,6 @@ data
 *.docx
 *.xpt
 docs
+
+/.quarto/
+**/*.quarto_ipynb
