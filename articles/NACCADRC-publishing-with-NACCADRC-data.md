@@ -114,6 +114,6 @@ Golde MD PhD)
 ## References
 
 Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
-“Alzheimer’s Clinical Research Data via r Packages: The Alzverse.”
+“Alzheimer’s clinical research data via R packages: The alzverse.”
 *Alzheimer’s & Dementia* 22 (2): e71152.
 <https://doi.org/10.1002/alz.71152>.

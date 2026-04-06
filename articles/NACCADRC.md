@@ -27,6 +27,15 @@ from the [NACC](https://www.naccdata.org/).
   evaluating the ability to combine imaging phenotypes across studies
   implementing different acquisition protocols
   - Dataset names that start with `phc_`.
+- [**Consortium for Clarity in ADRD Research Through Imaging
+  (CLARiTI)**](https://clariti.naccdata.org) (U01 AG082350, PI Sterling
+  Johnson, PhD). CLARiTI is a nationwide research initiative focused on
+  standardized PET and MRI imaging across ADRC sites.
+  - Dataset names that start with `clariti_`.
+
+Note some datasets that combine data from different sources have the
+prefix dropped (e.g. `amyloidpetgaain`, `amyloidpetnpdka`,
+`fdgpetnpdka`, `mriqc`, `mrisbm`, `petqc`, and `taupetnpdka`)
 
 ### ADRC program components
 
@@ -73,7 +82,7 @@ from the [NACC](https://www.naccdata.org/).
 ## Installation
 
 To install the package locally, run
-`install.packages("path/to/NACCADRC_72.1.0.tar.gz", repos = NULL, type = "source")`.
+`install.packages("path/to/NACCADRC_72.20260323.1.tar.gz", repos = NULL, type = "source")`.
 
 ## Package usage and key meta data
 
@@ -87,19 +96,20 @@ library(NACCADRC)
 The NACCADRC package contains a data stamped date of which the raw data
 was downloaded to build the package. For instance, the current package
 contains data that downloaded from the [NACC](https://www.naccdata.org/)
-as of 2025-12-01.
+as of 2026-03-23.
 
 ``` r
 
 # Data source downloaded date
 NACCADRC::data_release_date
-#> [1] "2025-12-01"
+#> [1] "2026-03-23"
 ```
 
 ### Data dictionary
 
 The separate data dictionaries provide by NACC have been merged into one
-data dictionary file (`NACCADRC::data_dictionary`):
+data dictionary file
+([`NACCADRC::data_dictionary`](https://atri-biostats.github.io/NACCADRC/reference/data_dictionary.md)):
 
 ``` r
 
@@ -121,11 +131,11 @@ A complete file manifest of all the source files used to build the
 package is also stored in the package (`NACCADRC::file_manifest`):
 
 Beekly, Duane L, Erin M Ramos, William W Lee, et al. 2007. “The National
-Alzheimer’s Coordinating Center (NACC) Database: The Uniform Data Set.”
+Alzheimer’s Coordinating Center (NACC) database: the uniform data set.”
 *Alzheimer Disease & Associated Disorders* 21 (3): 249–58.
 
 Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
-“Alzheimer’s Clinical Research Data via r Packages: The Alzverse.”
+“Alzheimer’s clinical research data via R packages: The alzverse.”
 *Alzheimer’s & Dementia* 22 (2): e71152.
 <https://doi.org/10.1002/alz.71152>.
 

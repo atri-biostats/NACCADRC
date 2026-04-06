@@ -1,11 +1,16 @@
 # uds_fcsf
 
-NACCADRC UDS dataset. The data is sourced from the file
+NACCADRC UDS dataset. CSF link. The data is sourced from the file(s)
+investigator_fcsf_nacc72.csv.
+
+NACCADRC UDS dataset. CSF link. The data is sourced from the file(s)
 investigator_fcsf_nacc72.csv.
 
 ## Usage
 
 ``` r
+data(uds_fcsf)
+
 data(uds_fcsf)
 ```
 
@@ -63,13 +68,70 @@ A data frame with 3051 rows and 23 variables:
 
 - CSFTTMDX:
 
+A data frame with 3051 rows and 23 variables:
+
+- NACCADC:
+
+  ADC at which subject was seen (100 -9999)
+
+- NACCID:
+
+  Participant ID
+
+- CSFABETA:
+
+- CSFPTAU:
+
+- CSFTTAU:
+
+- CSFLPMO:
+
+- CSFLPDY:
+
+- CSFLPYR:
+
+- CSFABMO:
+
+- CSFABDY:
+
+- CSFABYR:
+
+- CSFABMD:
+
+- CSFABMDX:
+
+- CSFPTMO:
+
+- CSFPTDY:
+
+- CSFPTYR:
+
+- CSFPTMD:
+
+- CSFPTMDX:
+
+- CSFTTMO:
+
+- CSFTTDY:
+
+- CSFTTYR:
+
+- CSFTTMD:
+
+- CSFTTMDX:
+
 ## Source
+
+<https://www.naccdata.org/about-nacc-data/>.
 
 <https://www.naccdata.org/about-nacc-data/>.
 
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
+browseVignettes('NACCADRC')
+} # }
 if (FALSE) { # \dontrun{
 browseVignettes('NACCADRC')
 } # }

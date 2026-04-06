@@ -1,29 +1,39 @@
 # Package index
 
-## SCAN Datasets
+## Data Dictionary
+
+- [`data_dictionary`](https://atri-biostats.github.io/NACCADRC/reference/data_dictionary.md)
+  : data_dictionary
+
+## Combined Imaging Datasets
+
+Mixed-Protocol, SCAN, and CLARiTI imaging data.
+
+- [`amyloidpetgaain`](https://atri-biostats.github.io/NACCADRC/reference/amyloidpetgaain.md)
+  : amyloidpetgaain
+- [`amyloidpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/amyloidpetnpdka.md)
+  : amyloidpetnpdka
+- [`fdgpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/fdgpetnpdka.md)
+  : fdgpetnpdka
+- [`mriqc`](https://atri-biostats.github.io/NACCADRC/reference/mriqc.md)
+  : mriqc
+- [`mrisbm`](https://atri-biostats.github.io/NACCADRC/reference/mrisbm.md)
+  : mrisbm
+- [`petqc`](https://atri-biostats.github.io/NACCADRC/reference/petqc.md)
+  : petqc
+- [`taupetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/taupetnpdka.md)
+  : taupetnpdka
+
+## CLARiTI Datasets
 
 Standardized, Centralized AD/ADRD Neuroimaging (SCAN).
 
-- [`scan_amyloidpetgaain`](https://atri-biostats.github.io/NACCADRC/reference/scan_amyloidpetgaain.md)
-  : scan_amyloidpetgaain
-- [`scan_amyloidpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_amyloidpetnpdka.md)
-  : scan_amyloidpetnpdka
-- [`scan_fdgpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_fdgpetnpdka.md)
-  : scan_fdgpetnpdka
-- [`scan_mp_amyloidpetgaain`](https://atri-biostats.github.io/NACCADRC/reference/scan_mp_amyloidpetgaain.md)
-  : scan_mp_amyloidpetgaain
-- [`scan_mp_amyloidpetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_mp_amyloidpetnpdka.md)
-  : scan_mp_amyloidpetnpdka
-- [`scan_mp_taupetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_mp_taupetnpdka.md)
-  : scan_mp_taupetnpdka
-- [`scan_mriqc`](https://atri-biostats.github.io/NACCADRC/reference/scan_mriqc.md)
-  : scan_mriqc
-- [`scan_mrisbm`](https://atri-biostats.github.io/NACCADRC/reference/scan_mrisbm.md)
-  : scan_mrisbm
-- [`scan_petqc`](https://atri-biostats.github.io/NACCADRC/reference/scan_petqc.md)
-  : scan_petqc
-- [`scan_taupetnpdka`](https://atri-biostats.github.io/NACCADRC/reference/scan_taupetnpdka.md)
-  : scan_taupetnpdka
+- [`clariti_edc`](https://atri-biostats.github.io/NACCADRC/reference/clariti_edc.md)
+  : clariti_edc
+- [`clariti_edc_dropped`](https://atri-biostats.github.io/NACCADRC/reference/clariti_edc_dropped.md)
+  : clariti_edc_dropped
+- [`clariti_edc_unfiltered`](https://atri-biostats.github.io/NACCADRC/reference/clariti_edc_unfiltered.md)
+  : clariti_edc_unfiltered
 
 ## UDS Datasets
 

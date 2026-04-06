@@ -10,7 +10,7 @@ from the [NACC](https://www.naccdata.org/).
 ## Installation
 
 To install the package locally, run
-`install.packages("path/to/NACCADRC_72.1.0.tar.gz", repos = NULL, type = "source")`.
+`install.packages("path/to/NACCADRC_72.20260323.1.tar.gz", repos = NULL, type = "source")`.
 
 ## Usage
 
@@ -39,11 +39,11 @@ copied
 ## References
 
 Beekly, Duane L, Erin M Ramos, William W Lee, et al. 2007. “The National
-Alzheimer’s Coordinating Center (NACC) Database: The Uniform Data Set.”
+Alzheimer’s Coordinating Center (NACC) database: the uniform data set.”
 *Alzheimer Disease & Associated Disorders* 21 (3): 249–58.
 
 Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
-“Alzheimer’s Clinical Research Data via r Packages: The Alzverse.”
+“Alzheimer’s clinical research data via R packages: The alzverse.”
 *Alzheimer’s & Dementia* 22 (2): e71152.
 <https://doi.org/10.1002/alz.71152>.
 

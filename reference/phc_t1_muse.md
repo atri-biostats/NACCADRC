@@ -1,7 +1,7 @@
 # phc_t1_muse
 
-NACCADRC ADSP PHC Imaging T1 dataset. The data is sourced from the file
-NACC_ADSP_PHC_T1_MUSE_2024.xlsx.
+NACCADRC ADSP PHC Imaging T1 dataset. The data is sourced from the
+file(s) NACC_ADSP_PHC_T1_MUSE_2024.xlsx.
 
 ## Usage
 
