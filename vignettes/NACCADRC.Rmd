@@ -66,6 +66,11 @@ datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ..
   * Dataset names that start with `scan_`.
 * [**Alzheimer's Disease Sequencing Project–Phenotype Harmonization Consortium (ADSP-PHC)**](https://adsp.niagads.org/funded-programs/phenotype-harmonization/) (U24 AG074855, PI Timothy J. Hohman, PhD). The ADSP-PHC focuses on post hoc harmonization of genetic ADRD datasets and is currently evaluating the ability to combine imaging phenotypes across studies implementing different acquisition protocols
   * Dataset names that start with `phc_`.
+* [**Consortium for Clarity in ADRD Research Through Imaging (CLARiTI)**](https://clariti.naccdata.org) (U01 AG082350, PI Sterling Johnson, PhD). CLARiTI is a nationwide research initiative focused on standardized PET and MRI imaging across ADRC sites.
+  * Dataset names that start with `clariti_`.
+  
+Note some datasets that combine data from different sources have the prefix dropped (e.g. `amyloidpetgaain`, `amyloidpetnpdka`, `fdgpetnpdka`, `mriqc`, `mrisbm`, `petqc`, and
+`taupetnpdka`)
 
 ## ADRC program components
 

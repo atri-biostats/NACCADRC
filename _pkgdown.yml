@@ -4,6 +4,29 @@ template:
   light-switch: true
 
 reference:
+  - title: Data dictionary
+    contents:
+    - starts_with("data_dictionary")
+
+reference:
+  - title: Combined imaging datasets
+    desc: > 
+       Mixed-Protocol, SCAN, and CLARiTI imaging data.
+    contents:
+    - starts_with("amyloidpetgaain")
+    - starts_with("amyloidpetnpdka")
+    - starts_with("fdgpetnpdka")
+    - starts_with("mriqc")
+    - starts_with("mrisbm")
+    - starts_with("petqc")
+    - starts_with("taupetnpdka")
+    
+  - title: CLARiTI Datasets
+    desc: > 
+       Standardized, Centralized AD/ADRD Neuroimaging (SCAN).
+    contents:
+    - starts_with("clariti_")
+
   - title: SCAN Datasets
     desc: > 
        Standardized, Centralized AD/ADRD Neuroimaging (SCAN).
