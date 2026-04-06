@@ -4,11 +4,11 @@ template:
   light-switch: true
 
 reference:
-  - title: Data dictionary
+  - title: Data Dictionary
     contents:
     - starts_with("data_dictionary")
 
-  - title: Combined imaging datasets
+  - title: Combined Imaging Datasets
     desc: > 
        Mixed-Protocol, SCAN, and CLARiTI imaging data.
     contents:
@@ -26,12 +26,6 @@ reference:
     contents:
     - starts_with("clariti_")
 
-  - title: SCAN Datasets
-    desc: > 
-       Standardized, Centralized AD/ADRD Neuroimaging (SCAN).
-    contents:
-    - starts_with("scan_")
-    
   - title: UDS Datasets
     desc: > 
          Uniform Data Set (UDS)
