@@ -425,7 +425,7 @@ cat("#' @keywords internal",
 # Document datasets ----
 
 cat('', file = file.path("..", "R", "data.R"))
-for (tt in setdiff(unique(file_manifest$DataName),'')) {
+for (tt in sort(setdiff(unique(file_manifest$DataName),''))) {
   man.sub <- file_manifest %>% 
     filter(DataName == tt)
   if(nrow(man.sub)>0){
