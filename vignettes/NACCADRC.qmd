@@ -1,15 +1,15 @@
 ---
 title: "NACCADRC"
-output: 
-   rmarkdown::html_vignette:
+format: 
+   html:
      toc: true
      toc_depth: 3
-     code_folding: show
+     code_fold: true
 date: "Last Updated: `r format(Sys.Date(), '%B %d, %Y')`"
 bibliography: references.bib  
 vignette: >
   %\VignetteIndexEntry{NACCADRC}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 

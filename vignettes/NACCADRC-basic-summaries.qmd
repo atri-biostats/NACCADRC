@@ -1,19 +1,21 @@
 ---
 title: "NACCADRC Basic Summaries"
-output: 
-   rmarkdown::html_vignette:
+format: 
+   html:
      toc: true
      toc_depth: 3
-     code_folding: hide
+     code_fold: true
 date: "Last Updated: `r format(Sys.Date(), '%B %d, %Y')`"
 bibliography: references.bib  
 vignette: >
   %\VignetteIndexEntry{NACCADRC Basic Summaries}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r settings, include = FALSE}
+```{r packages, message = FALSE}
+#| code-fold: true
+
 library(NACCADRC)
 library(ggplot2)
 library(tidyverse)
@@ -22,6 +24,16 @@ library(data.table)
 library(gtsummary)
 library(UpSetR)
 
+# Data print function
+datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ...) {
+  DT::datatable(
+    data = data, ...,
+    options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...)
+  )
+}
+```
+
+```{r settings, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -46,19 +58,13 @@ scale_fill_discrete <-
 # Package Versions
 pkgName <- "NACCADRC"
 pkgFilename <- paste0('NACCADRC_', packageVersion('NACCADRC'), '.tar.gz')
-
-# Data print function
-datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ...) {
-  DT::datatable(
-    data = data, ...,
-    options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...)
-  )
-}
 ```
 
 # Merge key imaging and PHC cognitive data
 
 ```{r merge-data}
+#| code-fold: true
+
 ## Combine hippocampal volume from SCAN and Mixed Protocol (UDS) ----
 mri_hipp <- mrisbm %>%          # SCAN volumes
   select(SOURCE, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV = CEREBRUMTCV) %>%
@@ -191,6 +197,7 @@ dd <- dd %>%
 ## Summarize data collection
 
 ```{r fig-clariti-barplots}
+#| code-fold: true
 #| fig-cap: "Number of CLARiTI pariticpants by etiology and clinical diagnosis."
 
 Etiology_levs <- dd_cross %>% filter(Cohort == 'CLARiTI') %>% pull(Etiology) %>% 
@@ -205,6 +212,7 @@ ggplot(aes(y=Etiology)) +
 ```
 
 ```{r fig-all-barplots}
+#| code-fold: true
 #| fig-cap: "Number of pariticpants including CLARiTI, SCAN, and mixed-protocol by etiology and clinical diagnosis."
 
 Etiology_levs <- dd_cross %>% pull(Etiology) %>% 
@@ -220,6 +228,7 @@ ggplot(aes(y=Etiology, fill = Cohort)) +
 ```
 
 ```{r fig-clariti-upset}
+#| code-fold: true
 #| fig-cap: "UpSet plot of CLARiTI participants."
 
 dd_upset <- dd_cross %>%
@@ -236,6 +245,7 @@ upset(subset(dd_upset, Cohort == 'CLARiTI'), nsets = 7, nintersects = 30, mb.rat
 ```
 
 ```{r fig-all-upset}
+#| code-fold: true
 #| fig-cap: "UpSet plot of all participants."
 
 upset(dd_upset, nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
@@ -243,6 +253,8 @@ upset(dd_upset, nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
 ```
 
 ```{r tbl-scan-counts, results = 'asis'}
+#| code-fold: true
+
 tmp <- dd %>% 
   select(NACCID, CENTILOIDS, HIPPOCAMPUS, Tau_PET_ComBat) %>%
   rename(
@@ -261,6 +273,7 @@ with(tmp, table(Type, `Serial scans`)) %>%
 ```
 
 ```{r fig-cummulative-scans}
+#| code-fold: true
 #| fig-cap: "Cumulative scans by time from first scan of each scan type."
 
 dd %>% 
@@ -295,6 +308,8 @@ ggplot(aes(x=Years, y=`Cumulative count`, color = Type)) +
 ## CLARiTI participants
 
 ```{r tbl-clariti-char}
+#| code-fold: true
+
 tbl_summary(
   data = dd_cross %>% filter(Cohort == 'CLARiTI'),
   by = NACCUDSD,
@@ -323,6 +338,8 @@ tbl_summary(
 ## All participants
 
 ```{r tbl-all-char}
+#| code-fold: true
+
 tbl_summary(
   data = dd_cross,
   by = NACCUDSD,
@@ -354,6 +371,8 @@ tbl_summary(
 ## Participants with hippocampal volumes
 
 ```{r tbl-mri-char}
+#| code-fold: true
+
 tbl_summary(
   data = dd_cross %>% filter(!is.na(HIPPOCAMPUS)),
   by = NACCUDSD,
@@ -385,6 +404,8 @@ tbl_summary(
 ## Participants with tau PET
 
 ```{r tbl-tau-char}
+#| code-fold: true
+
 tbl_summary(
   data = dd_cross %>% filter(!is.na(Tau_PET)),
   by = NACCUDSD,
@@ -416,6 +437,8 @@ tbl_summary(
 ## Participants with amyloid PET
 
 ```{r tbl-amyloid-char}
+#| code-fold: true
+
 tbl_summary(
   data = dd_cross %>% filter(!is.na(CENTILOIDS)),
   by = NACCUDSD,
@@ -448,7 +471,11 @@ tbl_summary(
 
 ## Spaghetti plots
 
-```{r Spaghetti-centiloids, fig.cap='Spaghetti plot of amyloid PET.'}
+```{r Spaghetti-centiloids}
+#| code-fold: true
+#| fig-cap: "Spaghetti plot of amyloid PET."
+
+
 dd %>% 
   select(NACCID, SOURCE = Amyloid_SOURCE, Etiology, Age, NACCUDSD, NACCETPR, CENTILOIDS) %>%
   filter(!is.na(CENTILOIDS), !is.na(Age)) %>%
@@ -469,7 +496,10 @@ ggplot(aes(x=Years, y=CENTILOIDS)) +
   ylab('Amyloid PET (CL)')
 ```
 
-```{r Spaghetti-tau-pet, fig.cap='Spaghetti plot of tau PET.'}
+```{r Spaghetti-tau-pet}
+#| code-fold: true
+#| fig-cap: "Spaghetti plot of tau PET."
+
 dd %>% 
   select(NACCID, SOURCE = Tau_SOURCE, Etiology, Age, NACCUDSD, NACCETPR, Tau_PET_ComBat) %>%
   filter(!is.na(Tau_PET_ComBat), !is.na(Age)) %>%
@@ -490,7 +520,10 @@ ggplot(aes(x=Years, y=Tau_PET_ComBat)) +
   ylab('Tau PET (MTL SUVR)')
 ```
 
-```{r Spaghetti-hippocampus, fig.cap='Spaghetti plot of hippocampal volumes.'}
+```{r Spaghetti-hippocampus}
+#| code-fold: true
+#| fig-cap: "Spaghetti plot of hippocampal volumes."
+
 dd %>% 
   select(NACCID, SOURCE = MRI_SOURCE, Etiology, Age, NACCUDSD, NACCETPR, HIPPOCAMPUS) %>%
   filter(!is.na(HIPPOCAMPUS), !is.na(Age)) %>%
@@ -511,7 +544,10 @@ ggplot(aes(x=Years, y=HIPPOCAMPUS)) +
   ylab('Hippocampal volume')
 ```
 
-```{r Spaghetti-cog, fig.cap='Spaghetti plot of harmonized cognitive scores.'}
+```{r Spaghetti-cog}
+#| code-fold: true
+#| fig-cap: "Spaghetti plot of harmonized cognitive scores."
+
 dd %>% 
   select(NACCID, Age, Etiology, NACCUDSD, NACCETPR,
     PHC_MEM, PHC_EXF, PHC_LAN) %>%
@@ -536,7 +572,10 @@ ggplot(aes(x=Years, y=value)) +
 
 ## LOESS Trends
 
-```{r loess, fig.cap='LOESS plots.', message=FALSE}
+```{r loess, message=FALSE}
+#| code-fold: true
+#| fig-cap: "LOESS plots."
+
 dd %>% 
   select(NACCID, Age, Etiology, NACCUDSD, NACCETPR,
     CENTILOIDS, HIPPOCAMPUS, Tau_PET_ComBat, PHC_MEM, PHC_EXF, PHC_LAN) %>%
@@ -567,6 +606,9 @@ ggplot(aes(x=Age, y=value, color = `Initial Dx`)) +
 ## ComBat Harmonization of tau PET (tracers)
 
 ```{r tau-PET-ComBat}
+#| code-fold: true
+#| fig-cap: "ComBat transformed versus raw Tau PET data by tracer."
+
 summary(tau_PET_fit)
 ggplot(dd %>% filter(!is.na(Tau_PET_ComBat)), 
   aes(x = Tau_PET, y = Tau_PET_ComBat, color = Tau_TRACER)) +
