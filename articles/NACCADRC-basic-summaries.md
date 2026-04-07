@@ -1,6 +1,29 @@
 # NACCADRC Basic Summaries
 
+Code
+
+``` r
+
+library(NACCADRC)
+library(ggplot2)
+library(tidyverse)
+library(nlme)
+library(data.table)
+library(gtsummary)
+library(UpSetR)
+
+# Data print function
+datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ...) {
+  DT::datatable(
+    data = data, ...,
+    options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...)
+  )
+}
+```
+
 ## Merge key imaging and PHC cognitive data
+
+Code
 
 ``` r
 
@@ -135,6 +158,8 @@ dd <- dd %>%
 
 ### Summarize data collection
 
+Code
+
 ``` r
 
 Etiology_levs <- dd_cross %>% filter(Cohort == 'CLARiTI') %>% pull(Etiology) %>% 
@@ -148,10 +173,12 @@ ggplot(aes(y=Etiology)) +
   ylab("")
 ```
 
-![Number of CLARiTI pariticpants by etiology and clinical
-diagnosis.](NACCADRC-basic-summaries_files/figure-html/fig-clariti-barplots-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/fig-clariti-barplots-1.png)
 
-Number of CLARiTI pariticpants by etiology and clinical diagnosis.
+Figure 1: Number of CLARiTI pariticpants by etiology and clinical
+diagnosis.
+
+Code
 
 ``` r
 
@@ -167,12 +194,12 @@ ggplot(aes(y=Etiology, fill = Cohort)) +
   ylab("")
 ```
 
-![Number of pariticpants including CLARiTI, SCAN, and mixed-protocol by
-etiology and clinical
-diagnosis.](NACCADRC-basic-summaries_files/figure-html/fig-all-barplots-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/fig-all-barplots-1.png)
 
-Number of pariticpants including CLARiTI, SCAN, and mixed-protocol by
-etiology and clinical diagnosis.
+Figure 2: Number of pariticpants including CLARiTI, SCAN, and
+mixed-protocol by etiology and clinical diagnosis.
+
+Code
 
 ``` r
 
@@ -189,10 +216,11 @@ upset(subset(dd_upset, Cohort == 'CLARiTI'), nsets = 7, nintersects = 30, mb.rat
       order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
 ```
 
-![UpSet plot of CLARiTI
-participants.](NACCADRC-basic-summaries_files/figure-html/fig-clariti-upset-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/fig-clariti-upset-1.png)
 
-UpSet plot of CLARiTI participants.
+Figure 3: UpSet plot of CLARiTI participants.
+
+Code
 
 ``` r
 
@@ -200,10 +228,11 @@ upset(dd_upset, nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
       order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
 ```
 
-![UpSet plot of all
-participants.](NACCADRC-basic-summaries_files/figure-html/fig-all-upset-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/fig-all-upset-1.png)
 
-UpSet plot of all participants.
+Figure 4: UpSet plot of all participants.
+
+Code
 
 ``` r
 
@@ -230,8 +259,10 @@ with(tmp, table(Type, `Serial scans`)) %>%
 | Tau PET        | 2035 |  274 |  22 |   0 |   0 |   0 |   0 |   0 |
 | Volumetric MRI | 5200 | 1315 | 473 | 123 |  25 |  19 |   3 |   1 |
 
-Number of individuals who have received the given number serial scans
-for each scan type. {.table}
+Table 1: Number of individuals who have received the given number serial
+scans for each scan type.
+
+Code
 
 ``` r
 
@@ -262,14 +293,15 @@ ggplot(aes(x=Years, y=`Cumulative count`, color = Type)) +
   xlab('Years from first scan of each type')
 ```
 
-![Cumulative scans by time from first scan of each scan
-type.](NACCADRC-basic-summaries_files/figure-html/fig-cummulative-scans-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/fig-cummulative-scans-1.png)
 
-Cumulative scans by time from first scan of each scan type.
+Figure 5: Cumulative scans by time from first scan of each scan type.
 
 ## Baseline characteristics
 
 ### CLARiTI participants
+
+Code
 
 ``` r
 
@@ -300,12 +332,13 @@ tbl_summary(
 
 [TABLE]
 
-Characteristics of CLARiTI participants by baseline diagnosis. Note
-CLARiTI participants are those with a NACCID in clariti_edc or any of
-the CLARiTI imaging summary files. {.table .gt_table
-quarto-disable-processing="false" quarto-bootstrap="false"}
+Table 2: Characteristics of CLARiTI participants by baseline diagnosis.
+Note CLARiTI participants are those with a NACCID in clariti_edc or any
+of the CLARiTI imaging summary files.
 
 ### All participants
+
+Code
 
 ``` r
 
@@ -339,10 +372,11 @@ tbl_summary(
 
 [TABLE]
 
-Characteristics of all participants by baseline diagnosis. {.table
-.gt_table quarto-disable-processing="false" quarto-bootstrap="false"}
+Table 3: Characteristics of all participants by baseline diagnosis.
 
 ### Participants with hippocampal volumes
+
+Code
 
 ``` r
 
@@ -376,11 +410,12 @@ tbl_summary(
 
 [TABLE]
 
-Characteristics of all participants with MRI data by baseline diagnosis.
-{.table .gt_table quarto-disable-processing="false"
-quarto-bootstrap="false"}
+Table 4: Characteristics of all participants with MRI data by baseline
+diagnosis.
 
 ### Participants with tau PET
+
+Code
 
 ``` r
 
@@ -414,11 +449,12 @@ tbl_summary(
 
 [TABLE]
 
-Characteristics of all participants with tau PET data by baseline
-diagnosis. {.table .gt_table quarto-disable-processing="false"
-quarto-bootstrap="false"}
+Table 5: Characteristics of all participants with tau PET data by
+baseline diagnosis.
 
 ### Participants with amyloid PET
+
+Code
 
 ``` r
 
@@ -452,15 +488,17 @@ tbl_summary(
 
 [TABLE]
 
-Characteristics of NACC ADRC participants with amyloid PET data by
-baseline diagnosis. {.table .gt_table quarto-disable-processing="false"
-quarto-bootstrap="false"}
+Table 6: Characteristics of NACC ADRC participants with amyloid PET data
+by baseline diagnosis.
 
 ## Summary plots
 
 ### Spaghetti plots
 
+Code
+
 ``` r
+
 
 dd %>% 
   select(NACCID, SOURCE = Amyloid_SOURCE, Etiology, Age, NACCUDSD, NACCETPR, CENTILOIDS) %>%
@@ -482,10 +520,11 @@ ggplot(aes(x=Years, y=CENTILOIDS)) +
   ylab('Amyloid PET (CL)')
 ```
 
-![Spaghetti plot of amyloid
-PET.](NACCADRC-basic-summaries_files/figure-html/Spaghetti-centiloids-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/Spaghetti-centiloids-1.png)
 
 Spaghetti plot of amyloid PET.
+
+Code
 
 ``` r
 
@@ -509,10 +548,11 @@ ggplot(aes(x=Years, y=Tau_PET_ComBat)) +
   ylab('Tau PET (MTL SUVR)')
 ```
 
-![Spaghetti plot of tau
-PET.](NACCADRC-basic-summaries_files/figure-html/Spaghetti-tau-pet-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/Spaghetti-tau-pet-1.png)
 
 Spaghetti plot of tau PET.
+
+Code
 
 ``` r
 
@@ -536,10 +576,11 @@ ggplot(aes(x=Years, y=HIPPOCAMPUS)) +
   ylab('Hippocampal volume')
 ```
 
-![Spaghetti plot of hippocampal
-volumes.](NACCADRC-basic-summaries_files/figure-html/Spaghetti-hippocampus-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/Spaghetti-hippocampus-1.png)
 
 Spaghetti plot of hippocampal volumes.
+
+Code
 
 ``` r
 
@@ -565,12 +606,13 @@ ggplot(aes(x=Years, y=value)) +
   ylab('')
 ```
 
-![Spaghetti plot of harmonized cognitive
-scores.](NACCADRC-basic-summaries_files/figure-html/Spaghetti-cog-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/Spaghetti-cog-1.png)
 
 Spaghetti plot of harmonized cognitive scores.
 
 ### LOESS Trends
+
+Code
 
 ``` r
 
@@ -601,11 +643,13 @@ ggplot(aes(x=Age, y=value, color = `Initial Dx`)) +
   ylab('Amyloid PET (CL)')
 ```
 
-![LOESS plots.](NACCADRC-basic-summaries_files/figure-html/loess-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/loess-1.png)
 
 LOESS plots.
 
 ### ComBat Harmonization of tau PET (tracers)
+
+Code
 
 ``` r
 
@@ -652,6 +696,8 @@ ggplot(dd %>% filter(!is.na(Tau_PET_ComBat)),
 
 ![](NACCADRC-basic-summaries_files/figure-html/tau-PET-ComBat-1.png)
 
+ComBat transformed versus raw Tau PET data by tracer.
+
 ### Publishing with NACC Data
 
 Authors must comply with the [NACC data use
@@ -659,7 +705,7 @@ agreement](https://www.naccdata.org/requesting-data/dua). See the
 [author
 checklist](https://www.naccdata.org/about-nacc-data/publish-with-nacc-data/)
 for more information. If you use the `NACCADRC` R data package, please
-also cite (Donohue et al. 2026).
+also cite ([Donohue et al. 2026](#ref-donohue2026alzheimer)).
 
 ### Funding
 
@@ -672,7 +718,8 @@ copied
 
 ### References
 
-Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
-“Alzheimer’s clinical research data via R packages: The alzverse.”
-*Alzheimer’s & Dementia* 22 (2): e71152.
+Donohue, Michael C, Kedir Hussen, Oliver Langford, Richard Gallardo,
+Gustavo Jimenez-Maggiora, Paul S Aisen, and Alzheimer’s Disease
+Neuroimaging Initiative. 2026. “Alzheimer’s clinical research data via R
+packages: The alzverse.” *Alzheimer’s & Dementia* 22 (2): e71152.
 <https://doi.org/10.1002/alz.71152>.

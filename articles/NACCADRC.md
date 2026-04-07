@@ -2,18 +2,19 @@
 
 ## Overview
 
-`NACCADRC` is an R data package (R Core Team 2025; Donohue et al. 2026)
-containing data and R code for the **National Alzheimer’s Coordinating
-Center (NACC)** (Beekly et al. 2007) Alzheimer’s Disease Research
-Centers (ADRC) data. `NACCADRC` is a bundle of data, analysis code
-examples, and documentation. Data, including the R package are available
-from the [NACC](https://www.naccdata.org/).
+`NACCADRC` is an R data package ([R Core Team 2025](#ref-R); [Donohue et
+al. 2026](#ref-donohue2026alzheimer)) containing data and R code for the
+**National Alzheimer’s Coordinating Center (NACC)** ([Beekly et al.
+2007](#ref-beekly2007national)) Alzheimer’s Disease Research Centers
+(ADRC) data. `NACCADRC` is a bundle of data, analysis code examples, and
+documentation. Data, including the R package are available from the
+[NACC](https://www.naccdata.org/).
 
 `NACCADRC` includes data from:
 
 - [**The Uniform Data Set
   (UDS)**](https://www.naccdata.org/collect-and-submit-nacc-data/forms/udsv4-forms-and-documentation/)
-  (Beekly et al. 2007)
+  ([Beekly et al. 2007](#ref-beekly2007national))
   - Dataset names that start with `uds_`.
 - [**Standardized, Centralized AD/ADRD Neuroimaging
   (SCAN)**](https://scan.naccdata.org) (U24 AG067418 PIs William Jagust,
@@ -39,7 +40,7 @@ prefix dropped (e.g. `amyloidpetgaain`, `amyloidpetnpdka`,
 
 ### ADRC program components
 
-(adapted from (Mormino et al. 2025))
+(adapted from ([Mormino et al. 2025](#ref-mormino2025consortium)))
 
 - [**Alzheimer’s Disease Research Centers
   (ADRCs):**](https://www.nia.nih.gov/health/clinical-trials-and-studies/find-alzheimers-disease-research-center)
@@ -69,15 +70,15 @@ prefix dropped (e.g. `amyloidpetgaain`, `amyloidpetnpdka`,
   SCAN standardized protocols across the ADRC sites. LONI is directed by
   Dr. Arthur Toga at the University of Southern California.
 - **[The Consortium for Clarity in ADRD Research Through Imaging
-  (CLARiTI)](https://clariti.naccdata.org)** (U01 AG082350) (Mormino et
-  al. 2025) This initiative aims to strengthen the Alzheimer’s Disease
-  Research Center (ADRC) program by providing standardized,
-  comprehensive in vivo biomarker data to improve understanding of mixed
-  pathologies in Alzheimer’s disease and related dementias (ADRD).
-  Building on existing ADRC infrastructure, CLARiTI incorporates
-  standardized imaging and plasma collection to characterize mixed
-  pathologies and applies community‑engaged research methods to enhance
-  diversity in ADRD research..
+  (CLARiTI)](https://clariti.naccdata.org)** (U01 AG082350) ([Mormino et
+  al. 2025](#ref-mormino2025consortium)) This initiative aims to
+  strengthen the Alzheimer’s Disease Research Center (ADRC) program by
+  providing standardized, comprehensive in vivo biomarker data to
+  improve understanding of mixed pathologies in Alzheimer’s disease and
+  related dementias (ADRD). Building on existing ADRC infrastructure,
+  CLARiTI incorporates standardized imaging and plasma collection to
+  characterize mixed pathologies and applies community‑engaged research
+  methods to enhance diversity in ADRD research..
 
 ## Installation
 
@@ -117,12 +118,12 @@ head(NACCADRC::data_dictionary, 6)
 #> # A tibble: 6 × 9
 #>   DataName      VariableName ShortDescriptor                              Comment AllowableCodes Source                    Form  VariableType DataType
 #>   <chr>         <chr>        <chr>                                        <chr>   <chr>          <chr>                     <chr> <chr>        <chr>   
-#> 1 phc_biomarker NACCID       Participant ID                               NA      NA             NACC_ADSP_PHC_Biomarker_… NA    NA           NA      
-#> 2 phc_biomarker NACCVNUM     Visit Number                                 NA      NA             NACC_ADSP_PHC_Biomarker_… NA    NA           NA      
-#> 3 phc_biomarker AB42_RAW     Raw AB42 Biomarker Levels                    NA      NA             NACC_ADSP_PHC_Biomarker_… NA    NA           NA      
-#> 4 phc_biomarker PHC_AB42     Harmonized Z-Score for AB42 Biomarker Levels NA      NA             NACC_ADSP_PHC_Biomarker_… NA    NA           NA      
-#> 5 phc_biomarker Tau_RAW      Raw Tau Biomarker Levels                     NA      NA             NACC_ADSP_PHC_Biomarker_… NA    NA           NA      
-#> 6 phc_biomarker PHC_Tau      Harmonized Z-Score for Tau Biomarker Levels  NA      NA             NACC_ADSP_PHC_Biomarker_… NA    NA           NA
+#> 1 phc_biomarker NACCID       Participant ID                               <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
+#> 2 phc_biomarker NACCVNUM     Visit Number                                 <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
+#> 3 phc_biomarker AB42_RAW     Raw AB42 Biomarker Levels                    <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
+#> 4 phc_biomarker PHC_AB42     Harmonized Z-Score for AB42 Biomarker Levels <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
+#> 5 phc_biomarker Tau_RAW      Raw Tau Biomarker Levels                     <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
+#> 6 phc_biomarker PHC_Tau      Harmonized Z-Score for Tau Biomarker Levels  <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>
 ```
 
 ### File manifest
@@ -130,19 +131,22 @@ head(NACCADRC::data_dictionary, 6)
 A complete file manifest of all the source files used to build the
 package is also stored in the package (`NACCADRC::file_manifest`):
 
-Beekly, Duane L, Erin M Ramos, William W Lee, et al. 2007. “The National
+Beekly, Duane L, Erin M Ramos, William W Lee, Woodrow D Deitrich, Mary E
+Jacka, Joylee Wu, Janene L Hubbard, et al. 2007. “The National
 Alzheimer’s Coordinating Center (NACC) database: the uniform data set.”
 *Alzheimer Disease & Associated Disorders* 21 (3): 249–58.
 
-Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
-“Alzheimer’s clinical research data via R packages: The alzverse.”
-*Alzheimer’s & Dementia* 22 (2): e71152.
+Donohue, Michael C, Kedir Hussen, Oliver Langford, Richard Gallardo,
+Gustavo Jimenez-Maggiora, Paul S Aisen, and Alzheimer’s Disease
+Neuroimaging Initiative. 2026. “Alzheimer’s clinical research data via R
+packages: The alzverse.” *Alzheimer’s & Dementia* 22 (2): e71152.
 <https://doi.org/10.1002/alz.71152>.
 
-Mormino, Elizabeth C, Sarah A Biber, Annalise Rahman-Filipiak, et al.
-2025. “The Consortium for Clarity in ADRD Research Through Imaging
+Mormino, Elizabeth C, Sarah A Biber, Annalise Rahman-Filipiak,
+Konstantinos Arfanakis, Lindsay Clark, Jeffrey L Dage, John A Detre, et
+al. 2025. “The Consortium for Clarity in ADRD Research Through Imaging
 (CLARiTI).” *Alzheimer’s & Dementia* 21 (1): e14383.
 
 R Core Team. 2025. *R: A Language and Environment for Statistical
-Computing*. R Foundation for Statistical Computing.
+Computing*. Vienna, Austria: R Foundation for Statistical Computing.
 <https://www.R-project.org/>.

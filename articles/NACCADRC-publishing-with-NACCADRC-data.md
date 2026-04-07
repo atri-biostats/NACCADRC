@@ -7,7 +7,7 @@ agreement](https://www.naccdata.org/requesting-data/dua). See the
 [author
 checklist](https://www.naccdata.org/about-nacc-data/publish-with-nacc-data/)
 for more information. If you use the `NACCADRC` R data package, please
-also cite (Donohue et al. 2026).
+also cite ([Donohue et al. 2026](#ref-donohue2026alzheimer)).
 
 ## Funding
 
@@ -113,7 +113,8 @@ Golde MD PhD)
 
 ## References
 
-Donohue, Michael C, Kedir Hussen, Oliver Langford, et al. 2026.
-“Alzheimer’s clinical research data via R packages: The alzverse.”
-*Alzheimer’s & Dementia* 22 (2): e71152.
+Donohue, Michael C, Kedir Hussen, Oliver Langford, Richard Gallardo,
+Gustavo Jimenez-Maggiora, Paul S Aisen, and Alzheimer’s Disease
+Neuroimaging Initiative. 2026. “Alzheimer’s clinical research data via R
+packages: The alzverse.” *Alzheimer’s & Dementia* 22 (2): e71152.
 <https://doi.org/10.1002/alz.71152>.
