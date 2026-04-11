@@ -20,6 +20,7 @@ Run `data-prep.R` to process the raw data files and store prepared data in the `
 
 ## Known Issues
 
+* (https://files.alz.washington.edu/documentation/uds4-rdd.csv) was not available at time of package build. Using (https://files.alz.washington.edu/documentation/uds3-rdd.csv)
 * Some `data_dictionary` `AllowableCodes` start with a range (e.g. `data_dictionary %>% filter(VariableName == 'SMOKYRS') %>% pull(AllowableCodes)`). This makes it hard to parse levels for coding factor variables. Currently any time `AllowableCodes` contains a `-`, that variable is not coded as a factor variable.
 * NA string definitions are mixed in with factor `AllowableCodes` making it difficult to parse these NA strings and convert to NA for numeric data.
 * The DUA provided by NACC includes an image of the required text that cannot be copy-pasted into a manuscript.

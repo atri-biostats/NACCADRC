@@ -1,8 +1,8 @@
 Package: NACCADRC
 Type: Package
 Title: NACCADRC Study Package
-Description: National Alzheimer’s Coordinating Center (NACC) Uniform Data Set (UDS)
-Version: 72.20260323.1
+Description: National Alzheimer’s Coordinating Center (NACC) Alzheimer's Disease Research Centers (ADRC) data.
+Version: 73.20260410.1
 Authors@R: person("ATRI Biostatistics", email = "biostat_request@atrihub.io",
   role = c("aut", "cre"))
 URL: 
@@ -11,8 +11,8 @@ URL:
     https://github.com/atri-biostats/NACCADRC
 License: https://www.naccdata.org/about-nacc-data/
 Encoding: UTF-8
-LazyData: true
-LazyDataCompression: bzip2
+LazyData: false
+LazyDataCompression: none
 RoxygenNote: 7.3.3
 Collate:
     'ComBat.R'

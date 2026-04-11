@@ -8,12 +8,12 @@ format:
 date: "Last Updated: `r format(Sys.Date(), '%B %d, %Y')`"
 bibliography: references.bib  
 vignette: >
-  %\VignetteIndexEntry{NACCADRC Basic Summaries}
+%\VignetteIndexEntry{NACCADRC Basic Summaries}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
----
-
-```{r packages, message = FALSE}
+  ---
+  
+  ```{r packages, message = FALSE}
 #| code-fold: true
 
 library(NACCADRC)
@@ -24,12 +24,15 @@ library(data.table)
 library(gtsummary)
 library(UpSetR)
 
+data(mrisbm, taupetnpdka, phc_cognition, amyloidpetgaain, 
+uds_ftldlbd, clariti_edc, uds_mri)
+
 # Data print function
 datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ...) {
-  DT::datatable(
-    data = data, ...,
-    options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...)
-  )
+DT::datatable(
+data = data, ...,
+options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...)
+)
 }
 ```
 
@@ -51,9 +54,9 @@ options(digits = 2, width = 150)
 theme_set(theme_minimal())
 
 scale_colour_discrete <-
-    function(...) ggsci::scale_color_lancet()
+  function(...) ggsci::scale_color_lancet()
 scale_fill_discrete <-
-    function(...) ggsci::scale_fill_lancet()
+  function(...) ggsci::scale_fill_lancet()
 
 # Package Versions
 pkgName <- "NACCADRC"
@@ -74,7 +77,8 @@ mri_hipp <- mrisbm %>%          # SCAN volumes
       filter(HIPPOCAMPUS != 88.8888, ICV != 9999.999, !is.na(HIPPOCAMPUS)) %>%
       mutate(
         DATE = as.IDate(paste(MRIYR, MRIMO, MRIDY, sep='-')),
-        SOURCE = 'Mixed protocol'))
+        SOURCE = 'Mixed protocol')) %>%
+  distinct(NACCID, DATE, .keep_all = TRUE)
 
 NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
 
@@ -98,21 +102,19 @@ dd <- mri_hipp %>%                        # Hippocampal volumes
   full_join(phc_cognition %>%            # Harmonized cognition
       select(NACCID, NACCVNUM, PHC_MEM, PHC_EXF, PHC_LAN) %>%
       left_join(uds_ftldlbd %>%            # UDS visit dates
-          mutate(DATE = as.IDate(paste(VISITYR, VISITMO, VISITDAY, sep='-'))) %>%
-          select(NACCID, NACCVNUM, DATE),
+          select(NACCID, NACCVNUM, DATE = VISITDATE),
         by = c('NACCID', 'NACCVNUM')),
     by = c('NACCID', 'DATE')) %>%
   full_join(uds_ftldlbd %>%              # UDS diagnosis, etiology over time
       mutate(
-        DATE = as.IDate(paste(VISITYR, VISITMO, VISITDAY, sep='-')),
         NACCETPR = factor(NACCETPR, levels = NACCETPR_levels)) %>%
-      select(NACCID, DATE, NACCUDSD, NACCETPR),
+      select(NACCID, DATE = VISITDATE, NACCUDSD, NACCETPR),
     by = c('NACCID', 'DATE')) %>%
   left_join(uds_ftldlbd %>%              # UDS demographics
       mutate(BIRTHDATE = as.IDate(paste(BIRTHYR, BIRTHMO, 15, sep = '-'))) %>%
       filter(!is.na(BIRTHDATE)) %>%
       arrange(NACCID, NACCVNUM) %>%
-      select(NACCID, BIRTHDATE, RACE, SEX, EDUC, HISPANIC) %>%
+      select(NACCID, BIRTHDATE, RACE, SEX = NACCSEX, EDUC, HISPANIC = NACCHISP) %>%
       group_by(NACCID) %>%                   # Carry information back/forward
       tidyr::fill(.direction = "updown") %>% # to impute missing data
       ungroup() %>%
@@ -196,36 +198,102 @@ dd <- dd %>%
 
 ## Summarize data collection
 
+### Bar charts
+
 ```{r fig-clariti-barplots}
 #| code-fold: true
-#| fig-cap: "Number of CLARiTI pariticpants by etiology and clinical diagnosis."
+#| fig-cap: "Number of CLARiTI pariticpants by etiology and UDS clinical diagnosis."
 
-Etiology_levs <- dd_cross %>% filter(Cohort == 'CLARiTI') %>% pull(Etiology) %>% 
-  table() %>% sort(decreasing = TRUE)
-
-dd_cross %>% filter(Cohort == 'CLARiTI') %>%
-  mutate(Etiology = factor(Etiology, levels = names(Etiology_levs))) %>%
-ggplot(aes(y=Etiology)) +
-  geom_bar() +
+plot_data <- dd_cross %>% 
+  filter(Cohort == 'CLARiTI') %>%
+  filter(NACCUDSD != 'Unknown') %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
+  group_by(NACCUDSD, Etiology) %>%
+  summarise(n = n(), .groups = "drop")
+ggplot(plot_data, aes(x = n, y = Etiology)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = n), hjust = -0.2, size = 3) +
+  expand_limits(x = max(plot_data$n) * 1.2) +
   facet_wrap(vars(NACCUDSD)) +
-  ylab("")
+  labs(y = "", x = "Count (N)")
 ```
 
 ```{r fig-all-barplots}
 #| code-fold: true
-#| fig-cap: "Number of pariticpants including CLARiTI, SCAN, and mixed-protocol by etiology and clinical diagnosis."
+#| fig-cap: "Number of pariticpants including CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical diagnosis."
 
-Etiology_levs <- dd_cross %>% pull(Etiology) %>% 
-  table() %>% sort(decreasing = TRUE)
+count_data <- dd_cross %>% 
+  filter(NACCUDSD != 'Unknown') %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
+  group_by(NACCUDSD, Etiology) %>%
+  summarise(n = n(), .groups = "drop")
 
-dd_cross %>%
-  mutate(Etiology = factor(Etiology, levels = names(Etiology_levs))) %>%
-ggplot(aes(y=Etiology, fill = Cohort)) +
-  geom_bar() +
+dd_cross %>% 
+  filter(NACCUDSD != 'Unknown') %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
+  group_by(NACCUDSD, Etiology, Cohort) %>%
+  summarise(n = n(), .groups = "drop") %>%
+ggplot(aes(x = n, y = Etiology)) +
+  geom_bar(aes(fill = Cohort), stat = "identity") +
+  geom_text(data = count_data, aes(label = n), 
+    hjust = -0.2, size = 3) +
+  expand_limits(x = max(count_data$n) * 1.2) +
   facet_wrap(vars(NACCUDSD)) +
-  theme(legend.position = 'inside', legend.position.inside = c(0.8, 0.2)) +
-  ylab("")
+  labs(y = "", x = "Count (N)")
+
 ```
+
+```{r fig-amy-barplots}
+#| code-fold: true
+#| fig-cap: "Number of pariticpants with amyloid PET, including CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical diagnosis."
+
+count_data <- dd_cross %>% 
+  filter(NACCUDSD != 'Unknown' & !is.na(CENTILOIDS)) %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
+  group_by(NACCUDSD, Etiology) %>%
+  summarise(n = n(), .groups = "drop")
+
+dd_cross %>% 
+  filter(NACCUDSD != 'Unknown' & !is.na(CENTILOIDS)) %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
+  group_by(NACCUDSD, Etiology, Cohort) %>%
+  summarise(n = n(), .groups = "drop") %>%
+ggplot(aes(x = n, y = Etiology)) +
+  geom_bar(aes(fill = Cohort), stat = "identity") +
+  geom_text(data = count_data, aes(label = n), 
+    hjust = -0.2, size = 3) +
+  expand_limits(x = max(count_data$n) * 1.2) +
+  facet_wrap(vars(NACCUDSD)) +
+  labs(y = "", x = "Count (N)")
+
+```
+
+```{r fig-tau-barplots}
+#| code-fold: true
+#| fig-cap: "Number of pariticpants with tau PET, including CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical diagnosis."
+
+count_data <- dd_cross %>% 
+  filter(NACCUDSD != 'Unknown' & !is.na(Tau_PET)) %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
+  group_by(NACCUDSD, Etiology) %>%
+  summarise(n = n(), .groups = "drop")
+
+dd_cross %>% 
+  filter(NACCUDSD != 'Unknown' & !is.na(Tau_PET)) %>%
+  mutate(across(where(is.factor), fct_drop)) %>%
+  group_by(NACCUDSD, Etiology, Cohort) %>%
+  summarise(n = n(), .groups = "drop") %>%
+ggplot(aes(x = n, y = Etiology)) +
+  geom_bar(aes(fill = Cohort), stat = "identity") +
+  geom_text(data = count_data, aes(label = n), 
+    hjust = -0.2, size = 3) +
+  expand_limits(x = max(count_data$n) * 1.2) +
+  facet_wrap(vars(NACCUDSD)) +
+  labs(y = "", x = "Count (N)")
+
+```
+
+### UpSet plots
 
 ```{r fig-clariti-upset}
 #| code-fold: true
@@ -241,7 +309,16 @@ dd_upset <- dd_cross %>%
   as.data.frame()
 
 upset(subset(dd_upset, Cohort == 'CLARiTI'), nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
-      order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
+  order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
+```
+
+```{r fig-clariti-scan-upset}
+#| code-fold: true
+#| fig-cap: "UpSet plot of CLARiTI and SCAN participants."
+
+upset(subset(dd_upset, Cohort %in% c('CLARiTI', 'SCAN')), 
+  nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
+  order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
 ```
 
 ```{r fig-all-upset}
@@ -249,8 +326,10 @@ upset(subset(dd_upset, Cohort == 'CLARiTI'), nsets = 7, nintersects = 30, mb.rat
 #| fig-cap: "UpSet plot of all participants."
 
 upset(dd_upset, nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
-      order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
+  order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
 ```
+
+### Scan counts
 
 ```{r tbl-scan-counts, results = 'asis'}
 #| code-fold: true
@@ -271,6 +350,8 @@ tmp <- dd %>%
 with(tmp, table(Type, `Serial scans`)) %>% 
   knitr::kable(caption = "Number of individuals who have received the given number serial scans for each scan type.")
 ```
+
+### Cummulative scans by time from first scan
 
 ```{r fig-cummulative-scans}
 #| code-fold: true
@@ -311,7 +392,8 @@ ggplot(aes(x=Years, y=`Cumulative count`, color = Type)) +
 #| code-fold: true
 
 tbl_summary(
-  data = dd_cross %>% filter(Cohort == 'CLARiTI'),
+  data = dd_cross %>% filter(Cohort == 'CLARiTI') %>%
+    mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
   include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
   type = all_continuous() ~ "continuous2",
@@ -326,7 +408,7 @@ tbl_summary(
   missing_text = "(Missing)") %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   # add_overall() %>%
-  modify_caption(caption = "Characteristics of CLARiTI participants by baseline diagnosis. Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.") %>%
+  modify_caption(caption = "Characteristics of CLARiTI participants by baseline UDS diagnosis. Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -341,7 +423,8 @@ tbl_summary(
 #| code-fold: true
 
 tbl_summary(
-  data = dd_cross,
+  data = dd_cross %>%
+    mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
   include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
   type = all_continuous() ~ "continuous2",
@@ -358,7 +441,7 @@ tbl_summary(
   missing_text = "(Missing)"
 ) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of all participants by baseline diagnosis.") %>%
+  modify_caption(caption = "Characteristics of all participants by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -374,7 +457,8 @@ tbl_summary(
 #| code-fold: true
 
 tbl_summary(
-  data = dd_cross %>% filter(!is.na(HIPPOCAMPUS)),
+  data = dd_cross %>% filter(!is.na(HIPPOCAMPUS)) %>%
+    mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
   include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
   type = all_continuous() ~ "continuous2",
@@ -391,7 +475,7 @@ tbl_summary(
   missing_text = "(Missing)"
 ) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of all participants with MRI data by baseline diagnosis.") %>%
+  modify_caption(caption = "Characteristics of all participants with MRI data by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -407,7 +491,8 @@ tbl_summary(
 #| code-fold: true
 
 tbl_summary(
-  data = dd_cross %>% filter(!is.na(Tau_PET)),
+  data = dd_cross %>% filter(!is.na(Tau_PET)) %>%
+    mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
   include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
   type = all_continuous() ~ "continuous2",
@@ -424,7 +509,7 @@ tbl_summary(
   missing_text = "(Missing)"
 ) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of all participants with tau PET data by baseline diagnosis.") %>%
+  modify_caption(caption = "Characteristics of all participants with tau PET data by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -440,7 +525,8 @@ tbl_summary(
 #| code-fold: true
 
 tbl_summary(
-  data = dd_cross %>% filter(!is.na(CENTILOIDS)),
+  data = dd_cross %>% filter(!is.na(CENTILOIDS)) %>%
+    mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
   include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
   type = all_continuous() ~ "continuous2",
@@ -457,7 +543,7 @@ tbl_summary(
   missing_text = "(Missing)"
 ) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of NACC ADRC participants with amyloid PET data by baseline diagnosis.") %>%
+  modify_caption(caption = "Characteristics of NACC ADRC participants with amyloid PET data by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),

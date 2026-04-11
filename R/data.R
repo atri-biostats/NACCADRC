@@ -1,22 +1,24 @@
 #' amyloidpetgaain
-#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetgaain_naccFREEZE.csv, investigator_scan_amyloidpetgaain_nacc72.csv, investigator_scan_mp_amyloidpetgaain_nacc72.csv. 
-#' @format A data frame with 5481 rows and 31 variables:
+#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetgaain_naccDEV.csv, amyloidpetgaain_duplicates.csv, investigator_scan_amyloidpetgaain_nacc73.csv, investigator_scan_mp_amyloidpetgaain_nacc73.csv, amyloidpetgaain_clariti_no_edc.csv. 
+#' @format A data frame with 5735 rows and 33 variables:
 #' \describe{
 #'   \item{SOURCE}{}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
-#'   \item{LONIUID}{}
-#'   \item{SCANDATE}{}
-#'   \item{PROCESSDATE}{}
-#'   \item{TRACER}{}
-#'   \item{TRACER_SUVR_WARNING}{}
-#'   \item{ACQUISITION_TIME}{}
-#'   \item{AMYLOID_STATUS}{}
-#'   \item{CENTILOIDS}{}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
+#'   \item{LONIUID}{LONI Image ID (Prefix “I” followed by 8 numerals)}
+#'   \item{SCANDATE}{Scan acquisition date (YYYY-MM-DD)}
+#'   \item{PROCESSDATE}{Date quantification pipeline was run (YYYY-MM-DD)}
+#'   \item{TRACER}{PET Radiotracer ((1) FDG  (2) PIB  (3) Florbetapir  (4) Florbetaben  (5) NAV4694  (6) Flortaucipir  (7) MK6240  (8) PI2620  (9) GTP1  (10) Flutemetamol  (99) Unknown)}
+#'   \item{TRACER_SUVR_WARNING}{USE CENTILOIDS (NOT SUVRs) TO COMPARE ACROSS TRACERS, DO NOT COMPARE ACROSS ACQUISITION WINDOWS}
+#'   \item{ACQUISITION_TIME}{Acquisition start-stop time post-injection (minutes) ((1) 30-60  (2) 40-60  (3) 40-70  (4) 45-75  (5) 45-90  (6) 50-70  (7) 60-90  (8) 70-90  (9) 70-110  (10) 80-100  (11) 90-110)}
+#'   \item{IN_CLARITI_PROJECT}{}
+#'   \item{QC_STATUS}{}
+#'   \item{AMYLOID_STATUS}{Amyloid positivity ((0) negative  (1) positive)}
+#'   \item{CENTILOIDS}{Centiloids (CLs) values}
 #'   \item{GAAIN_SUMMARY_SUVR}{GAAIN summary cortical SUVR normalized by GAAIN whole cerebellum}
 #'   \item{GAAIN_WHOLECEREBELLUM_SUVR}{Reference region - SUVR of GAAIN whole cerebellum normalized by GAAIN whole cerebellum}
 #'   \item{GAAIN_COMPOSITE_REF_SUVR}{Reference region -  SUVR of composite ref region (volume-weighted mean of GAAIN whole cerebellum, GAAIN brainstem and NPDKA eroded WM) normalized by GAAIN whole cerebellum}
-#'   \item{GAAIN_CEREBELLUM_CORTEX}{}
+#'   \item{GAAIN_CEREBELLUM_CORTEX}{Reference region -  SUVR of GAAIN cerebellum grey matter}
 #'   \item{NPDKA_ERODED_SUBCORTICALWM_SUVR}{Reference region -  SUVR of NPDKA eroded subcortical white matter normalized by NPDKA whole cerebellum; See SCAN MRI-Free Amyloid PET Methods document on LONI}
 #'   \item{LONIUID_MULTI}{}
 #'   \item{ACQUISITION_START}{}
@@ -31,8 +33,8 @@
 #'   \item{SCAN_PROJECT}{}
 #'   \item{CL_FAIL}{}
 #'   \item{NPDKA_ERODED_SUBCORTICALWM_GAAINWC_SUVR}{}
-#'   \item{VISIT}{}
-#'   \item{IN_SCAN_PROJECT}{}
+#'   \item{VISIT}{Visit Type ((BL) Baseline  (FU) Followup)}
+#'   \item{IN_SCAN_PROJECT}{Is this record also in the SCAN project? ((0) No  (1) Yes)}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -47,18 +49,20 @@
 NULL
 
 #' amyloidpetnpdka
-#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetnpdka_naccFREEZE.csv, investigator_scan_amyloidpetnpdka_nacc72.csv, investigator_scan_mp_amyloidpetnpdka_nacc72.csv. 
-#' @format A data frame with 5481 rows and 180 variables:
+#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetnpdka_naccDEV.csv, amyloidpetnpdka_duplicates.csv, investigator_scan_amyloidpetnpdka_nacc73.csv, investigator_scan_mp_amyloidpetnpdka_nacc73.csv. 
+#' @format A data frame with 5735 rows and 182 variables:
 #' \describe{
 #'   \item{SOURCE}{}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
-#'   \item{LONIUID}{}
-#'   \item{SCANDATE}{}
-#'   \item{PROCESSDATE}{}
-#'   \item{TRACER}{}
-#'   \item{TRACER_SUVR_WARNING}{}
-#'   \item{ACQUISITION_TIME}{}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
+#'   \item{LONIUID}{LONI Image ID (Prefix “I” followed by 8 numerals)}
+#'   \item{SCANDATE}{Scan acquisition date (YYYY-MM-DD)}
+#'   \item{PROCESSDATE}{Date quantification pipeline was run (YYYY-MM-DD)}
+#'   \item{TRACER}{PET Radiotracer ((1) FDG  (2) PIB  (3) Florbetapir  (4) Florbetaben  (5) NAV4694  (6) Flortaucipir  (7) MK6240  (8) PI2620  (9) GTP1  (10) Flutemetamol  (99) Unknown)}
+#'   \item{TRACER_SUVR_WARNING}{USE CENTILOIDS (NOT SUVRs) TO COMPARE ACROSS TRACERS, DO NOT COMPARE ACROSS ACQUISITION WINDOWS}
+#'   \item{ACQUISITION_TIME}{Acquisition start-stop time post-injection (minutes) ((1) 30-60  (2) 40-60  (3) 40-70  (4) 45-75  (5) 45-90  (6) 50-70  (7) 60-90  (8) 70-90  (9) 70-110  (10) 80-100  (11) 90-110)}
+#'   \item{IN_CLARITI_PROJECT}{}
+#'   \item{QC_STATUS}{}
 #'   \item{NPDKA_SUMMARY_SUVR}{NPDKA summary cortical SUVR (volume-weighted mean of frontal, cingulate, parietal and temporal regions) normalized by NPDKA whole cerebellum; See SCAN MRI-Free Amyloid PET Methods document on LONI}
 #'   \item{NPDKA_WHOLECEREBELLUM_SUVR}{Reference region - SUVR of NPDKA whole cerebellum normalized by NPDKA whole cerebellum}
 #'   \item{NPDKA_COMPOSITE_REF_SUVR}{Reference region -  SUVR of composite ref region (volume-weighted mean of NPDKA whole cerebellum, NPDKA brainstem and NPDKA eroded WM) normalized by NPDKA whole cerebellum}
@@ -228,8 +232,8 @@ NULL
 #'   \item{ACQUISITION_END}{}
 #'   \item{SCAN_PROJECT}{}
 #'   \item{NPDKA_ERODED_SUBCORTICALWM_NPDKAWC_SUVR}{}
-#'   \item{VISIT}{}
-#'   \item{IN_SCAN_PROJECT}{}
+#'   \item{VISIT}{Visit Type ((BL) Baseline  (FU) Followup)}
+#'   \item{IN_SCAN_PROJECT}{Is this record also in the SCAN project? ((0) No  (1) Yes)}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -244,432 +248,15 @@ NULL
 NULL
 
 #' clariti_edc
-#' @description NACCADRC UDS Electronic Data Capture (EDC) dataset. The data is sourced from the file(s) investigator_clariti_edc_naccFREEZE.csv. 
-#' @format A data frame with 513 rows and 488 variables:
+#' @description NACCADRC UDS Electronic Data Capture (EDC) dataset. The data is sourced from the file(s) investigator_clariti_edc_naccDEV.csv. 
+#' @format A data frame with 606 rows and 56 variables:
 #' \describe{
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
 #'   \item{NACCID}{Participant ID}
-#'   \item{CLVISIT}{}
-#'   \item{LOCCLVISITEVENTNAME}{}
-#'   \item{CLFORMVER}{}
 #'   \item{SCREENDT}{}
 #'   \item{LOCSCREENDT}{}
-#'   \item{UDSVER}{}
-#'   \item{CLRURAL}{}
-#'   \item{APOE4}{}
-#'   \item{CLAFFFAMM}{}
-#'   \item{PREG}{}
-#'   \item{LOCPREG}{}
-#'   \item{IMGSTUDY}{}
-#'   \item{PSYRISK}{}
-#'   \item{LOCSUMEXCL}{}
-#'   \item{PSYRISKX}{}
-#'   \item{AGESCR}{}
-#'   \item{AGE50}{}
-#'   \item{AGE75}{}
-#'   \item{VETERAN}{}
-#'   \item{COHORT}{}
-#'   \item{COHORTX}{}
-#'   \item{BDONOR}{}
-#'   \item{NEWEXPT}{}
-#'   \item{RECLTR}{}
-#'   \item{RECSTF}{}
-#'   \item{RECSM}{}
-#'   \item{RECWEB}{}
-#'   \item{RECHCP}{}
-#'   \item{RECPCP}{}
-#'   \item{RECRECSP}{}
-#'   \item{RECRSC}{}
-#'   \item{RECCHC}{}
-#'   \item{RECPCPOTH}{}
-#'   \item{RECPCPOTHX}{}
-#'   \item{RECREF}{}
-#'   \item{RECORG}{}
-#'   \item{RECCEV}{}
-#'   \item{RECAD}{}
-#'   \item{RECMAT}{}
-#'   \item{RECBHR}{}
-#'   \item{RECAATM}{}
-#'   \item{RECAPIR}{}
-#'   \item{RECADEAR}{}
-#'   \item{RECTCISCRP}{}
-#'   \item{RECMATOTH}{}
-#'   \item{RECMATOTHX}{}
-#'   \item{RECOTHR}{}
-#'   \item{RECOTHRX}{}
-#'   \item{FORMSTATUS}{}
-#'   \item{LOCELIGHISPANIC}{}
-#'   \item{LOCRACEBLACK}{}
-#'   \item{LOCRACEAIAN}{}
-#'   \item{LOCRACENHPI}{}
-#'   \item{LOCRACEASIAN}{}
-#'   \item{LOCRACEMENA}{}
-#'   \item{LOCRACEOTHER}{}
-#'   \item{LOCRACEUNKNOWN}{}
-#'   \item{LOCELIGCLRACE}{}
-#'   \item{LOCELIGCLRACESEC}{}
-#'   \item{LOCELIGCLRACETER}{}
-#'   \item{LOCELIGRACEV4}{}
-#'   \item{LOCELIGRACEALL}{}
-#'   \item{LOCELIGHISPRACEALL}{}
-#'   \item{LOCELIGCARDIOVASCULAR}{}
-#'   \item{LOCELIGCOGCOMP}{}
-#'   \item{LOCELIGNEUROBEH}{}
-#'   \item{LOCSUMCARDIOCOGNEURO}{}
-#'   \item{LOCCOMPLETEELIGIMPAIRED}{}
-#'   \item{LOCCOMPLETEELIGURG}{}
-#'   \item{LOCCOMPLETEURGALL}{}
-#'   \item{LOCCOMPLETEELIGURGCI}{}
-#'   \item{LOCCOMPLETEELIGATRISK}{}
-#'   \item{LOCDECLINED}{}
-#'   \item{LOCCOMPLETEELIGOPTIONS}{}
-#'   \item{LOCCOMPLETEINELIG}{}
-#'   \item{ELIGIBLE}{}
-#'   \item{CNSTV1}{}
 #'   \item{CNSTDT1}{}
-#'   \item{CNSTV2}{}
 #'   \item{CNSTDT2}{}
-#'   \item{CNSTYN}{}
-#'   \item{CNSTYRSREF}{}
-#'   \item{CNSTYRSCNT}{}
-#'   \item{CNSTYRSLAB}{}
-#'   \item{CNSTYRSIMG}{}
-#'   \item{CNSTYRSBEN}{}
-#'   \item{CNSTYRSLRN}{}
-#'   \item{CNSTYRSWOR}{}
-#'   \item{CNSTYRSPR}{}
-#'   \item{CNSTYRSIH}{}
-#'   \item{CNSTYRSURP}{}
-#'   \item{CNSTYRSOTH}{}
-#'   \item{CNSTYRSOTHX}{}
-#'   \item{CNSTNRSPET}{}
-#'   \item{CNSTNRSMRI}{}
-#'   \item{CNSTNRSLAB}{}
-#'   \item{CNSTNRSBEN}{}
-#'   \item{CNSTNRSNI}{}
-#'   \item{CNSTNRSH}{}
-#'   \item{CNSTNRSOW}{}
-#'   \item{CNSTNRSTVL}{}
-#'   \item{CNSTNRSOBS}{}
-#'   \item{CNSTNRSSEC}{}
-#'   \item{CNSTNRSIC}{}
-#'   \item{CNSTNRSOS}{}
-#'   \item{CNSTNRSCG}{}
-#'   \item{CNSTNRSTM}{}
-#'   \item{CNSTNRSOTH}{}
-#'   \item{CNSTNRSOTHX}{}
-#'   \item{LOC22MO}{}
-#'   \item{CNSTTYP1}{}
-#'   \item{CNSTNONRORINFO}{}
-#'   \item{CNSTNONRORCOST}{}
-#'   \item{CNSTNONRORTIME}{}
-#'   \item{CNSTNONRORPERSONNEL}{}
-#'   \item{CNSTNONRORPATINT}{}
-#'   \item{CNSTNONROREXPERT}{}
-#'   \item{CNSTNONRORCLINREG}{}
-#'   \item{CNSTNONRORPOTHARM}{}
-#'   \item{CNSTNONRORLEGAL}{}
-#'   \item{CNSTNONROROTHERPART}{}
-#'   \item{CNSTNONROROTHERPARTX}{}
-#'   \item{CNSTNONRORUI}{}
-#'   \item{CNSTNONRORPOP}{}
-#'   \item{CNSTNONRORPOPX}{}
-#'   \item{CNSTNONROROTHER}{}
-#'   \item{CNSTNONROROTHERX}{}
-#'   \item{CNSTFUND}{}
-#'   \item{LOCADDLCONS}{}
-#'   \item{CNSTTYP2}{}
-#'   \item{BDSPECVOL1}{}
-#'   \item{BDSPECVOL2}{}
-#'   \item{BDSPECVOL3}{}
-#'   \item{PCVOL}{}
-#'   \item{BCVOL1}{}
-#'   \item{BCVOL2}{}
-#'   \item{BCVOL3}{}
-#'   \item{PCNUM}{}
-#'   \item{BDSPECNUM1}{}
-#'   \item{BDSPECNUM2}{}
-#'   \item{BDSPECNUM3}{}
-#'   \item{PCRSPECNUM}{}
-#'   \item{BCSPECNUM1}{}
-#'   \item{BCSPECNUM2}{}
-#'   \item{BCSPECNUM3}{}
-#'   \item{BDPREVDT}{}
-#'   \item{BDDT}{}
-#'   \item{BDMDT}{}
-#'   \item{BDCONDYN}{}
-#'   \item{BDCONDNRS}{}
-#'   \item{BDNCSITE}{}
-#'   \item{BDPREVX}{}
-#'   \item{LOCPREVBDCALC}{}
-#'   \item{BDCONDNRSX}{}
-#'   \item{BDCONDNX}{}
-#'   \item{BDKITNUM}{}
-#'   \item{BDTM}{}
-#'   \item{BDMTM}{}
-#'   \item{BDSPECNA2}{}
-#'   \item{BDSPECNA3}{}
-#'   \item{BCNA2}{}
-#'   \item{BCNA3}{}
-#'   \item{APETPREHRATE}{}
-#'   \item{APETPOSTHRATE}{}
-#'   \item{APETDT}{}
-#'   \item{APETCBPDT}{}
-#'   \item{APETUPLOADDT}{}
-#'   \item{APETFUND}{}
-#'   \item{APETSCANYN}{}
-#'   \item{APETSCANNRS}{}
-#'   \item{APETSCANNO}{}
-#'   \item{APETSCANNX}{}
-#'   \item{APETSCANTRL}{}
-#'   \item{APETSCANNRT}{}
-#'   \item{APETRT}{}
-#'   \item{APETRTSC}{}
-#'   \item{APETCBP}{}
-#'   \item{APETCBPTM}{}
-#'   \item{APETPREBPSYS}{}
-#'   \item{APETPREBPDIAS}{}
-#'   \item{APETPREBPARM}{}
-#'   \item{APETWEIGHT}{}
-#'   \item{APETWEIGHTU}{}
-#'   \item{APETSCANNAME}{}
-#'   \item{APETPOSTBPSYS}{}
-#'   \item{APETPOSTBPDIAS}{}
-#'   \item{APETPOSTBPARM}{}
-#'   \item{TPETPREHRATE}{}
-#'   \item{TPETPOSTHRATE}{}
-#'   \item{TPETDT}{}
-#'   \item{TPETCBPDT}{}
-#'   \item{TPETUPLOADDT}{}
-#'   \item{TPETFUND}{}
-#'   \item{TPETSCANYN}{}
-#'   \item{TPETSCANNRS}{}
-#'   \item{TPETSCANNO}{}
-#'   \item{TPETSCANNX}{}
-#'   \item{TPETSCANTRL}{}
-#'   \item{TPETSCANNRT}{}
-#'   \item{TPETRT}{}
-#'   \item{TPETRTSC}{}
-#'   \item{TPETCBP}{}
-#'   \item{TPETCBPTM}{}
-#'   \item{TPETPREBPSYS}{}
-#'   \item{TPETPREBPDIAS}{}
-#'   \item{TPETPREBPARM}{}
-#'   \item{TPETWEIGHT}{}
-#'   \item{TPETWEIGHTU}{}
-#'   \item{TPETRTDS}{}
-#'   \item{TPETCINJTM}{}
-#'   \item{TPETRDSTM}{}
-#'   \item{TPETSCANNAME}{}
-#'   \item{TPETMKTAD}{}
-#'   \item{TPETPITAD}{}
-#'   \item{TPETFTPTAD}{}
-#'   \item{TPETTIMX}{}
-#'   \item{TPETPOSTBPSYS}{}
-#'   \item{TPETPOSTBPDIAS}{}
-#'   \item{TPETPOSTBPARM}{}
-#'   \item{FPETDT}{}
-#'   \item{FPETCBPDT}{}
-#'   \item{FPETUPLOADDT}{}
-#'   \item{FPETSCANYN}{}
-#'   \item{FPETSCANNRS}{}
-#'   \item{FPETSCANNO}{}
-#'   \item{FPETSCANNX}{}
-#'   \item{FPETSCANTRL}{}
-#'   \item{FPETSCANNRT}{}
-#'   \item{FPETRTSC}{}
-#'   \item{FPETCBP}{}
-#'   \item{FPETCBPTM}{}
-#'   \item{FPETFAST}{}
-#'   \item{FPETBG}{}
-#'   \item{FPETFBS}{}
-#'   \item{FPETWEIGHT}{}
-#'   \item{FPETWEIGHTU}{}
-#'   \item{FPETVISX}{}
-#'   \item{FPETMOTPR}{}
-#'   \item{FPETMOTPRX}{}
-#'   \item{MRIPREVDT}{}
-#'   \item{MRIDT}{}
-#'   \item{MRIATDT}{}
-#'   \item{MRIUPLOADDT}{}
-#'   \item{MRISCANYN}{}
-#'   \item{MRISCANNRS}{}
-#'   \item{LOCCONSDT352CALC}{}
-#'   \item{MRIPREVSTUDY}{}
-#'   \item{MRISCANNO}{}
-#'   \item{MRISCANNX}{}
-#'   \item{MRISCANTRL}{}
-#'   \item{MRIFUND}{}
-#'   \item{MRIWEIGHT}{}
-#'   \item{MRIWEIGHTU}{}
-#'   \item{MRISCANNAME}{}
-#'   \item{MRISCNSRTM}{}
-#'   \item{MRISCNSPTM}{}
-#'   \item{MRIADX}{}
-#'   \item{PRERORPHQ4X}{}
-#'   \item{PRERORGDSX}{}
-#'   \item{PRERORGAD7X}{}
-#'   \item{PRERORPHQ9X}{}
-#'   \item{PRERORDT}{}
-#'   \item{LOCPREAPETDTPIPE}{}
-#'   \item{LOCPRETPETDTPIPE}{}
-#'   \item{PRERORDIS}{}
-#'   \item{PRERORAPETBROC}{}
-#'   \item{PRERORADDEDUMAT}{}
-#'   \item{PRERORPREF}{}
-#'   \item{PRERORREC1}{}
-#'   \item{PRERORREC2}{}
-#'   \item{PRERORREC3}{}
-#'   \item{PRERORREC4}{}
-#'   \item{PRERORREC5}{}
-#'   \item{PRERORREC6}{}
-#'   \item{PRERORREC7}{}
-#'   \item{PRERORREC8}{}
-#'   \item{PRERORREC9}{}
-#'   \item{PRERORREC9X}{}
-#'   \item{PRERORNOT1}{}
-#'   \item{PRERORNOT2}{}
-#'   \item{PRERORNOT3}{}
-#'   \item{PRERORNOT4}{}
-#'   \item{PRERORNOT5}{}
-#'   \item{PRERORNOT6}{}
-#'   \item{PRERORNOT7}{}
-#'   \item{PRERORNOT8}{}
-#'   \item{PRERORNOT9}{}
-#'   \item{PRERORNOT10}{}
-#'   \item{PRERORNOT10X}{}
-#'   \item{PRERORUNCERT1}{}
-#'   \item{PRERORUNCERT2}{}
-#'   \item{PRERORUNCERT3}{}
-#'   \item{PRERORUNCERT4}{}
-#'   \item{PRERORUNCERT5}{}
-#'   \item{PRERORUNCERT6}{}
-#'   \item{PRERORUNCERT7}{}
-#'   \item{PRERORUNCERT8}{}
-#'   \item{PRERORUNCERT9}{}
-#'   \item{PRERORUNCERT10}{}
-#'   \item{PRERORUNCERT10X}{}
-#'   \item{PRERORPHQ9}{}
-#'   \item{PRERORGAD7}{}
-#'   \item{PRERORPHQ4}{}
-#'   \item{PRERORGDS}{}
-#'   \item{PREROROTHYN}{}
-#'   \item{PREROROTHFORM}{}
-#'   \item{PREROROTHX}{}
-#'   \item{OTHERPSYCHADD1}{}
-#'   \item{PREROROTHYN2}{}
-#'   \item{PREROROTHFORM2}{}
-#'   \item{PREROROTHX2}{}
-#'   \item{OTHERPSYCHADD2}{}
-#'   \item{PREROROTHYN3}{}
-#'   \item{PREROROTHFORM3}{}
-#'   \item{PREROROTHX3}{}
-#'   \item{OTHERPSYCHADD3}{}
-#'   \item{PREROROTHYN4}{}
-#'   \item{PREROROTHFORM4}{}
-#'   \item{PREROROTHX4}{}
-#'   \item{PRERORAPETLEARN}{}
-#'   \item{PRERORAPETLEARNX}{}
-#'   \item{PRERORTPETLEARN}{}
-#'   \item{PRERORTPETLEARNINT}{}
-#'   \item{RORLENGTH}{}
-#'   \item{RORDT}{}
-#'   \item{LOCRORAPETDTPIPE}{}
-#'   \item{LOCRORTPETDTPIPE}{}
-#'   \item{RORDIS}{}
-#'   \item{RORCENAPET}{}
-#'   \item{RORLOCAPET}{}
-#'   \item{RORCENTPET}{}
-#'   \item{RORLOCTPET}{}
-#'   \item{RORMRI}{}
-#'   \item{RORCSF}{}
-#'   \item{RORNEURO}{}
-#'   \item{ROROTHRES}{}
-#'   \item{RORADDSCANOTHX}{}
-#'   \item{RORINT}{}
-#'   \item{RORCLIN}{}
-#'   \item{RORCLINX}{}
-#'   \item{RORFORMAT}{}
-#'   \item{RORSUPPORT}{}
-#'   \item{RORSUPPORTX}{}
-#'   \item{RORPET}{}
-#'   \item{RORPETX}{}
-#'   \item{RORDX0}{}
-#'   \item{RORDX1}{}
-#'   \item{RORDX2}{}
-#'   \item{RORDX3}{}
-#'   \item{RORDX4}{}
-#'   \item{RORDX5}{}
-#'   \item{RORDX6}{}
-#'   \item{RORDX7}{}
-#'   \item{RORDX8}{}
-#'   \item{RORDX9}{}
-#'   \item{RORDX10}{}
-#'   \item{RORCOMP}{}
-#'   \item{RORKIT0}{}
-#'   \item{RORKIT1}{}
-#'   \item{RORKIT2}{}
-#'   \item{RORKIT3}{}
-#'   \item{RORKIT4}{}
-#'   \item{RORKIT5}{}
-#'   \item{RORKIT6}{}
-#'   \item{RORKIT7}{}
-#'   \item{RORKIT8}{}
-#'   \item{RORKIT9}{}
-#'   \item{RORADDRES0}{}
-#'   \item{RORADDRES1}{}
-#'   \item{RORADDRES2}{}
-#'   \item{RORADDRES3}{}
-#'   \item{RORADDRES6}{}
-#'   \item{RORADDRES7}{}
-#'   \item{RORADDRES4}{}
-#'   \item{RORADDRES5}{}
-#'   \item{RORCLINSHARE}{}
-#'   \item{RORPOSTROR}{}
-#'   \item{POSTRORPHQ4X}{}
-#'   \item{POSTRORINIADPX}{}
-#'   \item{POSTRORGAD7X}{}
-#'   \item{POSTRORPHQ9X}{}
-#'   \item{POSTRORINIADDX}{}
-#'   \item{POSTRORINIADX}{}
-#'   \item{POSTRORDT}{}
-#'   \item{LOCPOSTAPETDTPIPE}{}
-#'   \item{LOCPOSTTPETDTPIPE}{}
-#'   \item{POSTRORDIS}{}
-#'   \item{STFNAMEE3}{}
-#'   \item{POSTRORCOMP}{}
-#'   \item{POSTRORNOREAS}{}
-#'   \item{POSTRORNOREASDT1}{}
-#'   \item{POSTRORNOREASDT2}{}
-#'   \item{POSTRORNOREASDT3}{}
-#'   \item{POSTRORNOREASOTHX}{}
-#'   \item{POSTRORINT}{}
-#'   \item{POSTRORPHQ9}{}
-#'   \item{POSTRORGAD7}{}
-#'   \item{POSTRORPHQ4}{}
-#'   \item{POSTRORINIAD}{}
-#'   \item{POSTROROTH}{}
-#'   \item{POSTROROTHNAME}{}
-#'   \item{POSTROROTHX}{}
-#'   \item{POSTRORRF}{}
-#'   \item{POSTRORRFX}{}
-#'   \item{POSTRORSHAREFAM}{}
-#'   \item{POSTRORSHARECLIN}{}
-#'   \item{POSTRORSHAREOTH}{}
-#'   \item{POSTRORSHAREOTHX}{}
-#'   \item{POSTRORSATISYN}{}
-#'   \item{POSTRORSATIS1}{}
-#'   \item{POSTRORSATIS2}{}
-#'   \item{POSTRORSATIS3}{}
-#'   \item{POSTRORSATIS4}{}
-#'   \item{POSTRORSATIS5}{}
-#'   \item{POSTRORSATIS6}{}
-#'   \item{POSTRORSATIS7}{}
-#'   \item{POSTRORSATIS8}{}
-#'   \item{POSTRORSATIS9}{}
-#'   \item{POSTRORSATIS10}{}
-#'   \item{POSTRORSATIS10X}{}
-#'   \item{RORAMYSUM}{}
 #'   \item{RORAMYSUMDT}{}
 #'   \item{RORAMYCENTRES}{}
 #'   \item{RORAMYTRFRONTAL}{}
@@ -678,14 +265,7 @@ NULL
 #'   \item{RORAMYTRTEMPORAL}{}
 #'   \item{RORAMYTROCCIPITAL}{}
 #'   \item{RORAMYTRNONE}{}
-#'   \item{RORAMYVRNX}{}
 #'   \item{RORAMYCONREV}{}
-#'   \item{RORAMYCONREASMC}{}
-#'   \item{RORAMYCONREAS}{}
-#'   \item{RORAMYCONNX}{}
-#'   \item{RORAMYLOCYN}{}
-#'   \item{RORAMYRESSHAREX}{}
-#'   \item{RORTAUSUM}{}
 #'   \item{RORTAUSUMDT}{}
 #'   \item{RORTAUCENTRES}{}
 #'   \item{RORTAUTRFRONTAL}{}
@@ -694,18 +274,8 @@ NULL
 #'   \item{RORTAUTRTEMPORAL}{}
 #'   \item{RORTAUTROCCIPITAL}{}
 #'   \item{RORTAUTRNONE}{}
-#'   \item{RORTAUVRNX}{}
 #'   \item{RORTAUCONREV}{}
-#'   \item{RORTAUCONREASMC}{}
-#'   \item{RORTAUCONREAS}{}
-#'   \item{RORTAUCONNX}{}
-#'   \item{RORTAULOCYN}{}
-#'   \item{RORTAULOCRES}{}
-#'   \item{RORTAULOCRESX}{}
-#'   \item{RORTAUCON}{}
-#'   \item{RORTAURESSHARE}{}
 #'   \item{RORTAURESSHAREX}{}
-#'   \item{RORCOMSUM}{}
 #'   \item{RORCOMSUMDT}{}
 #'   \item{RORACOMTRFRONTAL}{}
 #'   \item{RORACOMTRPARIETAL}{}
@@ -713,28 +283,30 @@ NULL
 #'   \item{RORACOMTRTEMPORAL}{}
 #'   \item{RORACOMTROCCIPITAL}{}
 #'   \item{RORACOMTRNONE}{}
-#'   \item{RORCOMVRNX}{}
 #'   \item{RORCOMCONREV}{}
-#'   \item{RORCOMCONREASMC}{}
-#'   \item{RORCOMCONREAS}{}
-#'   \item{RORCOMCONNX}{}
-#'   \item{RORCOMLOCYN}{}
-#'   \item{RORCOMLOCRES}{}
-#'   \item{RORCOMLOCRESX}{}
-#'   \item{RORCOMCON}{}
-#'   \item{RORCOMRESSHARE}{}
-#'   \item{RORCOMRESSHAREX}{}
 #'   \item{EXITDT}{}
-#'   \item{BDONATEDT}{}
-#'   \item{AUTOPSYDT}{}
 #'   \item{EXITRS}{}
-#'   \item{EXITRSX}{}
-#'   \item{BAUTOPSYYN}{}
-#'   \item{BDONATEYN}{}
-#'   \item{BDONATEX}{}
-#'   \item{AUTOPSYYN}{}
-#'   \item{COD}{}
-#'   \item{AUTOPSYDESC}{}
+#'   \item{BDPREVDT}{}
+#'   \item{BDDT}{}
+#'   \item{BDMDT}{}
+#'   \item{BDCONDYN}{}
+#'   \item{BDCONDNRS}{}
+#'   \item{LOCPREVBDCALC}{}
+#'   \item{BDCONDNRSX}{}
+#'   \item{BDTM}{}
+#'   \item{BDMTM}{}
+#'   \item{APETDT}{}
+#'   \item{APETSCANYN}{}
+#'   \item{TPETDT}{}
+#'   \item{TPETSCANYN}{}
+#'   \item{FPETDT}{}
+#'   \item{FPETSCANYN}{}
+#'   \item{MRIPREVDT}{}
+#'   \item{MRIDT}{}
+#'   \item{MRISCANYN}{}
+#'   \item{MRISCANNRS}{}
+#'   \item{MRIPREVSTUDY}{}
+#'   \item{MRISCANNO}{}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -748,542 +320,9 @@ NULL
 #' }
 NULL
 
-#' clariti_edc_dropped
-#' @description NACCADRC UDS Electronic Data Capture (EDC) dataset. The data is sourced from the file(s) clariti_edc_dropped.csv. 
-#' @format A data frame with 250 rows and 6 variables:
-#' \describe{
-#'   \item{REASON}{}
-#'   \item{RECORDID}{}
-#'   \item{NACCID}{Participant ID}
-#'   \item{CNSTYN}{}
-#'   \item{ELIGIBILITYSITEPISIG}{}
-#'   \item{FORMSIGOPT}{}
-#' }
-#' @docType data
-#' @keywords datasets
-#' @name clariti_edc_dropped
-#' @usage data(clariti_edc_dropped)
-#' @source \href{https://www.naccdata.org/about-nacc-data/}{https://www.naccdata.org/about-nacc-data/}.
-#' @examples
-#' \dontrun{
-
-#' browseVignettes('NACCADRC')
-#' }
-NULL
-
-#' clariti_edc_unfiltered
-#' @description NACCADRC UDS Electronic Data Capture (EDC) dataset. The data is sourced from the file(s) investigator_clariti_edc_unfiltered_naccFREEZE.csv. 
-#' @format A data frame with 576 rows and 493 variables:
-#' \describe{
-#'   \item{RECORDID}{}
-#'   \item{ADCID}{}
-#'   \item{PTID}{}
-#'   \item{NACCID}{Participant ID}
-#'   \item{CLVISIT}{}
-#'   \item{LOCCLVISITEVENTNAME}{}
-#'   \item{CLFORMVER}{}
-#'   \item{SCREENDT}{}
-#'   \item{LOCSCREENDT}{}
-#'   \item{UDSVER}{}
-#'   \item{CLRURAL}{}
-#'   \item{APOE4}{}
-#'   \item{CLAFFFAMM}{}
-#'   \item{PREG}{}
-#'   \item{LOCPREG}{}
-#'   \item{IMGSTUDY}{}
-#'   \item{PSYRISK}{}
-#'   \item{LOCSUMEXCL}{}
-#'   \item{PSYRISKX}{}
-#'   \item{AGESCR}{}
-#'   \item{AGE50}{}
-#'   \item{AGE75}{}
-#'   \item{VETERAN}{}
-#'   \item{COHORT}{}
-#'   \item{COHORTX}{}
-#'   \item{BDONOR}{}
-#'   \item{NEWEXPT}{}
-#'   \item{RECLTR}{}
-#'   \item{RECSTF}{}
-#'   \item{RECSM}{}
-#'   \item{RECWEB}{}
-#'   \item{RECHCP}{}
-#'   \item{RECPCP}{}
-#'   \item{RECRECSP}{}
-#'   \item{RECRSC}{}
-#'   \item{RECCHC}{}
-#'   \item{RECPCPOTH}{}
-#'   \item{RECPCPOTHX}{}
-#'   \item{RECREF}{}
-#'   \item{RECORG}{}
-#'   \item{RECCEV}{}
-#'   \item{RECAD}{}
-#'   \item{RECMAT}{}
-#'   \item{RECBHR}{}
-#'   \item{RECAATM}{}
-#'   \item{RECAPIR}{}
-#'   \item{RECADEAR}{}
-#'   \item{RECTCISCRP}{}
-#'   \item{RECMATOTH}{}
-#'   \item{RECMATOTHX}{}
-#'   \item{RECOTHR}{}
-#'   \item{RECOTHRX}{}
-#'   \item{FORMSTATUS}{}
-#'   \item{LOCELIGHISPANIC}{}
-#'   \item{LOCRACEBLACK}{}
-#'   \item{LOCRACEAIAN}{}
-#'   \item{LOCRACENHPI}{}
-#'   \item{LOCRACEASIAN}{}
-#'   \item{LOCRACEMENA}{}
-#'   \item{LOCRACEOTHER}{}
-#'   \item{LOCRACEUNKNOWN}{}
-#'   \item{LOCELIGCLRACE}{}
-#'   \item{LOCELIGCLRACESEC}{}
-#'   \item{LOCELIGCLRACETER}{}
-#'   \item{LOCELIGRACEV4}{}
-#'   \item{LOCELIGRACEALL}{}
-#'   \item{LOCELIGHISPRACEALL}{}
-#'   \item{LOCELIGCARDIOVASCULAR}{}
-#'   \item{LOCELIGCOGCOMP}{}
-#'   \item{LOCELIGNEUROBEH}{}
-#'   \item{LOCSUMCARDIOCOGNEURO}{}
-#'   \item{LOCCOMPLETEELIGIMPAIRED}{}
-#'   \item{LOCCOMPLETEELIGURG}{}
-#'   \item{LOCCOMPLETEURGALL}{}
-#'   \item{LOCCOMPLETEELIGURGCI}{}
-#'   \item{LOCCOMPLETEELIGATRISK}{}
-#'   \item{LOCDECLINED}{}
-#'   \item{LOCCOMPLETEELIGOPTIONS}{}
-#'   \item{LOCCOMPLETEINELIG}{}
-#'   \item{ELIGIBLE}{}
-#'   \item{CNSTV1}{}
-#'   \item{CNSTDT1}{}
-#'   \item{CNSTV2}{}
-#'   \item{CNSTDT2}{}
-#'   \item{CNSTYN}{}
-#'   \item{CNSTYRSREF}{}
-#'   \item{CNSTYRSCNT}{}
-#'   \item{CNSTYRSLAB}{}
-#'   \item{CNSTYRSIMG}{}
-#'   \item{CNSTYRSBEN}{}
-#'   \item{CNSTYRSLRN}{}
-#'   \item{CNSTYRSWOR}{}
-#'   \item{CNSTYRSPR}{}
-#'   \item{CNSTYRSIH}{}
-#'   \item{CNSTYRSURP}{}
-#'   \item{CNSTYRSOTH}{}
-#'   \item{CNSTYRSOTHX}{}
-#'   \item{CNSTNRSPET}{}
-#'   \item{CNSTNRSMRI}{}
-#'   \item{CNSTNRSLAB}{}
-#'   \item{CNSTNRSBEN}{}
-#'   \item{CNSTNRSNI}{}
-#'   \item{CNSTNRSH}{}
-#'   \item{CNSTNRSOW}{}
-#'   \item{CNSTNRSTVL}{}
-#'   \item{CNSTNRSOBS}{}
-#'   \item{CNSTNRSSEC}{}
-#'   \item{CNSTNRSIC}{}
-#'   \item{CNSTNRSOS}{}
-#'   \item{CNSTNRSCG}{}
-#'   \item{CNSTNRSTM}{}
-#'   \item{CNSTNRSOTH}{}
-#'   \item{CNSTNRSOTHX}{}
-#'   \item{LOC22MO}{}
-#'   \item{CNSTTYP1}{}
-#'   \item{CNSTNONRORINFO}{}
-#'   \item{CNSTNONRORCOST}{}
-#'   \item{CNSTNONRORTIME}{}
-#'   \item{CNSTNONRORPERSONNEL}{}
-#'   \item{CNSTNONRORPATINT}{}
-#'   \item{CNSTNONROREXPERT}{}
-#'   \item{CNSTNONRORCLINREG}{}
-#'   \item{CNSTNONRORPOTHARM}{}
-#'   \item{CNSTNONRORLEGAL}{}
-#'   \item{CNSTNONROROTHERPART}{}
-#'   \item{CNSTNONROROTHERPARTX}{}
-#'   \item{CNSTNONRORUI}{}
-#'   \item{CNSTNONRORPOP}{}
-#'   \item{CNSTNONRORPOPX}{}
-#'   \item{CNSTNONROROTHER}{}
-#'   \item{CNSTNONROROTHERX}{}
-#'   \item{CNSTFUND}{}
-#'   \item{LOCADDLCONS}{}
-#'   \item{CNSTTYP2}{}
-#'   \item{ELIGIBILITYSITEPISIG}{}
-#'   \item{FORMSIGOPT}{}
-#'   \item{BDSPECVOL1}{}
-#'   \item{BDSPECVOL2}{}
-#'   \item{BDSPECVOL3}{}
-#'   \item{PCVOL}{}
-#'   \item{BCVOL1}{}
-#'   \item{BCVOL2}{}
-#'   \item{BCVOL3}{}
-#'   \item{PCNUM}{}
-#'   \item{BDSPECNUM1}{}
-#'   \item{BDSPECNUM2}{}
-#'   \item{BDSPECNUM3}{}
-#'   \item{PCRSPECNUM}{}
-#'   \item{BCSPECNUM1}{}
-#'   \item{BCSPECNUM2}{}
-#'   \item{BCSPECNUM3}{}
-#'   \item{BDPREVDT}{}
-#'   \item{BDDT}{}
-#'   \item{BDMDT}{}
-#'   \item{BDCONDYN}{}
-#'   \item{BDCONDNRS}{}
-#'   \item{BDNCSITE}{}
-#'   \item{BDPREVX}{}
-#'   \item{LOCPREVBDCALC}{}
-#'   \item{BDCONDNRSX}{}
-#'   \item{BDCONDNX}{}
-#'   \item{BDKITNUM}{}
-#'   \item{BDTM}{}
-#'   \item{BDMTM}{}
-#'   \item{BDSPECNA2}{}
-#'   \item{BDSPECNA3}{}
-#'   \item{BCNA2}{}
-#'   \item{BCNA3}{}
-#'   \item{APETPREHRATE}{}
-#'   \item{APETPOSTHRATE}{}
-#'   \item{APETDT}{}
-#'   \item{APETCBPDT}{}
-#'   \item{APETUPLOADDT}{}
-#'   \item{APETFUND}{}
-#'   \item{APETSCANYN}{}
-#'   \item{APETSCANNRS}{}
-#'   \item{APETSCANNO}{}
-#'   \item{APETSCANNX}{}
-#'   \item{APETSCANTRL}{}
-#'   \item{APETSCANNRT}{}
-#'   \item{APETRT}{}
-#'   \item{APETRTSC}{}
-#'   \item{APETCBP}{}
-#'   \item{APETCBPTM}{}
-#'   \item{APETPREBPSYS}{}
-#'   \item{APETPREBPDIAS}{}
-#'   \item{APETPREBPARM}{}
-#'   \item{APETWEIGHT}{}
-#'   \item{APETWEIGHTU}{}
-#'   \item{APETSCANNAME}{}
-#'   \item{APETPOSTBPSYS}{}
-#'   \item{APETPOSTBPDIAS}{}
-#'   \item{APETPOSTBPARM}{}
-#'   \item{TPETPREHRATE}{}
-#'   \item{TPETPOSTHRATE}{}
-#'   \item{TPETDT}{}
-#'   \item{TPETCBPDT}{}
-#'   \item{TPETUPLOADDT}{}
-#'   \item{TPETFUND}{}
-#'   \item{TPETSCANYN}{}
-#'   \item{TPETSCANNRS}{}
-#'   \item{TPETSCANNO}{}
-#'   \item{TPETSCANNX}{}
-#'   \item{TPETSCANTRL}{}
-#'   \item{TPETSCANNRT}{}
-#'   \item{TPETRT}{}
-#'   \item{TPETRTSC}{}
-#'   \item{TPETCBP}{}
-#'   \item{TPETCBPTM}{}
-#'   \item{TPETPREBPSYS}{}
-#'   \item{TPETPREBPDIAS}{}
-#'   \item{TPETPREBPARM}{}
-#'   \item{TPETWEIGHT}{}
-#'   \item{TPETWEIGHTU}{}
-#'   \item{TPETRTDS}{}
-#'   \item{TPETCINJTM}{}
-#'   \item{TPETRDSTM}{}
-#'   \item{TPETSCANNAME}{}
-#'   \item{TPETMKTAD}{}
-#'   \item{TPETPITAD}{}
-#'   \item{TPETFTPTAD}{}
-#'   \item{TPETTIMX}{}
-#'   \item{TPETPOSTBPSYS}{}
-#'   \item{TPETPOSTBPDIAS}{}
-#'   \item{TPETPOSTBPARM}{}
-#'   \item{FPETDT}{}
-#'   \item{FPETCBPDT}{}
-#'   \item{FPETUPLOADDT}{}
-#'   \item{FPETSCANYN}{}
-#'   \item{FPETSCANNRS}{}
-#'   \item{FPETSCANNO}{}
-#'   \item{FPETSCANNX}{}
-#'   \item{FPETSCANTRL}{}
-#'   \item{FPETSCANNRT}{}
-#'   \item{FPETRTSC}{}
-#'   \item{FPETCBP}{}
-#'   \item{FPETCBPTM}{}
-#'   \item{FPETFAST}{}
-#'   \item{FPETBG}{}
-#'   \item{FPETFBS}{}
-#'   \item{FPETWEIGHT}{}
-#'   \item{FPETWEIGHTU}{}
-#'   \item{FPETVISX}{}
-#'   \item{FPETMOTPR}{}
-#'   \item{FPETMOTPRX}{}
-#'   \item{MRIPREVDT}{}
-#'   \item{MRIDT}{}
-#'   \item{MRIATDT}{}
-#'   \item{MRIUPLOADDT}{}
-#'   \item{MRISCANYN}{}
-#'   \item{MRISCANNRS}{}
-#'   \item{LOCCONSDT352CALC}{}
-#'   \item{MRIPREVSTUDY}{}
-#'   \item{MRISCANNO}{}
-#'   \item{MRISCANNX}{}
-#'   \item{MRISCANTRL}{}
-#'   \item{MRIFUND}{}
-#'   \item{MRIWEIGHT}{}
-#'   \item{MRIWEIGHTU}{}
-#'   \item{MRISCANNAME}{}
-#'   \item{MRISCNSRTM}{}
-#'   \item{MRISCNSPTM}{}
-#'   \item{MRIADX}{}
-#'   \item{PRERORPHQ4X}{}
-#'   \item{PRERORGDSX}{}
-#'   \item{PRERORGAD7X}{}
-#'   \item{PRERORPHQ9X}{}
-#'   \item{PRERORDT}{}
-#'   \item{LOCPREAPETDTPIPE}{}
-#'   \item{LOCPRETPETDTPIPE}{}
-#'   \item{PRERORDIS}{}
-#'   \item{PRERORAPETBROC}{}
-#'   \item{PRERORADDEDUMAT}{}
-#'   \item{PRERORPREF}{}
-#'   \item{PRERORREC1}{}
-#'   \item{PRERORREC2}{}
-#'   \item{PRERORREC3}{}
-#'   \item{PRERORREC4}{}
-#'   \item{PRERORREC5}{}
-#'   \item{PRERORREC6}{}
-#'   \item{PRERORREC7}{}
-#'   \item{PRERORREC8}{}
-#'   \item{PRERORREC9}{}
-#'   \item{PRERORREC9X}{}
-#'   \item{PRERORNOT1}{}
-#'   \item{PRERORNOT2}{}
-#'   \item{PRERORNOT3}{}
-#'   \item{PRERORNOT4}{}
-#'   \item{PRERORNOT5}{}
-#'   \item{PRERORNOT6}{}
-#'   \item{PRERORNOT7}{}
-#'   \item{PRERORNOT8}{}
-#'   \item{PRERORNOT9}{}
-#'   \item{PRERORNOT10}{}
-#'   \item{PRERORNOT10X}{}
-#'   \item{PRERORUNCERT1}{}
-#'   \item{PRERORUNCERT2}{}
-#'   \item{PRERORUNCERT3}{}
-#'   \item{PRERORUNCERT4}{}
-#'   \item{PRERORUNCERT5}{}
-#'   \item{PRERORUNCERT6}{}
-#'   \item{PRERORUNCERT7}{}
-#'   \item{PRERORUNCERT8}{}
-#'   \item{PRERORUNCERT9}{}
-#'   \item{PRERORUNCERT10}{}
-#'   \item{PRERORUNCERT10X}{}
-#'   \item{PRERORPHQ9}{}
-#'   \item{PRERORGAD7}{}
-#'   \item{PRERORPHQ4}{}
-#'   \item{PRERORGDS}{}
-#'   \item{PREROROTHYN}{}
-#'   \item{PREROROTHFORM}{}
-#'   \item{PREROROTHX}{}
-#'   \item{OTHERPSYCHADD1}{}
-#'   \item{PREROROTHYN2}{}
-#'   \item{PREROROTHFORM2}{}
-#'   \item{PREROROTHX2}{}
-#'   \item{OTHERPSYCHADD2}{}
-#'   \item{PREROROTHYN3}{}
-#'   \item{PREROROTHFORM3}{}
-#'   \item{PREROROTHX3}{}
-#'   \item{OTHERPSYCHADD3}{}
-#'   \item{PREROROTHYN4}{}
-#'   \item{PREROROTHFORM4}{}
-#'   \item{PREROROTHX4}{}
-#'   \item{PRERORAPETLEARN}{}
-#'   \item{PRERORAPETLEARNX}{}
-#'   \item{PRERORTPETLEARN}{}
-#'   \item{PRERORTPETLEARNINT}{}
-#'   \item{RORLENGTH}{}
-#'   \item{RORDT}{}
-#'   \item{LOCRORAPETDTPIPE}{}
-#'   \item{LOCRORTPETDTPIPE}{}
-#'   \item{RORDIS}{}
-#'   \item{RORCENAPET}{}
-#'   \item{RORLOCAPET}{}
-#'   \item{RORCENTPET}{}
-#'   \item{RORLOCTPET}{}
-#'   \item{RORMRI}{}
-#'   \item{RORCSF}{}
-#'   \item{RORNEURO}{}
-#'   \item{ROROTHRES}{}
-#'   \item{RORADDSCANOTHX}{}
-#'   \item{RORINT}{}
-#'   \item{RORCLIN}{}
-#'   \item{RORCLINX}{}
-#'   \item{RORFORMAT}{}
-#'   \item{RORSUPPORT}{}
-#'   \item{RORSUPPORTX}{}
-#'   \item{RORPET}{}
-#'   \item{RORPETX}{}
-#'   \item{RORDX0}{}
-#'   \item{RORDX1}{}
-#'   \item{RORDX2}{}
-#'   \item{RORDX3}{}
-#'   \item{RORDX4}{}
-#'   \item{RORDX5}{}
-#'   \item{RORDX6}{}
-#'   \item{RORDX7}{}
-#'   \item{RORDX8}{}
-#'   \item{RORDX9}{}
-#'   \item{RORDX10}{}
-#'   \item{RORCOMP}{}
-#'   \item{RORKIT0}{}
-#'   \item{RORKIT1}{}
-#'   \item{RORKIT2}{}
-#'   \item{RORKIT3}{}
-#'   \item{RORKIT4}{}
-#'   \item{RORKIT5}{}
-#'   \item{RORKIT6}{}
-#'   \item{RORKIT7}{}
-#'   \item{RORKIT8}{}
-#'   \item{RORKIT9}{}
-#'   \item{RORADDRES0}{}
-#'   \item{RORADDRES1}{}
-#'   \item{RORADDRES2}{}
-#'   \item{RORADDRES3}{}
-#'   \item{RORADDRES6}{}
-#'   \item{RORADDRES7}{}
-#'   \item{RORADDRES4}{}
-#'   \item{RORADDRES5}{}
-#'   \item{RORCLINSHARE}{}
-#'   \item{RORPOSTROR}{}
-#'   \item{POSTRORPHQ4X}{}
-#'   \item{POSTRORINIADPX}{}
-#'   \item{POSTRORGAD7X}{}
-#'   \item{POSTRORPHQ9X}{}
-#'   \item{POSTRORINIADDX}{}
-#'   \item{POSTRORINIADX}{}
-#'   \item{POSTRORDT}{}
-#'   \item{LOCPOSTAPETDTPIPE}{}
-#'   \item{LOCPOSTTPETDTPIPE}{}
-#'   \item{POSTRORDIS}{}
-#'   \item{STFNAMEE3}{}
-#'   \item{POSTRORCOMP}{}
-#'   \item{POSTRORNOREAS}{}
-#'   \item{POSTRORNOREASDT1}{}
-#'   \item{POSTRORNOREASDT2}{}
-#'   \item{POSTRORNOREASDT3}{}
-#'   \item{POSTRORNOREASOTHX}{}
-#'   \item{POSTRORINT}{}
-#'   \item{POSTRORPHQ9}{}
-#'   \item{POSTRORGAD7}{}
-#'   \item{POSTRORPHQ4}{}
-#'   \item{POSTRORINIAD}{}
-#'   \item{POSTROROTH}{}
-#'   \item{POSTROROTHNAME}{}
-#'   \item{POSTROROTHX}{}
-#'   \item{POSTRORRF}{}
-#'   \item{POSTRORRFX}{}
-#'   \item{POSTRORSHAREFAM}{}
-#'   \item{POSTRORSHARECLIN}{}
-#'   \item{POSTRORSHAREOTH}{}
-#'   \item{POSTRORSHAREOTHX}{}
-#'   \item{POSTRORSATISYN}{}
-#'   \item{POSTRORSATIS1}{}
-#'   \item{POSTRORSATIS2}{}
-#'   \item{POSTRORSATIS3}{}
-#'   \item{POSTRORSATIS4}{}
-#'   \item{POSTRORSATIS5}{}
-#'   \item{POSTRORSATIS6}{}
-#'   \item{POSTRORSATIS7}{}
-#'   \item{POSTRORSATIS8}{}
-#'   \item{POSTRORSATIS9}{}
-#'   \item{POSTRORSATIS10}{}
-#'   \item{POSTRORSATIS10X}{}
-#'   \item{RORAMYSUM}{}
-#'   \item{RORAMYSUMDT}{}
-#'   \item{RORAMYCENTRES}{}
-#'   \item{RORAMYTRFRONTAL}{}
-#'   \item{RORAMYTRPARIETAL}{}
-#'   \item{RORAMYTRPOSTCINGULATEPRECUNEUS}{}
-#'   \item{RORAMYTRTEMPORAL}{}
-#'   \item{RORAMYTROCCIPITAL}{}
-#'   \item{RORAMYTRNONE}{}
-#'   \item{RORAMYVRNX}{}
-#'   \item{RORAMYCONREV}{}
-#'   \item{RORAMYCONREASMC}{}
-#'   \item{RORAMYCONREAS}{}
-#'   \item{RORAMYCONNX}{}
-#'   \item{RORAMYLOCYN}{}
-#'   \item{RORAMYRESSHAREX}{}
-#'   \item{RORTAUSUM}{}
-#'   \item{RORTAUSUMDT}{}
-#'   \item{RORTAUCENTRES}{}
-#'   \item{RORTAUTRFRONTAL}{}
-#'   \item{RORTAUTRPARIETAL}{}
-#'   \item{RORTAUTRPOSTCINGULATEPRECUNEUS}{}
-#'   \item{RORTAUTRTEMPORAL}{}
-#'   \item{RORTAUTROCCIPITAL}{}
-#'   \item{RORTAUTRNONE}{}
-#'   \item{RORTAUVRNX}{}
-#'   \item{RORTAUCONREV}{}
-#'   \item{RORTAUCONREASMC}{}
-#'   \item{RORTAUCONREAS}{}
-#'   \item{RORTAUCONNX}{}
-#'   \item{RORTAULOCYN}{}
-#'   \item{RORTAULOCRES}{}
-#'   \item{RORTAULOCRESX}{}
-#'   \item{RORTAUCON}{}
-#'   \item{RORTAURESSHARE}{}
-#'   \item{RORTAURESSHAREX}{}
-#'   \item{RORCOMSUM}{}
-#'   \item{RORCOMSUMDT}{}
-#'   \item{RORACOMTRFRONTAL}{}
-#'   \item{RORACOMTRPARIETAL}{}
-#'   \item{RORACOMTRPOSTCINGULATEPRECUNEUS}{}
-#'   \item{RORACOMTRTEMPORAL}{}
-#'   \item{RORACOMTROCCIPITAL}{}
-#'   \item{RORACOMTRNONE}{}
-#'   \item{RORCOMVRNX}{}
-#'   \item{RORCOMCONREV}{}
-#'   \item{RORCOMCONREASMC}{}
-#'   \item{RORCOMCONREAS}{}
-#'   \item{RORCOMCONNX}{}
-#'   \item{RORCOMLOCYN}{}
-#'   \item{RORCOMLOCRES}{}
-#'   \item{RORCOMLOCRESX}{}
-#'   \item{RORCOMCON}{}
-#'   \item{RORCOMRESSHARE}{}
-#'   \item{RORCOMRESSHAREX}{}
-#'   \item{EXITDT}{}
-#'   \item{BDONATEDT}{}
-#'   \item{AUTOPSYDT}{}
-#'   \item{EXITRS}{}
-#'   \item{EXITRSX}{}
-#'   \item{BAUTOPSYYN}{}
-#'   \item{BDONATEYN}{}
-#'   \item{BDONATEX}{}
-#'   \item{AUTOPSYYN}{}
-#'   \item{COD}{}
-#'   \item{AUTOPSYDESC}{}
-#'   \item{CLNORMCOG}{}
-#' }
-#' @docType data
-#' @keywords datasets
-#' @name clariti_edc_unfiltered
-#' @usage data(clariti_edc_unfiltered)
-#' @source \href{https://www.naccdata.org/about-nacc-data/}{https://www.naccdata.org/about-nacc-data/}.
-#' @examples
-#' \dontrun{
-
-#' browseVignettes('NACCADRC')
-#' }
-NULL
-
 #' data_dictionary
-#' @description NACCADRC ADSP PHC, UDS Data Dictionary dataset. The data is sourced from the file(s) NACC_ADSP_PHC_Biomarker_DD_2024.xlsx, NACC_ADSP_PHC_Cognition_DD_2024.xlsx, NACC_ADSP_PHC_DTI_DD_2024.xlsx, NACC_ADSP_PHC_FLAIR_DD_2024.xlsx, NACC_ADSP_PHC_Amyloid_Detailed_DD_2024.xlsx, NACC_ADSP_PHC_Amyloid_Simple_DD_2024.xlsx, NACC_ADSP_PHC_Tau_Detailed_DD_2024.xlsx, NACC_ADSP_PHC_Tau_Simple_DD_2024.xlsx, NACC_ADSP_PHC_T1_Freesurfer_DD_2024.xlsx, NACC_ADSP_PHC_T1_MUSE_DD_2024.xlsx, NACC_ADSP_PHC_Neuropath_DD_2024.xlsx, NACC_ADSP_PHC_VascularRisk_DD_2024.xlsx, uds3-rdd.csv, rdd-np.csv, rdd-gen.csv. 
-#' @format A data frame with 15704 rows and 9 variables:
+#' @description NACCADRC ADSP PHC, UDS Data Dictionary dataset. The data is sourced from the file(s) NACC_ADSP_PHC_Biomarker_DD_2024.xlsx, NACC_ADSP_PHC_Cognition_DD_2024.xlsx, NACC_ADSP_PHC_DTI_DD_2024.xlsx, NACC_ADSP_PHC_FLAIR_DD_2024.xlsx, NACC_ADSP_PHC_Amyloid_Detailed_DD_2024.xlsx, NACC_ADSP_PHC_Amyloid_Simple_DD_2024.xlsx, NACC_ADSP_PHC_Tau_Detailed_DD_2024.xlsx, NACC_ADSP_PHC_Tau_Simple_DD_2024.xlsx, NACC_ADSP_PHC_T1_Freesurfer_DD_2024.xlsx, NACC_ADSP_PHC_T1_MUSE_DD_2024.xlsx, NACC_ADSP_PHC_Neuropath_DD_2024.xlsx, NACC_ADSP_PHC_VascularRisk_DD_2024.xlsx, CLARiTI Data Freeze Clean Data Dictionary for Test Freeze v2 01APR2026.xlsx, uds3-rdd.csv, rdd-np.csv, rdd-gen.csv. 
+#' @format A data frame with 16181 rows and 15 variables:
 #' \describe{
 #'   \item{DataName}{}
 #'   \item{VariableName}{}
@@ -1291,9 +330,15 @@ NULL
 #'   \item{Comment}{}
 #'   \item{AllowableCodes}{}
 #'   \item{Source}{}
+#'   \item{Data Freeze variable name}{}
+#'   \item{Data type}{}
+#'   \item{Data source}{}
+#'   \item{Variable Length}{}
+#'   \item{Description / derivation}{}
 #'   \item{Form}{}
 #'   \item{VariableType}{}
 #'   \item{DataType}{}
+#'   \item{Source variable}{}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -1308,19 +353,21 @@ NULL
 NULL
 
 #' fdgpetnpdka
-#' @description NACCADRC UDS, SCAN Imaging FDG PET dataset. The data is sourced from the file(s) investigator_clariti_fdgpetnpdka_naccFREEZE.csv, investigator_scan_fdgpetnpdka_nacc72.csv. 
-#' @format A data frame with 665 rows and 172 variables:
+#' @description NACCADRC UDS, SCAN Imaging FDG PET dataset. The data is sourced from the file(s) investigator_clariti_fdgpetnpdka_naccDEV.csv, fdgpetnpdka_duplicates.csv, investigator_scan_fdgpetnpdka_nacc73.csv. 
+#' @format A data frame with 839 rows and 174 variables:
 #' \describe{
 #'   \item{SOURCE}{}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
-#'   \item{LONIUID}{}
-#'   \item{SCANDATE}{}
-#'   \item{PROCESSDATE}{}
-#'   \item{TRACER}{}
-#'   \item{ACQUISITION_TIME}{}
-#'   \item{FDG_METAROI_SUVR}{}
-#'   \item{TOP50PONSVERMIS_SUVR}{}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
+#'   \item{LONIUID}{LONI Image ID (Prefix “I” followed by 8 numerals)}
+#'   \item{SCANDATE}{Scan acquisition date (YYYY-MM-DD)}
+#'   \item{PROCESSDATE}{Date quantification pipeline was run (YYYY-MM-DD)}
+#'   \item{TRACER}{PET Radiotracer ((1) FDG  (2) PIB  (3) Florbetapir  (4) Florbetaben  (5) NAV4694  (6) Flortaucipir  (7) MK6240  (8) PI2620  (9) GTP1  (10) Flutemetamol  (99) Unknown)}
+#'   \item{ACQUISITION_TIME}{Acquisition start-stop time post-injection (minutes) ((1) 30-60  (2) 40-60  (3) 40-70  (4) 45-75  (5) 45-90  (6) 50-70  (7) 60-90  (8) 70-90  (9) 70-110  (10) 80-100  (11) 90-110)}
+#'   \item{IN_CLARITI_PROJECT}{}
+#'   \item{QC_STATUS}{}
+#'   \item{FDG_METAROI_SUVR}{FDG MetaROI SUVR}
+#'   \item{TOP50PONSVERMIS_SUVR}{Reference region - SUVR of the top 50 percent of voxels of the pons/vermis}
 #'   \item{BRAINSTEM_SUVR}{brain-stem SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
 #'   \item{CC_ANTERIOR_SUVR}{cc-anterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
 #'   \item{CC_CENTRAL_SUVR}{cc-central SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
@@ -1481,8 +528,8 @@ NULL
 #'   \item{RIGHT_THALAMUS_PROPER_SUVR}{right-thalamus-proper SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
 #'   \item{RIGHT_VENTRALDC_SUVR}{right-ventraldc SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
 #'   \item{RIGHT_VESSEL_SUVR}{right-vessel SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VISIT}{}
-#'   \item{IN_SCAN_PROJECT}{}
+#'   \item{VISIT}{Visit Type ((BL) Baseline  (FU) Followup)}
+#'   \item{IN_SCAN_PROJECT}{Is this record also in the SCAN project? ((0) No  (1) Yes)}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -1497,12 +544,12 @@ NULL
 NULL
 
 #' mriqc
-#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mriqc_naccFREEZE.csv, investigator_scan_mriqc_nacc72.csv. 
-#' @format A data frame with 28915 rows and 40 variables:
+#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mriqc_naccDEV.csv, mriqc_duplicates.csv, investigator_scan_mriqc_nacc73.csv. 
+#' @format A data frame with 29982 rows and 40 variables:
 #' \describe{
 #'   \item{SOURCE}{}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
 #'   \item{STUDYDATE}{}
 #'   \item{SERIESTIME}{}
 #'   \item{STUDYVISITCODE}{}
@@ -1554,12 +601,12 @@ NULL
 NULL
 
 #' mrisbm
-#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mrisbm_naccFREEZE.csv, investigator_scan_mrisbm_nacc72.csv. 
-#' @format A data frame with 6436 rows and 253 variables:
+#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mrisbm_naccDEV.csv, mrisbm_duplicates.csv, investigator_scan_mrisbm_nacc73.csv, mrisbm_clariti_no_edc.csv. 
+#' @format A data frame with 6415 rows and 253 variables:
 #' \describe{
 #'   \item{SOURCE}{}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
 #'   \item{SCANDT}{}
 #'   \item{LONI_IMAGE_FLAIR}{}
 #'   \item{DESCRIPTION_FLAIR}{}
@@ -1824,16 +871,16 @@ NULL
 NULL
 
 #' petqc
-#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_petqc_naccFREEZE.csv, investigator_scan_petqc_nacc72.csv. 
-#' @format A data frame with 7798 rows and 13 variables:
+#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_petqc_naccDEV.csv, petqc_duplicates.csv, investigator_scan_petqc_nacc73.csv. 
+#' @format A data frame with 8284 rows and 13 variables:
 #' \describe{
 #'   \item{SOURCE}{}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
 #'   \item{SCAN_DATE}{}
 #'   \item{SCAN_TIME}{}
 #'   \item{RADIOTRACER}{}
-#'   \item{LONIUID}{}
+#'   \item{LONIUID}{LONI Image ID (Prefix “I” followed by 8 numerals)}
 #'   \item{SCANNER_MODEL}{}
 #'   \item{PASS_FAIL}{}
 #'   \item{FAIL_REASON}{}
@@ -16750,18 +15797,20 @@ NULL
 NULL
 
 #' taupetnpdka
-#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_taupetnpdka_naccFREEZE.csv, investigator_scan_mp_taupetnpdka_nacc72.csv, investigator_scan_taupetnpdka_nacc72.csv. 
-#' @format A data frame with 2870 rows and 185 variables:
+#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_taupetnpdka_naccDEV.csv, taupetnpdka_duplicates.csv, investigator_scan_mp_taupetnpdka_nacc73.csv, investigator_scan_taupetnpdka_nacc73.csv, taupetnpdka_clariti_no_edc.csv. 
+#' @format A data frame with 3019 rows and 187 variables:
 #' \describe{
 #'   \item{SOURCE}{}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
-#'   \item{LONIUID}{}
-#'   \item{SCANDATE}{}
-#'   \item{PROCESSDATE}{}
-#'   \item{TRACER}{}
-#'   \item{TRACER_SUVR_WARNING}{}
-#'   \item{ACQUISITION_TIME}{}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
+#'   \item{LONIUID}{LONI Image ID (Prefix “I” followed by 8 numerals)}
+#'   \item{SCANDATE}{Scan acquisition date (YYYY-MM-DD)}
+#'   \item{PROCESSDATE}{Date quantification pipeline was run (YYYY-MM-DD)}
+#'   \item{TRACER}{PET Radiotracer ((1) FDG  (2) PIB  (3) Florbetapir  (4) Florbetaben  (5) NAV4694  (6) Flortaucipir  (7) MK6240  (8) PI2620  (9) GTP1  (10) Flutemetamol  (99) Unknown)}
+#'   \item{TRACER_SUVR_WARNING}{USE CENTILOIDS (NOT SUVRs) TO COMPARE ACROSS TRACERS, DO NOT COMPARE ACROSS ACQUISITION WINDOWS}
+#'   \item{ACQUISITION_TIME}{Acquisition start-stop time post-injection (minutes) ((1) 30-60  (2) 40-60  (3) 40-70  (4) 45-75  (5) 45-90  (6) 50-70  (7) 60-90  (8) 70-90  (9) 70-110  (10) 80-100  (11) 90-110)}
+#'   \item{IN_CLARITI_PROJECT}{}
+#'   \item{QC_STATUS}{}
 #'   \item{META_TEMPORAL_SUVR}{Meta temporal SUVR normalized by inferior cerebellar grey matter.}
 #'   \item{CTX_ENTORHINAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-entorhinal and ctx-rh-entorhinal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
 #'   \item{INFERIORCEREBELLUM_SUVR}{Reference region -  SUVR of NPDKA inferior cerebellar grey matter; See SCAN MRI-Free Tau PET methods document on LONI}
@@ -16936,8 +15985,8 @@ NULL
 #'   \item{INJECTED_DOSE}{}
 #'   \item{DYNAMIC}{}
 #'   \item{SCAN_PROJECT}{}
-#'   \item{VISIT}{}
-#'   \item{IN_SCAN_PROJECT}{}
+#'   \item{VISIT}{Visit Type ((BL) Baseline  (FU) Followup)}
+#'   \item{IN_SCAN_PROJECT}{Is this record also in the SCAN project? ((0) No  (1) Yes)}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -16952,10 +16001,10 @@ NULL
 NULL
 
 #' uds_fcsf
-#' @description NACCADRC UDS dataset. CSF link. The data is sourced from the file(s) investigator_fcsf_nacc72.csv. 
-#' @format A data frame with 3051 rows and 23 variables:
+#' @description NACCADRC UDS dataset. CSF link. The data is sourced from the file(s) investigator_fcsf_nacc73.csv. 
+#' @format A data frame with 3046 rows and 23 variables:
 #' \describe{
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
 #'   \item{NACCID}{Participant ID}
 #'   \item{CSFABETA}{}
 #'   \item{CSFPTAU}{}
@@ -16992,84 +16041,299 @@ NULL
 NULL
 
 #' uds_ftldlbd
-#' @description NACCADRC UDS dataset. UDS with NP and Genetics plus FTLD and LBD modules. The data is sourced from the file(s) investigator_ftldlbd_nacc72.csv. 
-#' @format A data frame with 207454 rows and 1936 variables:
+#' @description NACCADRC UDS dataset. UDS with NP and Genetics plus FTLD and LBD modules. The data is sourced from the file(s) investigator_ftldlbd_nacc73.csv. 
+#' @format A data frame with 214977 rows and 2651 variables:
 #' \describe{
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
 #'   \item{NACCID}{Participant ID}
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
 #'   \item{PACKET}{Packet code ( I = Initial Visit Packet  F = Follow-up Visit Packet IT = Telephone Initial Visit Packet  T = Telephone Follow-up Visit Packet)}
 #'   \item{FORMVER}{Form version number (1 - 3.2)}
-#'   \item{VISITMO}{Form date - month (1 - 12)}
-#'   \item{VISITDAY}{Form date - day (1 -  31)}
-#'   \item{VISITYR}{Form date - year (2005 to the present year)}
+#'   \item{VISITDATE}{}
 #'   \item{NACCVNUM}{Visit Number}
 #'   \item{NACCAVST}{Total number of all UDS visits made (1 - 20)}
 #'   \item{NACCNVST}{Number of in-person UDS visits made (1 - 20)}
 #'   \item{NACCDAYS}{Days from initial visit to most recent visit (0 - 5000)}
 #'   \item{NACCFDYS}{Days from initial visit to each follow-up visit (0 - 5000)}
 #'   \item{NACCCORE}{}
-#'   \item{NACCREAS}{Primary reason for coming to ADC ( 1 = To participate in a research study	   2 = To have a clinical evaluation 7 = Both to participate in a research study and to have a clinical evaluation, or another reason 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{NACCREFR}{Principal referral source ( 1 = Non-professional contact: self/relative/friend   2 = Professional contact: clinician, nurse, doctor, other health care provider, or other staff (ADC and non-ADC) 8 = Other 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCDIED}{Subject is known to be deceased ( 0 = Not deceased/unknown 1 = Deceased Description/derivation:	A subject with a Neuropathology Form and/or a Milestones Form reporting the subject's death is indicated as deceased (naccdied = 1). Otherwise, naccdied = 0. NOTE: NACC is not always made aware of deaths for active and inactive subjects; thus naccdied = 0 for a subject who has died but whose death was not reported to NACC.)}
+#'   \item{NACCMOD}{Month of death ( 1 - 12 88 = Not applicable, subject not deceased 99 = Unknown)}
+#'   \item{NACCYOD}{Year of death ( Allowable codes cannot precede 1970; in most cases, should not precede 1984  8888 = Not applicable, subject not deceased 9999 = Unknown)}
+#'   \item{NACCACTV}{Follow-up status at the Alzheimer's Disease Center (ADC) ( 0 = Died, discontinued, lost to follow-up 1 = Annual follow-up (no discontinuation/loss to follow-up or minimal contact) 2 = Minimal contact with Center, no annual follow-up)}
+#'   \item{NACCNOVS}{No longer followed annually in person or by telephone ( 0 = Still receiving annual follow-up in person or by telephone  		1 = No longer receiving annual follow-up in person or by telephone 		8 = Not applicable, enrolled for initial visit only)}
+#'   \item{NACCDSMO}{Month of discontinuation from annual follow-up ( 1 - 12 		88 = Not applicable, still followed annually in person or by telephone)}
+#'   \item{NACCDSDY}{Day of discontinuation from annual follow-up ( 1- 31 		88 = Not applicable, still followed annually in person or by telephone)}
+#'   \item{NACCDSYR}{Year of discontinuation from annual follow-up ( 2005 to present 		8888 = Not applicable, still followed annually in person or by telephone)}
+#'   \item{NACCNURP}{Permanently moved to a nursing home ( 0 = Did not report permanent move to a nursing home  1 = Permanently moved to a nursing home)}
+#'   \item{NACCNRMO}{Month permanently moved to nursing home ( 1 - 12 88 = Not applicable, no permanent move to a nursing home 99 = Unknown)}
+#'   \item{NACCNRDY}{Day permanently moved to nursing home ( 1 - 31 88 = Not applicable, no permanent move to a nursing home 99 = Unknown)}
+#'   \item{NACCNRYR}{Year permanently moved to nursing home ( 2002 to present 8888 = Not applicable, no permanent move to a nursing home 9999 = Unknown)}
+#'   \item{NACCMDSS}{Subject's status in the Minimal Data Set (MDS) and Uniform Data Set (UDS) ( 1 = In the UDS and MDS 2 = In the MDS only  3 = In the UDS only)}
+#'   \item{NACCPAFF}{Previously affiliated subject ( 0 = Not previously affiliated subject  1 = Previously affiliated subject)}
+#'   \item{FRMDATEA1}{}
+#'   \item{LANGA1}{}
+#'   \item{MODEA1}{}
+#'   \item{RMREASA1}{}
+#'   \item{RMMODEA1}{}
+#'   \item{ADMINA1}{}
+#'   \item{NACCAGE}{Subject's age at visit (18  - 120)}
+#'   \item{NACCAGEB}{Subject's age at initial visit (18  - 120)}
 #'   \item{BIRTHMO}{Subject's month of birth (1- 12)}
 #'   \item{BIRTHYR}{Subject's year of birth (1875 to (current year minus 15))}
-#'   \item{SEX}{Subject's sex ( 1 = Male 2 = Female)}
-#'   \item{HISPANIC}{Hispanic/Latino ethnicity ( 0 = No 1 = Yes 9 = Unknown)}
-#'   \item{HISPOR}{Hispanic origins ( 1 = Mexican, Chicano, or Mexican-American  2 = Puerto Rican  3 = Cuban  4 = Dominican  5 = Central American  6 = South American  50 = Other (specify) 88 = Not applicable; subject is not Hispanic 99 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HISPORX}{Hispanic origins, other- specify (Any text or numbers)}
+#'   \item{CHLDHDCTRY}{}
+#'   \item{NACCNIHR}{Derived NIH race definitions ( 1 = White  2 = Black or African American  3 = American Indian or Alaska Native  4 = Native Hawaiian or Pacific Islander  5 = Asian  6 = Multiracial  99 = Unknown or ambiguous)}
 #'   \item{RACE}{Race ( 1 = White  2 = Black or African American 3 = American Indian or Alaska Native 4 = Native Hawaiian or Other Pacific Islander 5 = Asian  50 = Other (specify) 99 = Unknown)}
 #'   \item{RACEX}{Race, other - specify (Any text or numbers)}
 #'   \item{RACESEC}{Second race ( 1 = White  2 = Black or African American 3 = American Indian or Alaska Native 4 = Native Hawaiian or Other Pacific Islander 5 = Asian  50 = Other (specify) 88 = None reported 99 = Unknown)}
 #'   \item{RACESECX}{Second race, other- specify (Any text or numbers)}
 #'   \item{RACETER}{Third race ( 1 = White  2 = Black or African American 3 = American Indian or Alaska Native 4 = Native Hawaiian or Other Pacific Islander 5 = Asian  50 = Other (specify) 88 = None reported 99 = Unknown)}
 #'   \item{RACETERX}{Third race, other- specify (Any text or numbers)}
-#'   \item{PRIMLANG}{Primary language ( 1 = English  2 = Spanish  3 = Mandarin  4 = Cantonese  5 = Russian  6 = Japanese  8 = Other primary language (specify)  9 = Unknown)}
-#'   \item{PRIMLANX}{Primary language, other- specify (Any text or numbers)}
+#'   \item{RACEAIAN}{}
+#'   \item{RACEAIANX}{}
+#'   \item{RACEASIAN}{}
+#'   \item{ETHCHINESE}{}
+#'   \item{ETHINDIA}{}
+#'   \item{ETHFILIP}{}
+#'   \item{ETHVIETNAM}{}
+#'   \item{ETHKOREAN}{}
+#'   \item{ETHJAPAN}{}
+#'   \item{ETHASNOTH}{}
+#'   \item{ETHASNOTHX}{}
+#'   \item{RACEBLACK}{}
+#'   \item{ETHAFAMER}{}
+#'   \item{ETHJAMAICA}{}
+#'   \item{ETHHAITIAN}{}
+#'   \item{ETHNIGERIA}{}
+#'   \item{ETHETHIOP}{}
+#'   \item{ETHSOMALI}{}
+#'   \item{ETHBLKOTH}{}
+#'   \item{ETHBLKOTHX}{}
+#'   \item{NACCHISP}{}
+#'   \item{HISPOR}{Hispanic origins ( 1 = Mexican, Chicano, or Mexican-American  2 = Puerto Rican  3 = Cuban  4 = Dominican  5 = Central American  6 = South American  50 = Other (specify) 88 = Not applicable; subject is not Hispanic 99 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HISPORX}{Hispanic origins, other- specify (Any text or numbers)}
+#'   \item{ETHMEXICAN}{}
+#'   \item{ETHPUERTO}{}
+#'   \item{ETHSALVA}{}
+#'   \item{ETHCUBAN}{}
+#'   \item{ETHDOMIN}{}
+#'   \item{ETHGUATEM}{}
+#'   \item{ETHHISOTH}{}
+#'   \item{ETHHISOTHX}{}
+#'   \item{RACEMENA}{}
+#'   \item{ETHLEBANON}{}
+#'   \item{ETHIRAN}{}
+#'   \item{ETHEGYPT}{}
+#'   \item{ETHSYRIA}{}
+#'   \item{ETHIRAQI}{}
+#'   \item{ETHISRAEL}{}
+#'   \item{ETHMENAOTH}{}
+#'   \item{ETHMENAOTX}{}
+#'   \item{RACENHPI}{}
+#'   \item{ETHHAWAII}{}
+#'   \item{ETHSAMOAN}{}
+#'   \item{ETHCHAMOR}{}
+#'   \item{ETHTONGAN}{}
+#'   \item{ETHFIJIAN}{}
+#'   \item{ETHMARSHAL}{}
+#'   \item{ETHNHPIOTH}{}
+#'   \item{ETHNHPIOTX}{}
+#'   \item{RACEWHITE}{}
+#'   \item{ETHENGLISH}{}
+#'   \item{ETHGERMAN}{}
+#'   \item{ETHIRISH}{}
+#'   \item{ETHITALIAN}{}
+#'   \item{ETHPOLISH}{}
+#'   \item{ETHSCOTT}{}
+#'   \item{ETHWHIOTH}{}
+#'   \item{ETHWHIOTHX}{}
+#'   \item{RACEUNKN}{}
+#'   \item{GENMAN}{}
+#'   \item{GENWOMAN}{}
+#'   \item{GENTRMAN}{}
+#'   \item{GENTRWOMAN}{}
+#'   \item{GENNONBI}{}
+#'   \item{GENTWOSPIR}{}
+#'   \item{GENOTH}{}
+#'   \item{GENOTHX}{}
+#'   \item{GENDKN}{}
+#'   \item{GENNOANS}{}
+#'   \item{NACCSEX}{}
+#'   \item{INTERSEX}{}
+#'   \item{SEXORNGAY}{}
+#'   \item{SEXORNHET}{}
+#'   \item{SEXORNBI}{}
+#'   \item{SEXORNTWOS}{}
+#'   \item{SEXORNOTH}{}
+#'   \item{SEXORNOTHX}{}
+#'   \item{SEXORNDNK}{}
+#'   \item{SEXORNNOAN}{}
+#'   \item{NACCLANG}{}
+#'   \item{NACCLANGX}{}
+#'   \item{HANDED}{Is the subject left- or right-handed? ( 1 = Left-handed  2 = Right-handed  3 = Ambidextrous  9 = Unknown)}
+#'   \item{NACCEDULVL}{}
 #'   \item{EDUC}{Years of education ( 0  - 36 99 = Unknown)}
 #'   \item{MARISTAT}{Marital status ( 1 = Married  2 = Widowed  3 = Divorced  4 = Separated  5 = Never married (or marriage was annulled)  6 = Living as married/domestic partner 9 = Other or unknown)}
 #'   \item{NACCLIVS}{Living situation ( 1 = Lives alone 2 = Lives with spouse or partner  3 = Lives with relative or friend  4 = Lives with group  5 = Other  9 = Unknown)}
 #'   \item{INDEPEND}{Level of independence ( 1 = Able to live independently  2 = Requires some assistance with complex activities  3 = Requires some assistance with basic activities  4 = Completely dependent  9 = Unknown)}
 #'   \item{RESIDENC}{Type of residence ( 1 = Single- or multi-family private residence  			(apartment, condo, house)  2 = Retirement community or independent group living  3 = Assisted living, adult family home, or boarding home  4 = Skilled nursing facility, nursing home, hospital, or hospice  9 = Other or unknown)}
-#'   \item{HANDED}{Is the subject left- or right-handed? ( 1 = Left-handed  2 = Right-handed  3 = Ambidextrous  9 = Unknown)}
+#'   \item{SERVED}{}
+#'   \item{MEDVA}{}
+#'   \item{EXRTIME}{}
+#'   \item{MEMWORS}{}
+#'   \item{MEMTROUB}{}
+#'   \item{MEMTEN}{}
+#'   \item{ADISTATE}{}
+#'   \item{ADINAT}{}
+#'   \item{PRIOCC}{}
+#'   \item{NACCREFR}{Principal referral source ( 1 = Non-professional contact: self/relative/friend   2 = Professional contact: clinician, nurse, doctor, other health care provider, or other staff (ADC and non-ADC) 8 = Other 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FRMDATEA1A}{}
+#'   \item{LANGA1A}{}
+#'   \item{MODEA1A}{}
+#'   \item{RMREASA1A}{}
+#'   \item{RMMODEA1A}{}
+#'   \item{A1ANOT}{}
+#'   \item{ADMINA1A}{}
+#'   \item{OWNSCAR}{}
+#'   \item{TRSPACCESS}{}
+#'   \item{TRANSPROB}{}
+#'   \item{TRANSWORRY}{}
+#'   \item{TRSPMED}{}
+#'   \item{INCOMEYR}{}
+#'   \item{FINSATIS}{}
+#'   \item{BILLPAY}{}
+#'   \item{FINUPSET}{}
+#'   \item{EATLESS}{}
+#'   \item{EATLESSYR}{}
+#'   \item{LESSMEDS}{}
+#'   \item{LESSMEDSYR}{}
+#'   \item{COMPCOMM}{}
+#'   \item{GUARDEDU}{}
+#'   \item{EMPTINESS}{}
+#'   \item{MISSPEOPLE}{}
+#'   \item{FRIENDS}{}
+#'   \item{ABANDONED}{}
+#'   \item{CLOSEFRND}{}
+#'   \item{PARENTCOMM}{}
+#'   \item{CHILDCOMM}{}
+#'   \item{FRIENDCOMM}{}
+#'   \item{PARTICIPATE}{}
+#'   \item{SAFEHOME}{}
+#'   \item{SAFECOMM}{}
+#'   \item{DELAYMED}{}
+#'   \item{SCRIPTPROB}{}
+#'   \item{MISSEDFUP}{}
+#'   \item{DOCADVICE}{}
+#'   \item{HEALTHACC}{}
+#'   \item{LESSCOURT}{}
+#'   \item{POORSERV}{}
+#'   \item{NOTSMART}{}
+#'   \item{ACTAFRAID}{}
+#'   \item{THREATENED}{}
+#'   \item{POORMEDTRT}{}
+#'   \item{EXPANCEST}{}
+#'   \item{EXPGENDER}{}
+#'   \item{EXPRACE}{}
+#'   \item{EXPAGE}{}
+#'   \item{EXPRELIG}{}
+#'   \item{EXPHEIGHT}{}
+#'   \item{EXPWEIGHT}{}
+#'   \item{EXPAPPEAR}{}
+#'   \item{EXPSEXORN}{}
+#'   \item{EXPEDUCINC}{}
+#'   \item{EXPDISAB}{}
+#'   \item{EXPSKIN}{}
+#'   \item{EXPOTHER}{}
+#'   \item{EXPNOTAPP}{}
+#'   \item{EXPNOANS}{}
+#'   \item{EXPSTRS}{}
+#'   \item{FRMDATEA2}{}
+#'   \item{LANGA2}{}
+#'   \item{MODEA2}{}
+#'   \item{RMREASA2}{}
+#'   \item{RMMODEA2}{}
+#'   \item{A2NOT}{}
+#'   \item{NEWINF}{Is this a new co-participant - i.e., one who was not a co-participant at any past UDS visit? ( 0 = No 1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{INRELTO}{Co-participant's relationship to subject ( 1 = 	Spouse, partner, or companion 2 = 	Child 3 = 	Sibling 4 = 	Other relative 5 = 	Friend, neighbor, or someone known through family, friends, work, or community 6 = 	Paid caregiver, health care provider, or clinician 7 = 	Other -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question Description/derivation:	Note that if there is no change in co-participant at a follow-up visit, the co-participant data from a previous visit (visit where reported) will be carried forward to the current visit.)}
+#'   \item{INRELTOX}{Co-participant relationship, other (specify) (Any text or numbers)}
+#'   \item{INKNOWN}{How long has the co-participant known the subject? ( 0 -120 999 = Unknown -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question  Description/derivation:	Note that if there is no change in co-participant at a follow-up visit, the co-participant data from a previous visit (visit where reported) will be carried forward to the current visit.)}
+#'   \item{INLIVWTH}{Does the co-participant live with the subject? ( 0 = 	No 1 = 	Yes -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{INCNTMOD}{}
+#'   \item{NACCINCNTFQ}{}
+#'   \item{INVISITS}{If no, approximate frequency of in-person visits? ( 1 = 	Daily 2 = 	At least 3 times per week 3 = 	Weekly 4 = 	At least 3 times per month 5 = 	Monthly 6 = 	Less than once a month 8 = 	Not applicable, co-participant lives with subject -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{INCALLS}{If no, approximate frequency of telephone contact? ( 1 = 	Daily 2 = 	At least 3 times per week 3 = 	Weekly 4 = 	At least 3 times per month 5 = 	Monthly 6 = 	Less than once a month 8 = 	Not applicable, co-participant lives with subject -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{INCNTMDX}{}
+#'   \item{INCNTTIM}{}
+#'   \item{INRELY}{Is there a question about the co-participant's reliability? ( 0 = 	No 1 = 	Yes -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{INMEMWORS}{}
+#'   \item{INMEMTROUB}{}
+#'   \item{INMEMTEN}{}
 #'   \item{INBIRMO}{Co-participant's month of birth ( 1 -12 99 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INBIRYR}{Co-participant's year of birth ( 1875 to (current year minus 15) 9999 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INSEX}{Co-participant's sex ( 1 = Male 2 = Female -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{NEWINF}{Is this a new co-participant - i.e., one who was not a co-participant at any past UDS visit? ( 0 = No 1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INHISP}{Co-participant Hispanic/Latino ethnicity ( 0 = No 1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INHISPOR}{Co-participant's Hispanic origins ( 1 = Mexican, Chicano, or Mexican-American 2 = Puerto Rican 3 = Cuban 4 = Dominican 5 = Central American 6 = South American 50 = Other (specify) 88 = Not applicable, co-participant is not Hispanic 99 = Unknown -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INHISPOX}{Co-participant of Hispanic origins, other (specify) (Any text or numbers)}
-#'   \item{NACCNINR}{Derived NIH race definitions ( 1 = 	White  2 = 	Black or African American  3 = 	American Indian or Alaska Native  4 = 	Native Hawaiian or Pacific Islander  5 = 	Asian  6 = 	Multiracial  99 = Unknown or ambiguous -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INRACE}{Co-participant race ( 1 = 	White 2 = 	Black or African American 3 = 	American Indian or Alaska Native 4 = 	Native Hawaiian or Other Pacific Islander 5 = 	Asian 50 = Other (specify) 99 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question Description/derivation:	Note that if there is no change in co-participant at a follow-up visit, the co-participant data from a previous visit (visit where reported) will be carried forward to the current visit.)}
 #'   \item{INRACEX}{Co-participant race, other (specify) (Any text or numbers)}
 #'   \item{INRASEC}{Co-participant second race ( 1 = 	White 2 = 	Black or African American 3 = 	American Indian or Alaska Native 4 = 	Native Hawaiian or Other Pacific Islander 5 = 	Asian 50 = Other 88 = None reported 99 = Unknown -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question Description/derivation:	Note that if there is no change in co-participant at a follow-up visit, the co-participant data from a previous visit (visit where reported) will be carried forward to the current visit.)}
 #'   \item{INRASECX}{Co-participant second race, other (specify) (Any text or numbers)}
 #'   \item{INRATER}{Co-participant third race ( 1 = White 2 = Black or African American 3 = American Indian or Alaska Native 4 = Native Hawaiian or Other Pacific Islander 5 = Asian 50 = Other 88 = None reported 99 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INRATERX}{Co-participant third race, other (specify) (Any text or numbers)}
+#'   \item{NACCNINR}{Derived NIH race definitions ( 1 = 	White  2 = 	Black or African American  3 = 	American Indian or Alaska Native  4 = 	Native Hawaiian or Pacific Islander  5 = 	Asian  6 = 	Multiracial  99 = Unknown or ambiguous -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INEDUC}{Co-participant's years of education ( 0 - 36 99 = Unknown -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question Description/derivation:	Note that if there is no change in co-participant at a follow-up visit, the co-participant data from a previous visit (visit where reported) will be carried forward to the current visit.)}
-#'   \item{INRELTO}{Co-participant's relationship to subject ( 1 = 	Spouse, partner, or companion 2 = 	Child 3 = 	Sibling 4 = 	Other relative 5 = 	Friend, neighbor, or someone known through family, friends, work, or community 6 = 	Paid caregiver, health care provider, or clinician 7 = 	Other -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question Description/derivation:	Note that if there is no change in co-participant at a follow-up visit, the co-participant data from a previous visit (visit where reported) will be carried forward to the current visit.)}
-#'   \item{INRELTOX}{Co-participant relationship, other (specify) (Any text or numbers)}
-#'   \item{INKNOWN}{How long has the co-participant known the subject? ( 0 -120 999 = Unknown -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question  Description/derivation:	Note that if there is no change in co-participant at a follow-up visit, the co-participant data from a previous visit (visit where reported) will be carried forward to the current visit.)}
-#'   \item{INLIVWTH}{Does the co-participant live with the subject? ( 0 = 	No 1 = 	Yes -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{INVISITS}{If no, approximate frequency of in-person visits? ( 1 = 	Daily 2 = 	At least 3 times per week 3 = 	Weekly 4 = 	At least 3 times per month 5 = 	Monthly 6 = 	Less than once a month 8 = 	Not applicable, co-participant lives with subject -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{INCALLS}{If no, approximate frequency of telephone contact? ( 1 = 	Daily 2 = 	At least 3 times per week 3 = 	Weekly 4 = 	At least 3 times per month 5 = 	Monthly 6 = 	Less than once a month 8 = 	Not applicable, co-participant lives with subject -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{INRELY}{Is there a question about the co-participant's reliability? ( 0 = 	No 1 = 	Yes -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FRMDATEA3}{}
+#'   \item{LANGA3}{}
+#'   \item{MODEA3}{}
+#'   \item{RMREASA3}{}
+#'   \item{RMMODEA3}{}
 #'   \item{NACCFAM}{Indicator of first-degree family member with cognitive impairment ( 0 = No report of a first-degree family member with cognitive impairment 1 = Report of at least one first-degree family member with cognitive impairment 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question)}
 #'   \item{NACCMOM}{Indicator of mother with cognitive impairment ( 0 = No report of mother with cognitive 	      impairment 1 = Mother was reported to have cognitive impairment 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question)}
 #'   \item{NACCDAD}{Indicator of father with cognitive impairment ( 0 = No report of father with cognitive 			impairment 1 = Father was reported to have cognitive impairment 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question)}
-#'   \item{NACCAM}{In this family, is there evidence for an AD mutation (from list of specific muta-tions)? ( 0 = No		   1 = Yes, APP 2 = Yes, PS-1 (PSEN-1) 3 = Yes, PS-2 (PSEN-2) 8 = Yes, other (specify) 9 = Unknown whether mutation exists -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question)}
-#'   \item{NACCAMX}{If yes, Other (specify) (Any text or numbers)}
-#'   \item{NACCAMS}{Source of evidence for AD mutation ( 1 = Family report (no test documentation 	      available) 2 = Commercial test documentation 3 = Research lab test documentation 8 = Other (specify) 9 = Unknown  -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question)}
-#'   \item{NACCAMSX}{If other, specify (Any text or numbers)}
-#'   \item{NACCFM}{In this family, is there evidence for an FTLD mutation (from list of specific mu-tations)? ( 0 = No		   1 = Yes, MAPT 2 = Yes, PGRN 3 = Yes, C9orf72 4 = Yes, FUS 8 = Yes, Other (specify) 9 = Unknown whether mutation exists -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question)}
-#'   \item{NACCFMX}{If yes, Other (specify) (Any text or numbers)}
-#'   \item{NACCFMS}{Source of evidence for FTLD mutation ( 1 = Family report (no test documentation 				availa-ble) 2 = Commercial test documentation 3 = Research lab test documentation 8 = Other (specify) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question.)}
-#'   \item{NACCFMSX}{If other, specify (Any text or numbers)}
-#'   \item{NACCOM}{In this family, is there evidence for a mutation other than an AD or FTLD muta-tion? ( 0 = No 1 = Yes (specify) 9 = Unknown whether mutation exists -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question)}
-#'   \item{NACCOMX}{Specified other mutation (Any text or numbers)}
-#'   \item{NACCOMS}{Source of evidence for other mutation ( 1 = Family report (no test documentation 				availa-ble) 2 = Commercial test documentation 3 = Research lab test documentation 8 = Other (specify) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes re-sponse to this question.)}
-#'   \item{NACCOMSX}{If other, specify (Any text or numbers)}
-#'   \item{NACCFADM}{In this family, is there evidence of a dominantly inherited AD mutation? ( 0 = No/unknown 1 = Yes)}
-#'   \item{NACCFFTD}{In this family, is there evidence for an  FTLD mutation? ( 0 = No/unknown 1 = Yes)}
+#'   \item{FRMDATEA4}{}
+#'   \item{LANGA4}{}
+#'   \item{MODEA4}{}
+#'   \item{RMREASA4}{}
+#'   \item{RMMODEA4}{}
 #'   \item{ANYMEDS}{Subject taking any medications ( 0 = No 1 = Yes -4 = Did not complete medications form)}
+#'   \item{RXNORMID1}{}
+#'   \item{RXNORMID2}{}
+#'   \item{RXNORMID3}{}
+#'   \item{RXNORMID4}{}
+#'   \item{RXNORMID5}{}
+#'   \item{RXNORMID6}{}
+#'   \item{RXNORMID7}{}
+#'   \item{RXNORMID8}{}
+#'   \item{RXNORMID9}{}
+#'   \item{RXNORMID10}{}
+#'   \item{RXNORMID11}{}
+#'   \item{RXNORMID12}{}
+#'   \item{RXNORMID13}{}
+#'   \item{RXNORMID14}{}
+#'   \item{RXNORMID15}{}
+#'   \item{RXNORMID16}{}
+#'   \item{RXNORMID17}{}
+#'   \item{RXNORMID18}{}
+#'   \item{RXNORMID19}{}
+#'   \item{RXNORMID20}{}
+#'   \item{RXNORMID21}{}
+#'   \item{RXNORMID22}{}
+#'   \item{RXNORMID23}{}
+#'   \item{RXNORMID24}{}
+#'   \item{RXNORMID25}{}
+#'   \item{RXNORMID26}{}
+#'   \item{RXNORMID27}{}
+#'   \item{RXNORMID28}{}
+#'   \item{RXNORMID29}{}
+#'   \item{RXNORMID30}{}
+#'   \item{RXNORMID31}{}
+#'   \item{RXNORMID32}{}
+#'   \item{RXNORMID33}{}
+#'   \item{RXNORMID34}{}
+#'   \item{RXNORMID35}{}
+#'   \item{RXNORMID36}{}
+#'   \item{RXNORMID37}{}
+#'   \item{RXNORMID38}{}
+#'   \item{RXNORMID39}{}
+#'   \item{RXNORMID40}{}
 #'   \item{DRUG1}{}
 #'   \item{DRUG2}{}
 #'   \item{DRUG3}{}
@@ -17110,37 +16374,243 @@ NULL
 #'   \item{DRUG38}{}
 #'   \item{DRUG39}{}
 #'   \item{DRUG40}{}
-#'   \item{TOBAC30}{Smoked cigarettes in last 30 days ( 0 = No 1 = Yes 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCAMD}{Total number of medications reported at each visit ( 0 - 40 -4 = Did not complete medications form)}
+#'   \item{NACCAHTN}{Reported current use of any type of an antihypertensive or blood pressure medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCHTNC}{Reported current use of an antihypertensive combination therapy ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCACEI}{Reported current use of an angiotensin converting enzyme (ACE) inhibitor ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCAAAS}{Reported current use of an antiadrenergic agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCBETA}{Reported current use of a beta-adrenergic blocking agent (Beta-Blocker) ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCCCBS}{Reported current use of a calcium channel blocking agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCDIUR}{Reported current use of a diuretic ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCVASD}{Reported current use of a vasodilator ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCANGI}{Reported current use of an angiotensin II inhibitor ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCLIPL}{Reported current use of lipid lowering medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCNSD}{Reported current use of nonsteroidal anti-inflammatory medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCAC}{Reported current use of an anticoagulant or antiplatelet agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCADEP}{Reported current use of an antidepressant ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCAPSY}{Reported current use of an antipsychotic agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCAANX}{Reported current use of an anxiolytic, sedative, or hypnotic agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCADMD}{Reported current use of a FDA-approved medication for Alzheimer's disease symptoms ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCPDMD}{Reported current use of an antiparkinson agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCEMD}{Reported current use of estrogen hormone therapy ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCEPMD}{Reported current use of estrogen + progestin hormone therapy ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{NACCDBMD}{Reported current use of a diabetes medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
+#'   \item{FRMDATEA4A}{}
+#'   \item{LANGA4A}{}
+#'   \item{MODEA4A}{}
+#'   \item{RMREASA4A}{}
+#'   \item{RMMODEA4A}{}
+#'   \item{TRTBIOMARK}{}
+#'   \item{NEWTREAT}{}
+#'   \item{TARGETAB1}{}
+#'   \item{TARGETTAU1}{}
+#'   \item{TARGETINF1}{}
+#'   \item{TARGETSYN1}{}
+#'   \item{TARGETOTH1}{}
+#'   \item{TARGETOTX1}{}
+#'   \item{TRTTRIAL1}{}
+#'   \item{NCTNUM1}{}
+#'   \item{STARTMO1}{}
+#'   \item{STARTYEAR1}{}
+#'   \item{ENDMO1}{}
+#'   \item{ENDYEAR1}{}
+#'   \item{CARETRIAL1}{}
+#'   \item{TRIALGRP1}{}
+#'   \item{TARGETAB2}{}
+#'   \item{TARGETTAU2}{}
+#'   \item{TARGETINF2}{}
+#'   \item{TARGETSYN2}{}
+#'   \item{TARGETOTH2}{}
+#'   \item{TARGETOTX2}{}
+#'   \item{TRTTRIAL2}{}
+#'   \item{NCTNUM2}{}
+#'   \item{STARTMO2}{}
+#'   \item{STARTYEAR2}{}
+#'   \item{ENDMO2}{}
+#'   \item{ENDYEAR2}{}
+#'   \item{CARETRIAL2}{}
+#'   \item{TRIALGRP2}{}
+#'   \item{TARGETAB3}{}
+#'   \item{TARGETTAU3}{}
+#'   \item{TARGETINF3}{}
+#'   \item{TARGETSYN3}{}
+#'   \item{TARGETOTH3}{}
+#'   \item{TARGETOTX3}{}
+#'   \item{TRTTRIAL3}{}
+#'   \item{NCTNUM3}{}
+#'   \item{STARTMO3}{}
+#'   \item{STARTYEAR3}{}
+#'   \item{ENDMO3}{}
+#'   \item{ENDYEAR3}{}
+#'   \item{CARETRIAL3}{}
+#'   \item{TRIALGRP3}{}
+#'   \item{TARGETAB4}{}
+#'   \item{TARGETTAU4}{}
+#'   \item{TARGETINF4}{}
+#'   \item{TARGETSYN4}{}
+#'   \item{TARGETOTH4}{}
+#'   \item{TARGETOTX4}{}
+#'   \item{TRTTRIAL4}{}
+#'   \item{NCTNUM4}{}
+#'   \item{STARTMO4}{}
+#'   \item{STARTYEAR4}{}
+#'   \item{ENDMO4}{}
+#'   \item{ENDYEAR4}{}
+#'   \item{CARETRIAL4}{}
+#'   \item{TRIALGRP4}{}
+#'   \item{TARGETAB5}{}
+#'   \item{TARGETTAU5}{}
+#'   \item{TARGETINF5}{}
+#'   \item{TARGETSYN5}{}
+#'   \item{TARGETOTH5}{}
+#'   \item{TARGETOTX5}{}
+#'   \item{TRTTRIAL5}{}
+#'   \item{NCTNUM5}{}
+#'   \item{STARTMO5}{}
+#'   \item{STARTYEAR5}{}
+#'   \item{ENDMO5}{}
+#'   \item{ENDYEAR5}{}
+#'   \item{CARETRIAL5}{}
+#'   \item{TRIALGRP5}{}
+#'   \item{TARGETAB6}{}
+#'   \item{TARGETTAU6}{}
+#'   \item{TARGETINF6}{}
+#'   \item{TARGETSYN6}{}
+#'   \item{TARGETOTH6}{}
+#'   \item{TARGETOTX6}{}
+#'   \item{TRTTRIAL6}{}
+#'   \item{NCTNUM6}{}
+#'   \item{STARTMO6}{}
+#'   \item{STARTYEAR6}{}
+#'   \item{ENDMO6}{}
+#'   \item{ENDYEAR6}{}
+#'   \item{CARETRIAL6}{}
+#'   \item{TRIALGRP6}{}
+#'   \item{TARGETAB7}{}
+#'   \item{TARGETTAU7}{}
+#'   \item{TARGETINF7}{}
+#'   \item{TARGETSYN7}{}
+#'   \item{TARGETOTH7}{}
+#'   \item{TARGETOTX7}{}
+#'   \item{TRTTRIAL7}{}
+#'   \item{NCTNUM7}{}
+#'   \item{STARTMO7}{}
+#'   \item{STARTYEAR7}{}
+#'   \item{ENDMO7}{}
+#'   \item{ENDYEAR7}{}
+#'   \item{CARETRIAL7}{}
+#'   \item{TRIALGRP7}{}
+#'   \item{TARGETAB8}{}
+#'   \item{TARGETTAU8}{}
+#'   \item{TARGETINF8}{}
+#'   \item{TARGETSYN8}{}
+#'   \item{TARGETOTH8}{}
+#'   \item{TARGETOTX8}{}
+#'   \item{TRTTRIAL8}{}
+#'   \item{NCTNUM8}{}
+#'   \item{STARTMO8}{}
+#'   \item{STARTYEAR8}{}
+#'   \item{ENDMO8}{}
+#'   \item{ENDYEAR8}{}
+#'   \item{CARETRIAL8}{}
+#'   \item{TRIALGRP8}{}
+#'   \item{ADVEVENT}{}
+#'   \item{NEWADEVENT}{}
+#'   \item{ARIAE}{}
+#'   \item{ARIAH}{}
+#'   \item{ADVERSEOTH}{}
+#'   \item{ADVERSEOTX}{}
+#'   \item{FRMDATEA5D2}{}
+#'   \item{LANGA5D2}{}
+#'   \item{MODEA5D2}{}
+#'   \item{RMREASA5D2}{}
+#'   \item{RMMODEA5D2}{}
 #'   \item{TOBAC100}{Smoked more than 100 cigarettes in life ( 0 = No 1 = Yes 9 = Unknown - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{SMOKYRS}{Total years smoked cigarettes ( 0 - 87  		88 = Not applicable 		99 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PACKSPER}{Average number of packs smoked per day ( 0 = No reported cigarette use 1 = 1 cigarette to less than 1/2 pack  2 = Â½ pack to less than 1 pack  3 = 1 pack to 1Â½ packs  4 = 1Â½ packs to 2 packs  5 = More than two packs 8 = Not applicable 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{TOBAC30}{Smoked cigarettes in last 30 days ( 0 = No 1 = Yes 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{QUITSMOK}{If the subject quit smoking, age at which he/she last smoked (i.e., quit) ( 7 - 110  888 = Not applicable, no significant    smoking history 999 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ALCFREQYR}{}
 #'   \item{ALCOCCAS}{In the past three months, has the subject consumed any alcohol? ( 0 = No 1 = Yes 9 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ALCFREQ}{During the past three months, how often did the subject have at least one drink of any alcoholic beverage such as wine, beer, malt liquor, or spirits? ( 0 = Less than once a month  1 = About once a month  2 = About once a week  3 = A few times a week  4 = Daily or almost daily 8 = Not applicable, no alcohol consumption in last three months 9 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ALCDRINKS}{}
+#'   \item{ALCBINGE}{}
+#'   \item{ALCOHOL}{Alcohol abuse - clinically significant impairment occurring over a 12-month period manifested in one of the following areas: work, driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCSUBST}{}
+#'   \item{ABUSOTHR}{Other abused substances - clinically significant impairment occurring over a 12-month period manifested in one of the following areas: work, driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ABUSX}{If reported other abused substances, specify abused substance(s) (Any text or numbers)}
+#'   \item{SUBSTPAST}{}
+#'   \item{CANNABIS}{}
+#'   \item{NACCHEART}{}
+#'   \item{HRTATTACK}{}
 #'   \item{CVHATT}{Heart attack/cardiac arrest ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MYOINF}{Myocardial infarct present within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HRTATTMULT}{}
 #'   \item{HATTMULT}{More than one heart attack/cardiac arrest? ( 0 = No 1 = Yes 8 = Not applicable, no reported history of heart attack 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HRTATTAGE}{}
 #'   \item{HATTYEAR}{Year of most recent heart attack ( 1900 - current year  8888 = Not applicable, no reported history               of heart attack 9999 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CARDARREST}{}
+#'   \item{CARDARRAGE}{}
 #'   \item{CVAFIB}{Atrial fibrillation ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{AFIBRILL}{Atrial fibrillation present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVANGIO}{Angioplasty/endarterectomy/stent ( 0 = Absent 1 = Recent/Active 2  = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ANGIOPCI}{Percutaneous coronary intervention: angioplasty and/or stent within the past  12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVBYPASS}{Cardiac bypass procedure ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BYPASSAGE}{}
 #'   \item{CVPACDEF}{Pacemaker and/or defibrillator ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVPACE}{Pacemaker ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{PACEMAKE}{Procedure: pacemaker and/or defibrillator within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{PACDEFAGE}{}
 #'   \item{CVCHF}{Congestive heart failure ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CONGHRT}{Congestive heart failure present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVANGINA}{Angina ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ANGINA}{Angina present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVHVALVE}{Heart valve replacement or repair ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HVALVE}{Procedure: heart valve replacement or repair within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{VALVEAGE}{}
 #'   \item{CVOTHR}{Other cardiovascular disease ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVOTHRX}{Specification for other cardiovascular disease (Any text or numbers)}
 #'   \item{CBSTROKE}{Stroke ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{STROKMUL}{More than one stroke reported as of the Initial Visit ( 0 = No 1 = Yes 8 = Not applicable, no reported history of stroke as of the Initial Visit 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCSTYR}{Most recently reported year of stroke as of the Initial Visit ( 1900 - current year  8888 = Not applicable, no reported history     of stroke at the Initial Visit 9999 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{STROKAGE}{}
+#'   \item{STROKSTAT}{}
+#'   \item{ANGIOCP}{Carotid procedure: angioplasty, endarterectomy, or stent within the past  12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CAROTIDAGE}{}
 #'   \item{CBTIA}{Transient ischemic attack (TIA) ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{TIAMULT}{More than one TIA reported as of the  Initial Visit ( 0 = No 1 = Yes 8 = Not applicable, no reported history of TIA as of the Initial Visit 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCTIYR}{Most recently reported year of TIA as of the Initial Visit ( 1900 - current year  8888 = Not applicable, no reported history      of TIA 9999 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{TIAAGE}{}
+#'   \item{TIAMULT}{More than one TIA reported as of the  Initial Visit ( 0 = No 1 = Yes 8 = Not applicable, no reported history of TIA as of the Initial Visit 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PD}{Parkinson's disease (PD) ( 0 = Absent 1 = Recent/Active 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{PDAGE}{}
 #'   \item{PDYR}{Year of PD diagnosis ( 1900-  current year  8888 = Not applicable, no reported PD 9999 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PDOTHR}{Other parkinsonian disorder ( 0 = Absent 1 = Recent/Active 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{PDOTHRAGE}{}
 #'   \item{PDOTHRYR}{Year of parkinsonian disorder diagnosis ( 1900 - current year  8888 = Not applicable, other parkinsonian      disorder not reported 9999 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{SEIZURES}{Seizures ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SEIZNUM}{}
+#'   \item{SEIZAGE}{}
+#'   \item{HEADACHE}{}
+#'   \item{MS}{}
+#'   \item{HYDROCEPH}{}
+#'   \item{HEADIMP}{}
+#'   \item{IMPAMFOOT}{}
+#'   \item{IMPSOCCER}{}
+#'   \item{IMPHOCKEY}{}
+#'   \item{IMPBOXING}{}
+#'   \item{IMPSPORT}{}
+#'   \item{IMPIPV}{}
+#'   \item{IMPMILIT}{}
+#'   \item{IMPASSAULT}{}
+#'   \item{IMPOTHER}{}
+#'   \item{IMPOTHERX}{}
+#'   \item{IMPYEARS}{}
+#'   \item{HEADINJURY}{}
+#'   \item{HEADINJUNC}{}
+#'   \item{HEADINJCON}{}
+#'   \item{HEADINJNUM}{}
+#'   \item{FIRSTTBI}{}
+#'   \item{LASTTBI}{}
 #'   \item{NACCTBI}{History of traumatic brain injury (TBI) ( 0 = No 1 = Yes 9 = Unknown - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{TBI}{Traumatic brain injury (TBI) ( 0 = Absent	 1 = Recent/active 2 = Remote/inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{TBIBRIEF}{Traumatic brain injury (TBI) with brief loss of consciousness (UDS v3.0) ( 0 = No	 1 = Single 2 = Repeated/multiple 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17153,42 +16623,154 @@ NULL
 #'   \item{NCOTHR}{Other neurological condition ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NCOTHRX}{Other neurological condition (specify) (Any text or numbers)}
 #'   \item{DIABETES}{Diabetes ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DIABET}{Diabetes present at visit ( 0 = No 1 = Yes, Type I 2 = Yes, Type II 3 = Yes, other type 9 = Not assessed or unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{DIABTYPE}{If Recent/active or Remote/inactive diabetes, which type? ( 1 = Type 1  2 = Type 2  3 = Other type (diabetes insipidus, latent autoimmune diabetes/type 1.5, gestational diabetes) 8 = Not applicable, no diabetes reported 9 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DIABINS}{}
+#'   \item{DIABMEDS}{}
+#'   \item{DIABGLP1}{}
+#'   \item{DIABRECACT}{}
+#'   \item{DIABDIET}{}
+#'   \item{DIABUNK}{}
+#'   \item{DIABAGE}{}
 #'   \item{HYPERTEN}{Hypertension ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HYPERT}{Hypertension present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HYPERTAGE}{}
 #'   \item{HYPERCHO}{Hypercholesterolemia ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HYPCHOL}{Hypercholesterolemia present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HYPERCHAGE}{}
 #'   \item{B12DEF}{Vitamin B12 deficiency ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{VB12DEF}{B12 deficiency present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{THYROID}{Thyroid disease ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{THYDIS}{Thyroid disease present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ARTHRIT}{Arthritis ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ARTH}{Arthritis present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCRHEUM}{}
+#'   \item{NACCOSTEO}{}
+#'   \item{NACCARTOTH}{}
 #'   \item{ARTHTYPE}{Type of arthritis ( 1 = Rheumatoid  2 = Osteoarthritis  3 = Other  8 = Not applicable, no reported arthritis 9 = Unknown  - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ARTYPE}{Arthritis type ( 1 = Rheumatoid 2 = Osteoarthritis 3 = Other (specify) 8 = No arthritis reported 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ARTHTYPX}{Other arthritis (specify) (Any text or numbers)}
+#'   \item{ARTYPEX}{Other arthritis type specification (Any text or numbers)}
 #'   \item{ARTHUPEX}{Arthritis, region affected - upper extremity ( 0 = No  1 = Yes 8 = Not applicable, no arthritis reported                             - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ARTUPEX}{Arthritis region affected - upper extremity ( 0 = No 1 = Yes 8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ARTHLOEX}{Arthritis, region affected - lower extremity ( 0 = No  1 = Yes        8 = Not applicable, no arthritis reported                      - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ARTLOEX}{Arthritis region affected - lower extremity ( 0 = No 1 = Yes 8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ARTHSPIN}{Arthritis, region affected - spine ( 0 = No 1 = Yes 8 = Not applicable, no arthritis reported - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ARTSPIN}{Arthritis region affected - spine ( 0 = No 1 = Yes 8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ARTHUNK}{Region affected - unknown ( 0 = No  1 = Yes 8 = Not applicable, no arthritis reported - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ARTUNKN}{Arthritis region affected - unknown ( 0 = No 1 = Yes  8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INCONTU}{Incontinence - urinary ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{URINEINC}{Incontinence present - urinary ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INCONTF}{Incontinence - bowel ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BOWLINC}{Incontinence present - bowel ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{APNEA}{Sleep apnea history reported at Initial Visit ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SLEEPAP}{Sleep apnea present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CPAP}{}
+#'   \item{APNEAORAL}{}
 #'   \item{RBD}{REM sleep behavior disorder (RBD) history reported at Initial Visit ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{REMDIS}{REM sleep behavior disorder (RBD) present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{INSOMN}{Hyposomnia/insomnia history reported at Initial Visit ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HYPOSOM}{Hyposomnia/insomnia present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTHSLEEP}{Other sleep disorder history reported at Initial Visit ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SLEEPOTH}{Other sleep disorder present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTHSLEEX}{Other sleep disorder (specify) (Any text or numbers)}
-#'   \item{ALCOHOL}{Alcohol abuse - clinically significant impairment occurring over a 12-month period manifested in one of the following areas: work, driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ABUSOTHR}{Other abused substances - clinically significant impairment occurring over a 12-month period manifested in one of the following areas: work, driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ABUSX}{If reported other abused substances, specify abused substance(s) (Any text or numbers)}
-#'   \item{PTSD}{Post-traumatic stress disorder (PTSD) ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BIPOLAR}{Bipolar disorder ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{SCHIZ}{Schizophrenia ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SLEEPOTX}{Other sleep disorder specification (Any text or numbers)}
+#'   \item{NACCCANCER}{}
+#'   \item{CANCERACTV}{}
+#'   \item{CANCER}{Cancer present in the last 12 months (excluding non-melanoma skin cancer), primary or metastatic ( 0 = No 1 = Yes, primary/non-metastatic 2 = Yes, metastatic 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CANCERPRIM}{}
+#'   \item{CANCERMETA}{}
+#'   \item{CANCMETBR}{}
+#'   \item{CANCMETOTH}{}
+#'   \item{CANCERUNK}{}
+#'   \item{CANCBLOOD}{}
+#'   \item{CANCBREAST}{}
+#'   \item{CANCCOLON}{}
+#'   \item{CANCLUNG}{}
+#'   \item{CANCPROST}{}
+#'   \item{CANCOTHER}{}
+#'   \item{CANCOTHERX}{}
+#'   \item{CANCSITE}{Cancer primary site specification (Any text or numbers)}
+#'   \item{CANCRAD}{}
+#'   \item{CANCRESECT}{}
+#'   \item{CANCIMMUNO}{}
+#'   \item{CANCBONE}{}
+#'   \item{CANCCHEMO}{}
+#'   \item{CANCHORM}{}
+#'   \item{CANCTROTH}{}
+#'   \item{CANCTROTHX}{}
+#'   \item{CANCERAGE}{}
+#'   \item{COVID19}{}
+#'   \item{COVIDHOSP}{}
+#'   \item{PULMONARY}{}
+#'   \item{KIDNEY}{}
+#'   \item{KIDNEYAGE}{}
+#'   \item{LIVER}{}
+#'   \item{LIVERAGE}{}
+#'   \item{PVD}{}
+#'   \item{PVDAGE}{}
+#'   \item{HIVDIAG}{}
+#'   \item{HIVAGE}{}
+#'   \item{ANTIENC}{Antibody-mediated encephalopathy within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ANTIENCX}{Antibody-mediated encephalopathy, specify (Any text or numbers)}
+#'   \item{NACCOTHCON}{}
+#'   \item{OTHERCOND}{}
+#'   \item{OTHCONDX}{Other medical conditions specification (Any text or numbers)}
+#'   \item{NACCDEP}{}
+#'   \item{MAJORDEP}{}
+#'   \item{OTHERDEP}{}
 #'   \item{DEP2YRS}{Active depression in the last two years ( 0 = No 1 = Yes 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{DEPOTHR}{Depression episodes more than two  years ago ( 0 = No 1 = Yes 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DEPRTREAT}{}
+#'   \item{BIPOLAR}{Bipolar disorder ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SCHIZ}{Schizophrenia ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCANX}{}
 #'   \item{ANXIETY}{Anxiety ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{GENERALANX}{}
+#'   \item{PANICDIS}{}
 #'   \item{OCD}{Obsessive-compulsive disorder (OCD) ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{OTHANXDIS}{}
+#'   \item{OTHANXDISX}{}
+#'   \item{PTSD}{Post-traumatic stress disorder (PTSD) ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NPSYDEV}{Developmental neuropsychiatric disorders (e.g., autism spectrum disorder [ASD], attention-deficit hyperactivity disorder [ADHD], dyslexia) ( 0 = Absent	 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PSYCDIS}{Other psychiatric disorder ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PSYCDISX}{If recent/active or remote/inactive psychiatric disorder, specify disorder (Any text or numbers)}
+#'   \item{MENARCHE}{}
+#'   \item{NOMENSAGE}{}
+#'   \item{NOMENSNAT}{}
+#'   \item{NOMENSHYST}{}
+#'   \item{NOMENSSURG}{}
+#'   \item{NOMENSCHEM}{}
+#'   \item{NOMENSRAD}{}
+#'   \item{NOMENSHORM}{}
+#'   \item{NOMENSESTR}{}
+#'   \item{NOMENSUNK}{}
+#'   \item{NOMENSOTH}{}
+#'   \item{NOMENSOTHX}{}
+#'   \item{HRT}{}
+#'   \item{HRTYEARS}{}
+#'   \item{HRTSTRTAGE}{}
+#'   \item{HRTENDAGE}{}
+#'   \item{BCPILLS}{}
+#'   \item{BCPILLSYR}{}
+#'   \item{BCSTARTAGE}{}
+#'   \item{BCENDAGE}{}
+#'   \item{FRMDATEB1}{}
+#'   \item{LANGB1}{}
+#'   \item{MODEB1}{}
+#'   \item{B1NOT}{}
 #'   \item{HEIGHT}{Subject's height (inches) ( 36.0 -  87.9		 88.8 = Unknown or not assessed - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{WEIGHT}{Subject's weight (lbs) ( 50  -  400	 888 = Unknown or not assessed - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCBMI}{Body mass index (BMI) ( 10.0 -  100.0	 888.8 = Unknown or not assessed - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCWAIST}{}
+#'   \item{NACCHIP}{}
+#'   \item{NACCBPSYSL}{}
+#'   \item{NACCBPSYSR}{}
+#'   \item{NACCBPDIAL}{}
+#'   \item{NACCBPDIAR}{}
 #'   \item{BPSYS}{Subject blood pressure (sitting), systolic ( 70 - 230	 777 = Blood pressure addendum submitted 888 = Unknown or not assessed - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BPDIAS}{Subject blood pressure (sitting), diastolic ( 30 - 140 777 = Blood pressure addendum submitted	 888 = Unknown or not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BPDEVICE}{Blood pressure measured by approved device (0 = No 1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{HRATE}{Subject resting heart rate (pulse) ( 33 -160	 888 = Unknown or not assessed - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{VISION}{Without corrective lenses, is the subject's vision functionally normal? ( 0 = No  1 = Yes  9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{VISCORR}{Does the subject usually wear corrective lenses? ( 0 = No  1 = Yes  9 = Unknown - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17213,6 +16795,10 @@ NULL
 #'   \item{CVDIMAG3}{Extensive white matter hyperintensity ( 0 = No 1 = Yes 8 = Not applicable - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVDIMAG4}{Other imaging evidence ( 0 = No 1 = Yes 8 = Not applicable - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVDIMAGX}{Other imaging evidence - specify (Any text or numbers)}
+#'   \item{FRMDATEB3}{}
+#'   \item{LANGB3}{}
+#'   \item{MODEB3}{}
+#'   \item{B3NOT}{}
 #'   \item{PDNORMAL}{UPDRS normal ( 0 = No, not normal 1 = Yes, normal 8 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{SPEECH}{Speech ( 0 = Normal 1 = Slight loss of expression, diction, and/or volume 2 = Monotone, slurred but understandable; moderately impaired 3 = Marked impairment, difficult to understand 4 = Unintelligible 8 = Untestable -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{SPEECHX}{Speech; untestable - specify reason (Any text or numbers)}
@@ -17268,6 +16854,12 @@ NULL
 #'   \item{POSSTABX}{Posture stability; untestable -  specify reason (Any text or numbers)}
 #'   \item{BRADYKIN}{Body bradykinesia and hypokinesia ( 0 = None 1 = Minimal slowness, giving movement a deliberate character; could be normal for some persons; possibly reduced amplitude 2 = Mild degree of slowness and poverty of movement which is definitely abnormal. Alternatively, some reduced amplitude 3 = Moderate slowness, poverty or small amplitude of movement 4 = Marked slowness, poverty or small amplitude of movement 8 = Untestable -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BRADYKIX}{Body bradykinesia and hypokinesia; untestable - specify reason (Any text or numbers)}
+#'   \item{TOTALUPDRS}{}
+#'   \item{FRMDATEB4}{}
+#'   \item{LANGB4}{}
+#'   \item{MODEB4}{}
+#'   \item{RMREASB4}{}
+#'   \item{RMMODEB4}{}
 #'   \item{MEMORY}{Memory ( 0.0 = No impairment 0.5 = Questionable impairment 1.0 = Mild impairment 2.0 = Moderate impairment 3.0 = Severe impairment)}
 #'   \item{ORIENT}{Orientation ( 0.0 = No impairment 0.5 = Questionable impairment 1.0 = Mild impairment 2.0 = Moderate impairment 3.0 = Severe impairment)}
 #'   \item{JUDGMENT}{Judgment and problem-solving ( 0.0 = No impairment 0.5 = Questionable impairment 1.0 = Mild impairment 2.0 = Moderate impairment 3.0 = Severe impairment)}
@@ -17278,6 +16870,12 @@ NULL
 #'   \item{CDRGLOB}{Global CDR ( 0.0 = No impairment 0.5 = Questionable impairment 1.0 = Mild impairment 2.0 = Moderate impairment 3.0 = Severe impairment)}
 #'   \item{COMPORT}{Behavior, comportment, and personality ( 0.0 = No impairment 0.5 = Questionable impairment 1.0 = Mild impairment 2.0 = Moderate impairment 3.0 = Severe impairment   -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CDRLANG}{Language ( 0.0 = No impairment 0.5 = Questionable impairment 1.0 = Mild impairment 2.0 = Moderate impairment 3.0 = Severe impairment   -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FRMDATEB5}{}
+#'   \item{LANGB5}{}
+#'   \item{MODEB5}{}
+#'   \item{RMREASB5}{}
+#'   \item{RMMODEB5}{}
+#'   \item{B5NOT}{}
 #'   \item{NPIQINF}{NPI-Q co-participant ( 1 = Spouse 2 = Child 3 = Other -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NPIQINFX}{NPI-Q co-participant, other-specify (Any text or numbers)}
 #'   \item{DEL}{Delusions in the last month ( 0 = No 1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17304,6 +16902,12 @@ NULL
 #'   \item{NITESEV}{Nighttime behaviors severity ( 1 = Mild (noticeable, but not a significant change) 2 = Moderate (significant, but not a dramatic change) 3 = Severe (very marked or prominent; a dramatic change) 8 = Not applicable, no nighttime behaviors reported 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{APP}{Appetite and eating problems in the last month ( 0 = No 1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{APPSEV}{Appetite and eating severity ( 1 = Mild (noticeable, but not a significant  	change) 2 = Moderate (significant, but not a dramatic change) 3 = Severe (very marked or prominent; a dramatic change) 8 = Not applicable, no appetite or eating problems reported 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FRMDATEB6}{}
+#'   \item{LANGB6}{}
+#'   \item{MODEB6}{}
+#'   \item{RMREASB6}{}
+#'   \item{RMMODEB6}{}
+#'   \item{B6NOT}{}
 #'   \item{NOGDS}{Is the subject able to complete the GDS, based on the clinician's best judgment? ( 0 = Able to complete the GDS 1 = Not able to complete the GDS -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{SATIS}{Are you basically satisfied with your life? ( 0 = Yes 1 = No 9 = Did not answer -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{DROPACT}{Have you dropped many of your activities and interests? ( 0 = No 1 = Yes 9 = Did not answer -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17321,6 +16925,12 @@ NULL
 #'   \item{HOPELESS}{Do you feel that your situation is hopeless? ( 0 = No 1 = Yes 9 = Did not answer -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BETTER}{Do you think that most people are better off than you are? ( 0 = No 1 = Yes 9 = Did not answer -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCGDS}{Total GDS Score ( 0 - 15 88 = Could not be calculated -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FRMDATEB7}{}
+#'   \item{LANGB7}{}
+#'   \item{MODEB7}{}
+#'   \item{RMREASB7}{}
+#'   \item{RMMODEB7}{}
+#'   \item{B7NOT}{}
 #'   \item{BILLS}{In the past four weeks, did the subject have any difficulty or need help with: Writing checks, paying bills, or balancing a checkbook ( 0 = Normal 1 = Has difficulty, but does by self 2 = Requires assistance 3 = Dependent 8 = Not applicable (e.g., never did) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{TAXES}{In the past four weeks, did the subject have any difficulty or need help with: Assembling tax records, business affairs, or other papers ( 0 = Normal 1 = Has difficulty, but does by self 2 = Requires assistance 3 = Dependent 8 = Not applicable (e.g., never did) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question.)}
 #'   \item{SHOPPING}{In the past four weeks, did the subject have any difficulty or need help with: Shopping alone for clothes, household necessities, or groceries ( 0 = Normal 1 = Has difficulty, but does by self 2 = Requires assistance 3 = Dependent 8 = Not applicable (e.g., never did) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17331,21 +16941,72 @@ NULL
 #'   \item{PAYATTN}{In the past four weeks, did the subject have any difficulty or need help with: Paying attention to and understanding a TV program, book, or magazine ( 0 = Normal 1 = Has difficulty, but does by self 2 = Requires assistance 3 = Dependent 8 = Not applicable (e.g., never did) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REMDATES}{In the past four weeks, did the subject have any difficulty or need help with: Remembering appointments, family occasions, holidays, medications ( 0 = Normal 1 = Has difficulty, but does by self 2 = Requires assistance 3 = Dependent 8 = Not applicable (e.g., never did) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{TRAVEL}{In the past four weeks, did the subject have any difficulty or need help with: Traveling out of the neighborhood, driving, or arranging to take public transportation ( 0 = Normal 1 = Has difficulty, but does by self 2 = Requires assistance 3 = Dependent 8 = Not applicable (e.g., never did) 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FRMDATEB8}{}
+#'   \item{LANGB8}{}
+#'   \item{MODEB8}{}
+#'   \item{RMREASB8}{}
+#'   \item{RMMODEB8}{}
 #'   \item{NACCNREX}{Were all findings unremarkable? ( 0 = Abnormal findings	   1 = No abnormal findings or findings normal for age 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NEUREXAM}{}
 #'   \item{NORMEXAM}{Were there abnormal neurological exam findings? ( 0 = No abnormal findings	   1 = Yes - abnormal findings were consistent with syndromes listed in Questions 2-8 2 = Yes - abnormal findings were consistent with age-associated changes or irrelevant to dementing disorders (e.g., Bell's palsy) -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NORMNREXAM}{}
 #'   \item{FOCLDEF}{Are focal deficits present indicative of central nervous system disorder? ( 0 = No	   1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{GAITDIS}{Is gait disorder present indicative of central nervous system disorder? ( 0 = No	   1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{EYEMOVE}{Are there eye movement abnormalities present indicative of central nervous system disorder? ( 0 = No	   1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PARKSIGN}{Parkinsonian signs ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{TREMREST}{}
+#'   \item{TREMPOST}{}
+#'   \item{TREMKINE}{}
 #'   \item{RESTTRL}{Resting tremor - left arm ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{RESTTRR}{Resting tremor - right arm ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SLOWINGFM}{}
 #'   \item{SLOWINGL}{Slowing of fine motor movements -  left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{SLOWINGR}{Slowing of fine motor movements - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BRADY}{Bradykinesia ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{RIGIDARM}{}
+#'   \item{RIGIDLEG}{}
 #'   \item{RIGIDL}{Rigidity - left arm ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{RIGIDR}{Rigidity - right arm ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BRADY}{Bradykinesia ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{PARKGAIT}{Parkinsonian gait disorder ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DYSTARM}{}
+#'   \item{DYSTLEG}{}
+#'   \item{DYSTONL}{Dystonia consistent with CBS, PSP, or related disorder - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DYSTONR}{Dystonia consistent with CBS, PSP, or related disorder - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CHOREA}{}
+#'   \item{AMPMOTOR}{}
+#'   \item{AXIALRIG}{}
 #'   \item{POSTINST}{Postural instability ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MASKING}{}
+#'   \item{STOOPED}{}
+#'   \item{OTHERSIGN}{}
+#'   \item{LIMBAPRAX}{}
+#'   \item{APRAXL}{Apraxia consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{APRAXR}{Apraxia consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{UMNDIST}{}
+#'   \item{LMNDIST}{}
+#'   \item{VFIELDCUT}{}
+#'   \item{LIMBATAX}{}
+#'   \item{ATAXL}{Ataxia consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ATAXR}{Ataxia consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MYOCLON}{}
+#'   \item{UNISOMATO}{}
+#'   \item{APHASIA}{}
+#'   \item{ALIENLIMB}{}
+#'   \item{ALIENLML}{Alien limb consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ALIENLMR}{Alien limb consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HSPATNEG}{}
+#'   \item{PSPOAGNO}{}
+#'   \item{SMTAGNO}{}
+#'   \item{OPTICATAX}{}
+#'   \item{APRAXGAZE}{}
+#'   \item{VHGAZEPAL}{}
+#'   \item{DYSARTH}{}
+#'   \item{DYSPSP}{Dysarthria consistent with PSP ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{APRAXSP}{Apraxia of speech ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CORTSENL}{Cortical sensory deficits consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CORTSENR}{Cortical sensory deficits consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MYOCLLT}{Myoclonus consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MYOCLRT}{Myoclonus consistent with CBS -  right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ALSFIND}{Findings suggesting ALS (e.g., muscle wasting, fasciculations, upper motor and/or lower motor neuron signs) ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVDSIGNS}{Neurological sign considered by examiner to be most likely consistent with cerebrovascular disease ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CORTDEF}{Cortical cognitive deficit (e.g., aphasia, apraxia, neglect) ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{SIVDFIND}{Focal or other neurological findings consistent with SIVD (subcortical ischemic vascular dementia) ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17358,29 +17019,29 @@ NULL
 #'   \item{POSTCORT}{Higher cortical visual problem suggesting posterior cortical atrophy (e.g., prosopagnosia, simultagnosia, Balint's syndrome) or apraxia of gaze ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PSPCBS}{Findings suggestive of progressive supranuclear palsy (PSP), corticobasal syndrome (CBS), or other related disorders ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{EYEPSP}{Eye movement changes consistent with PSP ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DYSPSP}{Dysarthria consistent with PSP ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{AXIALPSP}{Axial rigidity consistent with PSP ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{GAITABN}{}
+#'   \item{GAITFIND}{}
+#'   \item{GAITOTHRX}{}
+#'   \item{PARKGAIT}{Parkinsonian gait disorder ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{GAITPSP}{Gait disorder consistent with PSP ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{APRAXSP}{Apraxia of speech ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{APRAXL}{Apraxia consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{APRAXR}{Apraxia consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{CORTSENL}{Cortical sensory deficits consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{CORTSENR}{Cortical sensory deficits consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ATAXL}{Ataxia consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ATAXR}{Ataxia consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ALIENLML}{Alien limb consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ALIENLMR}{Alien limb consistent with CBS - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DYSTONL}{Dystonia consistent with CBS, PSP, or related disorder - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DYSTONR}{Dystonia consistent with CBS, PSP, or related disorder - right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MYOCLLT}{Myoclonus consistent with CBS - left side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MYOCLRT}{Myoclonus consistent with CBS -  right side ( 0 = No	   1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ALSFIND}{Findings suggesting ALS (e.g., muscle wasting, fasciculations, upper motor and/or lower motor neuron signs) ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{GAITNPH}{Normal pressure hydrocephalus -  gait apraxia ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTHNEUR}{Other findings (e.g., cerebella ataxia, chorea, myoclonus) ( 0 = No	   1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTHNEURX}{Other findings (specify) (Any text or numbers)}
+#'   \item{FRMDATEB9}{}
+#'   \item{LANGB9}{}
+#'   \item{MODEB9}{}
+#'   \item{RMREASB9}{}
+#'   \item{RMMODEB9}{}
 #'   \item{B9CHG}{Indicate changes in information reported at previous visit ( 1 = There have been no meaningful changes  	    in the subject's cognition, behavior, or  	    motor function since the previous  	    UDS visit		  2 =  At the previous UDS visit, the clinician DID NOT report a decline in the subject's memory, non-memory cognitive abilities, behavior, or motor function. However, there have been meaningful changes since then 3 = At the previous UDS visit, the clinician DID report a decline in the subject's memory, non-memory cognitive abilities, behavior, or motor function. Since then, there have been additional meaningful changes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DECCOG}{}
 #'   \item{DECSUB}{Does the subject report a decline in memory (relative to previously attained abilities)? ( 0 = No		  1 = Yes 8 = Could not be assessed/subject too impaired  9= Unknown Description/derivation 	Note that ""Could not be assessed/subject too impaired"" (decsub = 8) was added in UDS3 and was not an available option in versions 1- 2.  		Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{DECMOT}{}
+#'   \item{PSYCHSYM}{}
+#'   \item{DECCOGIN}{}
 #'   \item{DECIN}{Does the co-participant report a decline in subject's memory (relative to previously attained abilities)? ( 0 = No		  1 = Yes 8 = There is no co-participant 9 = Unknown  Description/derivation 	Note that ""There is no co-participant"" (decin = 8) was added in UDS3 and was not an available option in  versions 1- 2.  Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{DECMOTIN}{}
+#'   \item{PSYCHSYMIN}{}
 #'   \item{DECCLIN}{Clinician believes there is a meaningful decline in memory, non-memory cognitive abilities, behavior, ability to manage his/her affairs, or there are motor/movement changes. ( 0 = No		  1 = Yes -4 = 	Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{DECCLCOG}{Based on the clinician's judgment, is the subject currently experiencing meaningful impairment in cognition? ( 0 = No		  1 = Yes -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{COGMEM}{Indicate whether the subject currently is meaningfully impaired, relative to previously attained abilities, in memory ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
@@ -17393,53 +17054,82 @@ NULL
 #'   \item{COGFLAGO}{At what age did the fluctuating cognition begin? ( 15  - 110 888 = Not applicable, no or unknown      fluctuating cognition 999 = Age unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{COGOTHR}{Indicate whether the subject currently is meaningfully impaired, relative to previously attained abilities, in other cognitive domains ( 0 = No	  1 = Yes 9 = Unknown)}
 #'   \item{COGOTHRX}{Specification of other cognitive impairment (Any text or numbers)}
-#'   \item{NACCCOGF}{Indicate the predominant symptom that was first recognized as a decline in the subject's cognition ( 0 = No impairment in cognition 1 = Memory		  2 = Orientation 3 = Executive function - judgment, planning, problem-solving 4 = Language 5 = Visuospatial function 6 = Attention/concentration 7 = Fluctuating cognition 8 = Other (specify) 99 = Unknown)}
-#'   \item{NACCCGFX}{Specification for other predominant symptom first recognized as a decline in the subject's cognition (Any text or numbers)}
+#'   \item{NACCCOGAGE}{}
 #'   \item{COGMODE}{Mode of onset of cognitive symptoms ( 0 = No impairment in cognition  1 = Gradual 2 = Subacute 3 = Abrupt 4 = Other (specify) 99 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{COGMODEX}{Specification for other mode of onset of cognitive symptoms (Any text or numbers)}
-#'   \item{DECAGE}{Based on clinician's assessment, at what age did the cognitive decline begin? ( 15-110 888 = No impairment in cognition 999 = Age unknown)}
+#'   \item{NACCCOGF}{Indicate the predominant symptom that was first recognized as a decline in the subject's cognition ( 0 = No impairment in cognition 1 = Memory		  2 = Orientation 3 = Executive function - judgment, planning, problem-solving 4 = Language 5 = Visuospatial function 6 = Attention/concentration 7 = Fluctuating cognition 8 = Other (specify) 99 = Unknown)}
+#'   \item{NACCCGFX}{Specification for other predominant symptom first recognized as a decline in the subject's cognition (Any text or numbers)}
 #'   \item{DECCLBE}{Based on clinician's judgment, is the subject currently experiencing any kind of behavioral symptoms? ( 0 = No		  1 = Yes -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BEAPATHY}{Subject currently manifests meaningful change in behavior - Apathy, withdrawal ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{BEDEP}{Subject currently manifests meaningful change in behavior - Depressed mood ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{BEANX}{Subject currently manifests meaningful change in behavior - Anxiety ( 0 = No		  1 = Yes 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BEEUPH}{}
+#'   \item{BEIRRIT}{Subject currently manifests meaningful change in behavior - Irritability ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{BEAGIT}{Subject currently manifests meaningful change in behavior - Agitation ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{BEHAGE}{}
 #'   \item{BEVHALL}{Subject currently manifests meaningful change in behavior - Psychosis -  Visual hallucinations ( 0 = No		  1 = Yes 9 = Unknown  Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{BEVPATT}{}
 #'   \item{BEVWELL}{If yes, are the hallucinations well-formed and detailed? ( 0 = No		  1 = Yes 8 = Not applicable, no visual hallucinations 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BEVHAGO}{If well-formed, clear-cut visual hallucinations, at what age did these hallucinations begin? ( 15 - 110 888 = Not applicable, no well-formed visual hallucinations -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BEAHALL}{Subject currently manifests meaningful change in behavior - Psychosis -  Auditory hallucinations ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{BEAHSIMP}{}
+#'   \item{BEAHCOMP}{}
 #'   \item{BEDEL}{Subject currently manifests meaningful change in behavior - Psychosis - Abnormal, false, or delusional beliefs ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{BEAGGRS}{}
+#'   \item{PSYCHAGE}{}
 #'   \item{BEDISIN}{Subject currently manifests meaningful change in behavior - Disinhibition ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
-#'   \item{BEIRRIT}{Subject currently manifests meaningful change in behavior - Irritability ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
-#'   \item{BEAGIT}{Subject currently manifests meaningful change in behavior - Agitation ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{BEPERCH}{Subject currently manifests meaningful change in behavior - Personality change ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{BEEMPATH}{}
+#'   \item{BEOBCOM}{}
+#'   \item{BEANGER}{}
+#'   \item{BESUBAB}{}
+#'   \item{ALCUSE}{}
+#'   \item{SEDUSE}{}
+#'   \item{OPIATEUSE}{}
+#'   \item{COCAINEUSE}{}
+#'   \item{CANNABUSE}{}
+#'   \item{OTHSUBUSE}{}
+#'   \item{OTHSUBUSEX}{}
+#'   \item{PERCHAGE}{}
+#'   \item{BEAGE}{Based on the clinician's assessment, at what age did the behavioral symptoms begin? ( 15 - 110	  888 = Not applicable, no behavioral symptoms 999 = Age unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BEREM}{Subject currently manifests meaningful change in behavior - REM sleep behavior disorder ( 0 = No		  1 = Yes 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{BEREMAGO}{If yes, at what age did the REM sleep behavior disorder begin? ( 15 - 110 888 = Not applicable, no REM sleep behavior disorder -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BEANX}{Subject currently manifests meaningful change in behavior - Anxiety ( 0 = No		  1 = Yes 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BEREMCONF}{}
 #'   \item{BEOTHR}{Subject currently manifests meaningful change in behavior - Other ( 0 = No/unknown		  1 = Yes)}
 #'   \item{BEOTHRX}{Subject currently manifests meaningful change in behavior - Other, specify (Any text or numbers)}
-#'   \item{NACCBEHF}{Indicate the predominant symptom that was first recognized as a decline in the subject's behavior ( 0 = No behavioral symptoms  1 = Apathy/withdrawal	  2 = Depressed mood 3 = Psychosis 4 = Disinhibition 5 = Irritability 6 = Agitation 7 = Personality change 8 = REM sleep behavior disorder 9 = Anxiety 10 = Other (specify) 99 = Unknown)}
-#'   \item{NACCBEFX}{Specification of other predominant symptom that was first recognized as a decline in the subject's behavior (Any text or numbers)}
 #'   \item{BEMODE}{Mode of onset of behavioral symptoms ( 0 = No behavioral symptoms 1 = Gradual		  2 = Subacute 3 = Abrupt 4 = Other (specify) 99 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{BEMODEX}{Specification of other mode of onset of behavioral symptoms (Any text or numbers)}
-#'   \item{BEAGE}{Based on the clinician's assessment, at what age did the behavioral symptoms begin? ( 15 - 110	  888 = Not applicable, no behavioral symptoms 999 = Age unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCBEHF}{Indicate the predominant symptom that was first recognized as a decline in the subject's behavior ( 0 = No behavioral symptoms  1 = Apathy/withdrawal	  2 = Depressed mood 3 = Psychosis 4 = Disinhibition 5 = Irritability 6 = Agitation 7 = Personality change 8 = REM sleep behavior disorder 9 = Anxiety 10 = Other (specify) 99 = Unknown)}
+#'   \item{NACCBEFX}{Specification of other predominant symptom that was first recognized as a decline in the subject's behavior (Any text or numbers)}
 #'   \item{DECCLMOT}{Based on the clinician's judgment, is the subject currently experiencing any motor symptoms? ( 0 = No		  1 = Yes -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOGAIT}{Indicate whether the subject currently has meaningful changes in motor function - Gait disorder ( 0 = No		  1 = Yes 9 = Unknown  Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{MOFALLS}{Indicate whether the subject currently has meaningful changes in motor function - Falls ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
-#'   \item{MOTREM}{Indicate whether the subject currently has meaningful changes in motor function - Tremor ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{MOSLOW}{Indicate whether the subject currently has meaningful changes in motor function - Slowness ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
-#'   \item{NACCMOTF}{Indicate the predominant symptom that was first recognized as a decline in the subject's motor function ( 0 = No motor symptoms  1 = Gait disorder		  2 = Falls 3 = Tremor 4 = Slowness 99 = Unknown)}
+#'   \item{MOTREM}{Indicate whether the subject currently has meaningful changes in motor function - Tremor ( 0 = No		  1 = Yes 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
+#'   \item{MOLIMB}{}
+#'   \item{MOFACE}{}
+#'   \item{MOSPEECH}{}
+#'   \item{MOTORAGE}{}
+#'   \item{MOAGE}{Based on the clinician's assessment, at what age did the motor changes begin? ( 9 - 110 888= No motor symptoms -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOMODE}{Mode of onset of motor symptoms ( 0 = No motor symptoms  1 = Gradual		  2 = Subacute 3 = Abrupt 4 = Other 99 = Unknown  Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{MOMODEX}{Specification for other mode of onset of motor symptoms (Any text or numbers)}
+#'   \item{NACCMOTF}{Indicate the predominant symptom that was first recognized as a decline in the subject's motor function ( 0 = No motor symptoms  1 = Gait disorder		  2 = Falls 3 = Tremor 4 = Slowness 99 = Unknown)}
 #'   \item{MOMOPARK}{Were changes in motor function suggestive of Parkinsonism? ( 0 = No		  1 = Yes 8 = Not applicable, no motor changes 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PARKAGE}{If yes, at what age did the motor symptoms suggestive of Parkinsonism begin? ( 15 - 110 888 = Not applicable, no Parkinsonism 999  = Age unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOMOALS}{Were changes in motor function suggestive of amyotrophic lateral sclerosis? ( 0 = No		  1 = Yes 8 = Not applicable, no motor function changes 9 = Unknown -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ALSAGE}{If yes, at what age did the motor symptoms suggestive of ALS begin? ( 15 - 110 888 = Not applicable, No ALS -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MOAGE}{Based on the clinician's assessment, at what age did the motor changes begin? ( 9 - 110 888= No motor symptoms -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{COURSE}{Overall course of decline of cognitive/behavioral/motor syndrome ( 1 = Gradually progressive		  2 = Stepwise 3 = Static 4 = Fluctuating 5 = Improved 8 = Not applicable 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{FRSTCHG}{Indicate the predominant domain that was first recognized as changed in the subject ( 1 = Cognition		  2 = Behavior 3 = Motor function 8 = Not applicable 9 = Unknown Description/derivation 	Please note that in version 1.2 of the UDS, the follow-up visit form asked for changes since the previous visit. If ""No meaningful changes"" (b9chg = 1) was selected, the clinician did not complete the rest of the form. In these cases, NACC has brought forward data from the previous visit. In cases where changes were reported on the form, the new data are provided longitudinally as recorded by the clinician. These changes apply only to those subjects who had a UDS follow-up visit using version 1.2 of the UDS (2005 - 2008); data collected using versions 2 and 3 of the UDS are not affected by this change.)}
 #'   \item{LBDEVAL}{Is the subject a potential candidate for further evaluation for Lewy body disease? ( 0 = No		  1 = Yes -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{FTLDEVAL}{Is the subject a potential candidate for further evaluation for frontotemporal lobar degeneration? ( 0 = No		  1 = Yes -4 =  Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FRMDATEC2C2T}{}
+#'   \item{LANGC2C2T}{}
+#'   \item{MODEC2C2T}{}
+#'   \item{RMREASC2C2T}{}
+#'   \item{RMMODEC2C2T}{}
 #'   \item{MMSECOMP}{Was any part of the MMSE completed? ( 0 = No 1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MMSELOC}{Administration of the MMSE was: ( 1 = In ADC/clinic 2 = In home 3 = In person - other -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MMSELAN}{Language of MMSE administration ( 1 = English 2 = Spanish 3 = Other -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MMSELOC}{Administration of the MMSE was: ( 1 = In ADC/clinic 2 = In home 3 = In person - other -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MMSELANX}{Language of MMSE administration - Other (specify) (Any text or numbers)}
 #'   \item{MMSEVIS}{Subject was unable to complete one or more sections due to visual impairment ( 0 = No 1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MMSEHEAR}{Subject was unable to complete one or more sections due to hearing impairment ( 0 = No 1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17485,6 +17175,7 @@ NULL
 #'   \item{UDSVERTI}{Number of non-F/L-words and rule  violation errors ( 0-30	  95 = Physical problem	  96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{COGSTAT}{Per the clinician, based on the UDS  neuropsychological examination, the  subject's cognitive status is deemed: ( 0 = Clinician unable to render opinion	 1 = Better than normal for age 2 = Normal for age 3 = One or two test scores abnormal 4 = Three or more scores are abnormal or lower than expected  -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCC1}{Form date discrepancy between UDS Form A1 and Form C1 ( 0 = UDS Form C1 completed within 90 days of Form A1 1 = UDS Form C1 completed >90 days before or after Form A1 -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MODCOMM}{Mode of administration of neuropsychological battery (1=Telephone 2=Video-assisted conference 3=Some combination of the two)}
 #'   \item{MOCACOMP}{Was any part of MoCA administered? ( 0 = No		  1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCAREAS}{If no part of MoCA administered,  reason code ( 95 = Physical problem	  96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCALOC}{Where was MoCA administered? ( 1 = In ADC or Clinic	  2 = In Home 3 = In-person - other -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17493,6 +17184,7 @@ NULL
 #'   \item{MOCAVIS}{Subject was unable to complete one or 	 more sections due to visual impairment ( 0 = No 1 = Yes  -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCAHEAR}{Subject was unable to complete one or  more sections due to hearing impairment ( 0 = No  1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCATOTS}{MoCA Total Raw Score - uncorrected ( 0 - 30	  88 = Item(s) or whole test not administered -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NACCMOCA}{MoCA Total Score - corrected for education ( 0 - 30	  88 = Item(s) or whole test not administered 99=Years of education missing/unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCATRAI}{MoCA: Visuospatial/executive - Trails ( 0 - 1	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCACUBE}{MoCA: Visuospatial/executive - Cube ( 0 - 1	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCACLOC}{MoCA: Visuospatial/executive -  Clock contour ( 0 - 1	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17515,7 +17207,6 @@ NULL
 #'   \item{MOCAORDY}{MoCA: Orientation - Day ( 0 - 1	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCAORPL}{MoCA: Orientation - Place ( 0 - 1	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MOCAORCT}{MoCA: Orientation - City ( 0 - 1	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{NACCMOCA}{MoCA Total Score - corrected for education ( 0 - 30	  88 = Item(s) or whole test not administered 99=Years of education missing/unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CRAFTVRS}{Craft Story 21 Recall (Immediate) - Total  story units recalled, verbatim scoring ( 0-44	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CRAFTURS}{Craft Story 21 Recall (Immediate) - Total  story units recalled, paraphrase scoring ( 0 - 25 95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{DIGFORCT}{Number Span Test: Forward - Number  of correct trials ( 0 - 14	  95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17533,9 +17224,9 @@ NULL
 #'   \item{MINTPCNG}{Multilingual Naming Test (MINT) -  Phonemic cues: Number given ( 0-32 95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MINTPCNC}{Multilingual Naming Test (MINT) -  Phonemic cues: Number correct with cue ( 0-32 88 = Not applicable, no phonemic cues given 95 = Physical problem 96 = Cognitive/behavior problem 97 = Other problem 98 = Verbal refusal -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCC2}{Form date discrepancy between UDS Form A1 and Form C2 ( 0 = UDS Form C2 completed within 90 days of Form A1 1 = UDS Form C2 completed >90 days before or after Form A1 -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MODCOMM}{Mode of administration of neuropsychological battery (1=Telephone 2=Video-assisted conference 3=Some combination of the two)}
 #'   \item{MOCBTOTS}{MoCA-Blind Total Raw Score — uncorrected (0-22 88=Item(s) or whole test not administered -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCMOCB}{MoCA-Blind Total Score — corrected for education (0–22 88=Item(s) or whole test not administered 99=Years of education missing/unknown  -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{VERBALTEST}{}
 #'   \item{REY1REC}{Rey Auditory Verbal Learning (Immediate) Trial 1 Total recall (0-15 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REY1INT}{Rey Auditory Verbal Learning (Immediate) Trial 1 Intrusions (0-85 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REY2REC}{Rey Auditory Verbal Learning (Immediate) Trial 2 Total recall (0-15 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17546,6 +17237,8 @@ NULL
 #'   \item{REY4INT}{Rey Auditory Verbal Learning (Immediate) Trial 4 Intrusions (0-85 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REY5REC}{Rey Auditory Verbal Learning (Immediate) Trial 5 Total recall (0-15 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REY5INT}{Rey Auditory Verbal Learning (Immediate) Trial 5 Intrusions (0-85 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{REYBREC}{}
+#'   \item{REYBINT}{}
 #'   \item{REY6REC}{Rey Auditory Verbal Learning (Immediate) Trial 6 Total recall (0-15 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REY6INT}{Rey Auditory Verbal Learning (Immediate) Trial 6 Intrusions (0-85 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTRAILA}{Oral Trail Making Test Part A — Total number of seconds to complete (0-100 888=Not assessed, optional 995=Physical problem 996=Cognitive/behavior problem 997=Other problem 998=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17556,8 +17249,24 @@ NULL
 #'   \item{OTRLBLI}{Oral Trail Making Test Part B — Number of correct lines (0-25 888=Not assessed, optional 995=Physical problem 996=Cognitive/behavior problem 997=Other problem 998=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question )}
 #'   \item{REYDREC}{Rey Auditory Verbal Learning (Delayed)  - Total Recall (0-15 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REYDINT}{Rey Auditory Verbal Learning (Delayed) - Intrusions (0-85 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{REYDTI}{}
+#'   \item{REYMETHOD}{}
 #'   \item{REYTCOR}{Rey Auditory Verbal Learning (Delayed) Recognition — Total  correct (0-15 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{REYFPOS}{Rey Auditory Verbal Learning (Delayed) Recognition — Total false  positive (0-15 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CERAD1REC}{}
+#'   \item{CERAD1READ}{}
+#'   \item{CERAD1INT}{}
+#'   \item{CERAD2REC}{}
+#'   \item{CERAD2READ}{}
+#'   \item{CERAD2INT}{}
+#'   \item{CERAD3REC}{}
+#'   \item{CERAD3READ}{}
+#'   \item{CERAD3INT}{}
+#'   \item{CERADDTI}{}
+#'   \item{CERADJ6REC}{}
+#'   \item{CERADJ6INT}{}
+#'   \item{CERADJ7YES}{}
+#'   \item{CERADJ7NO}{}
 #'   \item{VNTTOTW}{Verbal Naming Test - Total correct without cue (0-50 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{VNTPCNC}{Verbal Naming Test - Total correct with a phonemic cue (0-50 88=Not assessed, optional 95=Physical problem 96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{RESPVAL}{Validity of participant’s responses (1 = Very valid, probably accurate indication of participant's cognitive abilities 2 = Questionably valid, possibly inaccurate indication of participant's cognitive abilities 3 = Invalid, probably inaccurate indication of participant's cognitive abilities -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17570,45 +17279,219 @@ NULL
 #'   \item{RESPASST}{Validity of participant’s responses - Unapproved assistance (0=No 1=Yes -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{RESPOTH}{Validity of participant’s responses - Other (0=No 1=Yes -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{RESPOTHX}{Validity of participant’s responses - Other, specify (Any text or numbers)}
+#'   \item{FRMDATED1A}{}
+#'   \item{LANGD1A}{}
 #'   \item{WHODIDDX}{Who did diagnosis ( 1 = A single clinician 2 = Consensus diagnosis -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{DXMETHOD}{Diagnosis method ( 1 = A single clinician  2 = A formal consensus panel  3 = Other (e.g., two or more clinicians or other informal group) -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NORMCOG}{Normal cognition and behavior ( 0 = No  1 = Yes)}
+#'   \item{SCD}{}
+#'   \item{SCDDXCONF}{}
 #'   \item{DEMENTED}{Met criteria for dementia ( 0 = No  1 = Yes)}
+#'   \item{MCICRITCLN}{}
+#'   \item{MCICRITIMP}{}
+#'   \item{MCICRITFUN}{}
+#'   \item{MCI}{}
+#'   \item{IMPNOMCIFU}{}
+#'   \item{IMPNOMCICG}{}
+#'   \item{IMPNOMCLCD}{}
+#'   \item{IMPNOMCIO}{}
+#'   \item{IMPNOMCIOX}{}
+#'   \item{IMPNOMCI}{Cognitively impaired, not MCI ( 0 = No 1 = Yes)}
+#'   \item{NACCUDSD}{Cognitive status at UDS visit ( 1 = Normal cognition  2 = Impaired-not-MCI  3 = MCI  4 = Dementia)}
+#'   \item{NACCTMCI}{Mild cognitive impairment (MCI) type ( 1 = Amnestic MCI- single domain  2 = Amnestic MCI- multiple domain  3 = Non-amnestic MCI- single domain  4 = Non-amnestic MCI- multiple domain  8 = No diagnosis of MCI)}
+#'   \item{NACCMCIM}{}
+#'   \item{NACCMCIL}{MCI domain affected - language ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
+#'   \item{NACCMCIA}{MCI domain affected - attention ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
+#'   \item{NACCMCIE}{MCI domain affected - executive function ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
+#'   \item{NACCMCIV}{MCI domain affected - visuospatial ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
+#'   \item{NACCMCIAPX}{}
+#'   \item{NACCNORM}{Normal cognition at all visits to date ( 0 = Had a diagnosis other than normal cognition (impaired but not MCI, MCI, or dementia) for at least one UDS visit 1 = Normal cognition at all UDS visits)}
+#'   \item{NACCIDEM}{Incident dementia during UDS follow-up ( 0 = Did not progress to dementia 1 = Progressed to dementia 8 = Initial visit only or diagnosed with dementia at initial visit)}
+#'   \item{NACCMCII}{Incident MCI during UDS follow-up ( 0 = Did not progress to MCI 1 = Progressed to MCI 8 = Initial visit only, or had a diagnosis of MCI or dementia at initial UDS visit, or progressed directly to dementia)}
+#'   \item{CDOMMEM}{}
+#'   \item{CDOMLANG}{}
+#'   \item{CDOMATTN}{}
+#'   \item{CDOMEXEC}{}
+#'   \item{CDOMVISU}{}
+#'   \item{CDOMBEH}{}
+#'   \item{CDOMAPRAX}{}
+#'   \item{MBI}{}
+#'   \item{BDOMMOT}{}
+#'   \item{BDOMAFREG}{}
+#'   \item{BDOMIMP}{}
+#'   \item{BDOMSOCIAL}{}
+#'   \item{BDOMTHTS}{}
+#'   \item{PREDOMSYN}{}
 #'   \item{AMNDEM}{Dementia syndrome - Amnestic multidomain dementia syndrome ( 0 = No  1 = Yes  8 = No diagnosis of dementia -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DYEXECSYN}{}
+#'   \item{NAMNDEM}{Dementia syndrome - Non-amnestic multidomain dementia, not PCA, PPA, bvFTD, or DLB syndrome ( 0 = No 1 = Yes  8 = No diagnosis of dementia -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PCA}{Dementia syndrome - Posterior cortical atrophy syndrome (or primary visual presentation) ( 0 = No  1 = Yes  8 = No diagnosis of dementia -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCPPA}{Primary progressive aphasia (PPA) with cognitive impairment ( 0 = No  1 = Yes  7 = Subject had Impaired-not-MCI or MCI but is missing information on presence/absence of PPA  8 = No cognitive impairment)}
 #'   \item{NACCPPAG}{Dementia syndrome - Primary progressive aphasia (PPA) subtype according to the criteria outlined by Gorno-Tempini et al. 2011 ( 1 = Meets criteria for semantic PPA 2 = Meets criteria for logopenic PPA 3 = Meets criteria for nonfluent/agrammatic PPA 4 = PPA other/not otherwise specified 7 = Impaired but no PPA syndrome 8 = No cognitive impairment -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCPPME}{Primary progressive aphasia (PPA) subtype according to older criteria outlined by Mesulam et al (2001 and 2003) ( 1 = Meets criteria for progressive nonfluent  			PPA 2 = Meets criteria for semantic dementia - anomia plus word comprehension 3 = Meets criteria for semantic dementia - agnostic variant 4 = PPA other/not otherwise specified (logopenic, anomic, transcortical, word deafness, syntactic comprehension, motor speech disorder) 6 = Subject had MCI but missing information on presence / absence of PPA 7 = Subject was cognitively impaired but did not have PPA 8 = No cognitive impairment  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{NACCBVFT}{Dementia syndrome - behavioral variant FTD syndrome (bvFTD) ( 0 = No 1 = Yes  8 = No diagnosis of dementia)}
 #'   \item{NACCLBDS}{Dementia syndrome - Lewy body  dementia syndrome ( 0 = No 1 = Yes  8 = No diagnosis of dementia)}
-#'   \item{NAMNDEM}{Dementia syndrome - Non-amnestic multidomain dementia, not PCA, PPA, bvFTD, or DLB syndrome ( 0 = No 1 = Yes  8 = No diagnosis of dementia -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{NACCTMCI}{Mild cognitive impairment (MCI) type ( 1 = Amnestic MCI- single domain  2 = Amnestic MCI- multiple domain  3 = Non-amnestic MCI- single domain  4 = Non-amnestic MCI- multiple domain  8 = No diagnosis of MCI)}
-#'   \item{NACCMCIL}{MCI domain affected - language ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
-#'   \item{NACCMCIA}{MCI domain affected - attention ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
-#'   \item{NACCMCIE}{MCI domain affected - executive function ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
-#'   \item{NACCMCIV}{MCI domain affected - visuospatial ( 0 = No 1 = Yes 8 = Not diagnosed with MCI)}
-#'   \item{NACCMCII}{Incident MCI during UDS follow-up ( 0 = Did not progress to MCI 1 = Progressed to MCI 8 = Initial visit only, or had a diagnosis of MCI or dementia at initial UDS visit, or progressed directly to dementia)}
-#'   \item{IMPNOMCI}{Cognitively impaired, not MCI ( 0 = No 1 = Yes)}
-#'   \item{AMYLPET}{Abnormally elevated amyloid on PET ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{LBDSYNT}{}
+#'   \item{PSPSYN}{}
+#'   \item{PSPSYNT}{}
+#'   \item{CTESYN}{}
+#'   \item{CBSSYN}{}
+#'   \item{MSASYN}{}
+#'   \item{MSASYNT}{}
+#'   \item{OTHSYN}{}
+#'   \item{OTHSYNX}{}
+#'   \item{SYNINFCLIN}{}
+#'   \item{SYNINFCTST}{}
+#'   \item{SYNINFBIOM}{}
+#'   \item{NACCDEPD}{}
+#'   \item{NACCDEPDIF}{}
+#'   \item{MAJDEPDX}{}
+#'   \item{MAJDEPDIF}{}
+#'   \item{OTHDEPDX}{}
+#'   \item{OTHDEPDIF}{}
+#'   \item{DEP}{Presumptive etiologic diagnosis - Depression ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
+#'   \item{DEPIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Depression ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no depression diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DEPTREAT}{Depression - Treated or untreated ( 0 = Untreated 1 = Treated  8 = No diagnosis of depression -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BIPOLDX}{Presumptive etiologic diagnosis -  Bipolar disorder ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BIPOLDIF}{Primary, contributing, or non-contributing cause of cognitive impairment - bipolar disorder ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no bipolar disorder diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SCHIZOP}{Presumptive etiologic diagnosis - Schizophrenia or other psychosis ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{SCHIZOIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Schizophrenia or other psychosis ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no schizophrenia diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ANXIET}{Presumptive etiologic diagnosis - Anxiety ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ANXIETIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Anxiety ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no anxiety diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{GENANX}{}
+#'   \item{PANICDISDX}{}
+#'   \item{OCDDX}{}
+#'   \item{OTHANXD}{}
+#'   \item{OTHANXDX}{}
+#'   \item{PTSDDX}{Presumptive etiologic diagnosis - Post-traumatic stress disorder (PTSD) ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{PTSDDXIF}{Primary, contributing, or non-contributing cause of cognitive impairment - PTSD ( 1 = Primary 2 = Contributing 3 = Non-contributing  7 = Cognitively impaired but no PTSD diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NDEVDIS}{}
+#'   \item{NDEVDISIF}{}
+#'   \item{DELIR}{Presumptive etiologic diagnosis - Delirium ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DELIRIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Delirium ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no delirium diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{OTHPSY}{Presumptive etiologic diagnosis - Other psychiatric disease ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
+#'   \item{OTHPSYIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Other psychiatric disease ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of other psychiatric disease 8 = Diagnosis of normal cognition)}
+#'   \item{OTHPSYX}{Presumptive etiologic diagnosis of the cognitive disorder - Other psychiatric disease (specify) (Any text or numbers)}
+#'   \item{NACCTBIDX}{}
+#'   \item{NACCTBIDXIF}{}
+#'   \item{TBIDX}{}
+#'   \item{TBIDXIF}{}
+#'   \item{BRNINJ}{Presumptive etiologic diagnosis - Traumatic brain injury (TBI) ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
+#'   \item{BRNINJIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Traumatic brain injury (TBI) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of TBI 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{BRNINCTE}{Symptoms consistent with chronic traumatic encephalopathy (CTE) ( 0 = No  1 = Yes  9 = Unknown 8 = No TBI diagnosis  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{EPILEP}{Presumptive etiologic diagnosis - Epilepsy ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{EPILEPIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Epilepsy ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no epilepsy diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HYCEPH}{Presumptive etiologic diagnosis of the cognitive disorder - Normal-pressure hydrocephalus (NPH) ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
+#'   \item{HYCEPHIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Normal-pressure hydrocephalus (NPH) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no hydrocephalus diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NEOP}{Presumptive etiologic diagnosis -  CNS neoplasm ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
+#'   \item{NEOPIF}{Primary, contributing, or non-contributing cause of cognitive impairment - CNS neoplasm ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no CNS neoplasm diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{NEOPSTAT}{CNS neoplasm - benign or malignant ( 1 = Benign  2 = Malignant  8 = No diagnosis of CNS neoplasm  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HIV}{Presumptive etiologic diagnosis - Human immunodeficiency virus (HIV) ( 0 = No (assumed assessed and found  			not present)   1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{HIVIF}{Primary, contributing, or non-contributing cause of cognitive impairment - HIV ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no HIV diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{POSTC19}{}
+#'   \item{POSTC19IF}{}
+#'   \item{APNEADX}{}
+#'   \item{APNEADXIF}{}
+#'   \item{OTHCOGILL}{}
+#'   \item{OTHCILLIF}{}
+#'   \item{OTHCOGILLX}{}
+#'   \item{DYSILL}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to systemic disease/medical illness ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
+#'   \item{DYSILLIF}{Primary, contributing, or non-contributing cause of cognitive impairment - systemic disease/medical illness ( 1 = Primary 2 = Contributing 3 = Non-contributing  7 = Cognitively impaired but no diagnosis of impairment due to systemic disease/medical illness 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{ALCDEM}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to alcohol abuse ( 0 = No (assumed assessed and found  			not present)  1 = Yes 8 = Diagnosis of normal cognition)}
+#'   \item{ALCDEMIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Alcohol abuse ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of impairment due to alcohol abuse 8 = Diagnosis of normal cognition)}
+#'   \item{ALCABUSE}{Current alcohol abuse ( 0 = No  1 = Yes  9 = Unknown  8 = No diagnosis of impairment due to alcohol abuse -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{IMPSUB}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to other substance abuse ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{IMPSUBIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Other substance abuse ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of impairment due to substance abuse 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MEDS}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to medications ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
+#'   \item{MEDSIF}{Primary, contributing, or non-contributing cause of cognitive impairment - medications ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of impairment due to medications 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DEMUN}{Presumptive etiologic diagnosis of the cognitive disorder - Undetermined etiology ( 0 = No  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DEMUNIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Undetermined etiology ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of dementia due to undetermined etiology 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{COGOTH}{Presumptive etiologic diagnosis of the cognitive disorder - Other 1 (specify) ( 0 = No  1 = Yes)}
+#'   \item{COGOTHIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Other 1 (specify) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no other etiologic diagnosis 8 = Diagnosis of normal cognition)}
+#'   \item{COGOTHX}{Other presumptive etiologic diagnosis of the cognitive disorder 1, specify (Any text or numbers)}
+#'   \item{COGOTH2}{Presumptive etiologic diagnosis of the cognitive disorder - Other 2 (specify) ( 0 = No  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{COGOTH2F}{Primary, contributing, or non-contributing cause of cognitive impairment - Other 2 (specify) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no other etiologic diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{COGOTH2X}{Other presumptive etiologic diagnosis of the cognitive disorder 2, specify (Any text or numbers)}
+#'   \item{COGOTH3}{Presumptive etiologic diagnosis of the cognitive disorder - Other 3 (specify) ( 0 = No  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{COGOTH3F}{Primary, contributing, or non-contributing cause of cognitive impairment - Other 3 (specify) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no other etiologic diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{COGOTH3X}{Other presumptive etiologic diagnosis of the cognitive disorder 3, specify (Any text or numbers)}
+#'   \item{FRMDATED1B}{}
+#'   \item{LANGD1B}{}
+#'   \item{BIOMARKDX}{}
+#'   \item{FLUIDBIOM}{}
+#'   \item{BLOODAD}{}
+#'   \item{BLOODFTLD}{}
+#'   \item{BLOODLBD}{}
+#'   \item{BLOODOTH}{}
+#'   \item{BLOODOTHX}{}
+#'   \item{CSFAD}{}
+#'   \item{CSFFTLD}{}
+#'   \item{CSFLBD}{}
+#'   \item{CSFOTH}{}
+#'   \item{CSFOTHX}{}
 #'   \item{AMYLCSF}{Abnormally low amyloid in CSF ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{FDGAD}{FDG-PET pattern of AD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HIPPATR}{Hippocampal atrophy ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{TAUPETAD}{Tau PET evidence for AD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CSFTAU}{Abnormally elevated CSF Tau or pTau ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{FDGFTLD}{FDG-PET evidence for frontal or anterior temporal hypometabolism for FTLD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{IMAGINGDX}{}
+#'   \item{PETDX}{}
+#'   \item{AMYLPET}{Abnormally elevated amyloid on PET ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{TAUPET}{}
+#'   \item{TAUPETAD}{Tau PET evidence for AD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{TPETFTLD}{Tau PET evidence for FTLD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FDGPETDX}{}
+#'   \item{FDGAD}{FDG-PET pattern of AD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FDGFTLD}{FDG-PET evidence for frontal or anterior temporal hypometabolism for FTLD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{MRFTLD}{Structural MR evidence for frontal or anterior temporal atrophy for FTLD ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FDGLBD}{}
+#'   \item{FDGOTH}{}
+#'   \item{FDGOTHX}{}
+#'   \item{HIPPATR}{Hippocampal atrophy ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{DATSCANDX}{}
 #'   \item{DATSCAN}{Dopamine transporter scan (DATscan)  		evidence for Lewy body disease ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{OTHBIOM}{Biomarker findings - Other ( 0 = No   1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{OTHBIOMX}{Biomarker findings - Other (specify) (Any text or numbers)}
+#'   \item{TRACOTHDX}{}
+#'   \item{TRACOTHDXX}{}
+#'   \item{TRACERAD}{}
+#'   \item{TRACERFTLD}{}
+#'   \item{TRACERLBD}{}
+#'   \item{TRACEROTH}{}
+#'   \item{TRACEROTHX}{}
+#'   \item{STRUCTDX}{}
+#'   \item{STRUCTAD}{}
+#'   \item{STRUCTFTLD}{}
+#'   \item{STRUCTCVD}{}
 #'   \item{IMAGLINF}{Large vessel infarct(s) ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{IMAGLAC}{Lacunar infarct(s) ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{IMAGMACH}{Macrohemorrhage(s) ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{IMAGMICH}{Microhemorrhage(s) ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{IMAGMWMH}{Moderate white-matter hyperintensity (CHS score 5 - 6) ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{IMAGEWMH}{Extensive white-matter hyperintensity (CHS score 7 - 8) ( 0 = No 1 = Yes  8 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{IMAGWMH}{}
+#'   \item{NACCWMHSEV}{}
+#'   \item{OTHBIOM1}{}
+#'   \item{OTHBIOMX1}{}
+#'   \item{BIOMAD1}{}
+#'   \item{BIOMFTLD1}{}
+#'   \item{BIOMLBD1}{}
+#'   \item{BIOMOTH1}{}
+#'   \item{BIOMOTHX1}{}
+#'   \item{OTHBIOM2}{}
+#'   \item{OTHBIOMX2}{}
+#'   \item{BIOMAD2}{}
+#'   \item{BIOMFTLD2}{}
+#'   \item{BIOMLBD2}{}
+#'   \item{BIOMOTH2}{}
+#'   \item{BIOMOTHX2}{}
+#'   \item{OTHBIOM3}{}
+#'   \item{OTHBIOMX3}{}
+#'   \item{BIOMAD3}{}
+#'   \item{BIOMFTLD3}{}
+#'   \item{BIOMLBD3}{}
+#'   \item{BIOMOTH3}{}
+#'   \item{BIOMOTHX3}{}
+#'   \item{OTHBIOM}{Biomarker findings - Other ( 0 = No   1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{OTHBIOMX}{Biomarker findings - Other (specify) (Any text or numbers)}
+#'   \item{AUTDOMMUT}{}
 #'   \item{OTHMUT}{Does the subject have a hereditary mutation other than an AD or FTLD mutation? ( 0 = No 1 = Yes  9 = Unknown/not assessed -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTHMUTX}{Other mutation, specify (Any text or numbers)}
+#'   \item{NACCADMU}{Does the subject have a dominantly inherited AD mutation? ( 0 = No/unknown 1 = Yes)}
+#'   \item{NACCFTDM}{Does the subject have a hereditary FTLD mutation? ( 0 = No/unknown 1 = Yes)}
 #'   \item{NACCALZD}{Presumptive etiologic diagnosis of the cognitive disorder - Alzheimer's disease ( 0 = No (assumed assessed and found  			not present) 1 = Yes  8 = No cognitive impairment)}
 #'   \item{NACCALZP}{Primary, contributing, or non-contributing cause of observed cognitive impairment - Alzheimer's disease (AD) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but not AD diagnosis 8 = Diagnosis of normal cognition)}
 #'   \item{PROBAD}{Presumptive etiologic diagnosis of the cognitive disorder - Probable Alzheimer's disease ( 0 = No 1 = Yes  8 = No cognitive impairment -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17618,8 +17501,7 @@ NULL
 #'   \item{NACCLBDE}{Presumptive etiologic diagnosis - Lewy body disease ( 0 = No (assumed assessed and found  			not present) 1 = Yes  8 = No cognitive impairment)}
 #'   \item{NACCLBDP}{Primary, contributing, or non-contributing cause of cognitive impairment - Lewy body disease (LBD) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but not LBD diagnosis 8 = Diagnosis of normal cognition)}
 #'   \item{PARK}{Parkinson's disease present ( 0 = No (assumed assessed and found  			not present) 1 = Yes)}
-#'   \item{MSA}{Presumptive etiologic diagnosis - Multiple system atrophy (MSA) ( 0 = No (assumed assessed and found  			not present 1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MSAIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Multiple system atrophy (MSA) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no MSA diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FTLD}{}
 #'   \item{PSP}{Presumptive etiologic diagnosis - primary supranuclear palsy (PSP) ( 0 = No (assumed assessed and found  			not present) 1 = Yes)}
 #'   \item{PSPIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Primary supranuclear palsy (PSP) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no PSP diagnosis 8 = Diagnosis of normal cognition)}
 #'   \item{CORT}{Presumptive etiologic diagnosis - Corticobasal degeneration (CBD) ( 0 = No (assumed assessed and found  			not present) 1 = Yes)}
@@ -17628,12 +17510,14 @@ NULL
 #'   \item{FTLDMOIF}{Primary, contributing, or non-contributing cause of cognitive impairment - FTLD with motor neuron disease (MND) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no FTLD with MND diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{FTLDNOS}{Presumptive etiologic diagnosis of the cognitive disorder - FTLD not otherwise specified (NOS) ( 0 = No (assumed assessed and found  			not present)  1 = Yes  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{FTLDNOIF}{Primary, contributing, or non-contributing cause of cognitive impairment - FTLD not otherwise specified (NOS) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no FTLD NOS diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FTLDSUBT}{FTLD subtype ( 1 = Tauopathy  2 = TDP-43 proteinopathy  3 = Other 7 = Cognitively impaired but no FTLD diagnosis 8 = Diagnosis of normal cognition  9 = Unknown subtype -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{FTLDSUBX}{Other FTLD subtype, specify (Any text or numbers)}
 #'   \item{FTD}{Presence of behavioral frontotemporal dementia (bvFTD) ( 0 = Absent  1 = Present 8 = No cognitive impairment -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{FTDIF}{Primary, contributing, or non-contributing cause of cognitive impairment - behavioral frontotemporal dementia (bvFTD) ( 1 = Primary 2 = Contributing 7 = Cognitively impaired but no bvFTD diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PPAPH}{Presumptive etiologic diagnosis of the cognitive disorder - Primary progressive aphasia (PPA) ( 0 = No 1 = Yes  8 = No cognitive impairment -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PPAPHIF}{Primary, contributing, or non-contributing cause of cognitive impairment - primary progressive aphasia (PPA) ( 1 = Primary 2 = Contributing 7 = Cognitively impaired but no PPA diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{FTLDSUBT}{FTLD subtype ( 1 = Tauopathy  2 = TDP-43 proteinopathy  3 = Other 7 = Cognitively impaired but no FTLD diagnosis 8 = Diagnosis of normal cognition  9 = Unknown subtype -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{FTLDSUBX}{Other FTLD subtype, specify (Any text or numbers)}
+#'   \item{MSA}{Presumptive etiologic diagnosis - Multiple system atrophy (MSA) ( 0 = No (assumed assessed and found  			not present 1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{MSAIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Multiple system atrophy (MSA) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no MSA diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVD}{Presumptive etiologic diagnosis - Vascular brain injury (VBI) ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{CVDIF}{Primary, contributing, or non-contributing cause of cognitive impairment - vascular brain injury ( 1 = Primary 2 = Contributing 3 = Non-contributing  7 = Cognitively impaired but no VBI diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PREVSTK}{Previous symptomatic stroke ( 0 = No  1 = Yes  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
@@ -17655,147 +17539,25 @@ NULL
 #'   \item{HUNTIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Huntington's disease ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no Huntington's disease diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{PRION}{Presumptive etiologic diagnosis of the cognitive disorder - Prion disease  (CJD, other) ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
 #'   \item{PRIONIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Prion disease (CJD, other) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no Prion disease diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BRNINJ}{Presumptive etiologic diagnosis - Traumatic brain injury (TBI) ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
-#'   \item{BRNINJIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Traumatic brain injury (TBI) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of TBI 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BRNINCTE}{Symptoms consistent with chronic traumatic encephalopathy (CTE) ( 0 = No  1 = Yes  9 = Unknown 8 = No TBI diagnosis  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HYCEPH}{Presumptive etiologic diagnosis of the cognitive disorder - Normal-pressure hydrocephalus (NPH) ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
-#'   \item{HYCEPHIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Normal-pressure hydrocephalus (NPH) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no hydrocephalus diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{EPILEP}{Presumptive etiologic diagnosis - Epilepsy ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{EPILEPIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Epilepsy ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no epilepsy diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{NEOP}{Presumptive etiologic diagnosis -  CNS neoplasm ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
-#'   \item{NEOPIF}{Primary, contributing, or non-contributing cause of cognitive impairment - CNS neoplasm ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no CNS neoplasm diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{NEOPSTAT}{CNS neoplasm - benign or malignant ( 1 = Benign  2 = Malignant  8 = No diagnosis of CNS neoplasm  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HIV}{Presumptive etiologic diagnosis - Human immunodeficiency virus (HIV) ( 0 = No (assumed assessed and found  			not present)   1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HIVIF}{Primary, contributing, or non-contributing cause of cognitive impairment - HIV ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no HIV diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{CTE}{}
+#'   \item{CTEIF}{}
+#'   \item{CTECERT}{}
+#'   \item{CAA}{}
+#'   \item{CAAIF}{}
+#'   \item{LATE}{}
+#'   \item{LATEIF}{}
 #'   \item{OTHCOG}{Presumptive etiologic diagnosis - Other neurological, genetic, or infectious condition ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTHCOGIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Other neurological, genetic, or infectious condition ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of other neurological, genetic, or infectious condition 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{OTHCOGX}{Presumptive etiologic diagnosis of the cognitive disorder - Other neurological, genetic, or infectious condition (specify) (Any text or numbers)}
-#'   \item{DEP}{Presumptive etiologic diagnosis - Depression ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
-#'   \item{DEPIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Depression ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no depression diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DEPTREAT}{Depression - Treated or untreated ( 0 = Untreated 1 = Treated  8 = No diagnosis of depression -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BIPOLDX}{Presumptive etiologic diagnosis -  Bipolar disorder ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BIPOLDIF}{Primary, contributing, or non-contributing cause of cognitive impairment - bipolar disorder ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no bipolar disorder diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{SCHIZOP}{Presumptive etiologic diagnosis - Schizophrenia or other psychosis ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{SCHIZOIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Schizophrenia or other psychosis ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no schizophrenia diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ANXIET}{Presumptive etiologic diagnosis - Anxiety ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ANXIETIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Anxiety ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no anxiety diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DELIR}{Presumptive etiologic diagnosis - Delirium ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DELIRIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Delirium ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no delirium diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{PTSDDX}{Presumptive etiologic diagnosis - Post-traumatic stress disorder (PTSD) ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{PTSDDXIF}{Primary, contributing, or non-contributing cause of cognitive impairment - PTSD ( 1 = Primary 2 = Contributing 3 = Non-contributing  7 = Cognitively impaired but no PTSD diagnosis 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{OTHPSY}{Presumptive etiologic diagnosis - Other psychiatric disease ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
-#'   \item{OTHPSYIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Other psychiatric disease ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of other psychiatric disease 8 = Diagnosis of normal cognition)}
-#'   \item{OTHPSYX}{Presumptive etiologic diagnosis of the cognitive disorder - Other psychiatric disease (specify) (Any text or numbers)}
-#'   \item{ALCDEM}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to alcohol abuse ( 0 = No (assumed assessed and found  			not present)  1 = Yes 8 = Diagnosis of normal cognition)}
-#'   \item{ALCDEMIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Alcohol abuse ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of impairment due to alcohol abuse 8 = Diagnosis of normal cognition)}
-#'   \item{ALCABUSE}{Current alcohol abuse ( 0 = No  1 = Yes  9 = Unknown  8 = No diagnosis of impairment due to alcohol abuse -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{IMPSUB}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to other substance abuse ( 0 = No (assumed assessed and found  			not present)  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{IMPSUBIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Other substance abuse ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of impairment due to substance abuse 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DYSILL}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to systemic disease/medical illness ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
-#'   \item{DYSILLIF}{Primary, contributing, or non-contributing cause of cognitive impairment - systemic disease/medical illness ( 1 = Primary 2 = Contributing 3 = Non-contributing  7 = Cognitively impaired but no diagnosis of impairment due to systemic disease/medical illness 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MEDS}{Presumptive etiologic diagnosis of the cognitive disorder - Cognitive impairment due to medications ( 0 = No (assumed assessed and found  			not present)  1 = Yes)}
-#'   \item{MEDSIF}{Primary, contributing, or non-contributing cause of cognitive impairment - medications ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of impairment due to medications 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DEMUN}{Presumptive etiologic diagnosis of the cognitive disorder - Undetermined etiology ( 0 = No  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{DEMUNIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Undetermined etiology ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no diagnosis of dementia due to undetermined etiology 8 = Diagnosis of normal cognition  -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{COGOTH}{Presumptive etiologic diagnosis of the cognitive disorder - Other 1 (specify) ( 0 = No  1 = Yes)}
-#'   \item{COGOTHIF}{Primary, contributing, or non-contributing cause of cognitive impairment - Other 1 (specify) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no other etiologic diagnosis 8 = Diagnosis of normal cognition)}
-#'   \item{COGOTHX}{Other presumptive etiologic diagnosis of the cognitive disorder 1, specify (Any text or numbers)}
-#'   \item{COGOTH2}{Presumptive etiologic diagnosis of the cognitive disorder - Other 2 (specify) ( 0 = No  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{COGOTH2F}{Primary, contributing, or non-contributing cause of cognitive impairment - Other 2 (specify) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no other etiologic diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{COGOTH2X}{Other presumptive etiologic diagnosis of the cognitive disorder 2, specify (Any text or numbers)}
-#'   \item{COGOTH3}{Presumptive etiologic diagnosis of the cognitive disorder - Other 3 (specify) ( 0 = No  1 = Yes -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{COGOTH3F}{Primary, contributing, or non-contributing cause of cognitive impairment - Other 3 (specify) ( 1 = Primary 2 = Contributing 3 = Non-contributing 7 = Cognitively impaired but no other etiologic diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{COGOTH3X}{Other presumptive etiologic diagnosis of the cognitive disorder 3, specify (Any text or numbers)}
 #'   \item{NACCETPR}{Primary etiologic diagnosis (MCI; impaired, not MCI; or dementia) ( 1 = Alzheimer's disease (AD) 2 = Lewy body disease (LBD) 3 = Multiple system atrophy (MSA) 4 = Progressive supranuclear palsy (PSP) 5 = Corticobasal degeneration (CBD) 6 = FTLD with motor neuron disease (e.g., ALS) 7 = FTLD, other 8 = Vascular brain injury or vascular dementia including stroke 9 = Essential tremor 10 = Down syndrome 11 = Huntington's disease 12 = Prion disease (CJD, other) 13 = Traumatic brain injury (TBI) 14 = Normal-pressure hydrocephalus (NPH) 15 = Epilepsy 16 = CNS neoplasm 17 = Human immunodeficiency virus (HIV) 18 = Other neurologic, genetic, or infectious condition 19 = Depression 20 = Bipolar disorder 21 = Schizophrenia or other psychosis 22 = Anxiety disorder 23 = Delirium 24 = Post-traumatic stress disorder (PTSD) 25 = Other psychiatric disease 26 = Cognitive impairment due to alcohol abuse 27 = Cognitive impairment due to other substance abuse 28 = Cognitive impairment due to systemic disease or medical illness 29 = Cognitive impairment due to medications 30 = Cognitive impairment for other specified reasons (i.e., written-in values) 88 = Not applicable, not cognitively impaired 99 = Missing/unknown)}
-#'   \item{NACCADMU}{Does the subject have a dominantly inherited AD mutation? ( 0 = No/unknown 1 = Yes)}
-#'   \item{NACCFTDM}{Does the subject have a hereditary FTLD mutation? ( 0 = No/unknown 1 = Yes)}
-#'   \item{CANCER}{Cancer present in the last 12 months (excluding non-melanoma skin cancer), primary or metastatic ( 0 = No 1 = Yes, primary/non-metastatic 2 = Yes, metastatic 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{CANCSITE}{Cancer primary site specification (Any text or numbers)}
-#'   \item{DIABET}{Diabetes present at visit ( 0 = No 1 = Yes, Type I 2 = Yes, Type II 3 = Yes, other type 9 = Not assessed or unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{MYOINF}{Myocardial infarct present within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{CONGHRT}{Congestive heart failure present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{AFIBRILL}{Atrial fibrillation present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HYPERT}{Hypertension present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ANGINA}{Angina present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HYPCHOL}{Hypercholesterolemia present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{VB12DEF}{B12 deficiency present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{THYDIS}{Thyroid disease present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ARTH}{Arthritis present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ARTYPE}{Arthritis type ( 1 = Rheumatoid 2 = Osteoarthritis 3 = Other (specify) 8 = No arthritis reported 9 = Unknown -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ARTYPEX}{Other arthritis type specification (Any text or numbers)}
-#'   \item{ARTUPEX}{Arthritis region affected - upper extremity ( 0 = No 1 = Yes 8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ARTLOEX}{Arthritis region affected - lower extremity ( 0 = No 1 = Yes 8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ARTSPIN}{Arthritis region affected - spine ( 0 = No 1 = Yes 8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ARTUNKN}{Arthritis region affected - unknown ( 0 = No 1 = Yes  8 = No arthritis reported -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{URINEINC}{Incontinence present - urinary ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{BOWLINC}{Incontinence present - bowel ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{SLEEPAP}{Sleep apnea present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{REMDIS}{REM sleep behavior disorder (RBD) present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HYPOSOM}{Hyposomnia/insomnia present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{SLEEPOTH}{Other sleep disorder present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{SLEEPOTX}{Other sleep disorder specification (Any text or numbers)}
-#'   \item{ANGIOCP}{Carotid procedure: angioplasty, endarterectomy, or stent within the past  12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ANGIOPCI}{Percutaneous coronary intervention: angioplasty and/or stent within the past  12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{PACEMAKE}{Procedure: pacemaker and/or defibrillator within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{HVALVE}{Procedure: heart valve replacement or repair within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ANTIENC}{Antibody-mediated encephalopathy within the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{ANTIENCX}{Antibody-mediated encephalopathy, specify (Any text or numbers)}
-#'   \item{OTHCOND}{Other medical conditions or procedures within the past 12 months not listed above ( 0 = No 1 = Yes -4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{OTHCONDX}{Other medical conditions specification (Any text or numbers)}
-#'   \item{NACCAGEB}{Subject's age at initial visit (18  - 120)}
-#'   \item{NACCNIHR}{Derived NIH race definitions ( 1 = White  2 = Black or African American  3 = American Indian or Alaska Native  4 = Native Hawaiian or Pacific Islander  5 = Asian  6 = Multiracial  99 = Unknown or ambiguous)}
-#'   \item{NACCNORM}{Normal cognition at all visits to date ( 0 = Had a diagnosis other than normal cognition (impaired but not MCI, MCI, or dementia) for at least one UDS visit 1 = Normal cognition at all UDS visits)}
-#'   \item{NACCIDEM}{Incident dementia during UDS follow-up ( 0 = Did not progress to dementia 1 = Progressed to dementia 8 = Initial visit only or diagnosed with dementia at initial visit)}
-#'   \item{NACCAGE}{Subject's age at visit (18  - 120)}
-#'   \item{NACCAAAS}{Reported current use of an antiadrenergic agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCAANX}{Reported current use of an anxiolytic, sedative, or hypnotic agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCAC}{Reported current use of an anticoagulant or antiplatelet agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCACEI}{Reported current use of an angiotensin converting enzyme (ACE) inhibitor ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCADEP}{Reported current use of an antidepressant ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCADMD}{Reported current use of a FDA-approved medication for Alzheimer's disease symptoms ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCAHTN}{Reported current use of any type of an antihypertensive or blood pressure medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCAMD}{Total number of medications reported at each visit ( 0 - 40 -4 = Did not complete medications form)}
-#'   \item{NACCANGI}{Reported current use of an angiotensin II inhibitor ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCAPSY}{Reported current use of an antipsychotic agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCBETA}{Reported current use of a beta-adrenergic blocking agent (Beta-Blocker) ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCCCBS}{Reported current use of a calcium channel blocking agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCDBMD}{Reported current use of a diabetes medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCDIUR}{Reported current use of a diuretic ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCEMD}{Reported current use of estrogen hormone therapy ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCEPMD}{Reported current use of estrogen + progestin hormone therapy ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCHTNC}{Reported current use of an antihypertensive combination therapy ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCLIPL}{Reported current use of lipid lowering medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCNSD}{Reported current use of nonsteroidal anti-inflammatory medication ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCPDMD}{Reported current use of an antiparkinson agent ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCVASD}{Reported current use of a vasodilator ( 0 = Did not report use at visit 1 = Reported use at visit -4 = Did not complete medications form)}
-#'   \item{NACCBMI}{Body mass index (BMI) ( 10.0 -  100.0	 888.8 = Unknown or not assessed - 4 = Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{NACCUDSD}{Cognitive status at UDS visit ( 1 = Normal cognition  2 = Impaired-not-MCI  3 = MCI  4 = Dementia)}
-#'   \item{NACCDIED}{Subject is known to be deceased ( 0 = Not deceased/unknown 1 = Deceased Description/derivation:	A subject with a Neuropathology Form and/or a Milestones Form reporting the subject's death is indicated as deceased (naccdied = 1). Otherwise, naccdied = 0. NOTE: NACC is not always made aware of deaths for active and inactive subjects; thus naccdied = 0 for a subject who has died but whose death was not reported to NACC.)}
-#'   \item{NACCMOD}{Month of death ( 1 - 12 88 = Not applicable, subject not deceased 99 = Unknown)}
-#'   \item{NACCYOD}{Year of death ( Allowable codes cannot precede 1970; in most cases, should not precede 1984  8888 = Not applicable, subject not deceased 9999 = Unknown)}
+#'   \item{NACCDAGE}{Age at death ( 15-120 	888 = Not applicable 	999 = Unknown)}
+#'   \item{NACCINT}{Time interval in months between last visit and death ( 0-100 888 = Not applicable 	999 = Unknown)}
 #'   \item{NACCAUTP}{Neuropathology data from an autopsy is available ( 0 = No 1 = Yes 8 = Not applicable, subject not deceased)}
-#'   \item{NACCACTV}{Follow-up status at the Alzheimer's Disease Center (ADC) ( 0 = Died, discontinued, lost to follow-up 1 = Annual follow-up (no discontinuation/loss to follow-up or minimal contact) 2 = Minimal contact with Center, no annual follow-up)}
-#'   \item{NACCNOVS}{No longer followed annually in person or by telephone ( 0 = Still receiving annual follow-up in person or by telephone  		1 = No longer receiving annual follow-up in person or by telephone 		8 = Not applicable, enrolled for initial visit only)}
-#'   \item{NACCDSMO}{Month of discontinuation from annual follow-up ( 1 - 12 		88 = Not applicable, still followed annually in person or by telephone)}
-#'   \item{NACCDSDY}{Day of discontinuation from annual follow-up ( 1- 31 		88 = Not applicable, still followed annually in person or by telephone)}
-#'   \item{NACCDSYR}{Year of discontinuation from annual follow-up ( 2005 to present 		8888 = Not applicable, still followed annually in person or by telephone)}
-#'   \item{NACCNURP}{Permanently moved to a nursing home ( 0 = Did not report permanent move to a nursing home  1 = Permanently moved to a nursing home)}
-#'   \item{NACCNRMO}{Month permanently moved to nursing home ( 1 - 12 88 = Not applicable, no permanent move to a nursing home 99 = Unknown)}
-#'   \item{NACCNRDY}{Day permanently moved to nursing home ( 1 - 31 88 = Not applicable, no permanent move to a nursing home 99 = Unknown)}
-#'   \item{NACCNRYR}{Year permanently moved to nursing home ( 2002 to present 8888 = Not applicable, no permanent move to a nursing home 9999 = Unknown)}
 #'   \item{NACCFTD}{One or more FTLD Module visits completed ( 0 = No FTLD Module visit 1 = At least one FTLD Module visit)}
-#'   \item{NACCMDSS}{Subject's status in the Minimal Data Set (MDS) and Uniform Data Set (UDS) ( 1 = In the UDS and MDS 2 = In the MDS only  3 = In the UDS only)}
-#'   \item{NACCPAFF}{Previously affiliated subject ( 0 = Not previously affiliated subject  1 = Previously affiliated subject)}
 #'   \item{NACCLBDM}{One or more LBD Module visits completed ( 0 = No LBD Module visit 1 = At least one LBD Module visit)}
 #'   \item{NACCACSF}{One or more measures of AB1-42 reported ( 0 = No AB1-42 reported 1 = One or more measures of AB1-42 reported)}
 #'   \item{NACCPCSF}{One or more measures of P-tau181P reported ( 0 = No P-tau181P reported 1 = One or more measures of P-tau181P reported)}
 #'   \item{NACCTCSF}{One or more measures of T-tau reported ( 0 = No T-tau reported 1 = One or more measures of T-tau reported)}
-#'   \item{NACCMRSA}{At least one MRI scan available ( 0 = No; does not have at least one MRI available at NACC 1 = Yes; has at least one MRI available at NACC)}
-#'   \item{NACCNMRI}{Total number of MRI session ( 1 - 20 88 = Not applicable / no MRI available)}
-#'   \item{NACCAPSA}{At least one amyloid PET scan available ( 0 = No; does not have any amyloid PET scans at NACC 1 = Yes; has at least one amyloid PET scan available at NACC)}
-#'   \item{NACCNAPA}{Total number of amyloid PET scans available ( 1 - 20 88 = Not applicable / no amyloid PET available)}
-#'   \item{TELCOV}{Is the UDS telephone follow-up protocol being used because the COVID pandemic precludes traditional in-person UDS visit? (0=No 1=Yes -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
-#'   \item{TELMOD}{What modality of communication was used to collect this remote UDS packet? (1 = Telephone 2 = Video-assisted conference 3 = Some combination of the two -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
 #'   \item{ADGCGWAS}{GWAS available from ADGC (y/n) ( 0 = No 1 = Yes)}
 #'   \item{ADGCEXOM}{ExomeChip available at ADGC (y/n) ( 0 = No 1 = Yes)}
 #'   \item{ADGCRND}{ADGC data-selection round (ADC 1 = Round 1 ADC 2 = Round 2 ADC 3 = Round 3 ADC 4 = Round 4 ADC 5 = Round 5 ADC 6 = Round 6 ADC 7 = Round 7 ADC 8 = Round 8 ADC 9 = Round 9 ADC 10 = Round 10 AA = African American round 88 = Not applicable/no genotype data available 99 = Missing/ could not be determined)}
@@ -17968,8 +17730,6 @@ NULL
 #'   \item{NPFAUT2}{If full autopsy performed, second major finding ( Any text or numbers -4 = Not available, NP Form version submitted did not collect data in this way Blanks	Blank if NPFAUT=/=1 or no additional findings)}
 #'   \item{NPFAUT3}{If full autopsy performed, third major finding ( Any text or numbers -4 = Not available, NP Form version submitted did not collect data in this way Blanks	Blank if NPFAUT=/=1 or no additional findings)}
 #'   \item{NPFAUT4}{If full autopsy performed, fourth major finding ( Any text or numbers -4 = Not available, NP Form version submitted did not collect data in this way Blanks	Blank if NPFAUT=/=1 or no additional findings)}
-#'   \item{NACCDAGE}{Age at death ( 15-120 	888 = Not applicable 	999 = Unknown)}
-#'   \item{NACCINT}{Time interval in months between last visit and death ( 0-100 888 = Not applicable 	999 = Unknown)}
 #'   \item{NPNIT}{NIA/Reagan Institute criteria ( 1-5 1 = High likelihood of dementia being due to Alzheimer's disease 2 = Intermediate likelihood of dementia being due to Alzheimer's disease 3 = Low likelihood of dementia being due to Alzheimer's disease 4 = Criteria not met 5 = Not Done Missing Code 9 = Missing/unknown)}
 #'   \item{NPCERAD}{CERAD criteria ( 1-5 1 = Definite Alzheimer's disease 2 = Probable Alzheimer's disease 3 = Possible Alzheimer's disease 4 = Criteria not met 5 = Not done Missing Code 9 = Missing/Unknown)}
 #'   \item{NPADRDA}{ADRDA/Khachaturian criteria ( 1-3 1 = Alzheimer's disease 2 = Criteria not met 3 = Not done Missing Code 9 = Missing/Unknown)}
@@ -18019,8 +17779,10 @@ NULL
 #'   \item{NPATGFR2}{}
 #'   \item{NPATGFR3}{}
 #'   \item{NPATGFR4}{}
+#'   \item{TELCOV}{Is the UDS telephone follow-up protocol being used because the COVID pandemic precludes traditional in-person UDS visit? (0=No 1=Yes -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{TELMOD}{What modality of communication was used to collect this remote UDS packet? (1 = Telephone 2 = Video-assisted conference 3 = Some combination of the two -4=Not available: UDS form submitted did not collect data in this way, or a skip pattern precludes response to this question)}
+#'   \item{PACKET_1}{}
 #'   \item{FTLDFORMVER}{}
-#'   \item{LBDFORMVER}{}
 #'   \item{FTDAFF}{}
 #'   \item{FTDMUTAT}{}
 #'   \item{FTDPMUT}{}
@@ -18502,6 +18264,8 @@ NULL
 #'   \item{FTDCBFOS}{}
 #'   \item{FTDOTHI}{}
 #'   \item{FTDOTHIS}{}
+#'   \item{PACKET_2}{}
+#'   \item{LBDFORMVER}{}
 #'   \item{LBSSALIV}{}
 #'   \item{LBSSWALL}{}
 #'   \item{LBSINSEX}{}
@@ -18945,10 +18709,10 @@ NULL
 NULL
 
 #' uds_mri
-#' @description NACCADRC UDS Imaging MRI dataset. Mixed protocol (non-SCAN compliant) MRI. The data is sourced from the file(s) investigator_mri_nacc72.csv. 
-#' @format A data frame with 12052 rows and 191 variables:
+#' @description NACCADRC UDS Imaging MRI dataset. Mixed protocol (non-SCAN compliant) MRI. The data is sourced from the file(s) investigator_mri_nacc73.csv. 
+#' @format A data frame with 12180 rows and 191 variables:
 #' \describe{
-#'   \item{NACCADC}{ADC at which subject was seen (100 -9999)}
+#'   \item{NACCADC}{ADC at which participant was seen (100 –9999)}
 #'   \item{NACCID}{Participant ID}
 #'   \item{MRIMO}{}
 #'   \item{MRIDY}{}
