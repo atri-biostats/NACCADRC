@@ -1,8 +1,8 @@
 # mrisbm
 
 NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the
-file(s) investigator_clariti_mrisbm_naccFREEZE.csv,
-investigator_scan_mrisbm_nacc72.csv.
+file(s) investigator_clariti_mrisbm_naccDEV.csv, mrisbm_duplicates.csv,
+investigator_scan_mrisbm_nacc73.csv, mrisbm_clariti_no_edc.csv.
 
 ## Usage
 
@@ -12,7 +12,7 @@ data(mrisbm)
 
 ## Format
 
-A data frame with 6436 rows and 253 variables:
+A data frame with 6415 rows and 253 variables:
 
 - SOURCE:
 
@@ -22,7 +22,7 @@ A data frame with 6436 rows and 253 variables:
 
 - NACCADC:
 
-  ADC at which subject was seen (100 -9999)
+  ADC at which participant was seen (100 –9999)
 
 - SCANDT:
 

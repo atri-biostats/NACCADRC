@@ -58,6 +58,11 @@ PMCID: PMC7605103.
 ``` r
 library(tidyverse)
 library(nlme)
+#> 
+#> Attaching package: ‘nlme’
+#> The following object is masked from ‘package:dplyr’:
+#> 
+#>     collapse
 set.seed(20250312)
 dd <- tibble(
   id = 1:100,

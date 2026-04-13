@@ -1,6 +1,7 @@
 # NACCADRC: NACCADRC Study Package
 
-National Alzheimer’s Coordinating Center (NACC) Uniform Data Set (UDS)
+National Alzheimer’s Coordinating Center (NACC) Alzheimer's Disease
+Research Centers (ADRC) data.
 
 ## See also
 

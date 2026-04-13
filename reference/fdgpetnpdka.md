@@ -1,8 +1,8 @@
 # fdgpetnpdka
 
 NACCADRC UDS, SCAN Imaging FDG PET dataset. The data is sourced from the
-file(s) investigator_clariti_fdgpetnpdka_naccFREEZE.csv,
-investigator_scan_fdgpetnpdka_nacc72.csv.
+file(s) investigator_clariti_fdgpetnpdka_naccDEV.csv,
+fdgpetnpdka_duplicates.csv, investigator_scan_fdgpetnpdka_nacc73.csv.
 
 ## Usage
 
@@ -12,7 +12,7 @@ data(fdgpetnpdka)
 
 ## Format
 
-A data frame with 665 rows and 172 variables:
+A data frame with 839 rows and 174 variables:
 
 - SOURCE:
 
@@ -22,21 +22,44 @@ A data frame with 665 rows and 172 variables:
 
 - NACCADC:
 
-  ADC at which subject was seen (100 -9999)
+  ADC at which participant was seen (100 –9999)
 
 - LONIUID:
 
+  LONI Image ID (Prefix “I” followed by 8 numerals)
+
 - SCANDATE:
+
+  Scan acquisition date (YYYY-MM-DD)
 
 - PROCESSDATE:
 
+  Date quantification pipeline was run (YYYY-MM-DD)
+
 - TRACER:
+
+  PET Radiotracer ((1) FDG (2) PIB (3) Florbetapir (4) Florbetaben (5)
+  NAV4694 (6) Flortaucipir (7) MK6240 (8) PI2620 (9) GTP1 (10)
+  Flutemetamol (99) Unknown)
 
 - ACQUISITION_TIME:
 
+  Acquisition start-stop time post-injection (minutes) ((1) 30-60 (2)
+  40-60 (3) 40-70 (4) 45-75 (5) 45-90 (6) 50-70 (7) 60-90 (8) 70-90 (9)
+  70-110 (10) 80-100 (11) 90-110)
+
+- IN_CLARITI_PROJECT:
+
+- QC_STATUS:
+
 - FDG_METAROI_SUVR:
 
+  FDG MetaROI SUVR
+
 - TOP50PONSVERMIS_SUVR:
+
+  Reference region - SUVR of the top 50 percent of voxels of the
+  pons/vermis
 
 - BRAINSTEM_SUVR:
 
@@ -889,7 +912,11 @@ A data frame with 665 rows and 172 variables:
 
 - VISIT:
 
+  Visit Type ((BL) Baseline (FU) Followup)
+
 - IN_SCAN_PROJECT:
+
+  Is this record also in the SCAN project? ((0) No (1) Yes)
 
 ## Source
 

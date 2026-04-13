@@ -1,8 +1,8 @@
 # mriqc
 
 NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the
-file(s) investigator_clariti_mriqc_naccFREEZE.csv,
-investigator_scan_mriqc_nacc72.csv.
+file(s) investigator_clariti_mriqc_naccDEV.csv, mriqc_duplicates.csv,
+investigator_scan_mriqc_nacc73.csv.
 
 ## Usage
 
@@ -12,7 +12,7 @@ data(mriqc)
 
 ## Format
 
-A data frame with 28915 rows and 40 variables:
+A data frame with 29982 rows and 40 variables:
 
 - SOURCE:
 
@@ -22,7 +22,7 @@ A data frame with 28915 rows and 40 variables:
 
 - NACCADC:
 
-  ADC at which subject was seen (100 -9999)
+  ADC at which participant was seen (100 –9999)
 
 - STUDYDATE:
 

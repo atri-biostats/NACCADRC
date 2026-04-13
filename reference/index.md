@@ -30,10 +30,6 @@ Standardized, Centralized AD/ADRD Neuroimaging (SCAN).
 
 - [`clariti_edc`](https://atri-biostats.github.io/NACCADRC/reference/clariti_edc.md)
   : clariti_edc
-- [`clariti_edc_dropped`](https://atri-biostats.github.io/NACCADRC/reference/clariti_edc_dropped.md)
-  : clariti_edc_dropped
-- [`clariti_edc_unfiltered`](https://atri-biostats.github.io/NACCADRC/reference/clariti_edc_unfiltered.md)
-  : clariti_edc_unfiltered
 
 ## UDS Datasets
 

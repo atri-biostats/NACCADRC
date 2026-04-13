@@ -1,7 +1,7 @@
 # uds_fcsf
 
 NACCADRC UDS dataset. CSF link. The data is sourced from the file(s)
-investigator_fcsf_nacc72.csv.
+investigator_fcsf_nacc73.csv.
 
 ## Usage
 
@@ -11,11 +11,11 @@ data(uds_fcsf)
 
 ## Format
 
-A data frame with 3051 rows and 23 variables:
+A data frame with 3046 rows and 23 variables:
 
 - NACCADC:
 
-  ADC at which subject was seen (100 -9999)
+  ADC at which participant was seen (100 –9999)
 
 - NACCID:
 

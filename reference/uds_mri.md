@@ -1,7 +1,7 @@
 # uds_mri
 
 NACCADRC UDS Imaging MRI dataset. Mixed protocol (non-SCAN compliant)
-MRI. The data is sourced from the file(s) investigator_mri_nacc72.csv.
+MRI. The data is sourced from the file(s) investigator_mri_nacc73.csv.
 
 ## Usage
 
@@ -11,11 +11,11 @@ data(uds_mri)
 
 ## Format
 
-A data frame with 12052 rows and 191 variables:
+A data frame with 12180 rows and 191 variables:
 
 - NACCADC:
 
-  ADC at which subject was seen (100 -9999)
+  ADC at which participant was seen (100 –9999)
 
 - NACCID:
 

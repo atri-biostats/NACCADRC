@@ -1,8 +1,8 @@
 # petqc
 
 NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the
-file(s) investigator_clariti_petqc_naccFREEZE.csv,
-investigator_scan_petqc_nacc72.csv.
+file(s) investigator_clariti_petqc_naccDEV.csv, petqc_duplicates.csv,
+investigator_scan_petqc_nacc73.csv.
 
 ## Usage
 
@@ -12,7 +12,7 @@ data(petqc)
 
 ## Format
 
-A data frame with 7798 rows and 13 variables:
+A data frame with 8284 rows and 13 variables:
 
 - SOURCE:
 
@@ -22,7 +22,7 @@ A data frame with 7798 rows and 13 variables:
 
 - NACCADC:
 
-  ADC at which subject was seen (100 -9999)
+  ADC at which participant was seen (100 –9999)
 
 - SCAN_DATE:
 
@@ -31,6 +31,8 @@ A data frame with 7798 rows and 13 variables:
 - RADIOTRACER:
 
 - LONIUID:
+
+  LONI Image ID (Prefix “I” followed by 8 numerals)
 
 - SCANNER_MODEL:
 

@@ -1,9 +1,10 @@
 # taupetnpdka
 
 NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the
-file(s) investigator_clariti_taupetnpdka_naccFREEZE.csv,
-investigator_scan_mp_taupetnpdka_nacc72.csv,
-investigator_scan_taupetnpdka_nacc72.csv.
+file(s) investigator_clariti_taupetnpdka_naccDEV.csv,
+taupetnpdka_duplicates.csv, investigator_scan_mp_taupetnpdka_nacc73.csv,
+investigator_scan_taupetnpdka_nacc73.csv,
+taupetnpdka_clariti_no_edc.csv.
 
 ## Usage
 
@@ -13,7 +14,7 @@ data(taupetnpdka)
 
 ## Format
 
-A data frame with 2870 rows and 185 variables:
+A data frame with 3019 rows and 187 variables:
 
 - SOURCE:
 
@@ -23,19 +24,40 @@ A data frame with 2870 rows and 185 variables:
 
 - NACCADC:
 
-  ADC at which subject was seen (100 -9999)
+  ADC at which participant was seen (100 –9999)
 
 - LONIUID:
 
+  LONI Image ID (Prefix “I” followed by 8 numerals)
+
 - SCANDATE:
+
+  Scan acquisition date (YYYY-MM-DD)
 
 - PROCESSDATE:
 
+  Date quantification pipeline was run (YYYY-MM-DD)
+
 - TRACER:
+
+  PET Radiotracer ((1) FDG (2) PIB (3) Florbetapir (4) Florbetaben (5)
+  NAV4694 (6) Flortaucipir (7) MK6240 (8) PI2620 (9) GTP1 (10)
+  Flutemetamol (99) Unknown)
 
 - TRACER_SUVR_WARNING:
 
+  USE CENTILOIDS (NOT SUVRs) TO COMPARE ACROSS TRACERS, DO NOT COMPARE
+  ACROSS ACQUISITION WINDOWS
+
 - ACQUISITION_TIME:
+
+  Acquisition start-stop time post-injection (minutes) ((1) 30-60 (2)
+  40-60 (3) 40-70 (4) 45-75 (5) 45-90 (6) 50-70 (7) 60-90 (8) 70-90 (9)
+  70-110 (10) 80-100 (11) 90-110)
+
+- IN_CLARITI_PROJECT:
+
+- QC_STATUS:
 
 - META_TEMPORAL_SUVR:
 
@@ -925,7 +947,11 @@ A data frame with 2870 rows and 185 variables:
 
 - VISIT:
 
+  Visit Type ((BL) Baseline (FU) Followup)
+
 - IN_SCAN_PROJECT:
+
+  Is this record also in the SCAN project? ((0) No (1) Yes)
 
 ## Source
 

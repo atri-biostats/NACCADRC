@@ -2,7 +2,7 @@
 
 NACCADRC UDS dataset. UDS with NP and Genetics plus FTLD and LBD
 modules. The data is sourced from the file(s)
-investigator_ftldlbd_nacc72.csv.
+investigator_ftldlbd_nacc73.csv.
 
 ## Usage
 
@@ -12,15 +12,15 @@ data(uds_ftldlbd)
 
 ## Format
 
-A data frame with 207454 rows and 1936 variables:
+A data frame with 214977 rows and 2651 variables:
+
+- NACCADC:
+
+  ADC at which participant was seen (100 –9999)
 
 - NACCID:
 
   Participant ID
-
-- NACCADC:
-
-  ADC at which subject was seen (100 -9999)
 
 - PACKET:
 
@@ -31,17 +31,7 @@ A data frame with 207454 rows and 1936 variables:
 
   Form version number (1 - 3.2)
 
-- VISITMO:
-
-  Form date - month (1 - 12)
-
-- VISITDAY:
-
-  Form date - day (1 - 31)
-
-- VISITYR:
-
-  Form date - year (2005 to the present year)
+- VISITDATE:
 
 - NACCVNUM:
 
@@ -65,22 +55,106 @@ A data frame with 207454 rows and 1936 variables:
 
 - NACCCORE:
 
-- NACCREAS:
+- NACCDIED:
 
-  Primary reason for coming to ADC ( 1 = To participate in a research
-  study 2 = To have a clinical evaluation 7 = Both to participate in a
-  research study and to have a clinical evaluation, or another reason 9
-  = Unknown -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
+  Subject is known to be deceased ( 0 = Not deceased/unknown 1 =
+  Deceased Description/derivation: A subject with a Neuropathology Form
+  and/or a Milestones Form reporting the subject's death is indicated as
+  deceased (naccdied = 1). Otherwise, naccdied = 0. NOTE: NACC is not
+  always made aware of deaths for active and inactive subjects; thus
+  naccdied = 0 for a subject who has died but whose death was not
+  reported to NACC.)
 
-- NACCREFR:
+- NACCMOD:
 
-  Principal referral source ( 1 = Non-professional contact:
-  self/relative/friend 2 = Professional contact: clinician, nurse,
-  doctor, other health care provider, or other staff (ADC and non-ADC) 8
-  = Other 9 = Unknown -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
+  Month of death ( 1 - 12 88 = Not applicable, subject not deceased 99 =
+  Unknown)
+
+- NACCYOD:
+
+  Year of death ( Allowable codes cannot precede 1970; in most cases,
+  should not precede 1984 8888 = Not applicable, subject not deceased
+  9999 = Unknown)
+
+- NACCACTV:
+
+  Follow-up status at the Alzheimer's Disease Center (ADC) ( 0 = Died,
+  discontinued, lost to follow-up 1 = Annual follow-up (no
+  discontinuation/loss to follow-up or minimal contact) 2 = Minimal
+  contact with Center, no annual follow-up)
+
+- NACCNOVS:
+
+  No longer followed annually in person or by telephone ( 0 = Still
+  receiving annual follow-up in person or by telephone 1 = No longer
+  receiving annual follow-up in person or by telephone 8 = Not
+  applicable, enrolled for initial visit only)
+
+- NACCDSMO:
+
+  Month of discontinuation from annual follow-up ( 1 - 12 88 = Not
+  applicable, still followed annually in person or by telephone)
+
+- NACCDSDY:
+
+  Day of discontinuation from annual follow-up ( 1- 31 88 = Not
+  applicable, still followed annually in person or by telephone)
+
+- NACCDSYR:
+
+  Year of discontinuation from annual follow-up ( 2005 to present 8888 =
+  Not applicable, still followed annually in person or by telephone)
+
+- NACCNURP:
+
+  Permanently moved to a nursing home ( 0 = Did not report permanent
+  move to a nursing home 1 = Permanently moved to a nursing home)
+
+- NACCNRMO:
+
+  Month permanently moved to nursing home ( 1 - 12 88 = Not applicable,
+  no permanent move to a nursing home 99 = Unknown)
+
+- NACCNRDY:
+
+  Day permanently moved to nursing home ( 1 - 31 88 = Not applicable, no
+  permanent move to a nursing home 99 = Unknown)
+
+- NACCNRYR:
+
+  Year permanently moved to nursing home ( 2002 to present 8888 = Not
+  applicable, no permanent move to a nursing home 9999 = Unknown)
+
+- NACCMDSS:
+
+  Subject's status in the Minimal Data Set (MDS) and Uniform Data Set
+  (UDS) ( 1 = In the UDS and MDS 2 = In the MDS only 3 = In the UDS
+  only)
+
+- NACCPAFF:
+
+  Previously affiliated subject ( 0 = Not previously affiliated subject
+  1 = Previously affiliated subject)
+
+- FRMDATEA1:
+
+- LANGA1:
+
+- MODEA1:
+
+- RMREASA1:
+
+- RMMODEA1:
+
+- ADMINA1:
+
+- NACCAGE:
+
+  Subject's age at visit (18 - 120)
+
+- NACCAGEB:
+
+  Subject's age at initial visit (18 - 120)
 
 - BIRTHMO:
 
@@ -90,26 +164,13 @@ A data frame with 207454 rows and 1936 variables:
 
   Subject's year of birth (1875 to (current year minus 15))
 
-- SEX:
+- CHLDHDCTRY:
 
-  Subject's sex ( 1 = Male 2 = Female)
+- NACCNIHR:
 
-- HISPANIC:
-
-  Hispanic/Latino ethnicity ( 0 = No 1 = Yes 9 = Unknown)
-
-- HISPOR:
-
-  Hispanic origins ( 1 = Mexican, Chicano, or Mexican-American 2 =
-  Puerto Rican 3 = Cuban 4 = Dominican 5 = Central American 6 = South
-  American 50 = Other (specify) 88 = Not applicable; subject is not
-  Hispanic 99 = Unknown -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- HISPORX:
-
-  Hispanic origins, other- specify (Any text or numbers)
+  Derived NIH race definitions ( 1 = White 2 = Black or African American
+  3 = American Indian or Alaska Native 4 = Native Hawaiian or Pacific
+  Islander 5 = Asian 6 = Multiracial 99 = Unknown or ambiguous)
 
 - RACE:
 
@@ -141,15 +202,183 @@ A data frame with 207454 rows and 1936 variables:
 
   Third race, other- specify (Any text or numbers)
 
-- PRIMLANG:
+- RACEAIAN:
 
-  Primary language ( 1 = English 2 = Spanish 3 = Mandarin 4 = Cantonese
-  5 = Russian 6 = Japanese 8 = Other primary language (specify) 9 =
-  Unknown)
+- RACEAIANX:
 
-- PRIMLANX:
+- RACEASIAN:
 
-  Primary language, other- specify (Any text or numbers)
+- ETHCHINESE:
+
+- ETHINDIA:
+
+- ETHFILIP:
+
+- ETHVIETNAM:
+
+- ETHKOREAN:
+
+- ETHJAPAN:
+
+- ETHASNOTH:
+
+- ETHASNOTHX:
+
+- RACEBLACK:
+
+- ETHAFAMER:
+
+- ETHJAMAICA:
+
+- ETHHAITIAN:
+
+- ETHNIGERIA:
+
+- ETHETHIOP:
+
+- ETHSOMALI:
+
+- ETHBLKOTH:
+
+- ETHBLKOTHX:
+
+- NACCHISP:
+
+- HISPOR:
+
+  Hispanic origins ( 1 = Mexican, Chicano, or Mexican-American 2 =
+  Puerto Rican 3 = Cuban 4 = Dominican 5 = Central American 6 = South
+  American 50 = Other (specify) 88 = Not applicable; subject is not
+  Hispanic 99 = Unknown -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- HISPORX:
+
+  Hispanic origins, other- specify (Any text or numbers)
+
+- ETHMEXICAN:
+
+- ETHPUERTO:
+
+- ETHSALVA:
+
+- ETHCUBAN:
+
+- ETHDOMIN:
+
+- ETHGUATEM:
+
+- ETHHISOTH:
+
+- ETHHISOTHX:
+
+- RACEMENA:
+
+- ETHLEBANON:
+
+- ETHIRAN:
+
+- ETHEGYPT:
+
+- ETHSYRIA:
+
+- ETHIRAQI:
+
+- ETHISRAEL:
+
+- ETHMENAOTH:
+
+- ETHMENAOTX:
+
+- RACENHPI:
+
+- ETHHAWAII:
+
+- ETHSAMOAN:
+
+- ETHCHAMOR:
+
+- ETHTONGAN:
+
+- ETHFIJIAN:
+
+- ETHMARSHAL:
+
+- ETHNHPIOTH:
+
+- ETHNHPIOTX:
+
+- RACEWHITE:
+
+- ETHENGLISH:
+
+- ETHGERMAN:
+
+- ETHIRISH:
+
+- ETHITALIAN:
+
+- ETHPOLISH:
+
+- ETHSCOTT:
+
+- ETHWHIOTH:
+
+- ETHWHIOTHX:
+
+- RACEUNKN:
+
+- GENMAN:
+
+- GENWOMAN:
+
+- GENTRMAN:
+
+- GENTRWOMAN:
+
+- GENNONBI:
+
+- GENTWOSPIR:
+
+- GENOTH:
+
+- GENOTHX:
+
+- GENDKN:
+
+- GENNOANS:
+
+- NACCSEX:
+
+- INTERSEX:
+
+- SEXORNGAY:
+
+- SEXORNHET:
+
+- SEXORNBI:
+
+- SEXORNTWOS:
+
+- SEXORNOTH:
+
+- SEXORNOTHX:
+
+- SEXORNDNK:
+
+- SEXORNNOAN:
+
+- NACCLANG:
+
+- NACCLANGX:
+
+- HANDED:
+
+  Is the subject left- or right-handed? ( 1 = Left-handed 2 =
+  Right-handed 3 = Ambidextrous 9 = Unknown)
+
+- NACCEDULVL:
 
 - EDUC:
 
@@ -181,10 +410,242 @@ A data frame with 207454 rows and 1936 variables:
   4 = Skilled nursing facility, nursing home, hospital, or hospice 9 =
   Other or unknown)
 
-- HANDED:
+- SERVED:
 
-  Is the subject left- or right-handed? ( 1 = Left-handed 2 =
-  Right-handed 3 = Ambidextrous 9 = Unknown)
+- MEDVA:
+
+- EXRTIME:
+
+- MEMWORS:
+
+- MEMTROUB:
+
+- MEMTEN:
+
+- ADISTATE:
+
+- ADINAT:
+
+- PRIOCC:
+
+- NACCREFR:
+
+  Principal referral source ( 1 = Non-professional contact:
+  self/relative/friend 2 = Professional contact: clinician, nurse,
+  doctor, other health care provider, or other staff (ADC and non-ADC) 8
+  = Other 9 = Unknown -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- FRMDATEA1A:
+
+- LANGA1A:
+
+- MODEA1A:
+
+- RMREASA1A:
+
+- RMMODEA1A:
+
+- A1ANOT:
+
+- ADMINA1A:
+
+- OWNSCAR:
+
+- TRSPACCESS:
+
+- TRANSPROB:
+
+- TRANSWORRY:
+
+- TRSPMED:
+
+- INCOMEYR:
+
+- FINSATIS:
+
+- BILLPAY:
+
+- FINUPSET:
+
+- EATLESS:
+
+- EATLESSYR:
+
+- LESSMEDS:
+
+- LESSMEDSYR:
+
+- COMPCOMM:
+
+- GUARDEDU:
+
+- EMPTINESS:
+
+- MISSPEOPLE:
+
+- FRIENDS:
+
+- ABANDONED:
+
+- CLOSEFRND:
+
+- PARENTCOMM:
+
+- CHILDCOMM:
+
+- FRIENDCOMM:
+
+- PARTICIPATE:
+
+- SAFEHOME:
+
+- SAFECOMM:
+
+- DELAYMED:
+
+- SCRIPTPROB:
+
+- MISSEDFUP:
+
+- DOCADVICE:
+
+- HEALTHACC:
+
+- LESSCOURT:
+
+- POORSERV:
+
+- NOTSMART:
+
+- ACTAFRAID:
+
+- THREATENED:
+
+- POORMEDTRT:
+
+- EXPANCEST:
+
+- EXPGENDER:
+
+- EXPRACE:
+
+- EXPAGE:
+
+- EXPRELIG:
+
+- EXPHEIGHT:
+
+- EXPWEIGHT:
+
+- EXPAPPEAR:
+
+- EXPSEXORN:
+
+- EXPEDUCINC:
+
+- EXPDISAB:
+
+- EXPSKIN:
+
+- EXPOTHER:
+
+- EXPNOTAPP:
+
+- EXPNOANS:
+
+- EXPSTRS:
+
+- FRMDATEA2:
+
+- LANGA2:
+
+- MODEA2:
+
+- RMREASA2:
+
+- RMMODEA2:
+
+- A2NOT:
+
+- NEWINF:
+
+  Is this a new co-participant - i.e., one who was not a co-participant
+  at any past UDS visit? ( 0 = No 1 = Yes -4 = Not available: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- INRELTO:
+
+  Co-participant's relationship to subject ( 1 = Spouse, partner, or
+  companion 2 = Child 3 = Sibling 4 = Other relative 5 = Friend,
+  neighbor, or someone known through family, friends, work, or community
+  6 = Paid caregiver, health care provider, or clinician 7 = Other -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question
+  Description/derivation: Note that if there is no change in
+  co-participant at a follow-up visit, the co-participant data from a
+  previous visit (visit where reported) will be carried forward to the
+  current visit.)
+
+- INRELTOX:
+
+  Co-participant relationship, other (specify) (Any text or numbers)
+
+- INKNOWN:
+
+  How long has the co-participant known the subject? ( 0 -120 999 =
+  Unknown -4 = Not available: UDS form submitted did not collect data in
+  this way, or a skip pattern precludes response to this question
+  Description/derivation: Note that if there is no change in
+  co-participant at a follow-up visit, the co-participant data from a
+  previous visit (visit where reported) will be carried forward to the
+  current visit.)
+
+- INLIVWTH:
+
+  Does the co-participant live with the subject? ( 0 = No 1 = Yes -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
+
+- INCNTMOD:
+
+- NACCINCNTFQ:
+
+- INVISITS:
+
+  If no, approximate frequency of in-person visits? ( 1 = Daily 2 = At
+  least 3 times per week 3 = Weekly 4 = At least 3 times per month 5 =
+  Monthly 6 = Less than once a month 8 = Not applicable, co-participant
+  lives with subject -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- INCALLS:
+
+  If no, approximate frequency of telephone contact? ( 1 = Daily 2 = At
+  least 3 times per week 3 = Weekly 4 = At least 3 times per month 5 =
+  Monthly 6 = Less than once a month 8 = Not applicable, co-participant
+  lives with subject -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- INCNTMDX:
+
+- INCNTTIM:
+
+- INRELY:
+
+  Is there a question about the co-participant's reliability? ( 0 = No 1
+  = Yes -4 = Not available: UDS form submitted did not collect data in
+  this way, or a skip pattern precludes response to this question)
+
+- INMEMWORS:
+
+- INMEMTROUB:
+
+- INMEMTEN:
 
 - INBIRMO:
 
@@ -202,13 +663,6 @@ A data frame with 207454 rows and 1936 variables:
 
   Co-participant's sex ( 1 = Male 2 = Female -4 = Not available: UDS
   form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- NEWINF:
-
-  Is this a new co-participant - i.e., one who was not a co-participant
-  at any past UDS visit? ( 0 = No 1 = Yes -4 = Not available: UDS form
-  submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
 - INHISP:
@@ -230,14 +684,6 @@ A data frame with 207454 rows and 1936 variables:
 
   Co-participant of Hispanic origins, other (specify) (Any text or
   numbers)
-
-- NACCNINR:
-
-  Derived NIH race definitions ( 1 = White 2 = Black or African American
-  3 = American Indian or Alaska Native 4 = Native Hawaiian or Pacific
-  Islander 5 = Asian 6 = Multiracial 99 = Unknown or ambiguous -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
 
 - INRACE:
 
@@ -283,6 +729,14 @@ A data frame with 207454 rows and 1936 variables:
 
   Co-participant third race, other (specify) (Any text or numbers)
 
+- NACCNINR:
+
+  Derived NIH race definitions ( 1 = White 2 = Black or African American
+  3 = American Indian or Alaska Native 4 = Native Hawaiian or Pacific
+  Islander 5 = Asian 6 = Multiracial 99 = Unknown or ambiguous -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
 - INEDUC:
 
   Co-participant's years of education ( 0 - 36 99 = Unknown -4 = Not
@@ -293,62 +747,15 @@ A data frame with 207454 rows and 1936 variables:
   previous visit (visit where reported) will be carried forward to the
   current visit.)
 
-- INRELTO:
+- FRMDATEA3:
 
-  Co-participant's relationship to subject ( 1 = Spouse, partner, or
-  companion 2 = Child 3 = Sibling 4 = Other relative 5 = Friend,
-  neighbor, or someone known through family, friends, work, or community
-  6 = Paid caregiver, health care provider, or clinician 7 = Other -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question
-  Description/derivation: Note that if there is no change in
-  co-participant at a follow-up visit, the co-participant data from a
-  previous visit (visit where reported) will be carried forward to the
-  current visit.)
+- LANGA3:
 
-- INRELTOX:
+- MODEA3:
 
-  Co-participant relationship, other (specify) (Any text or numbers)
+- RMREASA3:
 
-- INKNOWN:
-
-  How long has the co-participant known the subject? ( 0 -120 999 =
-  Unknown -4 = Not available: UDS form submitted did not collect data in
-  this way, or a skip pattern precludes response to this question
-  Description/derivation: Note that if there is no change in
-  co-participant at a follow-up visit, the co-participant data from a
-  previous visit (visit where reported) will be carried forward to the
-  current visit.)
-
-- INLIVWTH:
-
-  Does the co-participant live with the subject? ( 0 = No 1 = Yes -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
-
-- INVISITS:
-
-  If no, approximate frequency of in-person visits? ( 1 = Daily 2 = At
-  least 3 times per week 3 = Weekly 4 = At least 3 times per month 5 =
-  Monthly 6 = Less than once a month 8 = Not applicable, co-participant
-  lives with subject -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- INCALLS:
-
-  If no, approximate frequency of telephone contact? ( 1 = Daily 2 = At
-  least 3 times per week 3 = Weekly 4 = At least 3 times per month 5 =
-  Monthly 6 = Less than once a month 8 = Not applicable, co-participant
-  lives with subject -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- INRELY:
-
-  Is there a question about the co-participant's reliability? ( 0 = No 1
-  = Yes -4 = Not available: UDS form submitted did not collect data in
-  this way, or a skip pattern precludes response to this question)
+- RMMODEA3:
 
 - NACCFAM:
 
@@ -375,94 +782,100 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes re-sponse to this question)
 
-- NACCAM:
+- FRMDATEA4:
 
-  In this family, is there evidence for an AD mutation (from list of
-  specific muta-tions)? ( 0 = No 1 = Yes, APP 2 = Yes, PS-1 (PSEN-1) 3 =
-  Yes, PS-2 (PSEN-2) 8 = Yes, other (specify) 9 = Unknown whether
-  mutation exists -4 = Not available: UDS form submitted did not collect
-  data in this way, or a skip pattern precludes re-sponse to this
-  question)
+- LANGA4:
 
-- NACCAMX:
+- MODEA4:
 
-  If yes, Other (specify) (Any text or numbers)
+- RMREASA4:
 
-- NACCAMS:
-
-  Source of evidence for AD mutation ( 1 = Family report (no test
-  documentation available) 2 = Commercial test documentation 3 =
-  Research lab test documentation 8 = Other (specify) 9 = Unknown -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes re-sponse to this question)
-
-- NACCAMSX:
-
-  If other, specify (Any text or numbers)
-
-- NACCFM:
-
-  In this family, is there evidence for an FTLD mutation (from list of
-  specific mu-tations)? ( 0 = No 1 = Yes, MAPT 2 = Yes, PGRN 3 = Yes,
-  C9orf72 4 = Yes, FUS 8 = Yes, Other (specify) 9 = Unknown whether
-  mutation exists -4 = Not available: UDS form submitted did not collect
-  data in this way, or a skip pattern precludes re-sponse to this
-  question)
-
-- NACCFMX:
-
-  If yes, Other (specify) (Any text or numbers)
-
-- NACCFMS:
-
-  Source of evidence for FTLD mutation ( 1 = Family report (no test
-  documentation availa-ble) 2 = Commercial test documentation 3 =
-  Research lab test documentation 8 = Other (specify) 9 = Unknown -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes re-sponse to this question.)
-
-- NACCFMSX:
-
-  If other, specify (Any text or numbers)
-
-- NACCOM:
-
-  In this family, is there evidence for a mutation other than an AD or
-  FTLD muta-tion? ( 0 = No 1 = Yes (specify) 9 = Unknown whether
-  mutation exists -4 = Not available: UDS form submitted did not collect
-  data in this way, or a skip pattern precludes re-sponse to this
-  question)
-
-- NACCOMX:
-
-  Specified other mutation (Any text or numbers)
-
-- NACCOMS:
-
-  Source of evidence for other mutation ( 1 = Family report (no test
-  documentation availa-ble) 2 = Commercial test documentation 3 =
-  Research lab test documentation 8 = Other (specify) 9 = Unknown -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes re-sponse to this question.)
-
-- NACCOMSX:
-
-  If other, specify (Any text or numbers)
-
-- NACCFADM:
-
-  In this family, is there evidence of a dominantly inherited AD
-  mutation? ( 0 = No/unknown 1 = Yes)
-
-- NACCFFTD:
-
-  In this family, is there evidence for an FTLD mutation? ( 0 =
-  No/unknown 1 = Yes)
+- RMMODEA4:
 
 - ANYMEDS:
 
   Subject taking any medications ( 0 = No 1 = Yes -4 = Did not complete
   medications form)
+
+- RXNORMID1:
+
+- RXNORMID2:
+
+- RXNORMID3:
+
+- RXNORMID4:
+
+- RXNORMID5:
+
+- RXNORMID6:
+
+- RXNORMID7:
+
+- RXNORMID8:
+
+- RXNORMID9:
+
+- RXNORMID10:
+
+- RXNORMID11:
+
+- RXNORMID12:
+
+- RXNORMID13:
+
+- RXNORMID14:
+
+- RXNORMID15:
+
+- RXNORMID16:
+
+- RXNORMID17:
+
+- RXNORMID18:
+
+- RXNORMID19:
+
+- RXNORMID20:
+
+- RXNORMID21:
+
+- RXNORMID22:
+
+- RXNORMID23:
+
+- RXNORMID24:
+
+- RXNORMID25:
+
+- RXNORMID26:
+
+- RXNORMID27:
+
+- RXNORMID28:
+
+- RXNORMID29:
+
+- RXNORMID30:
+
+- RXNORMID31:
+
+- RXNORMID32:
+
+- RXNORMID33:
+
+- RXNORMID34:
+
+- RXNORMID35:
+
+- RXNORMID36:
+
+- RXNORMID37:
+
+- RXNORMID38:
+
+- RXNORMID39:
+
+- RXNORMID40:
 
 - DRUG1:
 
@@ -544,11 +957,389 @@ A data frame with 207454 rows and 1936 variables:
 
 - DRUG40:
 
-- TOBAC30:
+- NACCAMD:
 
-  Smoked cigarettes in last 30 days ( 0 = No 1 = Yes 9 = Unknown - 4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
+  Total number of medications reported at each visit ( 0 - 40 -4 = Did
+  not complete medications form)
+
+- NACCAHTN:
+
+  Reported current use of any type of an antihypertensive or blood
+  pressure medication ( 0 = Did not report use at visit 1 = Reported use
+  at visit -4 = Did not complete medications form)
+
+- NACCHTNC:
+
+  Reported current use of an antihypertensive combination therapy ( 0 =
+  Did not report use at visit 1 = Reported use at visit -4 = Did not
+  complete medications form)
+
+- NACCACEI:
+
+  Reported current use of an angiotensin converting enzyme (ACE)
+  inhibitor ( 0 = Did not report use at visit 1 = Reported use at visit
+  -4 = Did not complete medications form)
+
+- NACCAAAS:
+
+  Reported current use of an antiadrenergic agent ( 0 = Did not report
+  use at visit 1 = Reported use at visit -4 = Did not complete
+  medications form)
+
+- NACCBETA:
+
+  Reported current use of a beta-adrenergic blocking agent
+  (Beta-Blocker) ( 0 = Did not report use at visit 1 = Reported use at
+  visit -4 = Did not complete medications form)
+
+- NACCCCBS:
+
+  Reported current use of a calcium channel blocking agent ( 0 = Did not
+  report use at visit 1 = Reported use at visit -4 = Did not complete
+  medications form)
+
+- NACCDIUR:
+
+  Reported current use of a diuretic ( 0 = Did not report use at visit 1
+  = Reported use at visit -4 = Did not complete medications form)
+
+- NACCVASD:
+
+  Reported current use of a vasodilator ( 0 = Did not report use at
+  visit 1 = Reported use at visit -4 = Did not complete medications
+  form)
+
+- NACCANGI:
+
+  Reported current use of an angiotensin II inhibitor ( 0 = Did not
+  report use at visit 1 = Reported use at visit -4 = Did not complete
+  medications form)
+
+- NACCLIPL:
+
+  Reported current use of lipid lowering medication ( 0 = Did not report
+  use at visit 1 = Reported use at visit -4 = Did not complete
+  medications form)
+
+- NACCNSD:
+
+  Reported current use of nonsteroidal anti-inflammatory medication ( 0
+  = Did not report use at visit 1 = Reported use at visit -4 = Did not
+  complete medications form)
+
+- NACCAC:
+
+  Reported current use of an anticoagulant or antiplatelet agent ( 0 =
+  Did not report use at visit 1 = Reported use at visit -4 = Did not
+  complete medications form)
+
+- NACCADEP:
+
+  Reported current use of an antidepressant ( 0 = Did not report use at
+  visit 1 = Reported use at visit -4 = Did not complete medications
+  form)
+
+- NACCAPSY:
+
+  Reported current use of an antipsychotic agent ( 0 = Did not report
+  use at visit 1 = Reported use at visit -4 = Did not complete
+  medications form)
+
+- NACCAANX:
+
+  Reported current use of an anxiolytic, sedative, or hypnotic agent ( 0
+  = Did not report use at visit 1 = Reported use at visit -4 = Did not
+  complete medications form)
+
+- NACCADMD:
+
+  Reported current use of a FDA-approved medication for Alzheimer's
+  disease symptoms ( 0 = Did not report use at visit 1 = Reported use at
+  visit -4 = Did not complete medications form)
+
+- NACCPDMD:
+
+  Reported current use of an antiparkinson agent ( 0 = Did not report
+  use at visit 1 = Reported use at visit -4 = Did not complete
+  medications form)
+
+- NACCEMD:
+
+  Reported current use of estrogen hormone therapy ( 0 = Did not report
+  use at visit 1 = Reported use at visit -4 = Did not complete
+  medications form)
+
+- NACCEPMD:
+
+  Reported current use of estrogen + progestin hormone therapy ( 0 = Did
+  not report use at visit 1 = Reported use at visit -4 = Did not
+  complete medications form)
+
+- NACCDBMD:
+
+  Reported current use of a diabetes medication ( 0 = Did not report use
+  at visit 1 = Reported use at visit -4 = Did not complete medications
+  form)
+
+- FRMDATEA4A:
+
+- LANGA4A:
+
+- MODEA4A:
+
+- RMREASA4A:
+
+- RMMODEA4A:
+
+- TRTBIOMARK:
+
+- NEWTREAT:
+
+- TARGETAB1:
+
+- TARGETTAU1:
+
+- TARGETINF1:
+
+- TARGETSYN1:
+
+- TARGETOTH1:
+
+- TARGETOTX1:
+
+- TRTTRIAL1:
+
+- NCTNUM1:
+
+- STARTMO1:
+
+- STARTYEAR1:
+
+- ENDMO1:
+
+- ENDYEAR1:
+
+- CARETRIAL1:
+
+- TRIALGRP1:
+
+- TARGETAB2:
+
+- TARGETTAU2:
+
+- TARGETINF2:
+
+- TARGETSYN2:
+
+- TARGETOTH2:
+
+- TARGETOTX2:
+
+- TRTTRIAL2:
+
+- NCTNUM2:
+
+- STARTMO2:
+
+- STARTYEAR2:
+
+- ENDMO2:
+
+- ENDYEAR2:
+
+- CARETRIAL2:
+
+- TRIALGRP2:
+
+- TARGETAB3:
+
+- TARGETTAU3:
+
+- TARGETINF3:
+
+- TARGETSYN3:
+
+- TARGETOTH3:
+
+- TARGETOTX3:
+
+- TRTTRIAL3:
+
+- NCTNUM3:
+
+- STARTMO3:
+
+- STARTYEAR3:
+
+- ENDMO3:
+
+- ENDYEAR3:
+
+- CARETRIAL3:
+
+- TRIALGRP3:
+
+- TARGETAB4:
+
+- TARGETTAU4:
+
+- TARGETINF4:
+
+- TARGETSYN4:
+
+- TARGETOTH4:
+
+- TARGETOTX4:
+
+- TRTTRIAL4:
+
+- NCTNUM4:
+
+- STARTMO4:
+
+- STARTYEAR4:
+
+- ENDMO4:
+
+- ENDYEAR4:
+
+- CARETRIAL4:
+
+- TRIALGRP4:
+
+- TARGETAB5:
+
+- TARGETTAU5:
+
+- TARGETINF5:
+
+- TARGETSYN5:
+
+- TARGETOTH5:
+
+- TARGETOTX5:
+
+- TRTTRIAL5:
+
+- NCTNUM5:
+
+- STARTMO5:
+
+- STARTYEAR5:
+
+- ENDMO5:
+
+- ENDYEAR5:
+
+- CARETRIAL5:
+
+- TRIALGRP5:
+
+- TARGETAB6:
+
+- TARGETTAU6:
+
+- TARGETINF6:
+
+- TARGETSYN6:
+
+- TARGETOTH6:
+
+- TARGETOTX6:
+
+- TRTTRIAL6:
+
+- NCTNUM6:
+
+- STARTMO6:
+
+- STARTYEAR6:
+
+- ENDMO6:
+
+- ENDYEAR6:
+
+- CARETRIAL6:
+
+- TRIALGRP6:
+
+- TARGETAB7:
+
+- TARGETTAU7:
+
+- TARGETINF7:
+
+- TARGETSYN7:
+
+- TARGETOTH7:
+
+- TARGETOTX7:
+
+- TRTTRIAL7:
+
+- NCTNUM7:
+
+- STARTMO7:
+
+- STARTYEAR7:
+
+- ENDMO7:
+
+- ENDYEAR7:
+
+- CARETRIAL7:
+
+- TRIALGRP7:
+
+- TARGETAB8:
+
+- TARGETTAU8:
+
+- TARGETINF8:
+
+- TARGETSYN8:
+
+- TARGETOTH8:
+
+- TARGETOTX8:
+
+- TRTTRIAL8:
+
+- NCTNUM8:
+
+- STARTMO8:
+
+- STARTYEAR8:
+
+- ENDMO8:
+
+- ENDYEAR8:
+
+- CARETRIAL8:
+
+- TRIALGRP8:
+
+- ADVEVENT:
+
+- NEWADEVENT:
+
+- ARIAE:
+
+- ARIAH:
+
+- ADVERSEOTH:
+
+- ADVERSEOTX:
+
+- FRMDATEA5D2:
+
+- LANGA5D2:
+
+- MODEA5D2:
+
+- RMREASA5D2:
+
+- RMMODEA5D2:
 
 - TOBAC100:
 
@@ -571,6 +1362,12 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- TOBAC30:
+
+  Smoked cigarettes in last 30 days ( 0 = No 1 = Yes 9 = Unknown - 4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
+
 - QUITSMOK:
 
   If the subject quit smoking, age at which he/she last smoked (i.e.,
@@ -578,6 +1375,8 @@ A data frame with 207454 rows and 1936 variables:
   999 = Unknown - 4 = Not available: UDS form submitted did not collect
   data in this way, or a skip pattern precludes response to this
   question)
+
+- ALCFREQYR:
 
 - ALCOCCAS:
 
@@ -596,12 +1395,58 @@ A data frame with 207454 rows and 1936 variables:
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- ALCDRINKS:
+
+- ALCBINGE:
+
+- ALCOHOL:
+
+  Alcohol abuse - clinically significant impairment occurring over a
+  12-month period manifested in one of the following areas: work,
+  driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 =
+  Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- NACCSUBST:
+
+- ABUSOTHR:
+
+  Other abused substances - clinically significant impairment occurring
+  over a 12-month period manifested in one of the following areas: work,
+  driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 =
+  Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- ABUSX:
+
+  If reported other abused substances, specify abused substance(s) (Any
+  text or numbers)
+
+- SUBSTPAST:
+
+- CANNABIS:
+
+- NACCHEART:
+
+- HRTATTACK:
+
 - CVHATT:
 
   Heart attack/cardiac arrest ( 0 = Absent 1 = Recent/Active 2 =
   Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
   did not collect data in this way, or a skip pattern precludes response
   to this question)
+
+- MYOINF:
+
+  Myocardial infarct present within the past 12 months ( 0 = No 1 = Yes
+  8 = Not assessed -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- HRTATTMULT:
 
 - HATTMULT:
 
@@ -610,12 +1455,18 @@ A data frame with 207454 rows and 1936 variables:
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
 
+- HRTATTAGE:
+
 - HATTYEAR:
 
   Year of most recent heart attack ( 1900 - current year 8888 = Not
   applicable, no reported history of heart attack 9999 = Unknown - 4 =
   Not available: UDS form submitted did not collect data in this way, or
   a skip pattern precludes response to this question)
+
+- CARDARREST:
+
+- CARDARRAGE:
 
 - CVAFIB:
 
@@ -624,6 +1475,12 @@ A data frame with 207454 rows and 1936 variables:
   data in this way, or a skip pattern precludes response to this
   question)
 
+- AFIBRILL:
+
+  Atrial fibrillation present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
 - CVANGIO:
 
   Angioplasty/endarterectomy/stent ( 0 = Absent 1 = Recent/Active 2 =
@@ -631,12 +1488,21 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- ANGIOPCI:
+
+  Percutaneous coronary intervention: angioplasty and/or stent within
+  the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
 - CVBYPASS:
 
   Cardiac bypass procedure ( 0 = Absent 1 = Recent/Active 2 =
   Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
   did not collect data in this way, or a skip pattern precludes response
   to this question)
+
+- BYPASSAGE:
 
 - CVPACDEF:
 
@@ -651,6 +1517,15 @@ A data frame with 207454 rows and 1936 variables:
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- PACEMAKE:
+
+  Procedure: pacemaker and/or defibrillator within the past 12 months (
+  0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- PACDEFAGE:
+
 - CVCHF:
 
   Congestive heart failure ( 0 = Absent 1 = Recent/Active 2 =
@@ -658,11 +1533,23 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- CONGHRT:
+
+  Congestive heart failure present ( 0 = No 1 = Yes 8 = Not assessed -4
+  = Not available: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
+
 - CVANGINA:
 
   Angina ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
+
+- ANGINA:
+
+  Angina present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available:
+  UDS form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
 
 - CVHVALVE:
 
@@ -670,6 +1557,15 @@ A data frame with 207454 rows and 1936 variables:
   Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
   did not collect data in this way, or a skip pattern precludes response
   to this question)
+
+- HVALVE:
+
+  Procedure: heart valve replacement or repair within the past 12 months
+  ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- VALVEAGE:
 
 - CVOTHR:
 
@@ -704,19 +1600,25 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- STROKAGE:
+
+- STROKSTAT:
+
+- ANGIOCP:
+
+  Carotid procedure: angioplasty, endarterectomy, or stent within the
+  past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available:
+  UDS form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- CAROTIDAGE:
+
 - CBTIA:
 
   Transient ischemic attack (TIA) ( 0 = Absent 1 = Recent/Active 2 =
   Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
   did not collect data in this way, or a skip pattern precludes response
   to this question)
-
-- TIAMULT:
-
-  More than one TIA reported as of the Initial Visit ( 0 = No 1 = Yes 8
-  = Not applicable, no reported history of TIA as of the Initial Visit 9
-  = Unknown - 4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
 
 - NACCTIYR:
 
@@ -725,11 +1627,22 @@ A data frame with 207454 rows and 1936 variables:
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- TIAAGE:
+
+- TIAMULT:
+
+  More than one TIA reported as of the Initial Visit ( 0 = No 1 = Yes 8
+  = Not applicable, no reported history of TIA as of the Initial Visit 9
+  = Unknown - 4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
 - PD:
 
   Parkinson's disease (PD) ( 0 = Absent 1 = Recent/Active 9 = Unknown -
   4 = Not available: UDS form submitted did not collect data in this
   way, or a skip pattern precludes response to this question)
+
+- PDAGE:
 
 - PDYR:
 
@@ -744,6 +1657,8 @@ A data frame with 207454 rows and 1936 variables:
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- PDOTHRAGE:
+
 - PDOTHRYR:
 
   Year of parkinsonian disorder diagnosis ( 1900 - current year 8888 =
@@ -756,6 +1671,52 @@ A data frame with 207454 rows and 1936 variables:
   Seizures ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
+
+- SEIZNUM:
+
+- SEIZAGE:
+
+- HEADACHE:
+
+- MS:
+
+- HYDROCEPH:
+
+- HEADIMP:
+
+- IMPAMFOOT:
+
+- IMPSOCCER:
+
+- IMPHOCKEY:
+
+- IMPBOXING:
+
+- IMPSPORT:
+
+- IMPIPV:
+
+- IMPMILIT:
+
+- IMPASSAULT:
+
+- IMPOTHER:
+
+- IMPOTHERX:
+
+- IMPYEARS:
+
+- HEADINJURY:
+
+- HEADINJUNC:
+
+- HEADINJCON:
+
+- HEADINJNUM:
+
+- FIRSTTBI:
+
+- LASTTBI:
 
 - NACCTBI:
 
@@ -837,6 +1798,13 @@ A data frame with 207454 rows and 1936 variables:
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- DIABET:
+
+  Diabetes present at visit ( 0 = No 1 = Yes, Type I 2 = Yes, Type II 3
+  = Yes, other type 9 = Not assessed or unknown -4 = Not available: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
 - DIABTYPE:
 
   If Recent/active or Remote/inactive diabetes, which type? ( 1 = Type 1
@@ -846,11 +1814,33 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- DIABINS:
+
+- DIABMEDS:
+
+- DIABGLP1:
+
+- DIABRECACT:
+
+- DIABDIET:
+
+- DIABUNK:
+
+- DIABAGE:
+
 - HYPERTEN:
 
   Hypertension ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
+
+- HYPERT:
+
+  Hypertension present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- HYPERTAGE:
 
 - HYPERCHO:
 
@@ -859,6 +1849,14 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- HYPCHOL:
+
+  Hypercholesterolemia present ( 0 = No 1 = Yes 8 = Not assessed -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
+
+- HYPERCHAGE:
+
 - B12DEF:
 
   Vitamin B12 deficiency ( 0 = Absent 1 = Recent/Active 2 =
@@ -866,17 +1864,41 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- VB12DEF:
+
+  B12 deficiency present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
 - THYROID:
 
   Thyroid disease ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- THYDIS:
+
+  Thyroid disease present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
 - ARTHRIT:
 
   Arthritis ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
+
+- ARTH:
+
+  Arthritis present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- NACCRHEUM:
+
+- NACCOSTEO:
+
+- NACCARTOTH:
 
 - ARTHTYPE:
 
@@ -885,9 +1907,20 @@ A data frame with 207454 rows and 1936 variables:
   UDS form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- ARTYPE:
+
+  Arthritis type ( 1 = Rheumatoid 2 = Osteoarthritis 3 = Other (specify)
+  8 = No arthritis reported 9 = Unknown -4 = Not available: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
 - ARTHTYPX:
 
   Other arthritis (specify) (Any text or numbers)
+
+- ARTYPEX:
+
+  Other arthritis type specification (Any text or numbers)
 
 - ARTHUPEX:
 
@@ -896,12 +1929,26 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- ARTUPEX:
+
+  Arthritis region affected - upper extremity ( 0 = No 1 = Yes 8 = No
+  arthritis reported -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
 - ARTHLOEX:
 
   Arthritis, region affected - lower extremity ( 0 = No 1 = Yes 8 = Not
   applicable, no arthritis reported - 4 = Not available: UDS form
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
+
+- ARTLOEX:
+
+  Arthritis region affected - lower extremity ( 0 = No 1 = Yes 8 = No
+  arthritis reported -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
 
 - ARTHSPIN:
 
@@ -910,12 +1957,24 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- ARTSPIN:
+
+  Arthritis region affected - spine ( 0 = No 1 = Yes 8 = No arthritis
+  reported -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
 - ARTHUNK:
 
   Region affected - unknown ( 0 = No 1 = Yes 8 = Not applicable, no
   arthritis reported - 4 = Not available: UDS form submitted did not
   collect data in this way, or a skip pattern precludes response to this
   question)
+
+- ARTUNKN:
+
+  Arthritis region affected - unknown ( 0 = No 1 = Yes 8 = No arthritis
+  reported -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
 
 - INCONTU:
 
@@ -924,12 +1983,24 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- URINEINC:
+
+  Incontinence present - urinary ( 0 = No 1 = Yes 8 = Not assessed -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
+
 - INCONTF:
 
   Incontinence - bowel ( 0 = Absent 1 = Recent/Active 2 =
   Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
   did not collect data in this way, or a skip pattern precludes response
   to this question)
+
+- BOWLINC:
+
+  Incontinence present - bowel ( 0 = No 1 = Yes 8 = Not assessed -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
 
 - APNEA:
 
@@ -938,12 +2009,28 @@ A data frame with 207454 rows and 1936 variables:
   form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- SLEEPAP:
+
+  Sleep apnea present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- CPAP:
+
+- APNEAORAL:
+
 - RBD:
 
   REM sleep behavior disorder (RBD) history reported at Initial Visit (
   0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 = Unknown - 4 = Not
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
+
+- REMDIS:
+
+  REM sleep behavior disorder (RBD) present ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
 
 - INSOMN:
 
@@ -952,6 +2039,12 @@ A data frame with 207454 rows and 1936 variables:
   form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- HYPOSOM:
+
+  Hyposomnia/insomnia present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
 - OTHSLEEP:
 
   Other sleep disorder history reported at Initial Visit ( 0 = Absent 1
@@ -959,51 +2052,124 @@ A data frame with 207454 rows and 1936 variables:
   UDS form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- SLEEPOTH:
+
+  Other sleep disorder present ( 0 = No 1 = Yes 8 = Not assessed -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
+
 - OTHSLEEX:
 
   Other sleep disorder (specify) (Any text or numbers)
 
-- ALCOHOL:
+- SLEEPOTX:
 
-  Alcohol abuse - clinically significant impairment occurring over a
-  12-month period manifested in one of the following areas: work,
-  driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 =
-  Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
+  Other sleep disorder specification (Any text or numbers)
 
-- ABUSOTHR:
+- NACCCANCER:
 
-  Other abused substances - clinically significant impairment occurring
-  over a 12-month period manifested in one of the following areas: work,
-  driving, legal, or social ( 0 = Absent 1 = Recent/Active 2 =
-  Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
+- CANCERACTV:
 
-- ABUSX:
+- CANCER:
 
-  If reported other abused substances, specify abused substance(s) (Any
-  text or numbers)
+  Cancer present in the last 12 months (excluding non-melanoma skin
+  cancer), primary or metastatic ( 0 = No 1 = Yes,
+  primary/non-metastatic 2 = Yes, metastatic 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
 
-- PTSD:
+- CANCERPRIM:
 
-  Post-traumatic stress disorder (PTSD) ( 0 = Absent 1 = Recent/Active 2
-  = Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
+- CANCERMETA:
 
-- BIPOLAR:
+- CANCMETBR:
 
-  Bipolar disorder ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9
-  = Unknown - 4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
+- CANCMETOTH:
 
-- SCHIZ:
+- CANCERUNK:
 
-  Schizophrenia ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
-  Unknown - 4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
+- CANCBLOOD:
+
+- CANCBREAST:
+
+- CANCCOLON:
+
+- CANCLUNG:
+
+- CANCPROST:
+
+- CANCOTHER:
+
+- CANCOTHERX:
+
+- CANCSITE:
+
+  Cancer primary site specification (Any text or numbers)
+
+- CANCRAD:
+
+- CANCRESECT:
+
+- CANCIMMUNO:
+
+- CANCBONE:
+
+- CANCCHEMO:
+
+- CANCHORM:
+
+- CANCTROTH:
+
+- CANCTROTHX:
+
+- CANCERAGE:
+
+- COVID19:
+
+- COVIDHOSP:
+
+- PULMONARY:
+
+- KIDNEY:
+
+- KIDNEYAGE:
+
+- LIVER:
+
+- LIVERAGE:
+
+- PVD:
+
+- PVDAGE:
+
+- HIVDIAG:
+
+- HIVAGE:
+
+- ANTIENC:
+
+  Antibody-mediated encephalopathy within the past 12 months ( 0 = No 1
+  = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- ANTIENCX:
+
+  Antibody-mediated encephalopathy, specify (Any text or numbers)
+
+- NACCOTHCON:
+
+- OTHERCOND:
+
+- OTHCONDX:
+
+  Other medical conditions specification (Any text or numbers)
+
+- NACCDEP:
+
+- MAJORDEP:
+
+- OTHERDEP:
 
 - DEP2YRS:
 
@@ -1017,16 +2183,47 @@ A data frame with 207454 rows and 1936 variables:
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- DEPRTREAT:
+
+- BIPOLAR:
+
+  Bipolar disorder ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9
+  = Unknown - 4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- SCHIZ:
+
+  Schizophrenia ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
+  Unknown - 4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- NACCANX:
+
 - ANXIETY:
 
   Anxiety ( 0 = Absent 1 = Recent/Active 2 = Remote/Inactive 9 =
   Unknown - 4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- GENERALANX:
+
+- PANICDIS:
+
 - OCD:
 
   Obsessive-compulsive disorder (OCD) ( 0 = Absent 1 = Recent/Active 2 =
   Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- OTHANXDIS:
+
+- OTHANXDISX:
+
+- PTSD:
+
+  Post-traumatic stress disorder (PTSD) ( 0 = Absent 1 = Recent/Active 2
+  = Remote/Inactive 9 = Unknown - 4 = Not available: UDS form submitted
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
@@ -1050,6 +2247,54 @@ A data frame with 207454 rows and 1936 variables:
   If recent/active or remote/inactive psychiatric disorder, specify
   disorder (Any text or numbers)
 
+- MENARCHE:
+
+- NOMENSAGE:
+
+- NOMENSNAT:
+
+- NOMENSHYST:
+
+- NOMENSSURG:
+
+- NOMENSCHEM:
+
+- NOMENSRAD:
+
+- NOMENSHORM:
+
+- NOMENSESTR:
+
+- NOMENSUNK:
+
+- NOMENSOTH:
+
+- NOMENSOTHX:
+
+- HRT:
+
+- HRTYEARS:
+
+- HRTSTRTAGE:
+
+- HRTENDAGE:
+
+- BCPILLS:
+
+- BCPILLSYR:
+
+- BCSTARTAGE:
+
+- BCENDAGE:
+
+- FRMDATEB1:
+
+- LANGB1:
+
+- MODEB1:
+
+- B1NOT:
+
 - HEIGHT:
 
   Subject's height (inches) ( 36.0 - 87.9 88.8 = Unknown or not
@@ -1061,6 +2306,24 @@ A data frame with 207454 rows and 1936 variables:
   Subject's weight (lbs) ( 50 - 400 888 = Unknown or not assessed - 4 =
   Not available: UDS form submitted did not collect data in this way, or
   a skip pattern precludes response to this question)
+
+- NACCBMI:
+
+  Body mass index (BMI) ( 10.0 - 100.0 888.8 = Unknown or not assessed -
+  4 = Not available: UDS form submitted did not collect data in this
+  way, or a skip pattern precludes response to this question)
+
+- NACCWAIST:
+
+- NACCHIP:
+
+- NACCBPSYSL:
+
+- NACCBPSYSR:
+
+- NACCBPDIAL:
+
+- NACCBPDIAR:
 
 - BPSYS:
 
@@ -1075,6 +2338,12 @@ A data frame with 207454 rows and 1936 variables:
   pressure addendum submitted 888 = Unknown or not assessed -4 = Not
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
+
+- BPDEVICE:
+
+  Blood pressure measured by approved device (0 = No 1 = Yes 9 = Unknown
+  -4 = Not available: UDS form submitted did not collect data in this
+  way, or a skip pattern precludes response to this question)
 
 - HRATE:
 
@@ -1226,6 +2495,14 @@ A data frame with 207454 rows and 1936 variables:
 - CVDIMAGX:
 
   Other imaging evidence - specify (Any text or numbers)
+
+- FRMDATEB3:
+
+- LANGB3:
+
+- MODEB3:
+
+- B3NOT:
 
 - PDNORMAL:
 
@@ -1622,6 +2899,18 @@ A data frame with 207454 rows and 1936 variables:
   Body bradykinesia and hypokinesia; untestable - specify reason (Any
   text or numbers)
 
+- TOTALUPDRS:
+
+- FRMDATEB4:
+
+- LANGB4:
+
+- MODEB4:
+
+- RMREASB4:
+
+- RMMODEB4:
+
 - MEMORY:
 
   Memory ( 0.0 = No impairment 0.5 = Questionable impairment 1.0 = Mild
@@ -1679,6 +2968,18 @@ A data frame with 207454 rows and 1936 variables:
   Mild impairment 2.0 = Moderate impairment 3.0 = Severe impairment -4 =
   Not available: UDS form submitted did not collect data in this way, or
   a skip pattern precludes response to this question)
+
+- FRMDATEB5:
+
+- LANGB5:
+
+- MODEB5:
+
+- RMREASB5:
+
+- RMMODEB5:
+
+- B5NOT:
 
 - NPIQINF:
 
@@ -1870,6 +3171,18 @@ A data frame with 207454 rows and 1936 variables:
   = Not available: UDS form submitted did not collect data in this way,
   or a skip pattern precludes response to this question)
 
+- FRMDATEB6:
+
+- LANGB6:
+
+- MODEB6:
+
+- RMREASB6:
+
+- RMMODEB6:
+
+- B6NOT:
+
 - NOGDS:
 
   Is the subject able to complete the GDS, based on the clinician's best
@@ -1979,6 +3292,18 @@ A data frame with 207454 rows and 1936 variables:
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
 
+- FRMDATEB7:
+
+- LANGB7:
+
+- MODEB7:
+
+- RMREASB7:
+
+- RMMODEB7:
+
+- B7NOT:
+
 - BILLS:
 
   In the past four weeks, did the subject have any difficulty or need
@@ -2073,12 +3398,24 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- FRMDATEB8:
+
+- LANGB8:
+
+- MODEB8:
+
+- RMREASB8:
+
+- RMMODEB8:
+
 - NACCNREX:
 
   Were all findings unremarkable? ( 0 = Abnormal findings 1 = No
   abnormal findings or findings normal for age 9 = Unknown -4 = Not
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
+
+- NEUREXAM:
 
 - NORMEXAM:
 
@@ -2089,6 +3426,8 @@ A data frame with 207454 rows and 1936 variables:
   (e.g., Bell's palsy) -4 = Not available: UDS form submitted did not
   collect data in this way, or a skip pattern precludes response to this
   question)
+
+- NORMNREXAM:
 
 - FOCLDEF:
 
@@ -2117,6 +3456,12 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- TREMREST:
+
+- TREMPOST:
+
+- TREMKINE:
+
 - RESTTRL:
 
   Resting tremor - left arm ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
@@ -2128,6 +3473,8 @@ A data frame with 207454 rows and 1936 variables:
   Resting tremor - right arm ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
+
+- SLOWINGFM:
 
 - SLOWINGL:
 
@@ -2141,6 +3488,16 @@ A data frame with 207454 rows and 1936 variables:
   assessed -4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
+- BRADY:
+
+  Bradykinesia ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- RIGIDARM:
+
+- RIGIDLEG:
+
 - RIGIDL:
 
   Rigidity - left arm ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
@@ -2153,21 +3510,152 @@ A data frame with 207454 rows and 1936 variables:
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
 
-- BRADY:
+- DYSTARM:
 
-  Bradykinesia ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
+- DYSTLEG:
 
-- PARKGAIT:
+- DYSTONL:
 
-  Parkinsonian gait disorder ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
+  Dystonia consistent with CBS, PSP, or related disorder - left side ( 0
+  = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- DYSTONR:
+
+  Dystonia consistent with CBS, PSP, or related disorder - right side (
+  0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- CHOREA:
+
+- AMPMOTOR:
+
+- AXIALRIG:
 
 - POSTINST:
 
   Postural instability ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- MASKING:
+
+- STOOPED:
+
+- OTHERSIGN:
+
+- LIMBAPRAX:
+
+- APRAXL:
+
+  Apraxia consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- APRAXR:
+
+  Apraxia consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- UMNDIST:
+
+- LMNDIST:
+
+- VFIELDCUT:
+
+- LIMBATAX:
+
+- ATAXL:
+
+  Ataxia consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- ATAXR:
+
+  Ataxia consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- MYOCLON:
+
+- UNISOMATO:
+
+- APHASIA:
+
+- ALIENLIMB:
+
+- ALIENLML:
+
+  Alien limb consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- ALIENLMR:
+
+  Alien limb consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- HSPATNEG:
+
+- PSPOAGNO:
+
+- SMTAGNO:
+
+- OPTICATAX:
+
+- APRAXGAZE:
+
+- VHGAZEPAL:
+
+- DYSARTH:
+
+- DYSPSP:
+
+  Dysarthria consistent with PSP ( 0 = No 1 = Yes 8 = Not assessed -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
+
+- APRAXSP:
+
+  Apraxia of speech ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- CORTSENL:
+
+  Cortical sensory deficits consistent with CBS - left side ( 0 = No 1 =
+  Yes 8 = Not assessed -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- CORTSENR:
+
+  Cortical sensory deficits consistent with CBS - right side ( 0 = No 1
+  = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- MYOCLLT:
+
+  Myoclonus consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- MYOCLRT:
+
+  Myoclonus consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
+  assessed -4 = Not available: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- ALSFIND:
+
+  Findings suggesting ALS (e.g., muscle wasting, fasciculations, upper
+  motor and/or lower motor neuron signs) ( 0 = No 1 = Yes -4 = Not
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
 
@@ -2251,112 +3739,29 @@ A data frame with 207454 rows and 1936 variables:
   assessed -4 = Not available: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
-- DYSPSP:
-
-  Dysarthria consistent with PSP ( 0 = No 1 = Yes 8 = Not assessed -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
-
 - AXIALPSP:
 
   Axial rigidity consistent with PSP ( 0 = No 1 = Yes 8 = Not assessed
   -4 = Not available: UDS form submitted did not collect data in this
   way, or a skip pattern precludes response to this question)
 
+- GAITABN:
+
+- GAITFIND:
+
+- GAITOTHRX:
+
+- PARKGAIT:
+
+  Parkinsonian gait disorder ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
 - GAITPSP:
 
   Gait disorder consistent with PSP ( 0 = No 1 = Yes 8 = Not assessed -4
   = Not available: UDS form submitted did not collect data in this way,
   or a skip pattern precludes response to this question)
-
-- APRAXSP:
-
-  Apraxia of speech ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- APRAXL:
-
-  Apraxia consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- APRAXR:
-
-  Apraxia consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- CORTSENL:
-
-  Cortical sensory deficits consistent with CBS - left side ( 0 = No 1 =
-  Yes 8 = Not assessed -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- CORTSENR:
-
-  Cortical sensory deficits consistent with CBS - right side ( 0 = No 1
-  = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- ATAXL:
-
-  Ataxia consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- ATAXR:
-
-  Ataxia consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- ALIENLML:
-
-  Alien limb consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- ALIENLMR:
-
-  Alien limb consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- DYSTONL:
-
-  Dystonia consistent with CBS, PSP, or related disorder - left side ( 0
-  = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- DYSTONR:
-
-  Dystonia consistent with CBS, PSP, or related disorder - right side (
-  0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- MYOCLLT:
-
-  Myoclonus consistent with CBS - left side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- MYOCLRT:
-
-  Myoclonus consistent with CBS - right side ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- ALSFIND:
-
-  Findings suggesting ALS (e.g., muscle wasting, fasciculations, upper
-  motor and/or lower motor neuron signs) ( 0 = No 1 = Yes -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
 
 - GAITNPH:
 
@@ -2374,6 +3779,16 @@ A data frame with 207454 rows and 1936 variables:
 
   Other findings (specify) (Any text or numbers)
 
+- FRMDATEB9:
+
+- LANGB9:
+
+- MODEB9:
+
+- RMREASB9:
+
+- RMMODEB9:
+
 - B9CHG:
 
   Indicate changes in information reported at previous visit ( 1 = There
@@ -2387,6 +3802,8 @@ A data frame with 207454 rows and 1936 variables:
   then, there have been additional meaningful changes -4 = Not
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
+
+- DECCOG:
 
 - DECSUB:
 
@@ -2405,6 +3822,12 @@ A data frame with 207454 rows and 1936 variables:
   visit using version 1.2 of the UDS (2005 - 2008); data collected using
   versions 2 and 3 of the UDS are not affected by this change.)
 
+- DECMOT:
+
+- PSYCHSYM:
+
+- DECCOGIN:
+
 - DECIN:
 
   Does the co-participant report a decline in subject's memory (relative
@@ -2421,6 +3844,10 @@ A data frame with 207454 rows and 1936 variables:
   to those subjects who had a UDS follow-up visit using version 1.2 of
   the UDS (2005 - 2008); data collected using versions 2 and 3 of the
   UDS are not affected by this change.)
+
+- DECMOTIN:
+
+- PSYCHSYMIN:
 
 - DECCLIN:
 
@@ -2545,19 +3972,7 @@ A data frame with 207454 rows and 1936 variables:
 
   Specification of other cognitive impairment (Any text or numbers)
 
-- NACCCOGF:
-
-  Indicate the predominant symptom that was first recognized as a
-  decline in the subject's cognition ( 0 = No impairment in cognition 1
-  = Memory 2 = Orientation 3 = Executive function - judgment, planning,
-  problem-solving 4 = Language 5 = Visuospatial function 6 =
-  Attention/concentration 7 = Fluctuating cognition 8 = Other (specify)
-  99 = Unknown)
-
-- NACCCGFX:
-
-  Specification for other predominant symptom first recognized as a
-  decline in the subject's cognition (Any text or numbers)
+- NACCCOGAGE:
 
 - COGMODE:
 
@@ -2579,10 +3994,19 @@ A data frame with 207454 rows and 1936 variables:
   Specification for other mode of onset of cognitive symptoms (Any text
   or numbers)
 
-- DECAGE:
+- NACCCOGF:
 
-  Based on clinician's assessment, at what age did the cognitive decline
-  begin? ( 15-110 888 = No impairment in cognition 999 = Age unknown)
+  Indicate the predominant symptom that was first recognized as a
+  decline in the subject's cognition ( 0 = No impairment in cognition 1
+  = Memory 2 = Orientation 3 = Executive function - judgment, planning,
+  problem-solving 4 = Language 5 = Visuospatial function 6 =
+  Attention/concentration 7 = Fluctuating cognition 8 = Other (specify)
+  99 = Unknown)
+
+- NACCCGFX:
+
+  Specification for other predominant symptom first recognized as a
+  decline in the subject's cognition (Any text or numbers)
 
 - DECCLBE:
 
@@ -2619,6 +4043,45 @@ A data frame with 207454 rows and 1936 variables:
   using version 1.2 of the UDS (2005 - 2008); data collected using
   versions 2 and 3 of the UDS are not affected by this change.)
 
+- BEANX:
+
+  Subject currently manifests meaningful change in behavior - Anxiety (
+  0 = No 1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did
+  not collect data in this way, or a skip pattern precludes response to
+  this question)
+
+- BEEUPH:
+
+- BEIRRIT:
+
+  Subject currently manifests meaningful change in behavior -
+  Irritability ( 0 = No 1 = Yes 9 = Unknown Description/derivation
+  Please note that in version 1.2 of the UDS, the follow-up visit form
+  asked for changes since the previous visit. If ""No meaningful
+  changes"" (b9chg = 1) was selected, the clinician did not complete the
+  rest of the form. In these cases, NACC has brought forward data from
+  the previous visit. In cases where changes were reported on the form,
+  the new data are provided longitudinally as recorded by the clinician.
+  These changes apply only to those subjects who had a UDS follow-up
+  visit using version 1.2 of the UDS (2005 - 2008); data collected using
+  versions 2 and 3 of the UDS are not affected by this change.)
+
+- BEAGIT:
+
+  Subject currently manifests meaningful change in behavior - Agitation
+  ( 0 = No 1 = Yes 9 = Unknown Description/derivation Please note that
+  in version 1.2 of the UDS, the follow-up visit form asked for changes
+  since the previous visit. If ""No meaningful changes"" (b9chg = 1) was
+  selected, the clinician did not complete the rest of the form. In
+  these cases, NACC has brought forward data from the previous visit. In
+  cases where changes were reported on the form, the new data are
+  provided longitudinally as recorded by the clinician. These changes
+  apply only to those subjects who had a UDS follow-up visit using
+  version 1.2 of the UDS (2005 - 2008); data collected using versions 2
+  and 3 of the UDS are not affected by this change.)
+
+- BEHAGE:
+
 - BEVHALL:
 
   Subject currently manifests meaningful change in behavior -
@@ -2633,6 +4096,8 @@ A data frame with 207454 rows and 1936 variables:
   who had a UDS follow-up visit using version 1.2 of the UDS (2005 -
   2008); data collected using versions 2 and 3 of the UDS are not
   affected by this change.)
+
+- BEVPATT:
 
 - BEVWELL:
 
@@ -2664,6 +4129,10 @@ A data frame with 207454 rows and 1936 variables:
   2008); data collected using versions 2 and 3 of the UDS are not
   affected by this change.)
 
+- BEAHSIMP:
+
+- BEAHCOMP:
+
 - BEDEL:
 
   Subject currently manifests meaningful change in behavior -
@@ -2679,6 +4148,10 @@ A data frame with 207454 rows and 1936 variables:
   the UDS (2005 - 2008); data collected using versions 2 and 3 of the
   UDS are not affected by this change.)
 
+- BEAGGRS:
+
+- PSYCHAGE:
+
 - BEDISIN:
 
   Subject currently manifests meaningful change in behavior -
@@ -2692,34 +4165,6 @@ A data frame with 207454 rows and 1936 variables:
   These changes apply only to those subjects who had a UDS follow-up
   visit using version 1.2 of the UDS (2005 - 2008); data collected using
   versions 2 and 3 of the UDS are not affected by this change.)
-
-- BEIRRIT:
-
-  Subject currently manifests meaningful change in behavior -
-  Irritability ( 0 = No 1 = Yes 9 = Unknown Description/derivation
-  Please note that in version 1.2 of the UDS, the follow-up visit form
-  asked for changes since the previous visit. If ""No meaningful
-  changes"" (b9chg = 1) was selected, the clinician did not complete the
-  rest of the form. In these cases, NACC has brought forward data from
-  the previous visit. In cases where changes were reported on the form,
-  the new data are provided longitudinally as recorded by the clinician.
-  These changes apply only to those subjects who had a UDS follow-up
-  visit using version 1.2 of the UDS (2005 - 2008); data collected using
-  versions 2 and 3 of the UDS are not affected by this change.)
-
-- BEAGIT:
-
-  Subject currently manifests meaningful change in behavior - Agitation
-  ( 0 = No 1 = Yes 9 = Unknown Description/derivation Please note that
-  in version 1.2 of the UDS, the follow-up visit form asked for changes
-  since the previous visit. If ""No meaningful changes"" (b9chg = 1) was
-  selected, the clinician did not complete the rest of the form. In
-  these cases, NACC has brought forward data from the previous visit. In
-  cases where changes were reported on the form, the new data are
-  provided longitudinally as recorded by the clinician. These changes
-  apply only to those subjects who had a UDS follow-up visit using
-  version 1.2 of the UDS (2005 - 2008); data collected using versions 2
-  and 3 of the UDS are not affected by this change.)
 
 - BEPERCH:
 
@@ -2735,6 +4180,38 @@ A data frame with 207454 rows and 1936 variables:
   visit using version 1.2 of the UDS (2005 - 2008); data collected using
   versions 2 and 3 of the UDS are not affected by this change.)
 
+- BEEMPATH:
+
+- BEOBCOM:
+
+- BEANGER:
+
+- BESUBAB:
+
+- ALCUSE:
+
+- SEDUSE:
+
+- OPIATEUSE:
+
+- COCAINEUSE:
+
+- CANNABUSE:
+
+- OTHSUBUSE:
+
+- OTHSUBUSEX:
+
+- PERCHAGE:
+
+- BEAGE:
+
+  Based on the clinician's assessment, at what age did the behavioral
+  symptoms begin? ( 15 - 110 888 = Not applicable, no behavioral
+  symptoms 999 = Age unknown -4 = Not available: UDS form submitted did
+  not collect data in this way, or a skip pattern precludes response to
+  this question)
+
 - BEREM:
 
   Subject currently manifests meaningful change in behavior - REM sleep
@@ -2749,12 +4226,7 @@ A data frame with 207454 rows and 1936 variables:
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
 
-- BEANX:
-
-  Subject currently manifests meaningful change in behavior - Anxiety (
-  0 = No 1 = Yes 9 = Unknown -4 = Not available: UDS form submitted did
-  not collect data in this way, or a skip pattern precludes response to
-  this question)
+- BEREMCONF:
 
 - BEOTHR:
 
@@ -2765,19 +4237,6 @@ A data frame with 207454 rows and 1936 variables:
 
   Subject currently manifests meaningful change in behavior - Other,
   specify (Any text or numbers)
-
-- NACCBEHF:
-
-  Indicate the predominant symptom that was first recognized as a
-  decline in the subject's behavior ( 0 = No behavioral symptoms 1 =
-  Apathy/withdrawal 2 = Depressed mood 3 = Psychosis 4 = Disinhibition 5
-  = Irritability 6 = Agitation 7 = Personality change 8 = REM sleep
-  behavior disorder 9 = Anxiety 10 = Other (specify) 99 = Unknown)
-
-- NACCBEFX:
-
-  Specification of other predominant symptom that was first recognized
-  as a decline in the subject's behavior (Any text or numbers)
 
 - BEMODE:
 
@@ -2799,13 +4258,18 @@ A data frame with 207454 rows and 1936 variables:
   Specification of other mode of onset of behavioral symptoms (Any text
   or numbers)
 
-- BEAGE:
+- NACCBEHF:
 
-  Based on the clinician's assessment, at what age did the behavioral
-  symptoms begin? ( 15 - 110 888 = Not applicable, no behavioral
-  symptoms 999 = Age unknown -4 = Not available: UDS form submitted did
-  not collect data in this way, or a skip pattern precludes response to
-  this question)
+  Indicate the predominant symptom that was first recognized as a
+  decline in the subject's behavior ( 0 = No behavioral symptoms 1 =
+  Apathy/withdrawal 2 = Depressed mood 3 = Psychosis 4 = Disinhibition 5
+  = Irritability 6 = Agitation 7 = Personality change 8 = REM sleep
+  behavior disorder 9 = Anxiety 10 = Other (specify) 99 = Unknown)
+
+- NACCBEFX:
+
+  Specification of other predominant symptom that was first recognized
+  as a decline in the subject's behavior (Any text or numbers)
 
 - DECCLMOT:
 
@@ -2843,20 +4307,6 @@ A data frame with 207454 rows and 1936 variables:
   visit using version 1.2 of the UDS (2005 - 2008); data collected using
   versions 2 and 3 of the UDS are not affected by this change.)
 
-- MOTREM:
-
-  Indicate whether the subject currently has meaningful changes in motor
-  function - Tremor ( 0 = No 1 = Yes 9 = Unknown Description/derivation
-  Please note that in version 1.2 of the UDS, the follow-up visit form
-  asked for changes since the previous visit. If ""No meaningful
-  changes"" (b9chg = 1) was selected, the clinician did not complete the
-  rest of the form. In these cases, NACC has brought forward data from
-  the previous visit. In cases where changes were reported on the form,
-  the new data are provided longitudinally as recorded by the clinician.
-  These changes apply only to those subjects who had a UDS follow-up
-  visit using version 1.2 of the UDS (2005 - 2008); data collected using
-  versions 2 and 3 of the UDS are not affected by this change.)
-
 - MOSLOW:
 
   Indicate whether the subject currently has meaningful changes in motor
@@ -2872,11 +4322,34 @@ A data frame with 207454 rows and 1936 variables:
   2008); data collected using versions 2 and 3 of the UDS are not
   affected by this change.)
 
-- NACCMOTF:
+- MOTREM:
 
-  Indicate the predominant symptom that was first recognized as a
-  decline in the subject's motor function ( 0 = No motor symptoms 1 =
-  Gait disorder 2 = Falls 3 = Tremor 4 = Slowness 99 = Unknown)
+  Indicate whether the subject currently has meaningful changes in motor
+  function - Tremor ( 0 = No 1 = Yes 9 = Unknown Description/derivation
+  Please note that in version 1.2 of the UDS, the follow-up visit form
+  asked for changes since the previous visit. If ""No meaningful
+  changes"" (b9chg = 1) was selected, the clinician did not complete the
+  rest of the form. In these cases, NACC has brought forward data from
+  the previous visit. In cases where changes were reported on the form,
+  the new data are provided longitudinally as recorded by the clinician.
+  These changes apply only to those subjects who had a UDS follow-up
+  visit using version 1.2 of the UDS (2005 - 2008); data collected using
+  versions 2 and 3 of the UDS are not affected by this change.)
+
+- MOLIMB:
+
+- MOFACE:
+
+- MOSPEECH:
+
+- MOTORAGE:
+
+- MOAGE:
+
+  Based on the clinician's assessment, at what age did the motor changes
+  begin? ( 9 - 110 888= No motor symptoms -4 = Not available: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
 
 - MOMODE:
 
@@ -2896,6 +4369,12 @@ A data frame with 207454 rows and 1936 variables:
 
   Specification for other mode of onset of motor symptoms (Any text or
   numbers)
+
+- NACCMOTF:
+
+  Indicate the predominant symptom that was first recognized as a
+  decline in the subject's motor function ( 0 = No motor symptoms 1 =
+  Gait disorder 2 = Falls 3 = Tremor 4 = Slowness 99 = Unknown)
 
 - MOMOPARK:
 
@@ -2923,13 +4402,6 @@ A data frame with 207454 rows and 1936 variables:
 
   If yes, at what age did the motor symptoms suggestive of ALS begin? (
   15 - 110 888 = Not applicable, No ALS -4 = Not available: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- MOAGE:
-
-  Based on the clinician's assessment, at what age did the motor changes
-  begin? ( 9 - 110 888= No motor symptoms -4 = Not available: UDS form
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
@@ -2977,11 +4449,27 @@ A data frame with 207454 rows and 1936 variables:
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
 
+- FRMDATEC2C2T:
+
+- LANGC2C2T:
+
+- MODEC2C2T:
+
+- RMREASC2C2T:
+
+- RMMODEC2C2T:
+
 - MMSECOMP:
 
   Was any part of the MMSE completed? ( 0 = No 1 = Yes -4 = Not
   available: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
+
+- MMSELAN:
+
+  Language of MMSE administration ( 1 = English 2 = Spanish 3 = Other -4
+  = Not available: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
 
 - MMSELOC:
 
@@ -2989,12 +4477,6 @@ A data frame with 207454 rows and 1936 variables:
   person - other -4 = Not available: UDS form submitted did not collect
   data in this way, or a skip pattern precludes response to this
   question)
-
-- MMSELAN:
-
-  Language of MMSE administration ( 1 = English 2 = Spanish 3 = Other -4
-  = Not available: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
 
 - MMSELANX:
 
@@ -3321,6 +4803,11 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
+- MODCOMM:
+
+  Mode of administration of neuropsychological battery (1=Telephone
+  2=Video-assisted conference 3=Some combination of the two)
+
 - MOCACOMP:
 
   Was any part of MoCA administered? ( 0 = No 1 = Yes -4 = Not
@@ -3371,6 +4858,13 @@ A data frame with 207454 rows and 1936 variables:
   not administered -4 = Not available: UDS form submitted did not
   collect data in this way, or a skip pattern precludes response to this
   question)
+
+- NACCMOCA:
+
+  MoCA Total Score - corrected for education ( 0 - 30 88 = Item(s) or
+  whole test not administered 99=Years of education missing/unknown -4 =
+  Not available: UDS form submitted did not collect data in this way, or
+  a skip pattern precludes response to this question)
 
 - MOCATRAI:
 
@@ -3528,13 +5022,6 @@ A data frame with 207454 rows and 1936 variables:
   Not available: UDS form submitted did not collect data in this way, or
   a skip pattern precludes response to this question)
 
-- NACCMOCA:
-
-  MoCA Total Score - corrected for education ( 0 - 30 88 = Item(s) or
-  whole test not administered 99=Years of education missing/unknown -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
-
 - CRAFTVRS:
 
   Craft Story 21 Recall (Immediate) - Total story units recalled,
@@ -3666,11 +5153,6 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
-- MODCOMM:
-
-  Mode of administration of neuropsychological battery (1=Telephone
-  2=Video-assisted conference 3=Some combination of the two)
-
 - MOCBTOTS:
 
   MoCA-Blind Total Raw Score — uncorrected (0-22 88=Item(s) or whole
@@ -3684,6 +5166,8 @@ A data frame with 207454 rows and 1936 variables:
   whole test not administered 99=Years of education missing/unknown
   -4=Not available: UDS form submitted did not collect data in this way,
   or a skip pattern precludes response to this question)
+
+- VERBALTEST:
 
 - REY1REC:
 
@@ -3765,6 +5249,10 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- REYBREC:
+
+- REYBINT:
+
 - REY6REC:
 
   Rey Auditory Verbal Learning (Immediate) Trial 6 Total recall (0-15
@@ -3845,6 +5333,10 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- REYDTI:
+
+- REYMETHOD:
+
 - REYTCOR:
 
   Rey Auditory Verbal Learning (Delayed) Recognition — Total correct
@@ -3860,6 +5352,34 @@ A data frame with 207454 rows and 1936 variables:
   96=Cognitive/behavior problem 97=Other problem 98=Verbal refusal
   -4=Not available: UDS form submitted did not collect data in this way,
   or a skip pattern precludes response to this question)
+
+- CERAD1REC:
+
+- CERAD1READ:
+
+- CERAD1INT:
+
+- CERAD2REC:
+
+- CERAD2READ:
+
+- CERAD2INT:
+
+- CERAD3REC:
+
+- CERAD3READ:
+
+- CERAD3INT:
+
+- CERADDTI:
+
+- CERADJ6REC:
+
+- CERADJ6INT:
+
+- CERADJ7YES:
+
+- CERADJ7NO:
 
 - VNTTOTW:
 
@@ -3940,6 +5460,10 @@ A data frame with 207454 rows and 1936 variables:
   Validity of participant’s responses - Other, specify (Any text or
   numbers)
 
+- FRMDATED1A:
+
+- LANGD1A:
+
 - WHODIDDX:
 
   Who did diagnosis ( 1 = A single clinician 2 = Consensus diagnosis -4
@@ -3957,9 +5481,116 @@ A data frame with 207454 rows and 1936 variables:
 
   Normal cognition and behavior ( 0 = No 1 = Yes)
 
+- SCD:
+
+- SCDDXCONF:
+
 - DEMENTED:
 
   Met criteria for dementia ( 0 = No 1 = Yes)
+
+- MCICRITCLN:
+
+- MCICRITIMP:
+
+- MCICRITFUN:
+
+- MCI:
+
+- IMPNOMCIFU:
+
+- IMPNOMCICG:
+
+- IMPNOMCLCD:
+
+- IMPNOMCIO:
+
+- IMPNOMCIOX:
+
+- IMPNOMCI:
+
+  Cognitively impaired, not MCI ( 0 = No 1 = Yes)
+
+- NACCUDSD:
+
+  Cognitive status at UDS visit ( 1 = Normal cognition 2 =
+  Impaired-not-MCI 3 = MCI 4 = Dementia)
+
+- NACCTMCI:
+
+  Mild cognitive impairment (MCI) type ( 1 = Amnestic MCI- single domain
+  2 = Amnestic MCI- multiple domain 3 = Non-amnestic MCI- single domain
+  4 = Non-amnestic MCI- multiple domain 8 = No diagnosis of MCI)
+
+- NACCMCIM:
+
+- NACCMCIL:
+
+  MCI domain affected - language ( 0 = No 1 = Yes 8 = Not diagnosed with
+  MCI)
+
+- NACCMCIA:
+
+  MCI domain affected - attention ( 0 = No 1 = Yes 8 = Not diagnosed
+  with MCI)
+
+- NACCMCIE:
+
+  MCI domain affected - executive function ( 0 = No 1 = Yes 8 = Not
+  diagnosed with MCI)
+
+- NACCMCIV:
+
+  MCI domain affected - visuospatial ( 0 = No 1 = Yes 8 = Not diagnosed
+  with MCI)
+
+- NACCMCIAPX:
+
+- NACCNORM:
+
+  Normal cognition at all visits to date ( 0 = Had a diagnosis other
+  than normal cognition (impaired but not MCI, MCI, or dementia) for at
+  least one UDS visit 1 = Normal cognition at all UDS visits)
+
+- NACCIDEM:
+
+  Incident dementia during UDS follow-up ( 0 = Did not progress to
+  dementia 1 = Progressed to dementia 8 = Initial visit only or
+  diagnosed with dementia at initial visit)
+
+- NACCMCII:
+
+  Incident MCI during UDS follow-up ( 0 = Did not progress to MCI 1 =
+  Progressed to MCI 8 = Initial visit only, or had a diagnosis of MCI or
+  dementia at initial UDS visit, or progressed directly to dementia)
+
+- CDOMMEM:
+
+- CDOMLANG:
+
+- CDOMATTN:
+
+- CDOMEXEC:
+
+- CDOMVISU:
+
+- CDOMBEH:
+
+- CDOMAPRAX:
+
+- MBI:
+
+- BDOMMOT:
+
+- BDOMAFREG:
+
+- BDOMIMP:
+
+- BDOMSOCIAL:
+
+- BDOMTHTS:
+
+- PREDOMSYN:
 
 - AMNDEM:
 
@@ -3967,6 +5598,15 @@ A data frame with 207454 rows and 1936 variables:
   = Yes 8 = No diagnosis of dementia -4 = Not applicable: UDS form
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
+
+- DYEXECSYN:
+
+- NAMNDEM:
+
+  Dementia syndrome - Non-amnestic multidomain dementia, not PCA, PPA,
+  bvFTD, or DLB syndrome ( 0 = No 1 = Yes 8 = No diagnosis of dementia
+  -4 = Not applicable: UDS form submitted did not collect data in this
+  way, or a skip pattern precludes response to this question)
 
 - PCA:
 
@@ -4016,54 +5656,453 @@ A data frame with 207454 rows and 1936 variables:
   Dementia syndrome - Lewy body dementia syndrome ( 0 = No 1 = Yes 8 =
   No diagnosis of dementia)
 
-- NAMNDEM:
+- LBDSYNT:
 
-  Dementia syndrome - Non-amnestic multidomain dementia, not PCA, PPA,
-  bvFTD, or DLB syndrome ( 0 = No 1 = Yes 8 = No diagnosis of dementia
-  -4 = Not applicable: UDS form submitted did not collect data in this
-  way, or a skip pattern precludes response to this question)
+- PSPSYN:
 
-- NACCTMCI:
+- PSPSYNT:
 
-  Mild cognitive impairment (MCI) type ( 1 = Amnestic MCI- single domain
-  2 = Amnestic MCI- multiple domain 3 = Non-amnestic MCI- single domain
-  4 = Non-amnestic MCI- multiple domain 8 = No diagnosis of MCI)
+- CTESYN:
 
-- NACCMCIL:
+- CBSSYN:
 
-  MCI domain affected - language ( 0 = No 1 = Yes 8 = Not diagnosed with
-  MCI)
+- MSASYN:
 
-- NACCMCIA:
+- MSASYNT:
 
-  MCI domain affected - attention ( 0 = No 1 = Yes 8 = Not diagnosed
-  with MCI)
+- OTHSYN:
 
-- NACCMCIE:
+- OTHSYNX:
 
-  MCI domain affected - executive function ( 0 = No 1 = Yes 8 = Not
-  diagnosed with MCI)
+- SYNINFCLIN:
 
-- NACCMCIV:
+- SYNINFCTST:
 
-  MCI domain affected - visuospatial ( 0 = No 1 = Yes 8 = Not diagnosed
-  with MCI)
+- SYNINFBIOM:
 
-- NACCMCII:
+- NACCDEPD:
 
-  Incident MCI during UDS follow-up ( 0 = Did not progress to MCI 1 =
-  Progressed to MCI 8 = Initial visit only, or had a diagnosis of MCI or
-  dementia at initial UDS visit, or progressed directly to dementia)
+- NACCDEPDIF:
 
-- IMPNOMCI:
+- MAJDEPDX:
 
-  Cognitively impaired, not MCI ( 0 = No 1 = Yes)
+- MAJDEPDIF:
 
-- AMYLPET:
+- OTHDEPDX:
 
-  Abnormally elevated amyloid on PET ( 0 = No 1 = Yes 8 = Unknown/not
-  assessed -4 = Not applicable: UDS form submitted did not collect data
+- OTHDEPDIF:
+
+- DEP:
+
+  Presumptive etiologic diagnosis - Depression ( 0 = No (assumed
+  assessed and found not present) 1 = Yes)
+
+- DEPIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Depression ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no depression diagnosis
+  8 = Diagnosis of normal cognition -4 = Not applicable: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- DEPTREAT:
+
+  Depression - Treated or untreated ( 0 = Untreated 1 = Treated 8 = No
+  diagnosis of depression -4 = Not applicable: UDS form submitted did
+  not collect data in this way, or a skip pattern precludes response to
+  this question)
+
+- BIPOLDX:
+
+  Presumptive etiologic diagnosis - Bipolar disorder ( 0 = No (assumed
+  assessed and found not present) 1 = Yes -4 = Not applicable: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- BIPOLDIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - bipolar disorder ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no bipolar disorder
+  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- SCHIZOP:
+
+  Presumptive etiologic diagnosis - Schizophrenia or other psychosis ( 0
+  = No (assumed assessed and found not present) 1 = Yes -4 = Not
+  applicable: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- SCHIZOIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Schizophrenia or other psychosis ( 1 = Primary 2 =
+  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
+  schizophrenia diagnosis 8 = Diagnosis of normal cognition -4 = Not
+  applicable: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- ANXIET:
+
+  Presumptive etiologic diagnosis - Anxiety ( 0 = No (assumed assessed
+  and found not present) 1 = Yes -4 = Not applicable: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- ANXIETIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Anxiety ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no anxiety diagnosis 8 =
+  Diagnosis of normal cognition -4 = Not applicable: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- GENANX:
+
+- PANICDISDX:
+
+- OCDDX:
+
+- OTHANXD:
+
+- OTHANXDX:
+
+- PTSDDX:
+
+  Presumptive etiologic diagnosis - Post-traumatic stress disorder
+  (PTSD) ( 0 = No (assumed assessed and found not present) 1 = Yes -4 =
+  Not applicable: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
+
+- PTSDDXIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - PTSD ( 1 = Primary 2 = Contributing 3 = Non-contributing
+  7 = Cognitively impaired but no PTSD diagnosis 8 = Diagnosis of normal
+  cognition -4 = Not applicable: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
+
+- NDEVDIS:
+
+- NDEVDISIF:
+
+- DELIR:
+
+  Presumptive etiologic diagnosis - Delirium ( 0 = No (assumed assessed
+  and found not present) 1 = Yes -4 = Not applicable: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- DELIRIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Delirium ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no delirium diagnosis 8
+  = Diagnosis of normal cognition -4 = Not applicable: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- OTHPSY:
+
+  Presumptive etiologic diagnosis - Other psychiatric disease ( 0 = No
+  (assumed assessed and found not present) 1 = Yes)
+
+- OTHPSYIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Other psychiatric disease ( 1 = Primary 2 = Contributing
+  3 = Non-contributing 7 = Cognitively impaired but no diagnosis of
+  other psychiatric disease 8 = Diagnosis of normal cognition)
+
+- OTHPSYX:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Other
+  psychiatric disease (specify) (Any text or numbers)
+
+- NACCTBIDX:
+
+- NACCTBIDXIF:
+
+- TBIDX:
+
+- TBIDXIF:
+
+- BRNINJ:
+
+  Presumptive etiologic diagnosis - Traumatic brain injury (TBI) ( 0 =
+  No (assumed assessed and found not present) 1 = Yes)
+
+- BRNINJIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Traumatic brain injury (TBI) ( 1 = Primary 2 =
+  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
+  diagnosis of TBI 8 = Diagnosis of normal cognition -4 = Not
+  applicable: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- BRNINCTE:
+
+  Symptoms consistent with chronic traumatic encephalopathy (CTE) ( 0 =
+  No 1 = Yes 9 = Unknown 8 = No TBI diagnosis -4 = Not applicable: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- EPILEP:
+
+  Presumptive etiologic diagnosis - Epilepsy ( 0 = No (assumed assessed
+  and found not present) 1 = Yes -4 = Not applicable: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- EPILEPIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Epilepsy ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no epilepsy diagnosis 8
+  = Diagnosis of normal cognition -4 = Not applicable: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- HYCEPH:
+
+  Presumptive etiologic diagnosis of the cognitive disorder -
+  Normal-pressure hydrocephalus (NPH) ( 0 = No (assumed assessed and
+  found not present) 1 = Yes)
+
+- HYCEPHIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Normal-pressure hydrocephalus (NPH) ( 1 = Primary 2 =
+  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
+  hydrocephalus diagnosis 8 = Diagnosis of normal cognition -4 = Not
+  applicable: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- NEOP:
+
+  Presumptive etiologic diagnosis - CNS neoplasm ( 0 = No (assumed
+  assessed and found not present) 1 = Yes)
+
+- NEOPIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - CNS neoplasm ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no CNS neoplasm
+  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- NEOPSTAT:
+
+  CNS neoplasm - benign or malignant ( 1 = Benign 2 = Malignant 8 = No
+  diagnosis of CNS neoplasm -4 = Not applicable: UDS form submitted did
+  not collect data in this way, or a skip pattern precludes response to
+  this question)
+
+- HIV:
+
+  Presumptive etiologic diagnosis - Human immunodeficiency virus (HIV) (
+  0 = No (assumed assessed and found not present) 1 = Yes -4 = Not
+  applicable: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- HIVIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - HIV ( 1 = Primary 2 = Contributing 3 = Non-contributing 7
+  = Cognitively impaired but no HIV diagnosis 8 = Diagnosis of normal
+  cognition -4 = Not applicable: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- POSTC19:
+
+- POSTC19IF:
+
+- APNEADX:
+
+- APNEADXIF:
+
+- OTHCOGILL:
+
+- OTHCILLIF:
+
+- OTHCOGILLX:
+
+- DYSILL:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
+  impairment due to systemic disease/medical illness ( 0 = No (assumed
+  assessed and found not present) 1 = Yes)
+
+- DYSILLIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - systemic disease/medical illness ( 1 = Primary 2 =
+  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
+  diagnosis of impairment due to systemic disease/medical illness 8 =
+  Diagnosis of normal cognition -4 = Not applicable: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- ALCDEM:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
+  impairment due to alcohol abuse ( 0 = No (assumed assessed and found
+  not present) 1 = Yes 8 = Diagnosis of normal cognition)
+
+- ALCDEMIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Alcohol abuse ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no diagnosis of
+  impairment due to alcohol abuse 8 = Diagnosis of normal cognition)
+
+- ALCABUSE:
+
+  Current alcohol abuse ( 0 = No 1 = Yes 9 = Unknown 8 = No diagnosis of
+  impairment due to alcohol abuse -4 = Not applicable: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- IMPSUB:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
+  impairment due to other substance abuse ( 0 = No (assumed assessed and
+  found not present) 1 = Yes -4 = Not applicable: UDS form submitted did
+  not collect data in this way, or a skip pattern precludes response to
+  this question)
+
+- IMPSUBIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Other substance abuse ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no diagnosis of
+  impairment due to substance abuse 8 = Diagnosis of normal cognition -4
+  = Not applicable: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
+
+- MEDS:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
+  impairment due to medications ( 0 = No (assumed assessed and found not
+  present) 1 = Yes)
+
+- MEDSIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - medications ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no diagnosis of
+  impairment due to medications 8 = Diagnosis of normal cognition -4 =
+  Not applicable: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
+
+- DEMUN:
+
+  Presumptive etiologic diagnosis of the cognitive disorder -
+  Undetermined etiology ( 0 = No 1 = Yes -4 = Not applicable: UDS form
+  submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- DEMUNIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Undetermined etiology ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no diagnosis of dementia
+  due to undetermined etiology 8 = Diagnosis of normal cognition -4 =
+  Not applicable: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
+
+- COGOTH:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Other 1
+  (specify) ( 0 = No 1 = Yes)
+
+- COGOTHIF:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Other 1 (specify) ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no other etiologic
+  diagnosis 8 = Diagnosis of normal cognition)
+
+- COGOTHX:
+
+  Other presumptive etiologic diagnosis of the cognitive disorder 1,
+  specify (Any text or numbers)
+
+- COGOTH2:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Other 2
+  (specify) ( 0 = No 1 = Yes -4 = Not applicable: UDS form submitted did
+  not collect data in this way, or a skip pattern precludes response to
+  this question)
+
+- COGOTH2F:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Other 2 (specify) ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no other etiologic
+  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- COGOTH2X:
+
+  Other presumptive etiologic diagnosis of the cognitive disorder 2,
+  specify (Any text or numbers)
+
+- COGOTH3:
+
+  Presumptive etiologic diagnosis of the cognitive disorder - Other 3
+  (specify) ( 0 = No 1 = Yes -4 = Not applicable: UDS form submitted did
+  not collect data in this way, or a skip pattern precludes response to
+  this question)
+
+- COGOTH3F:
+
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Other 3 (specify) ( 1 = Primary 2 = Contributing 3 =
+  Non-contributing 7 = Cognitively impaired but no other etiologic
+  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- COGOTH3X:
+
+  Other presumptive etiologic diagnosis of the cognitive disorder 3,
+  specify (Any text or numbers)
+
+- FRMDATED1B:
+
+- LANGD1B:
+
+- BIOMARKDX:
+
+- FLUIDBIOM:
+
+- BLOODAD:
+
+- BLOODFTLD:
+
+- BLOODLBD:
+
+- BLOODOTH:
+
+- BLOODOTHX:
+
+- CSFAD:
+
+- CSFFTLD:
+
+- CSFLBD:
+
+- CSFOTH:
+
+- CSFOTHX:
 
 - AMYLCSF:
 
@@ -4071,17 +6110,23 @@ A data frame with 207454 rows and 1936 variables:
   assessed -4 = Not applicable: UDS form submitted did not collect data
   in this way, or a skip pattern precludes response to this question)
 
-- FDGAD:
+- CSFTAU:
 
-  FDG-PET pattern of AD ( 0 = No 1 = Yes 8 = Unknown/not assessed -4 =
-  Not applicable: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
+  Abnormally elevated CSF Tau or pTau ( 0 = No 1 = Yes 8 = Unknown/not
+  assessed -4 = Not applicable: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
 
-- HIPPATR:
+- IMAGINGDX:
 
-  Hippocampal atrophy ( 0 = No 1 = Yes 8 = Unknown/not assessed -4 = Not
-  applicable: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
+- PETDX:
+
+- AMYLPET:
+
+  Abnormally elevated amyloid on PET ( 0 = No 1 = Yes 8 = Unknown/not
+  assessed -4 = Not applicable: UDS form submitted did not collect data
+  in this way, or a skip pattern precludes response to this question)
+
+- TAUPET:
 
 - TAUPETAD:
 
@@ -4089,11 +6134,19 @@ A data frame with 207454 rows and 1936 variables:
   Not applicable: UDS form submitted did not collect data in this way,
   or a skip pattern precludes response to this question)
 
-- CSFTAU:
+- TPETFTLD:
 
-  Abnormally elevated CSF Tau or pTau ( 0 = No 1 = Yes 8 = Unknown/not
-  assessed -4 = Not applicable: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
+  Tau PET evidence for FTLD ( 0 = No 1 = Yes 8 = Unknown/not assessed -4
+  = Not applicable: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
+
+- FDGPETDX:
+
+- FDGAD:
+
+  FDG-PET pattern of AD ( 0 = No 1 = Yes 8 = Unknown/not assessed -4 =
+  Not applicable: UDS form submitted did not collect data in this way,
+  or a skip pattern precludes response to this question)
 
 - FDGFTLD:
 
@@ -4102,18 +6155,26 @@ A data frame with 207454 rows and 1936 variables:
   UDS form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
-- TPETFTLD:
-
-  Tau PET evidence for FTLD ( 0 = No 1 = Yes 8 = Unknown/not assessed -4
-  = Not applicable: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
-
 - MRFTLD:
 
   Structural MR evidence for frontal or anterior temporal atrophy for
   FTLD ( 0 = No 1 = Yes 8 = Unknown/not assessed -4 = Not applicable:
   UDS form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
+
+- FDGLBD:
+
+- FDGOTH:
+
+- FDGOTHX:
+
+- HIPPATR:
+
+  Hippocampal atrophy ( 0 = No 1 = Yes 8 = Unknown/not assessed -4 = Not
+  applicable: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- DATSCANDX:
 
 - DATSCAN:
 
@@ -4122,15 +6183,27 @@ A data frame with 207454 rows and 1936 variables:
   submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
-- OTHBIOM:
+- TRACOTHDX:
 
-  Biomarker findings - Other ( 0 = No 1 = Yes -4 = Not applicable: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
+- TRACOTHDXX:
 
-- OTHBIOMX:
+- TRACERAD:
 
-  Biomarker findings - Other (specify) (Any text or numbers)
+- TRACERFTLD:
+
+- TRACERLBD:
+
+- TRACEROTH:
+
+- TRACEROTHX:
+
+- STRUCTDX:
+
+- STRUCTAD:
+
+- STRUCTFTLD:
+
+- STRUCTCVD:
 
 - IMAGLINF:
 
@@ -4156,19 +6229,63 @@ A data frame with 207454 rows and 1936 variables:
   applicable: UDS form submitted did not collect data in this way, or a
   skip pattern precludes response to this question)
 
-- IMAGMWMH:
+- IMAGWMH:
 
-  Moderate white-matter hyperintensity (CHS score 5 - 6) ( 0 = No 1 =
-  Yes 8 = Unknown/not assessed -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
+- NACCWMHSEV:
 
-- IMAGEWMH:
+- OTHBIOM1:
 
-  Extensive white-matter hyperintensity (CHS score 7 - 8) ( 0 = No 1 =
-  Yes 8 = Unknown/not assessed -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
+- OTHBIOMX1:
+
+- BIOMAD1:
+
+- BIOMFTLD1:
+
+- BIOMLBD1:
+
+- BIOMOTH1:
+
+- BIOMOTHX1:
+
+- OTHBIOM2:
+
+- OTHBIOMX2:
+
+- BIOMAD2:
+
+- BIOMFTLD2:
+
+- BIOMLBD2:
+
+- BIOMOTH2:
+
+- BIOMOTHX2:
+
+- OTHBIOM3:
+
+- OTHBIOMX3:
+
+- BIOMAD3:
+
+- BIOMFTLD3:
+
+- BIOMLBD3:
+
+- BIOMOTH3:
+
+- BIOMOTHX3:
+
+- OTHBIOM:
+
+  Biomarker findings - Other ( 0 = No 1 = Yes -4 = Not applicable: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
+
+- OTHBIOMX:
+
+  Biomarker findings - Other (specify) (Any text or numbers)
+
+- AUTDOMMUT:
 
 - OTHMUT:
 
@@ -4180,6 +6297,16 @@ A data frame with 207454 rows and 1936 variables:
 - OTHMUTX:
 
   Other mutation, specify (Any text or numbers)
+
+- NACCADMU:
+
+  Does the subject have a dominantly inherited AD mutation? ( 0 =
+  No/unknown 1 = Yes)
+
+- NACCFTDM:
+
+  Does the subject have a hereditary FTLD mutation? ( 0 = No/unknown 1 =
+  Yes)
 
 - NACCALZD:
 
@@ -4243,21 +6370,7 @@ A data frame with 207454 rows and 1936 variables:
   Parkinson's disease present ( 0 = No (assumed assessed and found not
   present) 1 = Yes)
 
-- MSA:
-
-  Presumptive etiologic diagnosis - Multiple system atrophy (MSA) ( 0 =
-  No (assumed assessed and found not present 1 = Yes -4 = Not
-  applicable: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- MSAIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Multiple system atrophy (MSA) ( 1 = Primary 2 =
-  Contributing 3 = Non-contributing 7 = Cognitively impaired but no MSA
-  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
+- FTLD:
 
 - PSP:
 
@@ -4316,6 +6429,18 @@ A data frame with 207454 rows and 1936 variables:
   UDS form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
+- FTLDSUBT:
+
+  FTLD subtype ( 1 = Tauopathy 2 = TDP-43 proteinopathy 3 = Other 7 =
+  Cognitively impaired but no FTLD diagnosis 8 = Diagnosis of normal
+  cognition 9 = Unknown subtype -4 = Not applicable: UDS form submitted
+  did not collect data in this way, or a skip pattern precludes response
+  to this question)
+
+- FTLDSUBX:
+
+  Other FTLD subtype, specify (Any text or numbers)
+
 - FTD:
 
   Presence of behavioral frontotemporal dementia (bvFTD) ( 0 = Absent 1
@@ -4348,17 +6473,21 @@ A data frame with 207454 rows and 1936 variables:
   did not collect data in this way, or a skip pattern precludes response
   to this question)
 
-- FTLDSUBT:
+- MSA:
 
-  FTLD subtype ( 1 = Tauopathy 2 = TDP-43 proteinopathy 3 = Other 7 =
-  Cognitively impaired but no FTLD diagnosis 8 = Diagnosis of normal
-  cognition 9 = Unknown subtype -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
+  Presumptive etiologic diagnosis - Multiple system atrophy (MSA) ( 0 =
+  No (assumed assessed and found not present 1 = Yes -4 = Not
+  applicable: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
 
-- FTLDSUBX:
+- MSAIF:
 
-  Other FTLD subtype, specify (Any text or numbers)
+  Primary, contributing, or non-contributing cause of cognitive
+  impairment - Multiple system atrophy (MSA) ( 1 = Primary 2 =
+  Contributing 3 = Non-contributing 7 = Cognitively impaired but no MSA
+  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
+  form submitted did not collect data in this way, or a skip pattern
+  precludes response to this question)
 
 - CVD:
 
@@ -4522,93 +6651,19 @@ A data frame with 207454 rows and 1936 variables:
   form submitted did not collect data in this way, or a skip pattern
   precludes response to this question)
 
-- BRNINJ:
+- CTE:
 
-  Presumptive etiologic diagnosis - Traumatic brain injury (TBI) ( 0 =
-  No (assumed assessed and found not present) 1 = Yes)
+- CTEIF:
 
-- BRNINJIF:
+- CTECERT:
 
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Traumatic brain injury (TBI) ( 1 = Primary 2 =
-  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
-  diagnosis of TBI 8 = Diagnosis of normal cognition -4 = Not
-  applicable: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
+- CAA:
 
-- BRNINCTE:
+- CAAIF:
 
-  Symptoms consistent with chronic traumatic encephalopathy (CTE) ( 0 =
-  No 1 = Yes 9 = Unknown 8 = No TBI diagnosis -4 = Not applicable: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
+- LATE:
 
-- HYCEPH:
-
-  Presumptive etiologic diagnosis of the cognitive disorder -
-  Normal-pressure hydrocephalus (NPH) ( 0 = No (assumed assessed and
-  found not present) 1 = Yes)
-
-- HYCEPHIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Normal-pressure hydrocephalus (NPH) ( 1 = Primary 2 =
-  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
-  hydrocephalus diagnosis 8 = Diagnosis of normal cognition -4 = Not
-  applicable: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- EPILEP:
-
-  Presumptive etiologic diagnosis - Epilepsy ( 0 = No (assumed assessed
-  and found not present) 1 = Yes -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- EPILEPIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Epilepsy ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no epilepsy diagnosis 8
-  = Diagnosis of normal cognition -4 = Not applicable: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- NEOP:
-
-  Presumptive etiologic diagnosis - CNS neoplasm ( 0 = No (assumed
-  assessed and found not present) 1 = Yes)
-
-- NEOPIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - CNS neoplasm ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no CNS neoplasm
-  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- NEOPSTAT:
-
-  CNS neoplasm - benign or malignant ( 1 = Benign 2 = Malignant 8 = No
-  diagnosis of CNS neoplasm -4 = Not applicable: UDS form submitted did
-  not collect data in this way, or a skip pattern precludes response to
-  this question)
-
-- HIV:
-
-  Presumptive etiologic diagnosis - Human immunodeficiency virus (HIV) (
-  0 = No (assumed assessed and found not present) 1 = Yes -4 = Not
-  applicable: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- HIVIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - HIV ( 1 = Primary 2 = Contributing 3 = Non-contributing 7
-  = Cognitively impaired but no HIV diagnosis 8 = Diagnosis of normal
-  cognition -4 = Not applicable: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
+- LATEIF:
 
 - OTHCOG:
 
@@ -4633,266 +6688,6 @@ A data frame with 207454 rows and 1936 variables:
   neurological, genetic, or infectious condition (specify) (Any text or
   numbers)
 
-- DEP:
-
-  Presumptive etiologic diagnosis - Depression ( 0 = No (assumed
-  assessed and found not present) 1 = Yes)
-
-- DEPIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Depression ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no depression diagnosis
-  8 = Diagnosis of normal cognition -4 = Not applicable: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- DEPTREAT:
-
-  Depression - Treated or untreated ( 0 = Untreated 1 = Treated 8 = No
-  diagnosis of depression -4 = Not applicable: UDS form submitted did
-  not collect data in this way, or a skip pattern precludes response to
-  this question)
-
-- BIPOLDX:
-
-  Presumptive etiologic diagnosis - Bipolar disorder ( 0 = No (assumed
-  assessed and found not present) 1 = Yes -4 = Not applicable: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- BIPOLDIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - bipolar disorder ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no bipolar disorder
-  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- SCHIZOP:
-
-  Presumptive etiologic diagnosis - Schizophrenia or other psychosis ( 0
-  = No (assumed assessed and found not present) 1 = Yes -4 = Not
-  applicable: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- SCHIZOIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Schizophrenia or other psychosis ( 1 = Primary 2 =
-  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
-  schizophrenia diagnosis 8 = Diagnosis of normal cognition -4 = Not
-  applicable: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- ANXIET:
-
-  Presumptive etiologic diagnosis - Anxiety ( 0 = No (assumed assessed
-  and found not present) 1 = Yes -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- ANXIETIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Anxiety ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no anxiety diagnosis 8 =
-  Diagnosis of normal cognition -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- DELIR:
-
-  Presumptive etiologic diagnosis - Delirium ( 0 = No (assumed assessed
-  and found not present) 1 = Yes -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- DELIRIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Delirium ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no delirium diagnosis 8
-  = Diagnosis of normal cognition -4 = Not applicable: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- PTSDDX:
-
-  Presumptive etiologic diagnosis - Post-traumatic stress disorder
-  (PTSD) ( 0 = No (assumed assessed and found not present) 1 = Yes -4 =
-  Not applicable: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
-
-- PTSDDXIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - PTSD ( 1 = Primary 2 = Contributing 3 = Non-contributing
-  7 = Cognitively impaired but no PTSD diagnosis 8 = Diagnosis of normal
-  cognition -4 = Not applicable: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- OTHPSY:
-
-  Presumptive etiologic diagnosis - Other psychiatric disease ( 0 = No
-  (assumed assessed and found not present) 1 = Yes)
-
-- OTHPSYIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Other psychiatric disease ( 1 = Primary 2 = Contributing
-  3 = Non-contributing 7 = Cognitively impaired but no diagnosis of
-  other psychiatric disease 8 = Diagnosis of normal cognition)
-
-- OTHPSYX:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Other
-  psychiatric disease (specify) (Any text or numbers)
-
-- ALCDEM:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
-  impairment due to alcohol abuse ( 0 = No (assumed assessed and found
-  not present) 1 = Yes 8 = Diagnosis of normal cognition)
-
-- ALCDEMIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Alcohol abuse ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no diagnosis of
-  impairment due to alcohol abuse 8 = Diagnosis of normal cognition)
-
-- ALCABUSE:
-
-  Current alcohol abuse ( 0 = No 1 = Yes 9 = Unknown 8 = No diagnosis of
-  impairment due to alcohol abuse -4 = Not applicable: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- IMPSUB:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
-  impairment due to other substance abuse ( 0 = No (assumed assessed and
-  found not present) 1 = Yes -4 = Not applicable: UDS form submitted did
-  not collect data in this way, or a skip pattern precludes response to
-  this question)
-
-- IMPSUBIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Other substance abuse ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no diagnosis of
-  impairment due to substance abuse 8 = Diagnosis of normal cognition -4
-  = Not applicable: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
-
-- DYSILL:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
-  impairment due to systemic disease/medical illness ( 0 = No (assumed
-  assessed and found not present) 1 = Yes)
-
-- DYSILLIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - systemic disease/medical illness ( 1 = Primary 2 =
-  Contributing 3 = Non-contributing 7 = Cognitively impaired but no
-  diagnosis of impairment due to systemic disease/medical illness 8 =
-  Diagnosis of normal cognition -4 = Not applicable: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- MEDS:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Cognitive
-  impairment due to medications ( 0 = No (assumed assessed and found not
-  present) 1 = Yes)
-
-- MEDSIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - medications ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no diagnosis of
-  impairment due to medications 8 = Diagnosis of normal cognition -4 =
-  Not applicable: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
-
-- DEMUN:
-
-  Presumptive etiologic diagnosis of the cognitive disorder -
-  Undetermined etiology ( 0 = No 1 = Yes -4 = Not applicable: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- DEMUNIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Undetermined etiology ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no diagnosis of dementia
-  due to undetermined etiology 8 = Diagnosis of normal cognition -4 =
-  Not applicable: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
-
-- COGOTH:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Other 1
-  (specify) ( 0 = No 1 = Yes)
-
-- COGOTHIF:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Other 1 (specify) ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no other etiologic
-  diagnosis 8 = Diagnosis of normal cognition)
-
-- COGOTHX:
-
-  Other presumptive etiologic diagnosis of the cognitive disorder 1,
-  specify (Any text or numbers)
-
-- COGOTH2:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Other 2
-  (specify) ( 0 = No 1 = Yes -4 = Not applicable: UDS form submitted did
-  not collect data in this way, or a skip pattern precludes response to
-  this question)
-
-- COGOTH2F:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Other 2 (specify) ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no other etiologic
-  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- COGOTH2X:
-
-  Other presumptive etiologic diagnosis of the cognitive disorder 2,
-  specify (Any text or numbers)
-
-- COGOTH3:
-
-  Presumptive etiologic diagnosis of the cognitive disorder - Other 3
-  (specify) ( 0 = No 1 = Yes -4 = Not applicable: UDS form submitted did
-  not collect data in this way, or a skip pattern precludes response to
-  this question)
-
-- COGOTH3F:
-
-  Primary, contributing, or non-contributing cause of cognitive
-  impairment - Other 3 (specify) ( 1 = Primary 2 = Contributing 3 =
-  Non-contributing 7 = Cognitively impaired but no other etiologic
-  diagnosis 8 = Diagnosis of normal cognition -4 = Not applicable: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- COGOTH3X:
-
-  Other presumptive etiologic diagnosis of the cognitive disorder 3,
-  specify (Any text or numbers)
-
 - NACCETPR:
 
   Primary etiologic diagnosis (MCI; impaired, not MCI; or dementia) ( 1
@@ -4914,468 +6709,24 @@ A data frame with 207454 rows and 1936 variables:
   for other specified reasons (i.e., written-in values) 88 = Not
   applicable, not cognitively impaired 99 = Missing/unknown)
 
-- NACCADMU:
+- NACCDAGE:
 
-  Does the subject have a dominantly inherited AD mutation? ( 0 =
-  No/unknown 1 = Yes)
+  Age at death ( 15-120 888 = Not applicable 999 = Unknown)
 
-- NACCFTDM:
+- NACCINT:
 
-  Does the subject have a hereditary FTLD mutation? ( 0 = No/unknown 1 =
-  Yes)
-
-- CANCER:
-
-  Cancer present in the last 12 months (excluding non-melanoma skin
-  cancer), primary or metastatic ( 0 = No 1 = Yes,
-  primary/non-metastatic 2 = Yes, metastatic 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- CANCSITE:
-
-  Cancer primary site specification (Any text or numbers)
-
-- DIABET:
-
-  Diabetes present at visit ( 0 = No 1 = Yes, Type I 2 = Yes, Type II 3
-  = Yes, other type 9 = Not assessed or unknown -4 = Not available: UDS
-  form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- MYOINF:
-
-  Myocardial infarct present within the past 12 months ( 0 = No 1 = Yes
-  8 = Not assessed -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- CONGHRT:
-
-  Congestive heart failure present ( 0 = No 1 = Yes 8 = Not assessed -4
-  = Not available: UDS form submitted did not collect data in this way,
-  or a skip pattern precludes response to this question)
-
-- AFIBRILL:
-
-  Atrial fibrillation present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- HYPERT:
-
-  Hypertension present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- ANGINA:
-
-  Angina present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available:
-  UDS form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- HYPCHOL:
-
-  Hypercholesterolemia present ( 0 = No 1 = Yes 8 = Not assessed -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
-
-- VB12DEF:
-
-  B12 deficiency present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- THYDIS:
-
-  Thyroid disease present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- ARTH:
-
-  Arthritis present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- ARTYPE:
-
-  Arthritis type ( 1 = Rheumatoid 2 = Osteoarthritis 3 = Other (specify)
-  8 = No arthritis reported 9 = Unknown -4 = Not available: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- ARTYPEX:
-
-  Other arthritis type specification (Any text or numbers)
-
-- ARTUPEX:
-
-  Arthritis region affected - upper extremity ( 0 = No 1 = Yes 8 = No
-  arthritis reported -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- ARTLOEX:
-
-  Arthritis region affected - lower extremity ( 0 = No 1 = Yes 8 = No
-  arthritis reported -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- ARTSPIN:
-
-  Arthritis region affected - spine ( 0 = No 1 = Yes 8 = No arthritis
-  reported -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- ARTUNKN:
-
-  Arthritis region affected - unknown ( 0 = No 1 = Yes 8 = No arthritis
-  reported -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- URINEINC:
-
-  Incontinence present - urinary ( 0 = No 1 = Yes 8 = Not assessed -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
-
-- BOWLINC:
-
-  Incontinence present - bowel ( 0 = No 1 = Yes 8 = Not assessed -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
-
-- SLEEPAP:
-
-  Sleep apnea present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- REMDIS:
-
-  REM sleep behavior disorder (RBD) present ( 0 = No 1 = Yes 8 = Not
-  assessed -4 = Not available: UDS form submitted did not collect data
-  in this way, or a skip pattern precludes response to this question)
-
-- HYPOSOM:
-
-  Hyposomnia/insomnia present ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- SLEEPOTH:
-
-  Other sleep disorder present ( 0 = No 1 = Yes 8 = Not assessed -4 =
-  Not available: UDS form submitted did not collect data in this way, or
-  a skip pattern precludes response to this question)
-
-- SLEEPOTX:
-
-  Other sleep disorder specification (Any text or numbers)
-
-- ANGIOCP:
-
-  Carotid procedure: angioplasty, endarterectomy, or stent within the
-  past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available:
-  UDS form submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- ANGIOPCI:
-
-  Percutaneous coronary intervention: angioplasty and/or stent within
-  the past 12 months ( 0 = No 1 = Yes 8 = Not assessed -4 = Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- PACEMAKE:
-
-  Procedure: pacemaker and/or defibrillator within the past 12 months (
-  0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- HVALVE:
-
-  Procedure: heart valve replacement or repair within the past 12 months
-  ( 0 = No 1 = Yes 8 = Not assessed -4 = Not available: UDS form
-  submitted did not collect data in this way, or a skip pattern
-  precludes response to this question)
-
-- ANTIENC:
-
-  Antibody-mediated encephalopathy within the past 12 months ( 0 = No 1
-  = Yes 8 = Not assessed -4 = Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
-
-- ANTIENCX:
-
-  Antibody-mediated encephalopathy, specify (Any text or numbers)
-
-- OTHCOND:
-
-  Other medical conditions or procedures within the past 12 months not
-  listed above ( 0 = No 1 = Yes -4 = Not available: UDS form submitted
-  did not collect data in this way, or a skip pattern precludes response
-  to this question)
-
-- OTHCONDX:
-
-  Other medical conditions specification (Any text or numbers)
-
-- NACCAGEB:
-
-  Subject's age at initial visit (18 - 120)
-
-- NACCNIHR:
-
-  Derived NIH race definitions ( 1 = White 2 = Black or African American
-  3 = American Indian or Alaska Native 4 = Native Hawaiian or Pacific
-  Islander 5 = Asian 6 = Multiracial 99 = Unknown or ambiguous)
-
-- NACCNORM:
-
-  Normal cognition at all visits to date ( 0 = Had a diagnosis other
-  than normal cognition (impaired but not MCI, MCI, or dementia) for at
-  least one UDS visit 1 = Normal cognition at all UDS visits)
-
-- NACCIDEM:
-
-  Incident dementia during UDS follow-up ( 0 = Did not progress to
-  dementia 1 = Progressed to dementia 8 = Initial visit only or
-  diagnosed with dementia at initial visit)
-
-- NACCAGE:
-
-  Subject's age at visit (18 - 120)
-
-- NACCAAAS:
-
-  Reported current use of an antiadrenergic agent ( 0 = Did not report
-  use at visit 1 = Reported use at visit -4 = Did not complete
-  medications form)
-
-- NACCAANX:
-
-  Reported current use of an anxiolytic, sedative, or hypnotic agent ( 0
-  = Did not report use at visit 1 = Reported use at visit -4 = Did not
-  complete medications form)
-
-- NACCAC:
-
-  Reported current use of an anticoagulant or antiplatelet agent ( 0 =
-  Did not report use at visit 1 = Reported use at visit -4 = Did not
-  complete medications form)
-
-- NACCACEI:
-
-  Reported current use of an angiotensin converting enzyme (ACE)
-  inhibitor ( 0 = Did not report use at visit 1 = Reported use at visit
-  -4 = Did not complete medications form)
-
-- NACCADEP:
-
-  Reported current use of an antidepressant ( 0 = Did not report use at
-  visit 1 = Reported use at visit -4 = Did not complete medications
-  form)
-
-- NACCADMD:
-
-  Reported current use of a FDA-approved medication for Alzheimer's
-  disease symptoms ( 0 = Did not report use at visit 1 = Reported use at
-  visit -4 = Did not complete medications form)
-
-- NACCAHTN:
-
-  Reported current use of any type of an antihypertensive or blood
-  pressure medication ( 0 = Did not report use at visit 1 = Reported use
-  at visit -4 = Did not complete medications form)
-
-- NACCAMD:
-
-  Total number of medications reported at each visit ( 0 - 40 -4 = Did
-  not complete medications form)
-
-- NACCANGI:
-
-  Reported current use of an angiotensin II inhibitor ( 0 = Did not
-  report use at visit 1 = Reported use at visit -4 = Did not complete
-  medications form)
-
-- NACCAPSY:
-
-  Reported current use of an antipsychotic agent ( 0 = Did not report
-  use at visit 1 = Reported use at visit -4 = Did not complete
-  medications form)
-
-- NACCBETA:
-
-  Reported current use of a beta-adrenergic blocking agent
-  (Beta-Blocker) ( 0 = Did not report use at visit 1 = Reported use at
-  visit -4 = Did not complete medications form)
-
-- NACCCCBS:
-
-  Reported current use of a calcium channel blocking agent ( 0 = Did not
-  report use at visit 1 = Reported use at visit -4 = Did not complete
-  medications form)
-
-- NACCDBMD:
-
-  Reported current use of a diabetes medication ( 0 = Did not report use
-  at visit 1 = Reported use at visit -4 = Did not complete medications
-  form)
-
-- NACCDIUR:
-
-  Reported current use of a diuretic ( 0 = Did not report use at visit 1
-  = Reported use at visit -4 = Did not complete medications form)
-
-- NACCEMD:
-
-  Reported current use of estrogen hormone therapy ( 0 = Did not report
-  use at visit 1 = Reported use at visit -4 = Did not complete
-  medications form)
-
-- NACCEPMD:
-
-  Reported current use of estrogen + progestin hormone therapy ( 0 = Did
-  not report use at visit 1 = Reported use at visit -4 = Did not
-  complete medications form)
-
-- NACCHTNC:
-
-  Reported current use of an antihypertensive combination therapy ( 0 =
-  Did not report use at visit 1 = Reported use at visit -4 = Did not
-  complete medications form)
-
-- NACCLIPL:
-
-  Reported current use of lipid lowering medication ( 0 = Did not report
-  use at visit 1 = Reported use at visit -4 = Did not complete
-  medications form)
-
-- NACCNSD:
-
-  Reported current use of nonsteroidal anti-inflammatory medication ( 0
-  = Did not report use at visit 1 = Reported use at visit -4 = Did not
-  complete medications form)
-
-- NACCPDMD:
-
-  Reported current use of an antiparkinson agent ( 0 = Did not report
-  use at visit 1 = Reported use at visit -4 = Did not complete
-  medications form)
-
-- NACCVASD:
-
-  Reported current use of a vasodilator ( 0 = Did not report use at
-  visit 1 = Reported use at visit -4 = Did not complete medications
-  form)
-
-- NACCBMI:
-
-  Body mass index (BMI) ( 10.0 - 100.0 888.8 = Unknown or not assessed -
-  4 = Not available: UDS form submitted did not collect data in this
-  way, or a skip pattern precludes response to this question)
-
-- NACCUDSD:
-
-  Cognitive status at UDS visit ( 1 = Normal cognition 2 =
-  Impaired-not-MCI 3 = MCI 4 = Dementia)
-
-- NACCDIED:
-
-  Subject is known to be deceased ( 0 = Not deceased/unknown 1 =
-  Deceased Description/derivation: A subject with a Neuropathology Form
-  and/or a Milestones Form reporting the subject's death is indicated as
-  deceased (naccdied = 1). Otherwise, naccdied = 0. NOTE: NACC is not
-  always made aware of deaths for active and inactive subjects; thus
-  naccdied = 0 for a subject who has died but whose death was not
-  reported to NACC.)
-
-- NACCMOD:
-
-  Month of death ( 1 - 12 88 = Not applicable, subject not deceased 99 =
-  Unknown)
-
-- NACCYOD:
-
-  Year of death ( Allowable codes cannot precede 1970; in most cases,
-  should not precede 1984 8888 = Not applicable, subject not deceased
-  9999 = Unknown)
+  Time interval in months between last visit and death ( 0-100 888 = Not
+  applicable 999 = Unknown)
 
 - NACCAUTP:
 
   Neuropathology data from an autopsy is available ( 0 = No 1 = Yes 8 =
   Not applicable, subject not deceased)
 
-- NACCACTV:
-
-  Follow-up status at the Alzheimer's Disease Center (ADC) ( 0 = Died,
-  discontinued, lost to follow-up 1 = Annual follow-up (no
-  discontinuation/loss to follow-up or minimal contact) 2 = Minimal
-  contact with Center, no annual follow-up)
-
-- NACCNOVS:
-
-  No longer followed annually in person or by telephone ( 0 = Still
-  receiving annual follow-up in person or by telephone 1 = No longer
-  receiving annual follow-up in person or by telephone 8 = Not
-  applicable, enrolled for initial visit only)
-
-- NACCDSMO:
-
-  Month of discontinuation from annual follow-up ( 1 - 12 88 = Not
-  applicable, still followed annually in person or by telephone)
-
-- NACCDSDY:
-
-  Day of discontinuation from annual follow-up ( 1- 31 88 = Not
-  applicable, still followed annually in person or by telephone)
-
-- NACCDSYR:
-
-  Year of discontinuation from annual follow-up ( 2005 to present 8888 =
-  Not applicable, still followed annually in person or by telephone)
-
-- NACCNURP:
-
-  Permanently moved to a nursing home ( 0 = Did not report permanent
-  move to a nursing home 1 = Permanently moved to a nursing home)
-
-- NACCNRMO:
-
-  Month permanently moved to nursing home ( 1 - 12 88 = Not applicable,
-  no permanent move to a nursing home 99 = Unknown)
-
-- NACCNRDY:
-
-  Day permanently moved to nursing home ( 1 - 31 88 = Not applicable, no
-  permanent move to a nursing home 99 = Unknown)
-
-- NACCNRYR:
-
-  Year permanently moved to nursing home ( 2002 to present 8888 = Not
-  applicable, no permanent move to a nursing home 9999 = Unknown)
-
 - NACCFTD:
 
   One or more FTLD Module visits completed ( 0 = No FTLD Module visit 1
   = At least one FTLD Module visit)
-
-- NACCMDSS:
-
-  Subject's status in the Minimal Data Set (MDS) and Uniform Data Set
-  (UDS) ( 1 = In the UDS and MDS 2 = In the MDS only 3 = In the UDS
-  only)
-
-- NACCPAFF:
-
-  Previously affiliated subject ( 0 = Not previously affiliated subject
-  1 = Previously affiliated subject)
 
 - NACCLBDM:
 
@@ -5396,42 +6747,6 @@ A data frame with 207454 rows and 1936 variables:
 
   One or more measures of T-tau reported ( 0 = No T-tau reported 1 = One
   or more measures of T-tau reported)
-
-- NACCMRSA:
-
-  At least one MRI scan available ( 0 = No; does not have at least one
-  MRI available at NACC 1 = Yes; has at least one MRI available at NACC)
-
-- NACCNMRI:
-
-  Total number of MRI session ( 1 - 20 88 = Not applicable / no MRI
-  available)
-
-- NACCAPSA:
-
-  At least one amyloid PET scan available ( 0 = No; does not have any
-  amyloid PET scans at NACC 1 = Yes; has at least one amyloid PET scan
-  available at NACC)
-
-- NACCNAPA:
-
-  Total number of amyloid PET scans available ( 1 - 20 88 = Not
-  applicable / no amyloid PET available)
-
-- TELCOV:
-
-  Is the UDS telephone follow-up protocol being used because the COVID
-  pandemic precludes traditional in-person UDS visit? (0=No 1=Yes -4=Not
-  available: UDS form submitted did not collect data in this way, or a
-  skip pattern precludes response to this question)
-
-- TELMOD:
-
-  What modality of communication was used to collect this remote UDS
-  packet? (1 = Telephone 2 = Video-assisted conference 3 = Some
-  combination of the two -4=Not available: UDS form submitted did not
-  collect data in this way, or a skip pattern precludes response to this
-  question)
 
 - ADGCGWAS:
 
@@ -6539,15 +7854,6 @@ A data frame with 207454 rows and 1936 variables:
   -4 = Not available, NP Form version submitted did not collect data in
   this way Blanks Blank if NPFAUT=/=1 or no additional findings)
 
-- NACCDAGE:
-
-  Age at death ( 15-120 888 = Not applicable 999 = Unknown)
-
-- NACCINT:
-
-  Time interval in months between last visit and death ( 0-100 888 = Not
-  applicable 999 = Unknown)
-
 - NPNIT:
 
   NIA/Reagan Institute criteria ( 1-5 1 = High likelihood of dementia
@@ -6749,9 +8055,24 @@ A data frame with 207454 rows and 1936 variables:
 
 - NPATGFR4:
 
-- FTLDFORMVER:
+- TELCOV:
 
-- LBDFORMVER:
+  Is the UDS telephone follow-up protocol being used because the COVID
+  pandemic precludes traditional in-person UDS visit? (0=No 1=Yes -4=Not
+  available: UDS form submitted did not collect data in this way, or a
+  skip pattern precludes response to this question)
+
+- TELMOD:
+
+  What modality of communication was used to collect this remote UDS
+  packet? (1 = Telephone 2 = Video-assisted conference 3 = Some
+  combination of the two -4=Not available: UDS form submitted did not
+  collect data in this way, or a skip pattern precludes response to this
+  question)
+
+- PACKET_1:
+
+- FTLDFORMVER:
 
 - FTDAFF:
 
@@ -7714,6 +9035,10 @@ A data frame with 207454 rows and 1936 variables:
 - FTDOTHI:
 
 - FTDOTHIS:
+
+- PACKET_2:
+
+- LBDFORMVER:
 
 - LBSSALIV:
 

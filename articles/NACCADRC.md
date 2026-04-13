@@ -83,13 +83,23 @@ prefix dropped (e.g. `amyloidpetgaain`, `amyloidpetnpdka`,
 ## Installation
 
 To install the package locally, run
-`install.packages("path/to/NACCADRC_72.20260323.1.tar.gz", repos = NULL, type = "source")`.
-
-## Package usage and key meta data
 
 ``` r
 
+install.packages("path/to/NACCADRC_73.20260410.1.tar.gz", repos = NULL, type = "source")
+```
+
+## Package usage and key meta data
+
+Code
+
+``` r
+
+# Load the NACCADRC package
 library(NACCADRC)
+
+# Loads specific data sets into the R environment
+data(data_release_date, data_dictionary, file_manifest)
 ```
 
 ### Package source data release date
@@ -97,39 +107,52 @@ library(NACCADRC)
 The NACCADRC package contains a data stamped date of which the raw data
 was downloaded to build the package. For instance, the current package
 contains data that downloaded from the [NACC](https://www.naccdata.org/)
-as of 2026-03-23.
+as of 2026-04-10.
+
+Code
 
 ``` r
 
 # Data source downloaded date
-NACCADRC::data_release_date
-#> [1] "2026-03-23"
+data_release_date
+#> [1] "2026-04-10"
 ```
 
 ### Data dictionary
 
 The separate data dictionaries provide by NACC have been merged into one
-data dictionary file
-([`NACCADRC::data_dictionary`](https://atri-biostats.github.io/NACCADRC/reference/data_dictionary.md)):
+data dictionary file (`data_dictionary`):
+
+Code
 
 ``` r
 
-head(NACCADRC::data_dictionary, 6)
-#> # A tibble: 6 × 9
-#>   DataName      VariableName ShortDescriptor                              Comment AllowableCodes Source                    Form  VariableType DataType
-#>   <chr>         <chr>        <chr>                                        <chr>   <chr>          <chr>                     <chr> <chr>        <chr>   
-#> 1 phc_biomarker NACCID       Participant ID                               <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
-#> 2 phc_biomarker NACCVNUM     Visit Number                                 <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
-#> 3 phc_biomarker AB42_RAW     Raw AB42 Biomarker Levels                    <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
-#> 4 phc_biomarker PHC_AB42     Harmonized Z-Score for AB42 Biomarker Levels <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
-#> 5 phc_biomarker Tau_RAW      Raw Tau Biomarker Levels                     <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>    
-#> 6 phc_biomarker PHC_Tau      Harmonized Z-Score for Tau Biomarker Levels  <NA>    <NA>           NACC_ADSP_PHC_Biomarker_… <NA>  <NA>         <NA>
+head(data_dictionary, 6)
+#> # A tibble: 6 × 15
+#>   DataName      VariableName ShortDescriptor          Comment AllowableCodes Source Data Freeze variable…¹ `Data type` `Data source` `Variable Length`
+#>   <chr>         <chr>        <chr>                    <chr>   <chr>          <chr>  <chr>                  <chr>       <chr>         <chr>            
+#> 1 phc_biomarker NACCID       Participant ID           <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
+#> 2 phc_biomarker NACCVNUM     Visit Number             <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
+#> 3 phc_biomarker AB42_RAW     Raw AB42 Biomarker Leve… <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
+#> 4 phc_biomarker PHC_AB42     Harmonized Z-Score for … <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
+#> 5 phc_biomarker Tau_RAW      Raw Tau Biomarker Levels <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
+#> 6 phc_biomarker PHC_Tau      Harmonized Z-Score for … <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
+#> # ℹ abbreviated name: ¹​`Data Freeze variable name`
+#> # ℹ 5 more variables: `Description / derivation` <chr>, Form <chr>, VariableType <chr>, DataType <chr>, `Source variable` <chr>
 ```
 
 ### File manifest
 
 A complete file manifest of all the source files used to build the
-package is also stored in the package (`NACCADRC::file_manifest`):
+package is also stored in the package (`file_manifest`):
+
+Code
+
+``` r
+
+file_manifest %>%
+  datatable(., paging = TRUE)
+```
 
 Beekly, Duane L, Erin M Ramos, William W Lee, Woodrow D Deitrich, Mary E
 Jacka, Joylee Wu, Janene L Hubbard, et al. 2007. “The National
