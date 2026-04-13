@@ -21,6 +21,8 @@ library(tidyverse)
 library(nlme)
 library(data.table)
 
+data(data_release_date, data_dictionary, file_manifest)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -85,36 +87,56 @@ Note some datasets that combine data from different sources have the prefix drop
 
 # Installation
 
-To install the package locally, run ``r paste0("install.packages(\"path/to/", pkgFilename, "\", repos = NULL, type = \"source\")")``.
+To install the package locally, run 
+
+```{r install-pkg}
+#| echo: false
+#| results: asis
+
+my_cmd <- paste0("install.packages(\"path/to/", pkgFilename, "\", repos = NULL, type = \"source\")")
+cat("\n```r\n", my_cmd, "\n```\n", sep = "")
+```
 
 # Package usage and key meta data
 
 ```{r study-pkg}
+#| code-fold: show
+
+# Load the NACCADRC package
 library(NACCADRC)
+
+# Loads specific data sets into the R environment
+data(data_release_date, data_dictionary, file_manifest)
 ```
 
 ## Package source data release date 
 
-The `r pkgName` package contains a data stamped date of which the raw data was downloaded to build the package. For instance, the current package contains data that downloaded from the [NACC](https://www.naccdata.org/) as of `r NACCADRC::data_release_date`.
+The `r pkgName` package contains a data stamped date of which the raw data was downloaded to build the package. For instance, the current package contains data that downloaded from the [NACC](https://www.naccdata.org/) as of `r data_release_date`.
 
 ```{r data-date}
+#| code-fold: show
+
 # Data source downloaded date
-NACCADRC::data_release_date
+data_release_date
 ```
 
 ## Data dictionary
 
-The separate data dictionaries provide by NACC have been merged into one data dictionary file (`NACCADRC::data_dictionary`):
+The separate data dictionaries provide by NACC have been merged into one data dictionary file (`data_dictionary`):
 
 ```{r data-dictionary-print}
-head(NACCADRC::data_dictionary, 6)
+#| code-fold: show
+
+head(data_dictionary, 6)
 ```
 
 ## File manifest
 
-A complete file manifest of all the source files used to build the package is also stored in the package (`NACCADRC::file_manifest`):
+A complete file manifest of all the source files used to build the package is also stored in the package (`file_manifest`):
 
-```{r file-manifest-print, eval = TRUE, echo = FALSE}
+```{r file-manifest-print, eval = TRUE}
+#| code-fold: true
+
 file_manifest %>%
   datatable(., paging = TRUE)
 ```

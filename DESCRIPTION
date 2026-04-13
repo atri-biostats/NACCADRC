@@ -18,16 +18,16 @@ Collate:
     'ComBat.R'
     'data.R'
     'NACCADRC-package.R'
-Imports:
-    rmarkdown
 Suggests: 
+    quarto,
     knitr,
+    rmarkdown,
     tidyverse,
     arsenal,
     ggplot2,
     ggsci,
     tidyr,
     dplyr
-VignetteBuilder: knitr
+VignetteBuilder: knitr, quarto
 Depends: 
     R (>= 3.5.0)
