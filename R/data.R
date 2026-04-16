@@ -1,5 +1,5 @@
 #' amyloidpetgaain
-#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetgaain_naccDEV.csv, amyloidpetgaain_duplicates.csv, investigator_scan_amyloidpetgaain_nacc73.csv, investigator_scan_mp_amyloidpetgaain_nacc73.csv, amyloidpetgaain_clariti_no_edc.csv. 
+#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetgaain_naccDEV.csv, investigator_scan_amyloidpetgaain_nacc73.csv, investigator_scan_mp_amyloidpetgaain_nacc73.csv. 
 #' @format A data frame with 5735 rows and 33 variables:
 #' \describe{
 #'   \item{SOURCE}{}
@@ -49,7 +49,7 @@
 NULL
 
 #' amyloidpetnpdka
-#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetnpdka_naccDEV.csv, amyloidpetnpdka_duplicates.csv, investigator_scan_amyloidpetnpdka_nacc73.csv, investigator_scan_mp_amyloidpetnpdka_nacc73.csv. 
+#' @description NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from the file(s) investigator_clariti_amyloidpetnpdka_naccDEV.csv, investigator_scan_amyloidpetnpdka_nacc73.csv, investigator_scan_mp_amyloidpetnpdka_nacc73.csv. 
 #' @format A data frame with 5735 rows and 182 variables:
 #' \describe{
 #'   \item{SOURCE}{}
@@ -353,7 +353,7 @@ NULL
 NULL
 
 #' fdgpetnpdka
-#' @description NACCADRC UDS, SCAN Imaging FDG PET dataset. The data is sourced from the file(s) investigator_clariti_fdgpetnpdka_naccDEV.csv, fdgpetnpdka_duplicates.csv, investigator_scan_fdgpetnpdka_nacc73.csv. 
+#' @description NACCADRC UDS, SCAN Imaging FDG PET dataset. The data is sourced from the file(s) investigator_clariti_fdgpetnpdka_naccDEV.csv, investigator_scan_fdgpetnpdka_nacc73.csv. 
 #' @format A data frame with 839 rows and 174 variables:
 #' \describe{
 #'   \item{SOURCE}{}
@@ -544,7 +544,7 @@ NULL
 NULL
 
 #' mriqc
-#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mriqc_naccDEV.csv, mriqc_duplicates.csv, investigator_scan_mriqc_nacc73.csv. 
+#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mriqc_naccDEV.csv, investigator_scan_mriqc_nacc73.csv. 
 #' @format A data frame with 29982 rows and 40 variables:
 #' \describe{
 #'   \item{SOURCE}{}
@@ -601,7 +601,7 @@ NULL
 NULL
 
 #' mrisbm
-#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mrisbm_naccDEV.csv, mrisbm_duplicates.csv, investigator_scan_mrisbm_nacc73.csv, mrisbm_clariti_no_edc.csv. 
+#' @description NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the file(s) investigator_clariti_mrisbm_naccDEV.csv, investigator_scan_mrisbm_nacc73.csv. 
 #' @format A data frame with 6415 rows and 253 variables:
 #' \describe{
 #'   \item{SOURCE}{}
@@ -871,7 +871,7 @@ NULL
 NULL
 
 #' petqc
-#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_petqc_naccDEV.csv, petqc_duplicates.csv, investigator_scan_petqc_nacc73.csv. 
+#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_petqc_naccDEV.csv, investigator_scan_petqc_nacc73.csv. 
 #' @format A data frame with 8284 rows and 13 variables:
 #' \describe{
 #'   \item{SOURCE}{}
@@ -15797,7 +15797,7 @@ NULL
 NULL
 
 #' taupetnpdka
-#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_taupetnpdka_naccDEV.csv, taupetnpdka_duplicates.csv, investigator_scan_mp_taupetnpdka_nacc73.csv, investigator_scan_taupetnpdka_nacc73.csv, taupetnpdka_clariti_no_edc.csv. 
+#' @description NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the file(s) investigator_clariti_taupetnpdka_naccDEV.csv, investigator_scan_mp_taupetnpdka_nacc73.csv, investigator_scan_taupetnpdka_nacc73.csv. 
 #' @format A data frame with 3019 rows and 187 variables:
 #' \describe{
 #'   \item{SOURCE}{}

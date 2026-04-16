@@ -6,6 +6,7 @@
 ^data-raw$
 ^data-sas$
 ^tools$
+^reports$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$

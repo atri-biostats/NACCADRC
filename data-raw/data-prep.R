@@ -297,8 +297,9 @@ for(file_name in data_files){
 
 # bind_rows for SCAN, CLARiIT ----
 
-dir.create(file.path('duplicates'))
-file.remove(file.path('duplicates', list.files('duplicates')))
+dup_dir <- file.path('..', 'reports', 'duplicates')
+dir.create(dup_dir, recursive = TRUE)
+file.remove(file.path(dup_dir, list.files(dup_dir)))
 
 # Combine files from SCAN, SCAN MP, and CLARiTI for PET data, if they exist.
 for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
@@ -349,7 +350,7 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
   if(nrow(duplicates) > 0){
     warning(paste("Duplicate NACCID and SCANDATE combinations in", df_name, "after combining sources."))
     write.csv(duplicates, 
-      file.path("duplicates", paste0(df_name, "_duplicates.csv")), 
+      file.path(dup_dir, paste0(df_name, "_duplicates.csv")), 
       row.names = FALSE)
   }
   
@@ -405,7 +406,7 @@ for(df_name in c('mriqc', 'mrisbm')){
   if(nrow(duplicates) > 0){
     warning(paste("Duplicate NACCID and SCANDATE combinations in", df_name, "after combining sources."))
     write.csv(duplicates, 
-      file.path("duplicates", paste0(df_name, "_duplicates.csv")), 
+      file.path(dup_dir, paste0(df_name, "_duplicates.csv")), 
       row.names = FALSE)
   }
   
@@ -714,30 +715,21 @@ usethis::use_data(uds_ftldlbd, overwrite = TRUE, compress = "xz")
 
 # QC ----
 
-dir.create(file.path('qc'))
-file.remove(file.path('qc', list.files('qc')))
+qc_dir <- file.path('..', 'reports', 'qc')
+dir.create(qc_dir, recursive = TRUE)
+file.remove(file.path(qc_dir, list.files(qc_dir)))
 
 mrisbm %>% filter(SOURCE == 'CLARiTI' & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, SCANDT) %>%
-  write.csv(file.path("qc", "mrisbm_clariti_no_edc.csv"), row.names = FALSE)
+  write.csv(file.path(qc_dir, "mrisbm_clariti_no_edc.csv"), row.names = FALSE)
 
 amyloidpetgaain %>% filter(SOURCE == 'CLARiTI' & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, SCANDATE) %>%
-  write.csv(file.path("qc", "amyloidpetgaain_clariti_no_edc.csv"), row.names = FALSE)
+  write.csv(file.path(qc_dir, "amyloidpetgaain_clariti_no_edc.csv"), row.names = FALSE)
 
 taupetnpdka %>% filter(SOURCE == 'CLARiTI' & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, LONIUID, SCANDATE, PROCESSDATE) %>%
-  write.csv(file.path("qc", "taupetnpdka_clariti_no_edc.csv"), row.names = FALSE)
-
-# Remove duplicate and qc reports from data ----
-
-file.remove(
-  list.files(file.path("..", "data"), 
-    pattern = "_duplicates\\.rda$", full.names = TRUE))
-
-file.remove(
-  list.files(file.path("..", "data"), 
-    pattern = "clariti_no_edc\\.rda$", full.names = TRUE))
+  write.csv(file.path(qc_dir, "taupetnpdka_clariti_no_edc.csv"), row.names = FALSE)
 
 # Build ----
 
