@@ -2,7 +2,7 @@
 
 NACCADRC UDS, SCAN Imaging FDG PET dataset. The data is sourced from the
 file(s) investigator_clariti_fdgpetnpdka_naccDEV.csv,
-fdgpetnpdka_duplicates.csv, investigator_scan_fdgpetnpdka_nacc73.csv.
+investigator_scan_fdgpetnpdka_nacc73.csv.
 
 ## Usage
 

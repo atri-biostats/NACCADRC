@@ -34,20 +34,22 @@ Code
 ## Combine hippocampal volume from SCAN and Mixed Protocol (UDS) ----
 mri_hipp <- mrisbm %>%          # SCAN volumes
   select(SOURCE, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV = CEREBRUMTCV) %>%
-  bind_rows(
-    uds_mri %>%                     # Mixed Protocol (UDS) volumes
-      select(NACCID, MRIYR, MRIMO, MRIDY, HIPPOCAMPUS = HIPPOVOL, ICV = NACCICV) %>%
-      filter(HIPPOCAMPUS != 88.8888, ICV != 9999.999, !is.na(HIPPOCAMPUS)) %>%
-      mutate(
-        DATE = as.IDate(paste(MRIYR, MRIMO, MRIDY, sep='-')),
-        SOURCE = 'Mixed protocol')) %>%
+  bind_rows(uds_mri %>%         # Mixed Protocol (UDS) volumes
+    select(NACCID, MRIYR, MRIMO, MRIDY, HIPPOCAMPUS = HIPPOVOL, ICV = NACCICV) %>%
+    filter(HIPPOCAMPUS != 88.8888, ICV != 9999.999, !is.na(HIPPOCAMPUS)) %>%
+    mutate(
+      DATE = as.IDate(paste(MRIYR, MRIMO, MRIDY, sep='-')),
+      SOURCE = 'Mixed protocol')) %>%
   distinct(NACCID, DATE, .keep_all = TRUE)
 
 NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
 
-## Combine hippocampal volume, tau PET, amyloid PET, cognition, and demographics ----
-dd_atn <- mri_hipp %>%                        # Hippocampal volumes
-  select(NACCID, MRI_SOURCE = SOURCE, DATE, HIPPOCAMPUS, ICV) %>%
+## Combine hipp volume, tau PET, amyloid PET, cognition, and demographics ----
+dd_atn <- clariti_edc %>% 
+  select(NACCID) %>% distinct() %>% mutate(`CLARiTI EDC` = 'Yes') %>%
+  left_join(mri_hipp %>%                 # Hippocampal volumes
+      select(NACCID, MRI_SOURCE = SOURCE, DATE, HIPPOCAMPUS, ICV),
+    by = 'NACCID') %>%
   full_join(taupetnpdka %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
@@ -55,7 +57,7 @@ dd_atn <- mri_hipp %>%                        # Hippocampal volumes
         Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
       distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
-  full_join(amyloidpetgaain %>%     # Amyloid PET
+  full_join(amyloidpetgaain %>%          # Amyloid PET
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, AMYLOID_STATUS, CENTILOIDS, 
@@ -64,7 +66,7 @@ dd_atn <- mri_hipp %>%                        # Hippocampal volumes
     by = c('NACCID', 'DATE')) %>%
   full_join(phc_cognition %>%            # Harmonized cognition
       select(NACCID, NACCVNUM, PHC_MEM, PHC_EXF, PHC_LAN) %>%
-      left_join(uds_ftldlbd %>%            # UDS visit dates
+      left_join(uds_ftldlbd %>%          # UDS visit dates
           select(NACCID, NACCVNUM, DATE = VISITDATE),
         by = c('NACCID', 'NACCVNUM')),
     by = c('NACCID', 'DATE'))
@@ -81,13 +83,13 @@ dd <- dd_atn %>%
       filter(!is.na(BIRTHDATE)) %>%
       arrange(NACCID, NACCVNUM) %>%
       select(NACCID, BIRTHDATE, RACE, SEX = NACCSEX, EDUC, HISPANIC = NACCHISP) %>%
-      group_by(NACCID) %>%                   # Carry information back/forward
+      group_by(NACCID) %>%               # Carry information back/forward
       tidyr::fill(.direction = "updown") %>% # to impute missing data
       ungroup() %>%
-      filter(!duplicated(NACCID)),         # One row of demographics per NACCID
+      filter(!duplicated(NACCID)),       # One row of demographics per NACCID
     by = 'NACCID') %>%
   arrange(NACCID, DATE) %>%
-  group_by(NACCID) %>%                 # Carry Dx information forward/back
+  group_by(NACCID) %>%                   # Carry Dx information forward/back
   tidyr::fill(all_of(c("NACCUDSD", "NACCETPR")), .direction = "downup") %>%
   mutate(ICV = mean(ICV, na.rm = TRUE)) %>% # Average ICV over visits
   ungroup() %>%
@@ -102,20 +104,11 @@ dd <- dd_atn %>%
       NACCETPR == "Vascular brain injury or vascular dementia including stroke" ~ "Vascular",
       TRUE ~ 'Other') %>%
       factor(levels = c('Not impaired', 'LBD', "FTLD (any)", 'AD', "Vascular", 'Other')),
-    # add labels for tables
     NACCUDSD = case_when(
       is.na(NACCUDSD) ~ 'Unknown',
       TRUE ~ NACCUDSD) %>%
       factor(levels = c("Normal cognition", "Impaired-not-MCI", 
-        "MCI", "Dementia", 'Unknown')),
-    PHC_MEM = structure(PHC_MEM, label = 'Harmonized Memory'),
-    PHC_MEM = structure(PHC_MEM, label = 'Harmonized Memory'), 
-    PHC_EXF = structure(PHC_EXF, label = 'Harmonized Exec Function'), 
-    PHC_LAN = structure(PHC_LAN, label = 'Harmonized Language'),
-    EDUC = structure(EDUC, label = 'Education (yrs)'),
-    Age = structure(Age, label = 'Age (yrs)'),
-    NACCETPR = structure(NACCETPR, label = 'Primary etiologic diagnosis'),
-    NACCUDSD = structure(NACCUDSD, label = 'Cognitive status at UDS visit'))
+        "MCI", "Dementia", 'Unknown')))
 
 CLARiTI_id <- dd %>%
   filter(MRI_SOURCE == 'CLARiTI' | Tau_SOURCE == 'CLARiTI' | Amyloid_SOURCE == 'CLARiTI') %>%
@@ -140,11 +133,18 @@ dd_cross <- dd %>%
       NACCID %in% SCAN_id ~ 'SCAN',
       TRUE ~ 'Mixed protocol'),
     PHC_MEM = structure(PHC_MEM, label = 'Harmonized Memory'),
-    PHC_MEM = structure(PHC_MEM, label = 'Harmonized Memory'), 
     PHC_EXF = structure(PHC_EXF, label = 'Harmonized Exec Function'), 
     PHC_LAN = structure(PHC_LAN, label = 'Harmonized Language'),
     EDUC = structure(EDUC, label = 'Education (yrs)'),
     Age = structure(Age, label = 'Age (yrs)'),
+    SEX = structure(SEX, label = 'Sex'),
+    RACE = structure(RACE, label = 'Race'),
+    HISPANIC = structure(HISPANIC, label = 'Hispanic'),
+    AMYLOID_STATUS = structure(AMYLOID_STATUS, label = 'Amyloid status'),
+    CENTILOIDS = structure(CENTILOIDS, label = 'Amyloid (CL)'),
+    HIPPOCAMPUS = structure(HIPPOCAMPUS, label = 'Hippocampal volume (mm3)'),
+    Tau_PET = structure(Tau_PET, label = 'Tau PET (SUVR)'),
+    Tau_TRACER = structure(Tau_TRACER, label = 'Tau PET tracer'),
     NACCETPR = structure(NACCETPR, label = 'Primary etiologic diagnosis'),
     NACCUDSD = structure(NACCUDSD, label = 'Cognitive status at UDS visit'))
 
@@ -284,11 +284,12 @@ Code
 
 dd_upset <- dd_cross %>%
   mutate(
+    `CLARiTI EDC` = case_when(`CLARiTI EDC` == 'Yes' ~ 1, TRUE ~ 0),
     Diagnosis = case_when(!is.na(NACCUDSD) &  NACCUDSD != "Unknown" ~ 1, TRUE ~ 0),
     MRI = case_when(!is.na(HIPPOCAMPUS) ~ 1, TRUE ~ 0),
     `Amyloid PET` = case_when(!is.na(CENTILOIDS) ~ 1, TRUE ~ 0),
     `Tau PET` = case_when(!is.na(Tau_PET) ~ 1, TRUE ~ 0)) %>%
-  select(NACCID, Cohort, Diagnosis:`Tau PET`) %>%
+  select(NACCID, Cohort, `CLARiTI EDC`, Diagnosis:`Tau PET`) %>%
   as.data.frame()
 
 upset(subset(dd_upset, Cohort == 'CLARiTI'), nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
@@ -405,7 +406,7 @@ tbl_summary(
   data = dd_cross %>% filter(Cohort == 'CLARiTI') %>%
     mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
-  include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
+  include = c("CLARiTI EDC", "Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
   type = all_continuous() ~ "continuous2",
   statistic = list(
     all_continuous() ~ c(
@@ -416,14 +417,13 @@ tbl_summary(
   digits = all_continuous() ~ 1,
   percent = "row",
   missing_text = "(Missing)") %>%
+  add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  # add_overall() %>%
   modify_caption(caption = "Characteristics of CLARiTI participants by baseline UDS diagnosis. Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
     replace = TRUE) %>%
-  # modify_abbreviation(abbreviation = abbrev_list) %>%
   bold_labels()
 ```
 
@@ -443,28 +443,23 @@ tbl_summary(
   data = dd_cross %>%
     mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
-  include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
+  include = c("Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
   type = all_continuous() ~ "continuous2",
-  statistic = list(
-    all_continuous() ~ c(
-      "{mean} ({sd})",
-      "{median} ({p25}, {p75})",
-      "{min}, {max}"
-    ),
-    all_categorical() ~ "{n} ({p}%)"
-  ),
+  statistic = list(all_continuous() ~ c(
+    "{mean} ({sd})",
+    "{median} ({p25}, {p75})",
+    "{min}, {max}"),
+    all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
   percent = "row",
-  missing_text = "(Missing)"
-) %>%
+  missing_text = "(Missing)") %>%
+  add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of all participants by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
-    replace = TRUE
-  ) %>%
-  # modify_abbreviation(abbreviation = abbrev_list) %>%
+    replace = TRUE) %>%
   bold_labels()
 ```
 
@@ -482,28 +477,25 @@ tbl_summary(
   data = dd_cross %>% filter(!is.na(HIPPOCAMPUS)) %>%
     mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
-  include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
+  include = c("Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
   type = all_continuous() ~ "continuous2",
-  statistic = list(
-    all_continuous() ~ c(
-      "{mean} ({sd})",
-      "{median} ({p25}, {p75})",
-      "{min}, {max}"
-    ),
-    all_categorical() ~ "{n} ({p}%)"
+  statistic = list(all_continuous() ~ c(
+    "{mean} ({sd})",
+    "{median} ({p25}, {p75})",
+    "{min}, {max}"
   ),
+    all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
   percent = "row",
-  missing_text = "(Missing)"
-) %>%
-  add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
+  missing_text = "(Missing)") %>%
+  add_overall(last = TRUE) %>%
+  add_stat_label(label = all_continuous2() ~ c("Mean (SD)", 
+    "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of all participants with MRI data by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
-    replace = TRUE
-  ) %>%
-  # modify_abbreviation(abbreviation = abbrev_list) %>%
+    replace = TRUE) %>%
   bold_labels()
 ```
 
@@ -522,28 +514,23 @@ tbl_summary(
   data = dd_cross %>% filter(!is.na(Tau_PET)) %>%
     mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
-  include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
+  include = c("Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
   type = all_continuous() ~ "continuous2",
-  statistic = list(
-    all_continuous() ~ c(
-      "{mean} ({sd})",
-      "{median} ({p25}, {p75})",
-      "{min}, {max}"
-    ),
-    all_categorical() ~ "{n} ({p}%)"
-  ),
+  statistic = list(all_continuous() ~ c(
+    "{mean} ({sd})",
+    "{median} ({p25}, {p75})",
+    "{min}, {max}"),
+    all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
   percent = "row",
-  missing_text = "(Missing)"
-) %>%
+  missing_text = "(Missing)") %>%
+  add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of all participants with tau PET data by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
-    replace = TRUE
-  ) %>%
-  # modify_abbreviation(abbreviation = abbrev_list) %>%
+    replace = TRUE) %>%
   bold_labels()
 ```
 
@@ -562,28 +549,24 @@ tbl_summary(
   data = dd_cross %>% filter(!is.na(CENTILOIDS)) %>%
     mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
-  include = c("Etiology", "SEX", "Age", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN", "EDUC"),
+  include = c("Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
   type = all_continuous() ~ "continuous2",
-  statistic = list(
-    all_continuous() ~ c(
-      "{mean} ({sd})",
-      "{median} ({p25}, {p75})",
-      "{min}, {max}"
-    ),
-    all_categorical() ~ "{n} ({p}%)"
+  statistic = list(all_continuous() ~ c(
+    "{mean} ({sd})",
+    "{median} ({p25}, {p75})",
+    "{min}, {max}"
   ),
+    all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
   percent = "row",
-  missing_text = "(Missing)"
-) %>%
+  missing_text = "(Missing)") %>%
+  add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of NACC ADRC participants with amyloid PET data by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
-    replace = TRUE
-  ) %>%
-  # modify_abbreviation(abbreviation = abbrev_list) %>%
+    replace = TRUE) %>%
   bold_labels()
 ```
 

@@ -1,8 +1,8 @@
 # mrisbm
 
 NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the
-file(s) investigator_clariti_mrisbm_naccDEV.csv, mrisbm_duplicates.csv,
-investigator_scan_mrisbm_nacc73.csv, mrisbm_clariti_no_edc.csv.
+file(s) investigator_clariti_mrisbm_naccDEV.csv,
+investigator_scan_mrisbm_nacc73.csv.
 
 ## Usage
 

@@ -1,7 +1,7 @@
 # mriqc
 
 NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the
-file(s) investigator_clariti_mriqc_naccDEV.csv, mriqc_duplicates.csv,
+file(s) investigator_clariti_mriqc_naccDEV.csv,
 investigator_scan_mriqc_nacc73.csv.
 
 ## Usage

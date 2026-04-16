@@ -1,7 +1,7 @@
 # petqc
 
 NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the
-file(s) investigator_clariti_petqc_naccDEV.csv, petqc_duplicates.csv,
+file(s) investigator_clariti_petqc_naccDEV.csv,
 investigator_scan_petqc_nacc73.csv.
 
 ## Usage

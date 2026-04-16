@@ -2,10 +2,8 @@
 
 NACCADRC UDS, SCAN Imaging Amyloid PET dataset. The data is sourced from
 the file(s) investigator_clariti_amyloidpetgaain_naccDEV.csv,
-amyloidpetgaain_duplicates.csv,
 investigator_scan_amyloidpetgaain_nacc73.csv,
-investigator_scan_mp_amyloidpetgaain_nacc73.csv,
-amyloidpetgaain_clariti_no_edc.csv.
+investigator_scan_mp_amyloidpetgaain_nacc73.csv.
 
 ## Usage
 

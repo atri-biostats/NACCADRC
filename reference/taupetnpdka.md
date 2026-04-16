@@ -2,9 +2,8 @@
 
 NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the
 file(s) investigator_clariti_taupetnpdka_naccDEV.csv,
-taupetnpdka_duplicates.csv, investigator_scan_mp_taupetnpdka_nacc73.csv,
-investigator_scan_taupetnpdka_nacc73.csv,
-taupetnpdka_clariti_no_edc.csv.
+investigator_scan_mp_taupetnpdka_nacc73.csv,
+investigator_scan_taupetnpdka_nacc73.csv.
 
 ## Usage
 
