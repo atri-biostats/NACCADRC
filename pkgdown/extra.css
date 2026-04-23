@@ -1,0 +1,8 @@
+/* Target the logo specifically within the page-header */
+.page-header .logo {
+  height: 100px !important;    /* Adjust this to your desired size */
+  width: auto !important;      /* Maintain aspect ratio */
+  max-height: none !important; /* Overwrite any default constraints */
+  margin-bottom: 1rem;         /* Add space below if it's too cramped */
+  display: block;              /* Helps with sizing control */
+}
