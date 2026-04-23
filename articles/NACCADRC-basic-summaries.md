@@ -292,6 +292,26 @@ dd_upset <- dd_cross %>%
   select(NACCID, Cohort, `CLARiTI EDC`, Diagnosis:`Tau PET`) %>%
   as.data.frame()
 
+# Output list CLARiTI participants with missing data for QC ----
+if(FALSE){
+  qc_dir <- file.path('..', 'reports', 'qc')
+  dir.create(qc_dir, recursive = TRUE)
+  dd_upset %>% 
+    rowwise() %>%
+    filter(`CLARiTI EDC` == 1, sum(c_across(MRI:`Tau PET`)) == 0) %>%
+    write.csv(file.path(qc_dir, "clariti_edc_no_imaging_participants.csv"), row.names = FALSE)
+  
+  dd_upset %>% 
+    rowwise() %>%
+    filter(`CLARiTI EDC` == 1, sum(c_across(Diagnosis:`Tau PET`)) == 0) %>%
+    write.csv(file.path(qc_dir, "clariti_edc_only_participants.csv"), row.names = FALSE)
+  
+  dd_upset %>% 
+    filter(Cohort == 'CLARiTI') %>%
+    write.csv(file.path(qc_dir, "clariti_participants.csv"), row.names = FALSE)
+}
+
+# UpSet plot of CLARiTI participants ----
 upset(subset(dd_upset, Cohort == 'CLARiTI'), nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
   order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
 ```
