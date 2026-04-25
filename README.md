@@ -3,7 +3,7 @@
 
 <!-- R package version convention: first two digits are for code; last digit is data release number  -->
 
-# NACCADRC <a href="https://naccdata.org/data-collection/forms-documentation/uds-3"><img src="man/figures/logo.png" align="right" height="138" /></a>
+# NACCADRC <a href="https://www.naccdata.org/collect-and-submit-nacc-data/forms/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 `NACCADRC` is an R data package (R Core Team 2025; Donohue et al. 2026)
 containing data and R code for the **National Alzheimer’s Coordinating
@@ -28,8 +28,8 @@ page
 ### Notes about NACC data:
 
 Please refer to the [NACC Researcher’s
-Guide](https://www.naccdata.org/nacc-navigator/researchers-guide) to
-learn about how the data are structured.
+Guide](https://www.naccdata.org/the-nacc-researchers-guide/) to learn
+about how the data are structured.
 
 ### Data dictionaries and other documentation:
 
@@ -50,8 +50,8 @@ any changes to variables across versions.
     you need to access these documents, the password is: `nacc8down`
   - Calculations for several derived variables have been revised. See
     the [Data Freeze (README)
-    document](https://www.naccdata.org/nacc-navigator/data-freeze-readme)
-    for more information.
+    document](https://www.naccdata.org/the-nacc-researchers-guide/) for
+    more information.
 - **[Researchers Data Dictionary - Genetics (includes
   APOE)](https://www.naccdata.org/collect-and-submit-nacc-data/forms/biomarker-and-imaging-data-set#rdd-gen)**
   \* **[Researchers Data Dictionary - Neuropathology Data
@@ -82,8 +82,8 @@ any changes to variables across versions.
   RDD-UDS, RDD-Neuropathology and RDD-Genetics variables and coding,
   linked in the respective sections under [“Download Your Data Set:
   About Data
-  Downloads”](https://www.naccdata.org/nacc-navigator/researchers-guide#data-downloads)
-  in the Researcher’s Guide.
+  Downloads”](https://www.naccdata.org/the-nacc-researchers-guide/) in
+  the Researcher’s Guide.
 - For additional documentation on each data type, please refer to the
   [Forms and Documentation
   section](https://www.naccdata.org/collect-and-submit-nacc-data/forms)
@@ -93,11 +93,10 @@ any changes to variables across versions.
 
 - Submit ANY abstracts and publications using these data to NACC via the
   [Publish with NACC
-  Data](https://www.naccdata.org/research-resources/publish-with-nacc-data)
-  page and review the [Checklist for
-  Authors](https://www.naccdata.org/research-resources/checklist-for-authors).
-  If you use the `NACCADRC` R data package, please also cite (Donohue et
-  al. 2026).
+  Data](https://www.naccdata.org/publish-with-nacc-data/) page and
+  review the [Checklist for
+  Authors](https://www.naccdata.org/publish-with-nacc-data/). If you use
+  the `NACCADRC` R data package, please also cite (Donohue et al. 2026).
 - The data in the `NACCADRC` R data package is non-commercial data. If
   your project goals shift to commercial goals, notify
   `consnacc@uw.edu`.
@@ -106,10 +105,9 @@ any changes to variables across versions.
 
 Work on this `R` package was funded by CLARiTI (NIH U01 AG082350). The
 NACC database is funded by NIA/NIH Grant U24 AG072122. SCAN was funded
-by NIA/NIH U24 AG067418. For funding of clinical sites, see [NACC data
-use agreement](https://www.naccdata.org/requesting-data/dua), also
-copied
-[here](%22../articles/NACCADRC-Publishing-with-NACCADRC-Data.html%22).
+by NIA/NIH U24 AG067418. See
+[naccdata.org](https://www.naccdata.org/publish-with-nacc-data) for more
+information.
 
 ## References
 
