@@ -2,12 +2,10 @@
 
 ## Publishing with NACC Data
 
-Authors must comply with the [NACC data use
-agreement](https://www.naccdata.org/requesting-data/dua). See the
-[author
-checklist](https://www.naccdata.org/about-nacc-data/publish-with-nacc-data/)
-for more information. If you use the `NACCADRC` R data package, please
-also cite ([Donohue et al. 2026](#ref-donohue2026alzheimer)).
+See the \[author
+checklist\]https://www.naccdata.org/publish-with-nacc-data) for more
+information. If you use the `NACCADRC` R data package, please also cite
+([Donohue et al. 2026](#ref-donohue2026alzheimer)).
 
 ## Funding
 

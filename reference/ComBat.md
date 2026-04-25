@@ -58,11 +58,6 @@ PMCID: PMC7605103.
 ``` r
 library(tidyverse)
 library(nlme)
-#> 
-#> Attaching package: ‘nlme’
-#> The following object is masked from ‘package:dplyr’:
-#> 
-#>     collapse
 set.seed(20250312)
 dd <- tibble(
   id = 1:100,
@@ -103,36 +98,36 @@ summary(lme(Y ~ scanner + scale_age,
   weights = varIdent(form = ~ 1 | scanner)))
 #> Linear mixed-effects model fit by REML
 #>   Data: dd 
-#>        AIC      BIC    logLik
-#>   3966.315 3995.865 -1975.158
+#>    AIC  BIC logLik
+#>   3966 3996  -1975
 #> 
 #> Random effects:
 #>  Formula: ~scale_age | id
 #>  Structure: General positive-definite, Log-Cholesky parametrization
-#>             StdDev    Corr  
-#> (Intercept) 331.92948 (Intr)
-#> scale_age   122.46724 0.045 
-#> Residual     50.73969       
+#>             StdDev Corr  
+#> (Intercept) 332    (Intr)
+#> scale_age   122    0.045 
+#> Residual     51          
 #> 
 #> Variance function:
 #>  Structure: Different standard deviations per stratum
 #>  Formula: ~1 | scanner 
 #>  Parameter estimates:
-#>        1        2 
-#> 1.000000 1.333929 
+#>   1   2 
+#> 1.0 1.3 
 #> Fixed effects:  Y ~ scanner + scale_age 
-#>                 Value Std.Error  DF  t-value p-value
-#> (Intercept)   29.1463  47.10299 199  0.61878  0.5368
-#> scanner2    3021.4973  66.68379  98 45.31082  0.0000
-#> scale_age      0.9544  12.95072 199  0.07369  0.9413
+#>             Value Std.Error  DF t-value p-value
+#> (Intercept)    29        47 199       1    0.54
+#> scanner2     3021        67  98      45    0.00
+#> scale_age       1        13 199       0    0.94
 #>  Correlation: 
 #>           (Intr) scnnr2
 #> scanner2  -0.706       
 #> scale_age  0.031 -0.001
 #> 
 #> Standardized Within-Group Residuals:
-#>        Min         Q1        Med         Q3        Max 
-#> -2.7199229 -0.3555095 -0.0468977  0.4128098  2.3620201 
+#>    Min     Q1    Med     Q3    Max 
+#> -2.720 -0.356 -0.047  0.413  2.362 
 #> 
 #> Number of Observations: 300
 #> Number of Groups: 100 
@@ -144,36 +139,36 @@ summary(lme(Y_combat ~ scanner + scale_age,
   weights = varIdent(form = ~ 1 | scanner)))
 #> Linear mixed-effects model fit by REML
 #>   Data: dd 
-#>        AIC      BIC    logLik
-#>   3933.827 3963.377 -1958.914
+#>    AIC  BIC logLik
+#>   3934 3963  -1959
 #> 
 #> Random effects:
 #>  Formula: ~scale_age | id
 #>  Structure: General positive-definite, Log-Cholesky parametrization
-#>             StdDev   Corr  
-#> (Intercept) 331.8318 (Intr)
-#> scale_age   122.1826 0.044 
-#> Residual     50.7494       
+#>             StdDev Corr  
+#> (Intercept) 332    (Intr)
+#> scale_age   122    0.044 
+#> Residual     51          
 #> 
 #> Variance function:
 #>  Structure: Different standard deviations per stratum
 #>  Formula: ~1 | scanner 
 #>  Parameter estimates:
-#>        1        2 
-#> 1.000000 1.000096 
+#> 1 2 
+#> 1 1 
 #> Fixed effects:  Y_combat ~ scanner + scale_age 
-#>                 Value Std.Error  DF   t-value p-value
-#> (Intercept) 29.105210  47.09027 199 0.6180727  0.5372
-#> scanner2     0.082099  66.56684  98 0.0012333  0.9990
-#> scale_age    1.160779  12.73439 199 0.0911531  0.9275
+#>             Value Std.Error  DF t-value p-value
+#> (Intercept)  29.1        47 199    0.62    0.54
+#> scanner2      0.1        67  98    0.00    1.00
+#> scale_age     1.2        13 199    0.09    0.93
 #>  Correlation: 
 #>           (Intr) scnnr2
 #> scanner2  -0.707       
 #> scale_age  0.029  0.000
 #> 
 #> Standardized Within-Group Residuals:
-#>         Min          Q1         Med          Q3         Max 
-#> -2.72025953 -0.34988959 -0.03585101  0.41182586  2.36152803 
+#>    Min     Q1    Med     Q3    Max 
+#> -2.720 -0.350 -0.036  0.412  2.362 
 #> 
 #> Number of Observations: 300
 #> Number of Groups: 100 

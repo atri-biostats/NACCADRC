@@ -105,11 +105,6 @@ Epub 2020 Jul 5. PMID: 32640273; PMCID: PMC7605103.</p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://svn.r-project.org/R-packages/trunk/nlme/" class="external-link">nlme</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘nlme’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:dplyr’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     collapse</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">20250312</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">dd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,</span></span>
@@ -150,36 +145,36 @@ Epub 2020 Jul 5. PMID: 32640273; PMCID: PMC7605103.</p>
 <span class="r-in"><span>  weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/varIdent.html" class="external-link">varIdent</a></span><span class="op">(</span>form <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">scanner</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear mixed-effects model fit by REML</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Data: dd </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        AIC      BIC    logLik</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3966.315 3995.865 -1975.158</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    AIC  BIC logLik</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3966 3996  -1975</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula: ~scale_age | id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Structure: General positive-definite, Log-Cholesky parametrization</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             StdDev    Corr  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 331.92948 (Intr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age   122.46724 0.045 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual     50.73969       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             StdDev Corr  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 332    (Intr)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age   122    0.045 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual     51          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variance function:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Structure: Different standard deviations per stratum</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula: ~1 | scanner </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Parameter estimates:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1        2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.000000 1.333929 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   1   2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1.0 1.3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects:  Y ~ scanner + scale_age </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 Value Std.Error  DF  t-value p-value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)   29.1463  47.10299 199  0.61878  0.5368</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> scanner2    3021.4973  66.68379  98 45.31082  0.0000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age      0.9544  12.95072 199  0.07369  0.9413</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Value Std.Error  DF t-value p-value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    29        47 199       1    0.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> scanner2     3021        67  98      45    0.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age       1        13 199       0    0.94</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Correlation: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           (Intr) scnnr2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scanner2  -0.706       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scale_age  0.031 -0.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Standardized Within-Group Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Min         Q1        Med         Q3        Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -2.7199229 -0.3555095 -0.0468977  0.4128098  2.3620201 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Min     Q1    Med     Q3    Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -2.720 -0.356 -0.047  0.413  2.362 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Observations: 300</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Groups: 100 </span>
@@ -191,36 +186,36 @@ Epub 2020 Jul 5. PMID: 32640273; PMCID: PMC7605103.</p>
 <span class="r-in"><span>  weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/nlme/man/varIdent.html" class="external-link">varIdent</a></span><span class="op">(</span>form <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">|</span> <span class="va">scanner</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Linear mixed-effects model fit by REML</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Data: dd </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        AIC      BIC    logLik</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3933.827 3963.377 -1958.914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    AIC  BIC logLik</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   3934 3963  -1959</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Random effects:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula: ~scale_age | id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Structure: General positive-definite, Log-Cholesky parametrization</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>             StdDev   Corr  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 331.8318 (Intr)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age   122.1826 0.044 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Residual     50.7494       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             StdDev Corr  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 332    (Intr)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age   122    0.044 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual     51          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Variance function:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Structure: Different standard deviations per stratum</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Formula: ~1 | scanner </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Parameter estimates:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        1        2 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1.000000 1.000096 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects:  Y_combat ~ scanner + scale_age </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                 Value Std.Error  DF   t-value p-value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept) 29.105210  47.09027 199 0.6180727  0.5372</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> scanner2     0.082099  66.56684  98 0.0012333  0.9990</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age    1.160779  12.73439 199 0.0911531  0.9275</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Value Std.Error  DF t-value p-value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  29.1        47 199    0.62    0.54</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> scanner2      0.1        67  98    0.00    1.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> scale_age     1.2        13 199    0.09    0.93</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Correlation: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           (Intr) scnnr2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scanner2  -0.707       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> scale_age  0.029  0.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Standardized Within-Group Residuals:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         Min          Q1         Med          Q3         Max </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -2.72025953 -0.34988959 -0.03585101  0.41182586  2.36152803 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Min     Q1    Med     Q3    Max </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -2.720 -0.350 -0.036  0.412  2.362 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Observations: 300</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Groups: 100 </span>
