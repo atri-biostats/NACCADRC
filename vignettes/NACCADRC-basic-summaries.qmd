@@ -24,6 +24,7 @@ library(data.table)
 library(gtsummary)
 library(UpSetR)
 library(patchwork)
+library(sva)
 
 data(mrisbm, taupetnpdka, phc_cognition, amyloidpetgaain, 
 uds_ftldlbd, clariti_edc, uds_mri)
@@ -86,14 +87,14 @@ NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
 ## Combine hipp volume, tau PET, amyloid PET, cognition, and demographics ----
 dd_atn <- clariti_edc %>% 
   select(NACCID) %>% distinct() %>% mutate(`CLARiTI EDC` = 'Yes') %>%
-  left_join(mri_hipp %>%                 # Hippocampal volumes
+  full_join(mri_hipp %>%                 # Hippocampal volumes
       select(NACCID, MRI_SOURCE = SOURCE, DATE, HIPPOCAMPUS, ICV),
     by = 'NACCID') %>%
   full_join(taupetnpdka %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, Tau_PET = META_TEMPORAL_SUVR, 
-        Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
+        CTX_ENTORHINAL_SUVR, Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
       distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
   full_join(amyloidpetgaain %>%          # Amyloid PET
@@ -105,17 +106,22 @@ dd_atn <- clariti_edc %>%
     by = c('NACCID', 'DATE')) %>%
   full_join(phc_cognition %>%            # Harmonized cognition
       select(NACCID, NACCVNUM, PHC_MEM, PHC_EXF, PHC_LAN) %>%
+      distinct(NACCID, NACCVNUM, .keep_all = TRUE) %>%
       left_join(uds_ftldlbd %>%          # UDS visit dates
           select(NACCID, NACCVNUM, DATE = VISITDATE),
-        by = c('NACCID', 'NACCVNUM')),
-    by = c('NACCID', 'DATE'))
+        by = c('NACCID', 'NACCVNUM')) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
+    by = c('NACCID', 'DATE')) 
+
+stopifnot(with(dd_atn, !any(duplicated(paste(NACCID, DATE)))))
 
 dd <- dd_atn %>%
   full_join(uds_ftldlbd %>%              # UDS diagnosis, etiology over time
       filter(NACCID %in% c(dd_atn$NACCID, clariti_edc$NACCID)) %>%
       mutate(
         NACCETPR = factor(NACCETPR, levels = NACCETPR_levels)) %>%
-      select(NACCID, DATE = VISITDATE, NACCUDSD, NACCETPR, PARK),
+      select(NACCID, DATE = VISITDATE, NACCUDSD, NACCETPR, PARK) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
   left_join(uds_ftldlbd %>%              # UDS demographics
       mutate(BIRTHDATE = as.IDate(paste(BIRTHYR, BIRTHMO, 15, sep = '-'))) %>%
@@ -149,6 +155,8 @@ dd <- dd_atn %>%
       factor(levels = c("Normal cognition", "Impaired-not-MCI", 
         "MCI", "Dementia", 'Unknown')))
 
+stopifnot(with(dd, !any(duplicated(paste(NACCID, DATE)))))
+
 CLARiTI_id <- dd %>%
   filter(MRI_SOURCE == 'CLARiTI' | Tau_SOURCE == 'CLARiTI' | Amyloid_SOURCE == 'CLARiTI') %>%
   pull(NACCID) %>% unique()
@@ -162,12 +170,10 @@ Mixed_id <- setdiff(dd$NACCID, c(CLARiTI_id, SCAN_id))
 
 # harmonize tau PET data ----
 tmp <- dd %>% filter(!is.na(Tau_PET) & !is.na(Age))
-tau_PET_fit <- lme(Tau_PET ~ Tau_TRACER + SEX + Age, data = tmp,
-  random = ~ 1 | NACCID,
-  weights = varIdent(form = ~ 1 | Tau_TRACER))
-tmp$Tau_PET_ComBat <- ComBat(Tau_PET ~ Tau_TRACER + SEX + Age, data = tmp,
-  random1 = ~ 1 | NACCID, random2 = NULL,
-  weights = varIdent(form = ~ 1 | Tau_TRACER))
+tmp$Tau_PET_ComBat <- sva::ComBat(
+  dat=t(tmp[, c('Tau_PET', 'CTX_ENTORHINAL_SUVR')]), 
+  batch=tmp$Tau_TRACER, 
+  mod=model.matrix(~-1 + Age, tmp), par.prior=TRUE, prior.plots=FALSE)[1,]
 
 dd <- dd %>%
   left_join(tmp %>% select(NACCID, DATE, Tau_PET_ComBat), 
@@ -815,7 +821,6 @@ ggplot(pd, aes(x=Years, y=value)) +
 #| code-fold: true
 #| fig-cap: "ComBat transformed versus raw Tau PET data by tracer."
 
-summary(tau_PET_fit)
 ggplot(dd %>% filter(!is.na(Tau_PET_ComBat)), 
   aes(x = Tau_PET, y = Tau_PET_ComBat, color = Tau_TRACER)) +
   geom_point() +

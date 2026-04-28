@@ -15,7 +15,6 @@ LazyData: false
 LazyDataCompression: none
 RoxygenNote: 7.3.3
 Collate:
-    'ComBat.R'
     'data.R'
     'NACCADRC-package.R'
 Suggests: 
@@ -27,7 +26,8 @@ Suggests:
     ggplot2,
     ggsci,
     tidyr,
-    dplyr
+    dplyr,
+    sva
 VignetteBuilder: knitr, quarto
 Depends: 
     R (>= 3.5.0)
