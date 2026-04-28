@@ -195,9 +195,6 @@ Consortium (ADSP-PHC)
 
 ## Functions
 
-- [`ComBat()`](https://atri-biostats.github.io/NACCADRC/reference/ComBat.md)
-  : ComBat Harmonization of Location and Scale
-
 # Articles
 
 ### All vignettes

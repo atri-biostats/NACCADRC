@@ -12,6 +12,7 @@ library(data.table)
 library(gtsummary)
 library(UpSetR)
 library(patchwork)
+library(sva)
 
 data(mrisbm, taupetnpdka, phc_cognition, amyloidpetgaain, 
 uds_ftldlbd, clariti_edc, uds_mri)
@@ -55,14 +56,14 @@ NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
 ## Combine hipp volume, tau PET, amyloid PET, cognition, and demographics ----
 dd_atn <- clariti_edc %>% 
   select(NACCID) %>% distinct() %>% mutate(`CLARiTI EDC` = 'Yes') %>%
-  left_join(mri_hipp %>%                 # Hippocampal volumes
+  full_join(mri_hipp %>%                 # Hippocampal volumes
       select(NACCID, MRI_SOURCE = SOURCE, DATE, HIPPOCAMPUS, ICV),
     by = 'NACCID') %>%
   full_join(taupetnpdka %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, Tau_PET = META_TEMPORAL_SUVR, 
-        Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
+        CTX_ENTORHINAL_SUVR, Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
       distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
   full_join(amyloidpetgaain %>%          # Amyloid PET
@@ -74,17 +75,22 @@ dd_atn <- clariti_edc %>%
     by = c('NACCID', 'DATE')) %>%
   full_join(phc_cognition %>%            # Harmonized cognition
       select(NACCID, NACCVNUM, PHC_MEM, PHC_EXF, PHC_LAN) %>%
+      distinct(NACCID, NACCVNUM, .keep_all = TRUE) %>%
       left_join(uds_ftldlbd %>%          # UDS visit dates
           select(NACCID, NACCVNUM, DATE = VISITDATE),
-        by = c('NACCID', 'NACCVNUM')),
-    by = c('NACCID', 'DATE'))
+        by = c('NACCID', 'NACCVNUM')) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
+    by = c('NACCID', 'DATE')) 
+
+stopifnot(with(dd_atn, !any(duplicated(paste(NACCID, DATE)))))
 
 dd <- dd_atn %>%
   full_join(uds_ftldlbd %>%              # UDS diagnosis, etiology over time
       filter(NACCID %in% c(dd_atn$NACCID, clariti_edc$NACCID)) %>%
       mutate(
         NACCETPR = factor(NACCETPR, levels = NACCETPR_levels)) %>%
-      select(NACCID, DATE = VISITDATE, NACCUDSD, NACCETPR, PARK),
+      select(NACCID, DATE = VISITDATE, NACCUDSD, NACCETPR, PARK) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
   left_join(uds_ftldlbd %>%              # UDS demographics
       mutate(BIRTHDATE = as.IDate(paste(BIRTHYR, BIRTHMO, 15, sep = '-'))) %>%
@@ -118,6 +124,8 @@ dd <- dd_atn %>%
       factor(levels = c("Normal cognition", "Impaired-not-MCI", 
         "MCI", "Dementia", 'Unknown')))
 
+stopifnot(with(dd, !any(duplicated(paste(NACCID, DATE)))))
+
 CLARiTI_id <- dd %>%
   filter(MRI_SOURCE == 'CLARiTI' | Tau_SOURCE == 'CLARiTI' | Amyloid_SOURCE == 'CLARiTI') %>%
   pull(NACCID) %>% unique()
@@ -131,12 +139,10 @@ Mixed_id <- setdiff(dd$NACCID, c(CLARiTI_id, SCAN_id))
 
 # harmonize tau PET data ----
 tmp <- dd %>% filter(!is.na(Tau_PET) & !is.na(Age))
-tau_PET_fit <- lme(Tau_PET ~ Tau_TRACER + SEX + Age, data = tmp,
-  random = ~ 1 | NACCID,
-  weights = varIdent(form = ~ 1 | Tau_TRACER))
-tmp$Tau_PET_ComBat <- ComBat(Tau_PET ~ Tau_TRACER + SEX + Age, data = tmp,
-  random1 = ~ 1 | NACCID, random2 = NULL,
-  weights = varIdent(form = ~ 1 | Tau_TRACER))
+tmp$Tau_PET_ComBat <- sva::ComBat(
+  dat=t(tmp[, c('Tau_PET', 'CTX_ENTORHINAL_SUVR')]), 
+  batch=tmp$Tau_TRACER, 
+  mod=model.matrix(~-1 + Age, tmp), par.prior=TRUE, prior.plots=FALSE)[1,]
 
 dd <- dd %>%
   left_join(tmp %>% select(NACCID, DATE, Tau_PET_ComBat), 
@@ -419,11 +425,11 @@ with(tmp, table(Type, `Serial scans`)) %>%
   knitr::kable(caption = "Number of individuals who have received the given number serial scans for each scan type.")
 ```
 
-|                |    1 |   2 |   3 |   4 |   5 |   6 |   9 |
-|:---------------|-----:|----:|----:|----:|----:|----:|----:|
-| Amyloid PET    | 3665 | 494 |  40 |   7 |   0 |   0 |   0 |
-| Tau PET        | 2107 | 293 |  27 |   2 |   0 |   0 |   0 |
-| Volumetric MRI |  178 |  66 |  21 |   6 |   4 |   3 |   1 |
+|                |    1 |    2 |   3 |   4 |   5 |   6 |   7 |   9 |
+|:---------------|-----:|-----:|----:|----:|----:|----:|----:|----:|
+| Amyloid PET    | 3665 |  494 |  40 |   7 |   0 |   0 |   0 |   0 |
+| Tau PET        | 2107 |  293 |  27 |   2 |   0 |   0 |   0 |   0 |
+| Volumetric MRI | 5175 | 1310 | 470 | 122 |  27 |  18 |   3 |   1 |
 
 Table 1: Number of individuals who have received the given number serial
 scans for each scan type.
@@ -892,41 +898,6 @@ Code
 
 ``` r
 
-summary(tau_PET_fit)
-#> Linear mixed-effects model fit by REML
-#>   Data: tmp 
-#>    AIC  BIC logLik
-#>   2214 2256  -1100
-#> 
-#> Random effects:
-#>  Formula: ~1 | NACCID
-#>         (Intercept) Residual
-#> StdDev:        0.37     0.23
-#> 
-#> Variance function:
-#>  Structure: Different standard deviations per stratum
-#>  Formula: ~1 | Tau_TRACER 
-#>  Parameter estimates:
-#>       MK6240 Flortaucipir 
-#>         1.00         0.37 
-#> Fixed effects:  Tau_PET ~ Tau_TRACER + SEX + Age 
-#>                  Value Std.Error   DF t-value p-value
-#> (Intercept)       1.42     0.062 2427    23.0    0.00
-#> Tau_TRACERMK6240 -0.13     0.019  351    -7.0    0.00
-#> SEXFemale         0.00     0.016 2427     0.1    0.89
-#> Age               0.00     0.001  351    -0.3    0.77
-#>  Correlation: 
-#>                  (Intr) T_TRAC SEXFml
-#> Tau_TRACERMK6240 -0.101              
-#> SEXFemale        -0.154 -0.069       
-#> Age              -0.978  0.047  0.006
-#> 
-#> Standardized Within-Group Residuals:
-#>    Min     Q1    Med     Q3    Max 
-#> -3.224 -0.153 -0.087  0.026  7.015 
-#> 
-#> Number of Observations: 2782
-#> Number of Groups: 2429
 ggplot(dd %>% filter(!is.na(Tau_PET_ComBat)), 
   aes(x = Tau_PET, y = Tau_PET_ComBat, color = Tau_TRACER)) +
   geom_point() +

@@ -73,6 +73,3 @@ Consortium (ADSP-PHC)
   : phc_vascularrisk
 
 ## Functions
-
-- [`ComBat()`](https://atri-biostats.github.io/NACCADRC/reference/ComBat.md)
-  : ComBat Harmonization of Location and Scale
