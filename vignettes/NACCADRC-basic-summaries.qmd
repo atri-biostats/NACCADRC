@@ -94,7 +94,7 @@ dd_atn <- clariti_edc %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, Tau_PET = META_TEMPORAL_SUVR, 
-        CTX_ENTORHINAL_SUVR, Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
+        Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
       distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
   full_join(amyloidpetgaain %>%          # Amyloid PET
@@ -169,11 +169,13 @@ SCAN_id <- dd %>%
 Mixed_id <- setdiff(dd$NACCID, c(CLARiTI_id, SCAN_id))
 
 # harmonize tau PET data ----
-tmp <- dd %>% filter(!is.na(Tau_PET) & !is.na(Age))
+tmp <- dd %>% filter(!is.na(Tau_PET) & !is.na(Age)) %>%
+  mutate(across(where(is.factor), fct_drop))
+set.seed(42)
 tmp$Tau_PET_ComBat <- sva::ComBat(
-  dat=t(tmp[, c('Tau_PET', 'CTX_ENTORHINAL_SUVR')]), 
+  dat=rbind(tmp$Tau_PET, jitter(tmp$Tau_PET)), # ComBat needs two rows 
   batch=tmp$Tau_TRACER, 
-  mod=model.matrix(~-1 + Age, tmp), par.prior=TRUE, prior.plots=FALSE)[1,]
+  mod=model.matrix(~Age + SEX, tmp), par.prior=TRUE, prior.plots=FALSE)[1,]
 
 dd <- dd %>%
   left_join(tmp %>% select(NACCID, DATE, Tau_PET_ComBat), 
