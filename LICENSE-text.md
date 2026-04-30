@@ -1,0 +1,4 @@
+# License
+
+    YEAR: 2026
+    COPYRIGHT HOLDER: NACCADRC authors. This package uses data subject to the NACC Data Use Agreement. The full agreement can be found at: https://www.naccdata.org

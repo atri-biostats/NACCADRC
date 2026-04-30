@@ -162,6 +162,8 @@ Uniform Data Set (UDS)
   : uds_ftldlbd
 - [`uds_mri`](https://atri-biostats.github.io/NACCADRC/reference/uds_mri.md)
   : uds_mri
+- [`uds_version`](https://atri-biostats.github.io/NACCADRC/reference/uds_version.md)
+  : uds_version
 
 ## PHC Datasets
 
@@ -192,8 +194,17 @@ Consortium (ADSP-PHC)
   : phc_tau_simple
 - [`phc_vascularrisk`](https://atri-biostats.github.io/NACCADRC/reference/phc_vascularrisk.md)
   : phc_vascularrisk
+- [`phc_version`](https://atri-biostats.github.io/NACCADRC/reference/phc_version.md)
+  : phc_version
 
-## Functions
+## Package meta data
+
+- [`data_release_date`](https://atri-biostats.github.io/NACCADRC/reference/data_release_date.md)
+  : data_release_date
+- [`file_manifest`](https://atri-biostats.github.io/NACCADRC/reference/file_manifest.md)
+  : file_manifest
+- [`package_version`](https://atri-biostats.github.io/NACCADRC/reference/package_version.md)
+  : package_version
 
 # Articles
 
