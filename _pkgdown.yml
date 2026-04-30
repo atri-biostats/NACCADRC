@@ -38,9 +38,11 @@ reference:
     contents:
     - starts_with("phc_")
 
-  - title: Functions
+  - title: Package meta data
     contents:
-    - starts_with("ComBat")
+    - starts_with("data_release_date")
+    - starts_with("file_manifest")
+    - starts_with("package_version")
 
 navbar:
   structure:

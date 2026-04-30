@@ -8,6 +8,7 @@
 ^tools$
 ^reports$
 ^_pkgdown\.yml$
+^_quarto\.yml$
 ^docs$
 ^pkgdown$
 ^LICENSE\.md$

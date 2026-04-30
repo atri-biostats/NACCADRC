@@ -495,6 +495,8 @@ for (file_name in pdf_files) {
     sep = '\n')
 }
 
+tools::compactPDF(file.path('..', 'vignettes'), gs_quality = "ebook")
+
 # Document package ----
 
 dir.create(file.path("..", "R"))

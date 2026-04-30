@@ -1,21 +1,21 @@
 Package: NACCADRC
 Type: Package
 Title: NACCADRC Study Package
-Description: National Alzheimer’s Coordinating Center (NACC) Alzheimer's Disease Research Centers (ADRC) data.
+Description: National Alzheimer’s Coordinating Center (NACC) Alzheimer's Disease Research Centers (ADRC) data. This package provides tools for analyzing NACC ADRC data in R. Note that use of the bundled data is governed by the agreement at <https://www.naccdata.org>.
 Version: 73.20260410.1
 Authors@R: person("ATRI Biostatistics", email = "biostat_request@atrihub.io",
   role = c("aut", "cre"))
 URL: 
-    https:https://www.naccdata.org/about-nacc-data/,
+    https:https://www.naccdata.org,
     https://atri-biostats.github.io/NACCADRC,
     https://github.com/atri-biostats/NACCADRC
-License: https://www.naccdata.org/about-nacc-data/
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: false
-LazyDataCompression: none
 RoxygenNote: 7.3.3
 Collate:
     'data.R'
+    'other-data.R'
     'NACCADRC-package.R'
 Suggests: 
     quarto,
@@ -26,7 +26,15 @@ Suggests:
     ggsci,
     tidyr,
     dplyr,
-    sva
+    sva,
+    DT,
+    ggbeeswarm,
+    zoo,
+    UpSetR,
+    data.table,
+    gtsummary,
+    nlme,
+    patchwork
 VignetteBuilder: knitr, quarto
 Depends: 
     R (>= 3.5.0)
