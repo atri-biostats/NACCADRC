@@ -27,7 +27,7 @@ Suggests:
     tidyr,
     dplyr,
     sva,
-    DT,
+    reactable,
     ggbeeswarm,
     zoo,
     UpSetR,

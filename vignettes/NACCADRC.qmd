@@ -20,6 +20,7 @@ library(ggplot2)
 library(tidyverse)
 library(nlme)
 library(data.table)
+library(reactable)
 
 data(data_release_date, data_dictionary, file_manifest)
 
@@ -46,14 +47,6 @@ scale_fill_discrete <-
 # Package Versions
 pkgName <- "NACCADRC"
 pkgFilename <- paste0('NACCADRC_', packageVersion('NACCADRC'), '.tar.gz')
-
-# Data print function
-datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ...) {
-  DT::datatable(
-    data = data, ...,
-    options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...)
-  )
-}
 ```
 
 # Overview 
@@ -137,6 +130,5 @@ A complete file manifest of all the source files used to build the package is al
 ```{r file-manifest-print, eval = TRUE}
 #| code-fold: true
 
-file_manifest %>%
-  datatable(., paging = TRUE)
+reactable(file_manifest)
 ```
