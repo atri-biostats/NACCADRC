@@ -135,7 +135,11 @@ SCAN_id <- dd %>%
   pull(NACCID) %>% unique() %>%
   setdiff(CLARiTI_id)
 
-Mixed_id <- setdiff(dd$NACCID, c(CLARiTI_id, SCAN_id))
+Mixed_id <- dd %>%
+  filter(MRI_SOURCE == 'Mixed protocol' | Tau_SOURCE == 'SCAN MP' | 
+    Amyloid_SOURCE == 'SCAN MP') %>%
+  pull(NACCID) %>% unique() %>%
+  setdiff(c(CLARiTI_id, SCAN_id))
 
 # harmonize tau PET data ----
 tmp <- dd %>% filter(!is.na(Tau_PET) & !is.na(Age)) %>%
@@ -161,8 +165,9 @@ dd_cross <- dd %>%
       NACCID %in% clariti_edc$NACCID ~ 'CLARiTI',
       NACCID %in% CLARiTI_id ~ 'CLARiTI',
       NACCID %in% SCAN_id ~ 'SCAN',
-      TRUE ~ 'Mixed protocol') %>%
-      factor(levels = c('CLARiTI', 'SCAN', 'Mixed protocol')),
+      NACCID %in% Mixed_id ~ 'Mixed protocol',
+      TRUE ~ 'UDS only') %>%
+      factor(levels = c('CLARiTI', 'SCAN', 'Mixed protocol', 'UDS only')),
     PHC_MEM = structure(PHC_MEM, label = 'Harmonized Memory'),
     PHC_EXF = structure(PHC_EXF, label = 'Harmonized Exec Function'), 
     PHC_LAN = structure(PHC_LAN, label = 'Harmonized Language'),
@@ -250,13 +255,13 @@ Code
 ``` r
 
 count_data <- dd_cross %>% 
-  filter(NACCUDSD != 'Unknown') %>%
+  filter(NACCUDSD != 'Unknown', Cohort != 'UDS only') %>%
   mutate(across(where(is.factor), fct_drop)) %>%
   group_by(NACCUDSD, Etiology) %>%
   summarise(n = n(), .groups = "drop")
 
 dd_cross %>% 
-  filter(NACCUDSD != 'Unknown') %>%
+  filter(NACCUDSD != 'Unknown', Cohort != 'UDS only') %>%
   mutate(across(where(is.factor), fct_drop)) %>%
   group_by(NACCUDSD, Etiology, Cohort) %>%
   summarise(n = n(), .groups = "drop") %>%
@@ -270,10 +275,11 @@ ggplot(aes(x = n, y = Etiology)) +
   scale_fill_manual(values = cohort_color)
 ```
 
-![](NACCADRC-basic-summaries_files/figure-html/fig-all-barplots-1.png)
+![](NACCADRC-basic-summaries_files/figure-html/fig-all-imaging-barplots-1.png)
 
-Figure 3: Number of pariticpants including CLARiTI, SCAN, and
-mixed-protocol by etiology and UDS clinical diagnosis.
+Figure 3: Number of pariticpants with any imaging data including
+CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical
+diagnosis.
 
 Code
 
@@ -396,13 +402,26 @@ Code
 
 ``` r
 
+upset(subset(dd_upset, Cohort %in% c('CLARiTI', 'SCAN', 'Mixed protocol')), 
+  nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
+  order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
+```
+
+![](NACCADRC-basic-summaries_files/figure-html/fig-any-imaging-upset-1.png)
+
+Figure 8: UpSet plot of participants with any imaging.
+
+Code
+
+``` r
+
 upset(dd_upset, nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
   order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
 ```
 
 ![](NACCADRC-basic-summaries_files/figure-html/fig-all-upset-1.png)
 
-Figure 8: UpSet plot of all participants.
+Figure 9: UpSet plot of all participants.
 
 ### Scan counts
 
@@ -471,7 +490,7 @@ ggplot(aes(x=Years, y=`Cumulative count`, color = Type)) +
 
 ![](NACCADRC-basic-summaries_files/figure-html/fig-cummulative-scans-1.png)
 
-Figure 9: Cumulative scans by time from first scan of each scan type.
+Figure 10: Cumulative scans by time from first scan of each scan type.
 
 ## Baseline characteristics
 
@@ -512,6 +531,42 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS
 diagnosis. Note CLARiTI participants are those with a NACCID in
 clariti_edc or any of the CLARiTI imaging summary files.
 
+### Participants with any imaging
+
+Code
+
+``` r
+
+tbl_summary(
+  data = dd_cross %>%
+    filter(Cohort != 'UDS only') %>%
+    mutate(across(where(is.factor), fct_drop)),
+  by = NACCUDSD,
+  include = c("Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
+  type = all_continuous() ~ "continuous2",
+  statistic = list(all_continuous() ~ c(
+    "{mean} ({sd})",
+    "{median} ({p25}, {p75})",
+    "{min}, {max}"),
+    all_categorical() ~ "{n} ({p}%)"),
+  digits = all_continuous() ~ 1,
+  percent = "row",
+  missing_text = "(Missing)") %>%
+  add_overall(last = TRUE) %>%
+  add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
+  modify_caption(caption = "Characteristics of participants with any imaging by baseline UDS diagnosis.") %>%
+  modify_footnote_header(
+    footnote = "Row-wise percentage; n (%)",
+    columns = all_stat_cols(),
+    replace = TRUE) %>%
+  bold_labels()
+```
+
+[TABLE]
+
+Table 3: Characteristics of participants with any imaging by baseline
+UDS diagnosis.
+
 ### All participants
 
 Code
@@ -544,7 +599,7 @@ tbl_summary(
 
 [TABLE]
 
-Table 3: Characteristics of all participants by baseline UDS diagnosis.
+Table 4: Characteristics of all participants by baseline UDS diagnosis.
 
 ### Participants with hippocampal volumes
 
@@ -580,7 +635,7 @@ tbl_summary(
 
 [TABLE]
 
-Table 4: Characteristics of all participants with MRI data by baseline
+Table 5: Characteristics of all participants with MRI data by baseline
 UDS diagnosis.
 
 ### Participants with tau PET
@@ -615,7 +670,7 @@ tbl_summary(
 
 [TABLE]
 
-Table 5: Characteristics of all participants with tau PET data by
+Table 6: Characteristics of all participants with tau PET data by
 baseline UDS diagnosis.
 
 ### Participants with amyloid PET
@@ -651,7 +706,7 @@ tbl_summary(
 
 [TABLE]
 
-Table 6: Characteristics of NACC ADRC participants with amyloid PET data
+Table 7: Characteristics of NACC ADRC participants with amyloid PET data
 by baseline UDS diagnosis.
 
 ## Summary plots

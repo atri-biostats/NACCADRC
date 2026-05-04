@@ -74,7 +74,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>NACCADRC Basic Summaries</h1>
 
 
-      <p class="date">2026-04-30</p>
+      <p class="date">2026-05-04</p>
 
       <small class="dont-index">Source: <a href="https://github.com/atri-biostats/NACCADRC/blob/HEAD/vignettes/NACCADRC-basic-summaries.qmd" class="external-link"><code>vignettes/NACCADRC-basic-summaries.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -216,7 +216,11 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">NACCID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">CLARiTI_id</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">Mixed_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="va">dd</span><span class="op">$</span><span class="va">NACCID</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">CLARiTI_id</span>, <span class="va">SCAN_id</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Mixed_id</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">MRI_SOURCE</span> <span class="op">==</span> <span class="st">'Mixed protocol'</span> <span class="op">|</span> <span class="va">Tau_SOURCE</span> <span class="op">==</span> <span class="st">'SCAN MP'</span> <span class="op">|</span> </span>
+<span>    <span class="va">Amyloid_SOURCE</span> <span class="op">==</span> <span class="st">'SCAN MP'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">NACCID</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">CLARiTI_id</span>, <span class="va">SCAN_id</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># harmonize tau PET data ----</span></span>
 <span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Tau_PET</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -242,8 +246,9 @@
 <span>      <span class="va">NACCID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">clariti_edc</span><span class="op">$</span><span class="va">NACCID</span> <span class="op">~</span> <span class="st">'CLARiTI'</span>,</span>
 <span>      <span class="va">NACCID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">CLARiTI_id</span> <span class="op">~</span> <span class="st">'CLARiTI'</span>,</span>
 <span>      <span class="va">NACCID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">SCAN_id</span> <span class="op">~</span> <span class="st">'SCAN'</span>,</span>
-<span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">'Mixed protocol'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>      <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'CLARiTI'</span>, <span class="st">'SCAN'</span>, <span class="st">'Mixed protocol'</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      <span class="va">NACCID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">Mixed_id</span> <span class="op">~</span> <span class="st">'Mixed protocol'</span>,</span>
+<span>      <span class="cn">TRUE</span> <span class="op">~</span> <span class="st">'UDS only'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span>levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'CLARiTI'</span>, <span class="st">'SCAN'</span>, <span class="st">'Mixed protocol'</span>, <span class="st">'UDS only'</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    PHC_MEM <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="va">PHC_MEM</span>, label <span class="op">=</span> <span class="st">'Harmonized Memory'</span><span class="op">)</span>,</span>
 <span>    PHC_EXF <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="va">PHC_EXF</span>, label <span class="op">=</span> <span class="st">'Harmonized Exec Function'</span><span class="op">)</span>, </span>
 <span>    PHC_LAN <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/structure.html" class="external-link">structure</a></span><span class="op">(</span><span class="va">PHC_LAN</span>, label <span class="op">=</span> <span class="st">'Harmonized Language'</span><span class="op">)</span>,</span>
@@ -331,13 +336,13 @@ Figure 2: Number of CLARiTI pariticpants by etiology and UDS clinical diagnosis
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">count_data</span> <span class="op">&lt;-</span> <span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NACCUDSD</span> <span class="op">!=</span> <span class="st">'Unknown'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NACCUDSD</span> <span class="op">!=</span> <span class="st">'Unknown'</span>, <span class="va">Cohort</span> <span class="op">!=</span> <span class="st">'UDS only'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">NACCUDSD</span>, <span class="va">Etiology</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NACCUDSD</span> <span class="op">!=</span> <span class="st">'Unknown'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NACCUDSD</span> <span class="op">!=</span> <span class="st">'Unknown'</span>, <span class="va">Cohort</span> <span class="op">!=</span> <span class="st">'UDS only'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">NACCUDSD</span>, <span class="va">Etiology</span>, <span class="va">Cohort</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -350,12 +355,12 @@ Figure 2: Number of CLARiTI pariticpants by etiology and UDS clinical diagnosis
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">""</span>, x <span class="op">=</span> <span class="st">"Count (N)"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">cohort_color</span><span class="op">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
-<div id="fig-all-barplots" class="quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-all-barplots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="NACCADRC-basic-summaries_files/figure-html/fig-all-barplots-1.png" style="width:100.0%">
+<div id="fig-all-imaging-barplots" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-all-imaging-barplots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="NACCADRC-basic-summaries_files/figure-html/fig-all-imaging-barplots-1.png" style="width:100.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-barplots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 3: Number of pariticpants including CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical diagnosis.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-imaging-barplots-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 3: Number of pariticpants with any imaging data including CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical diagnosis.
 </figcaption></figure>
 </div>
 </div>
@@ -489,6 +494,22 @@ Figure 7: UpSet plot of CLARiTI and SCAN participants.
 </div>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html" class="external-link">upset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">dd_upset</span>, <span class="va">Cohort</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'CLARiTI'</span>, <span class="st">'SCAN'</span>, <span class="st">'Mixed protocol'</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  nsets <span class="op">=</span> <span class="fl">7</span>, nintersects <span class="op">=</span> <span class="fl">30</span>, mb.ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>  order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"freq"</span>, <span class="st">"degree"</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details><div class="cell-output-display">
+<div id="fig-any-imaging-upset" class="quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-fig"><div aria-describedby="fig-any-imaging-upset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="NACCADRC-basic-summaries_files/figure-html/fig-any-imaging-upset-1.png" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-any-imaging-upset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure 8: UpSet plot of participants with any imaging.
+</figcaption></figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html" class="external-link">upset</a></span><span class="op">(</span><span class="va">dd_upset</span>, nsets <span class="op">=</span> <span class="fl">7</span>, nintersects <span class="op">=</span> <span class="fl">30</span>, mb.ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
 <span>  order.by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"freq"</span>, <span class="st">"degree"</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
@@ -497,14 +518,14 @@ Figure 7: UpSet plot of CLARiTI and SCAN participants.
 <img src="NACCADRC-basic-summaries_files/figure-html/fig-all-upset-1.png" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-all-upset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 8: UpSet plot of all participants.
+Figure 9: UpSet plot of all participants.
 </figcaption></figure>
 </div>
 </div>
 </div>
 </section><section class="level2"><h3 id="scan-counts">Scan counts<a class="anchor" aria-label="anchor" href="#scan-counts"></a>
 </h3>
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NACCID</span>, <span class="va">CENTILOIDS</span>, <span class="va">HIPPOCAMPUS</span>, <span class="va">Tau_PET_ComBat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename</a></span><span class="op">(</span></span>
@@ -578,7 +599,7 @@ Table 1: Number of individuals who have received the given number serial scans 
 </section><section class="level2"><h3 id="cummulative-scans-by-time-from-first-scan">Cummulative scans by time from first scan<a class="anchor" aria-label="anchor" href="#cummulative-scans-by-time-from-first-scan"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NACCID</span>, <span class="va">Age</span>, <span class="va">Etiology</span>, <span class="va">NACCUDSD</span>, <span class="va">NACCETPR</span>,</span>
 <span>    <span class="va">CENTILOIDS</span>, <span class="va">HIPPOCAMPUS</span>, <span class="va">Tau_PET_ComBat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -610,7 +631,7 @@ Table 1: Number of individuals who have received the given number serial scans 
 <img src="NACCADRC-basic-summaries_files/figure-html/fig-cummulative-scans-1.png" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cummulative-scans-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure 9: Cumulative scans by time from first scan of each scan type.
+Figure 10: Cumulative scans by time from first scan of each scan type.
 </figcaption></figure>
 </div>
 </div>
@@ -620,7 +641,7 @@ Figure 9: Cumulative scans by time from first scan of each scan type.
 <section class="level2"><h3 id="clariti-participants">CLARiTI participants<a class="anchor" aria-label="anchor" href="#clariti-participants"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Cohort</span> <span class="op">==</span> <span class="st">'CLARiTI'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -649,23 +670,23 @@ Figure 9: Cumulative scans by time from first scan of each scan type.
 Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.
 </figcaption><div aria-describedby="tbl-clariti-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="bgmldcfcww" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bgmldcfcww table {
+<div id="jbuhgqxncb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jbuhgqxncb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bgmldcfcww thead, #bgmldcfcww tbody, #bgmldcfcww tfoot, #bgmldcfcww tr, #bgmldcfcww td, #bgmldcfcww th {
+#jbuhgqxncb thead, #jbuhgqxncb tbody, #jbuhgqxncb tfoot, #jbuhgqxncb tr, #jbuhgqxncb td, #jbuhgqxncb th {
   border-style: none;
 }
 
-#bgmldcfcww p {
+#jbuhgqxncb p {
   margin: 0;
   padding: 0;
 }
 
-#bgmldcfcww .gt_table {
+#jbuhgqxncb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -691,12 +712,12 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-left-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_caption {
+#jbuhgqxncb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bgmldcfcww .gt_title {
+#jbuhgqxncb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -708,7 +729,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-bottom-width: 0;
 }
 
-#bgmldcfcww .gt_subtitle {
+#jbuhgqxncb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -720,7 +741,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-top-width: 0;
 }
 
-#bgmldcfcww .gt_heading {
+#jbuhgqxncb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -732,13 +753,13 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-right-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_bottom_border {
+#jbuhgqxncb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_col_headings {
+#jbuhgqxncb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -753,7 +774,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-right-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_col_heading {
+#jbuhgqxncb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -773,7 +794,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   overflow-x: hidden;
 }
 
-#bgmldcfcww .gt_column_spanner_outer {
+#jbuhgqxncb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -785,15 +806,15 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   padding-right: 4px;
 }
 
-#bgmldcfcww .gt_column_spanner_outer:first-child {
+#jbuhgqxncb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bgmldcfcww .gt_column_spanner_outer:last-child {
+#jbuhgqxncb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bgmldcfcww .gt_column_spanner {
+#jbuhgqxncb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -805,11 +826,11 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   width: 100%;
 }
 
-#bgmldcfcww .gt_spanner_row {
+#jbuhgqxncb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bgmldcfcww .gt_group_heading {
+#jbuhgqxncb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -835,7 +856,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   text-align: left;
 }
 
-#bgmldcfcww .gt_empty_group_heading {
+#jbuhgqxncb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -850,15 +871,15 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   vertical-align: middle;
 }
 
-#bgmldcfcww .gt_from_md > :first-child {
+#jbuhgqxncb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bgmldcfcww .gt_from_md > :last-child {
+#jbuhgqxncb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bgmldcfcww .gt_row {
+#jbuhgqxncb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -877,7 +898,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   overflow-x: hidden;
 }
 
-#bgmldcfcww .gt_stub {
+#jbuhgqxncb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -890,7 +911,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   padding-right: 5px;
 }
 
-#bgmldcfcww .gt_stub_row_group {
+#jbuhgqxncb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -904,15 +925,15 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   vertical-align: top;
 }
 
-#bgmldcfcww .gt_row_group_first td {
+#jbuhgqxncb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bgmldcfcww .gt_row_group_first th {
+#jbuhgqxncb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bgmldcfcww .gt_summary_row {
+#jbuhgqxncb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -922,16 +943,16 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   padding-right: 5px;
 }
 
-#bgmldcfcww .gt_first_summary_row {
+#jbuhgqxncb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_first_summary_row.thick {
+#jbuhgqxncb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bgmldcfcww .gt_last_summary_row {
+#jbuhgqxncb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -941,7 +962,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-bottom-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_grand_summary_row {
+#jbuhgqxncb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -951,7 +972,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   padding-right: 5px;
 }
 
-#bgmldcfcww .gt_first_grand_summary_row {
+#jbuhgqxncb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -961,7 +982,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-top-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_last_grand_summary_row_top {
+#jbuhgqxncb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -971,11 +992,11 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-bottom-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_striped {
+#jbuhgqxncb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bgmldcfcww .gt_table_body {
+#jbuhgqxncb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -984,7 +1005,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-bottom-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_footnotes {
+#jbuhgqxncb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -998,7 +1019,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-right-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_footnote {
+#jbuhgqxncb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1007,7 +1028,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   padding-right: 5px;
 }
 
-#bgmldcfcww .gt_sourcenotes {
+#jbuhgqxncb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1021,7 +1042,7 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   border-right-color: #D3D3D3;
 }
 
-#bgmldcfcww .gt_sourcenote {
+#jbuhgqxncb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1029,72 +1050,72 @@ Table 2: Characteristics of CLARiTI participants by baseline UDS diagnosis. Not
   padding-right: 5px;
 }
 
-#bgmldcfcww .gt_left {
+#jbuhgqxncb .gt_left {
   text-align: left;
 }
 
-#bgmldcfcww .gt_center {
+#jbuhgqxncb .gt_center {
   text-align: center;
 }
 
-#bgmldcfcww .gt_right {
+#jbuhgqxncb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bgmldcfcww .gt_font_normal {
+#jbuhgqxncb .gt_font_normal {
   font-weight: normal;
 }
 
-#bgmldcfcww .gt_font_bold {
+#jbuhgqxncb .gt_font_bold {
   font-weight: bold;
 }
 
-#bgmldcfcww .gt_font_italic {
+#jbuhgqxncb .gt_font_italic {
   font-style: italic;
 }
 
-#bgmldcfcww .gt_super {
+#jbuhgqxncb .gt_super {
   font-size: 65%;
 }
 
-#bgmldcfcww .gt_footnote_marks {
+#jbuhgqxncb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bgmldcfcww .gt_asterisk {
+#jbuhgqxncb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bgmldcfcww .gt_indent_1 {
+#jbuhgqxncb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bgmldcfcww .gt_indent_2 {
+#jbuhgqxncb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bgmldcfcww .gt_indent_3 {
+#jbuhgqxncb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bgmldcfcww .gt_indent_4 {
+#jbuhgqxncb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bgmldcfcww .gt_indent_5 {
+#jbuhgqxncb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bgmldcfcww .katex-display {
+#jbuhgqxncb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bgmldcfcww div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jbuhgqxncb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1823,12 +1844,13 @@ N = 558<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
 </figure>
 </div>
 </div>
-</section><section class="level2"><h3 id="all-participants">All participants<a class="anchor" aria-label="anchor" href="#all-participants"></a>
+</section><section class="level2"><h3 id="participants-with-any-imaging">Participants with any imaging<a class="anchor" aria-label="anchor" href="#participants-with-any-imaging"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Cohort</span> <span class="op">!=</span> <span class="st">'UDS only'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  by <span class="op">=</span> <span class="va">NACCUDSD</span>,</span>
 <span>  include <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Etiology"</span>, <span class="st">"Age"</span>, <span class="st">"SEX"</span>, <span class="st">"EDUC"</span>, <span class="st">"RACE"</span>, <span class="st">"HISPANIC"</span>, <span class="st">"AMYLOID_STATUS"</span>, <span class="st">"CENTILOIDS"</span>, <span class="st">"HIPPOCAMPUS"</span>, <span class="st">"Tau_PET"</span>, <span class="st">"Tau_TRACER"</span>, <span class="st">"PHC_MEM"</span>, <span class="st">"PHC_EXF"</span>, <span class="st">"PHC_LAN"</span><span class="op">)</span>,</span>
@@ -1843,34 +1865,34 @@ N = 558<span class="gt_footnote_marks" style="white-space:nowrap;font-style:ital
 <span>  missing_text <span class="op">=</span> <span class="st">"(Missing)"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_overall.html" class="external-link">add_overall</a></span><span class="op">(</span>last <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_stat_label.html" class="external-link">add_stat_label</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_continuous2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mean (SD)"</span>, <span class="st">"Median (Q1, Q3)"</span>, <span class="st">"Range"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/modify_caption.html" class="external-link">modify_caption</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Characteristics of all participants by baseline UDS diagnosis."</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/modify_caption.html" class="external-link">modify_caption</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Characteristics of participants with any imaging by baseline UDS diagnosis."</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/modify_footnote2.html" class="external-link">modify_footnote_header</a></span><span class="op">(</span></span>
 <span>    footnote <span class="op">=</span> <span class="st">"Row-wise percentage; n (%)"</span>,</span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_stat_cols</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html" class="external-link">bold_labels</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-</details><div id="tbl-all-char" class="cell quarto-float quarto-figure quarto-figure-center">
-<figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-all-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 3: Characteristics of all participants by baseline UDS diagnosis.
-</figcaption><div aria-describedby="tbl-all-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+</details><div id="tbl-any-imaging-char" class="cell quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-any-imaging-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 3: Characteristics of participants with any imaging by baseline UDS diagnosis.
+</figcaption><div aria-describedby="tbl-any-imaging-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="docgisdlch" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#docgisdlch table {
+<div id="tzqrawchlj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tzqrawchlj table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#docgisdlch thead, #docgisdlch tbody, #docgisdlch tfoot, #docgisdlch tr, #docgisdlch td, #docgisdlch th {
+#tzqrawchlj thead, #tzqrawchlj tbody, #tzqrawchlj tfoot, #tzqrawchlj tr, #tzqrawchlj td, #tzqrawchlj th {
   border-style: none;
 }
 
-#docgisdlch p {
+#tzqrawchlj p {
   margin: 0;
   padding: 0;
 }
 
-#docgisdlch .gt_table {
+#tzqrawchlj .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1896,12 +1918,12 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-left-color: #D3D3D3;
 }
 
-#docgisdlch .gt_caption {
+#tzqrawchlj .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#docgisdlch .gt_title {
+#tzqrawchlj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1913,7 +1935,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-bottom-width: 0;
 }
 
-#docgisdlch .gt_subtitle {
+#tzqrawchlj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1925,7 +1947,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-top-width: 0;
 }
 
-#docgisdlch .gt_heading {
+#tzqrawchlj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1937,13 +1959,13 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-right-color: #D3D3D3;
 }
 
-#docgisdlch .gt_bottom_border {
+#tzqrawchlj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#docgisdlch .gt_col_headings {
+#tzqrawchlj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1958,7 +1980,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-right-color: #D3D3D3;
 }
 
-#docgisdlch .gt_col_heading {
+#tzqrawchlj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1978,7 +2000,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   overflow-x: hidden;
 }
 
-#docgisdlch .gt_column_spanner_outer {
+#tzqrawchlj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1990,15 +2012,15 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   padding-right: 4px;
 }
 
-#docgisdlch .gt_column_spanner_outer:first-child {
+#tzqrawchlj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#docgisdlch .gt_column_spanner_outer:last-child {
+#tzqrawchlj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#docgisdlch .gt_column_spanner {
+#tzqrawchlj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2010,11 +2032,11 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   width: 100%;
 }
 
-#docgisdlch .gt_spanner_row {
+#tzqrawchlj .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#docgisdlch .gt_group_heading {
+#tzqrawchlj .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2040,7 +2062,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   text-align: left;
 }
 
-#docgisdlch .gt_empty_group_heading {
+#tzqrawchlj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2055,15 +2077,15 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   vertical-align: middle;
 }
 
-#docgisdlch .gt_from_md > :first-child {
+#tzqrawchlj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#docgisdlch .gt_from_md > :last-child {
+#tzqrawchlj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#docgisdlch .gt_row {
+#tzqrawchlj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2082,7 +2104,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   overflow-x: hidden;
 }
 
-#docgisdlch .gt_stub {
+#tzqrawchlj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2095,7 +2117,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   padding-right: 5px;
 }
 
-#docgisdlch .gt_stub_row_group {
+#tzqrawchlj .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2109,15 +2131,15 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   vertical-align: top;
 }
 
-#docgisdlch .gt_row_group_first td {
+#tzqrawchlj .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#docgisdlch .gt_row_group_first th {
+#tzqrawchlj .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#docgisdlch .gt_summary_row {
+#tzqrawchlj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2127,16 +2149,16 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   padding-right: 5px;
 }
 
-#docgisdlch .gt_first_summary_row {
+#tzqrawchlj .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#docgisdlch .gt_first_summary_row.thick {
+#tzqrawchlj .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#docgisdlch .gt_last_summary_row {
+#tzqrawchlj .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2146,7 +2168,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-bottom-color: #D3D3D3;
 }
 
-#docgisdlch .gt_grand_summary_row {
+#tzqrawchlj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2156,7 +2178,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   padding-right: 5px;
 }
 
-#docgisdlch .gt_first_grand_summary_row {
+#tzqrawchlj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2166,7 +2188,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-top-color: #D3D3D3;
 }
 
-#docgisdlch .gt_last_grand_summary_row_top {
+#tzqrawchlj .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2176,11 +2198,11 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-bottom-color: #D3D3D3;
 }
 
-#docgisdlch .gt_striped {
+#tzqrawchlj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#docgisdlch .gt_table_body {
+#tzqrawchlj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2189,7 +2211,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-bottom-color: #D3D3D3;
 }
 
-#docgisdlch .gt_footnotes {
+#tzqrawchlj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2203,7 +2225,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-right-color: #D3D3D3;
 }
 
-#docgisdlch .gt_footnote {
+#tzqrawchlj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2212,7 +2234,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   padding-right: 5px;
 }
 
-#docgisdlch .gt_sourcenotes {
+#tzqrawchlj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2226,7 +2248,7 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   border-right-color: #D3D3D3;
 }
 
-#docgisdlch .gt_sourcenote {
+#tzqrawchlj .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2234,72 +2256,1268 @@ Table 3: Characteristics of all participants by baseline UDS diagnosis.
   padding-right: 5px;
 }
 
-#docgisdlch .gt_left {
+#tzqrawchlj .gt_left {
   text-align: left;
 }
 
-#docgisdlch .gt_center {
+#tzqrawchlj .gt_center {
   text-align: center;
 }
 
-#docgisdlch .gt_right {
+#tzqrawchlj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#docgisdlch .gt_font_normal {
+#tzqrawchlj .gt_font_normal {
   font-weight: normal;
 }
 
-#docgisdlch .gt_font_bold {
+#tzqrawchlj .gt_font_bold {
   font-weight: bold;
 }
 
-#docgisdlch .gt_font_italic {
+#tzqrawchlj .gt_font_italic {
   font-style: italic;
 }
 
-#docgisdlch .gt_super {
+#tzqrawchlj .gt_super {
   font-size: 65%;
 }
 
-#docgisdlch .gt_footnote_marks {
+#tzqrawchlj .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#docgisdlch .gt_asterisk {
+#tzqrawchlj .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#docgisdlch .gt_indent_1 {
+#tzqrawchlj .gt_indent_1 {
   text-indent: 5px;
 }
 
-#docgisdlch .gt_indent_2 {
+#tzqrawchlj .gt_indent_2 {
   text-indent: 10px;
 }
 
-#docgisdlch .gt_indent_3 {
+#tzqrawchlj .gt_indent_3 {
   text-indent: 15px;
 }
 
-#docgisdlch .gt_indent_4 {
+#tzqrawchlj .gt_indent_4 {
   text-indent: 20px;
 }
 
-#docgisdlch .gt_indent_5 {
+#tzqrawchlj .gt_indent_5 {
   text-indent: 25px;
 }
 
-#docgisdlch .katex-display {
+#tzqrawchlj .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#docgisdlch div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#tzqrawchlj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="table gt_table do-not-create-environment cell caption-top" style="width:100%;" data-quarto-bootstrap="false">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead><tr class="gt_col_headings header">
+<th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
+<th id="stat_1" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<strong>Normal cognition</strong><br>
+N = 5,594<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+<th id="stat_2" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<strong>Impaired-not-MCI</strong><br>
+N = 372<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+<th id="stat_3" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<strong>MCI</strong><br>
+N = 2,285<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+<th id="stat_4" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<strong>Dementia</strong><br>
+N = 1,515<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+<th id="stat_5" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<strong>Unknown</strong><br>
+N = 415<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+<th id="stat_0" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">
+<strong>Overall</strong><br>
+N = 10,181<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span>
+</th>
+</tr></thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Etiology, n (%)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Not impaired</td>
+<td class="gt_row gt_center" headers="stat_1">5,504 (100%)</td>
+<td class="gt_row gt_center" headers="stat_2">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_3">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_4">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">5,504 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    LBD</td>
+<td class="gt_row gt_center" headers="stat_1">90 (31%)</td>
+<td class="gt_row gt_center" headers="stat_2">9 (3.1%)</td>
+<td class="gt_row gt_center" headers="stat_3">122 (43%)</td>
+<td class="gt_row gt_center" headers="stat_4">65 (23%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">286 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    FTLD (any)</td>
+<td class="gt_row gt_center" headers="stat_1">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_2">7 (2.8%)</td>
+<td class="gt_row gt_center" headers="stat_3">58 (23%)</td>
+<td class="gt_row gt_center" headers="stat_4">185 (74%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">250 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    AD</td>
+<td class="gt_row gt_center" headers="stat_1">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_2">51 (2.1%)</td>
+<td class="gt_row gt_center" headers="stat_3">1,242 (51%)</td>
+<td class="gt_row gt_center" headers="stat_4">1,123 (46%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">2,416 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Vascular</td>
+<td class="gt_row gt_center" headers="stat_1">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_2">34 (15%)</td>
+<td class="gt_row gt_center" headers="stat_3">166 (74%)</td>
+<td class="gt_row gt_center" headers="stat_4">24 (11%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">224 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Other</td>
+<td class="gt_row gt_center" headers="stat_1">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_2">271 (18%)</td>
+<td class="gt_row gt_center" headers="stat_3">697 (46%)</td>
+<td class="gt_row gt_center" headers="stat_4">118 (7.9%)</td>
+<td class="gt_row gt_center" headers="stat_5">415 (28%)</td>
+<td class="gt_row gt_center" headers="stat_0">1,501 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Age (yrs)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">68.6 (8.8)</td>
+<td class="gt_row gt_center" headers="stat_2">68.9 (8.5)</td>
+<td class="gt_row gt_center" headers="stat_3">71.6 (8.4)</td>
+<td class="gt_row gt_center" headers="stat_4">70.3 (9.7)</td>
+<td class="gt_row gt_center" headers="stat_5">NA (NA)</td>
+<td class="gt_row gt_center" headers="stat_0">69.6 (8.9)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">69.0 (64.0, 74.1)</td>
+<td class="gt_row gt_center" headers="stat_2">68.8 (63.8, 75.3)</td>
+<td class="gt_row gt_center" headers="stat_3">71.9 (66.1, 77.3)</td>
+<td class="gt_row gt_center" headers="stat_4">71.0 (63.1, 77.6)</td>
+<td class="gt_row gt_center" headers="stat_5">NA (NA, NA)</td>
+<td class="gt_row gt_center" headers="stat_0">69.9 (64.4, 75.6)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">21.3, 100.1</td>
+<td class="gt_row gt_center" headers="stat_2">36.4, 92.0</td>
+<td class="gt_row gt_center" headers="stat_3">27.3, 98.7</td>
+<td class="gt_row gt_center" headers="stat_4">22.5, 94.2</td>
+<td class="gt_row gt_center" headers="stat_5">Inf, -Inf</td>
+<td class="gt_row gt_center" headers="stat_0">21.3, 100.1</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">0</td>
+<td class="gt_row gt_center" headers="stat_2">0</td>
+<td class="gt_row gt_center" headers="stat_3">0</td>
+<td class="gt_row gt_center" headers="stat_4">0</td>
+<td class="gt_row gt_center" headers="stat_5">415</td>
+<td class="gt_row gt_center" headers="stat_0">415</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Sex, n (%)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Male</td>
+<td class="gt_row gt_center" headers="stat_1">1,917 (47%)</td>
+<td class="gt_row gt_center" headers="stat_2">155 (3.8%)</td>
+<td class="gt_row gt_center" headers="stat_3">1,186 (29%)</td>
+<td class="gt_row gt_center" headers="stat_4">783 (19%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">4,041 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Female</td>
+<td class="gt_row gt_center" headers="stat_1">3,676 (64%)</td>
+<td class="gt_row gt_center" headers="stat_2">217 (3.8%)</td>
+<td class="gt_row gt_center" headers="stat_3">1,099 (19%)</td>
+<td class="gt_row gt_center" headers="stat_4">732 (13%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">5,724 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Prefer not to answer</td>
+<td class="gt_row gt_center" headers="stat_1">1 (100%)</td>
+<td class="gt_row gt_center" headers="stat_2">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_3">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_4">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">1 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">0</td>
+<td class="gt_row gt_center" headers="stat_2">0</td>
+<td class="gt_row gt_center" headers="stat_3">0</td>
+<td class="gt_row gt_center" headers="stat_4">0</td>
+<td class="gt_row gt_center" headers="stat_5">415</td>
+<td class="gt_row gt_center" headers="stat_0">415</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Education (yrs)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">16.2 (2.8)</td>
+<td class="gt_row gt_center" headers="stat_2">15.0 (3.7)</td>
+<td class="gt_row gt_center" headers="stat_3">15.7 (3.2)</td>
+<td class="gt_row gt_center" headers="stat_4">15.5 (3.3)</td>
+<td class="gt_row gt_center" headers="stat_5">NA (NA)</td>
+<td class="gt_row gt_center" headers="stat_0">16.0 (3.0)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">16.0 (14.0, 18.0)</td>
+<td class="gt_row gt_center" headers="stat_2">16.0 (12.0, 18.0)</td>
+<td class="gt_row gt_center" headers="stat_3">16.0 (14.0, 18.0)</td>
+<td class="gt_row gt_center" headers="stat_4">16.0 (13.0, 18.0)</td>
+<td class="gt_row gt_center" headers="stat_5">NA (NA, NA)</td>
+<td class="gt_row gt_center" headers="stat_0">16.0 (14.0, 18.0)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">0.0, 25.0</td>
+<td class="gt_row gt_center" headers="stat_2">0.0, 24.0</td>
+<td class="gt_row gt_center" headers="stat_3">0.0, 31.0</td>
+<td class="gt_row gt_center" headers="stat_4">0.0, 30.0</td>
+<td class="gt_row gt_center" headers="stat_5">Inf, -Inf</td>
+<td class="gt_row gt_center" headers="stat_0">0.0, 31.0</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">16</td>
+<td class="gt_row gt_center" headers="stat_2">1</td>
+<td class="gt_row gt_center" headers="stat_3">12</td>
+<td class="gt_row gt_center" headers="stat_4">15</td>
+<td class="gt_row gt_center" headers="stat_5">415</td>
+<td class="gt_row gt_center" headers="stat_0">459</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Race, n (%)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    White</td>
+<td class="gt_row gt_center" headers="stat_1">4,293 (56%)</td>
+<td class="gt_row gt_center" headers="stat_2">247 (3.2%)</td>
+<td class="gt_row gt_center" headers="stat_3">1,782 (23%)</td>
+<td class="gt_row gt_center" headers="stat_4">1,350 (18%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">7,672 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Black or African American</td>
+<td class="gt_row gt_center" headers="stat_1">981 (63%)</td>
+<td class="gt_row gt_center" headers="stat_2">95 (6.1%)</td>
+<td class="gt_row gt_center" headers="stat_3">374 (24%)</td>
+<td class="gt_row gt_center" headers="stat_4">102 (6.6%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">1,552 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    American Indian or Alaska Native</td>
+<td class="gt_row gt_center" headers="stat_1">77 (71%)</td>
+<td class="gt_row gt_center" headers="stat_2">6 (5.6%)</td>
+<td class="gt_row gt_center" headers="stat_3">23 (21%)</td>
+<td class="gt_row gt_center" headers="stat_4">2 (1.9%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">108 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Native Hawaiian or Other Pacific Islander</td>
+<td class="gt_row gt_center" headers="stat_1">4 (57%)</td>
+<td class="gt_row gt_center" headers="stat_2">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_3">3 (43%)</td>
+<td class="gt_row gt_center" headers="stat_4">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">7 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Asian</td>
+<td class="gt_row gt_center" headers="stat_1">113 (55%)</td>
+<td class="gt_row gt_center" headers="stat_2">8 (3.9%)</td>
+<td class="gt_row gt_center" headers="stat_3">60 (29%)</td>
+<td class="gt_row gt_center" headers="stat_4">25 (12%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">206 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Other (specify)</td>
+<td class="gt_row gt_center" headers="stat_1">52 (57%)</td>
+<td class="gt_row gt_center" headers="stat_2">6 (6.6%)</td>
+<td class="gt_row gt_center" headers="stat_3">20 (22%)</td>
+<td class="gt_row gt_center" headers="stat_4">13 (14%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">91 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Unknown</td>
+<td class="gt_row gt_center" headers="stat_1">31 (46%)</td>
+<td class="gt_row gt_center" headers="stat_2">4 (5.9%)</td>
+<td class="gt_row gt_center" headers="stat_3">14 (21%)</td>
+<td class="gt_row gt_center" headers="stat_4">19 (28%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">68 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">43</td>
+<td class="gt_row gt_center" headers="stat_2">6</td>
+<td class="gt_row gt_center" headers="stat_3">9</td>
+<td class="gt_row gt_center" headers="stat_4">4</td>
+<td class="gt_row gt_center" headers="stat_5">415</td>
+<td class="gt_row gt_center" headers="stat_0">477</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Hispanic, n (%)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    No</td>
+<td class="gt_row gt_center" headers="stat_1">5,070 (58%)</td>
+<td class="gt_row gt_center" headers="stat_2">307 (3.5%)</td>
+<td class="gt_row gt_center" headers="stat_3">2,041 (23%)</td>
+<td class="gt_row gt_center" headers="stat_4">1,383 (16%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">8,801 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Yes</td>
+<td class="gt_row gt_center" headers="stat_1">510 (55%)</td>
+<td class="gt_row gt_center" headers="stat_2">63 (6.8%)</td>
+<td class="gt_row gt_center" headers="stat_3">232 (25%)</td>
+<td class="gt_row gt_center" headers="stat_4">123 (13%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">928 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Unknown</td>
+<td class="gt_row gt_center" headers="stat_1">14 (38%)</td>
+<td class="gt_row gt_center" headers="stat_2">2 (5.4%)</td>
+<td class="gt_row gt_center" headers="stat_3">12 (32%)</td>
+<td class="gt_row gt_center" headers="stat_4">9 (24%)</td>
+<td class="gt_row gt_center" headers="stat_5">0 (0%)</td>
+<td class="gt_row gt_center" headers="stat_0">37 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">0</td>
+<td class="gt_row gt_center" headers="stat_2">0</td>
+<td class="gt_row gt_center" headers="stat_3">0</td>
+<td class="gt_row gt_center" headers="stat_4">0</td>
+<td class="gt_row gt_center" headers="stat_5">415</td>
+<td class="gt_row gt_center" headers="stat_0">415</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Amyloid status, n (%)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Negative</td>
+<td class="gt_row gt_center" headers="stat_1">1,657 (68%)</td>
+<td class="gt_row gt_center" headers="stat_2">68 (2.8%)</td>
+<td class="gt_row gt_center" headers="stat_3">417 (17%)</td>
+<td class="gt_row gt_center" headers="stat_4">192 (7.9%)</td>
+<td class="gt_row gt_center" headers="stat_5">107 (4.4%)</td>
+<td class="gt_row gt_center" headers="stat_0">2,441 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Positive</td>
+<td class="gt_row gt_center" headers="stat_1">748 (39%)</td>
+<td class="gt_row gt_center" headers="stat_2">29 (1.5%)</td>
+<td class="gt_row gt_center" headers="stat_3">572 (30%)</td>
+<td class="gt_row gt_center" headers="stat_4">490 (25%)</td>
+<td class="gt_row gt_center" headers="stat_5">85 (4.4%)</td>
+<td class="gt_row gt_center" headers="stat_0">1,924 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">3,189</td>
+<td class="gt_row gt_center" headers="stat_2">275</td>
+<td class="gt_row gt_center" headers="stat_3">1,296</td>
+<td class="gt_row gt_center" headers="stat_4">833</td>
+<td class="gt_row gt_center" headers="stat_5">223</td>
+<td class="gt_row gt_center" headers="stat_0">5,816</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Amyloid (CL)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">13.3 (31.1)</td>
+<td class="gt_row gt_center" headers="stat_2">12.5 (28.8)</td>
+<td class="gt_row gt_center" headers="stat_3">41.2 (47.7)</td>
+<td class="gt_row gt_center" headers="stat_4">61.4 (52.7)</td>
+<td class="gt_row gt_center" headers="stat_5">25.6 (41.6)</td>
+<td class="gt_row gt_center" headers="stat_0">27.2 (43.5)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">3.0 (-4.0, 20.0)</td>
+<td class="gt_row gt_center" headers="stat_2">2.5 (-4.0, 24.0)</td>
+<td class="gt_row gt_center" headers="stat_3">25.0 (0.0, 81.0)</td>
+<td class="gt_row gt_center" headers="stat_4">70.0 (6.0, 103.0)</td>
+<td class="gt_row gt_center" headers="stat_5">8.0 (-3.0, 43.0)</td>
+<td class="gt_row gt_center" headers="stat_0">8.0 (-3.0, 55.0)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">-59.0, 201.0</td>
+<td class="gt_row gt_center" headers="stat_2">-34.0, 103.0</td>
+<td class="gt_row gt_center" headers="stat_3">-56.0, 211.0</td>
+<td class="gt_row gt_center" headers="stat_4">-56.0, 219.0</td>
+<td class="gt_row gt_center" headers="stat_5">-56.0, 152.0</td>
+<td class="gt_row gt_center" headers="stat_0">-59.0, 219.0</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">3,213</td>
+<td class="gt_row gt_center" headers="stat_2">290</td>
+<td class="gt_row gt_center" headers="stat_3">1,388</td>
+<td class="gt_row gt_center" headers="stat_4">861</td>
+<td class="gt_row gt_center" headers="stat_5">223</td>
+<td class="gt_row gt_center" headers="stat_0">5,975</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Hippocampal volume (mm3)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">6.3 (0.8)</td>
+<td class="gt_row gt_center" headers="stat_2">6.2 (0.8)</td>
+<td class="gt_row gt_center" headers="stat_3">6.0 (0.9)</td>
+<td class="gt_row gt_center" headers="stat_4">5.6 (1.0)</td>
+<td class="gt_row gt_center" headers="stat_5">6.3 (0.9)</td>
+<td class="gt_row gt_center" headers="stat_0">6.2 (0.9)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">6.3 (5.8, 6.9)</td>
+<td class="gt_row gt_center" headers="stat_2">6.2 (5.6, 6.7)</td>
+<td class="gt_row gt_center" headers="stat_3">5.9 (5.3, 6.6)</td>
+<td class="gt_row gt_center" headers="stat_4">5.5 (4.9, 6.2)</td>
+<td class="gt_row gt_center" headers="stat_5">6.4 (5.7, 6.9)</td>
+<td class="gt_row gt_center" headers="stat_0">6.2 (5.6, 6.8)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">0.0, 9.7</td>
+<td class="gt_row gt_center" headers="stat_2">4.4, 8.7</td>
+<td class="gt_row gt_center" headers="stat_3">2.5, 9.1</td>
+<td class="gt_row gt_center" headers="stat_4">2.3, 9.0</td>
+<td class="gt_row gt_center" headers="stat_5">2.4, 8.2</td>
+<td class="gt_row gt_center" headers="stat_0">0.0, 9.7</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">1,404</td>
+<td class="gt_row gt_center" headers="stat_2">71</td>
+<td class="gt_row gt_center" headers="stat_3">673</td>
+<td class="gt_row gt_center" headers="stat_4">649</td>
+<td class="gt_row gt_center" headers="stat_5">258</td>
+<td class="gt_row gt_center" headers="stat_0">3,055</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Tau PET (SUVR)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">1.2 (0.2)</td>
+<td class="gt_row gt_center" headers="stat_2">1.2 (0.2)</td>
+<td class="gt_row gt_center" headers="stat_3">1.4 (0.4)</td>
+<td class="gt_row gt_center" headers="stat_4">1.7 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_5">1.3 (0.4)</td>
+<td class="gt_row gt_center" headers="stat_0">1.4 (0.4)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">1.2 (1.1, 1.3)</td>
+<td class="gt_row gt_center" headers="stat_2">1.2 (1.1, 1.3)</td>
+<td class="gt_row gt_center" headers="stat_3">1.3 (1.2, 1.5)</td>
+<td class="gt_row gt_center" headers="stat_4">1.6 (1.2, 2.2)</td>
+<td class="gt_row gt_center" headers="stat_5">1.2 (1.1, 1.3)</td>
+<td class="gt_row gt_center" headers="stat_0">1.2 (1.2, 1.4)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">0.9, 3.4</td>
+<td class="gt_row gt_center" headers="stat_2">0.8, 1.9</td>
+<td class="gt_row gt_center" headers="stat_3">0.9, 4.2</td>
+<td class="gt_row gt_center" headers="stat_4">0.9, 4.4</td>
+<td class="gt_row gt_center" headers="stat_5">0.9, 3.7</td>
+<td class="gt_row gt_center" headers="stat_0">0.8, 4.4</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">4,187</td>
+<td class="gt_row gt_center" headers="stat_2">315</td>
+<td class="gt_row gt_center" headers="stat_3">1,731</td>
+<td class="gt_row gt_center" headers="stat_4">1,104</td>
+<td class="gt_row gt_center" headers="stat_5">240</td>
+<td class="gt_row gt_center" headers="stat_0">7,577</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Tau PET tracer, n (%)</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Flortaucipir</td>
+<td class="gt_row gt_center" headers="stat_1">910 (47%)</td>
+<td class="gt_row gt_center" headers="stat_2">38 (2.0%)</td>
+<td class="gt_row gt_center" headers="stat_3">464 (24%)</td>
+<td class="gt_row gt_center" headers="stat_4">396 (20%)</td>
+<td class="gt_row gt_center" headers="stat_5">128 (6.6%)</td>
+<td class="gt_row gt_center" headers="stat_0">1,936 (100%)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    MK6240</td>
+<td class="gt_row gt_center" headers="stat_1">504 (73%)</td>
+<td class="gt_row gt_center" headers="stat_2">19 (2.8%)</td>
+<td class="gt_row gt_center" headers="stat_3">98 (14%)</td>
+<td class="gt_row gt_center" headers="stat_4">18 (2.6%)</td>
+<td class="gt_row gt_center" headers="stat_5">47 (6.9%)</td>
+<td class="gt_row gt_center" headers="stat_0">686 (100%)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">4,180</td>
+<td class="gt_row gt_center" headers="stat_2">315</td>
+<td class="gt_row gt_center" headers="stat_3">1,723</td>
+<td class="gt_row gt_center" headers="stat_4">1,101</td>
+<td class="gt_row gt_center" headers="stat_5">240</td>
+<td class="gt_row gt_center" headers="stat_0">7,559</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Harmonized Memory</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">0.9 (0.5)</td>
+<td class="gt_row gt_center" headers="stat_2">0.5 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_3">0.1 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_4">-0.7 (0.7)</td>
+<td class="gt_row gt_center" headers="stat_5">1.0 (0.4)</td>
+<td class="gt_row gt_center" headers="stat_0">0.4 (0.8)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">0.8 (0.5, 1.2)</td>
+<td class="gt_row gt_center" headers="stat_2">0.5 (0.1, 0.9)</td>
+<td class="gt_row gt_center" headers="stat_3">0.2 (-0.2, 0.5)</td>
+<td class="gt_row gt_center" headers="stat_4">-0.7 (-1.1, -0.2)</td>
+<td class="gt_row gt_center" headers="stat_5">0.9 (0.7, 1.2)</td>
+<td class="gt_row gt_center" headers="stat_0">0.6 (0.0, 1.0)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">-0.9, 2.7</td>
+<td class="gt_row gt_center" headers="stat_2">-0.8, 2.2</td>
+<td class="gt_row gt_center" headers="stat_3">-1.8, 2.0</td>
+<td class="gt_row gt_center" headers="stat_4">-2.7, 1.6</td>
+<td class="gt_row gt_center" headers="stat_5">0.4, 1.6</td>
+<td class="gt_row gt_center" headers="stat_0">-2.7, 2.7</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">748</td>
+<td class="gt_row gt_center" headers="stat_2">50</td>
+<td class="gt_row gt_center" headers="stat_3">291</td>
+<td class="gt_row gt_center" headers="stat_4">170</td>
+<td class="gt_row gt_center" headers="stat_5">401</td>
+<td class="gt_row gt_center" headers="stat_0">1,660</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Harmonized Exec Function</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">0.7 (0.7)</td>
+<td class="gt_row gt_center" headers="stat_2">0.2 (0.7)</td>
+<td class="gt_row gt_center" headers="stat_3">0.1 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_4">-0.6 (0.9)</td>
+<td class="gt_row gt_center" headers="stat_5">0.4 (0.5)</td>
+<td class="gt_row gt_center" headers="stat_0">0.4 (0.9)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">0.7 (0.3, 1.2)</td>
+<td class="gt_row gt_center" headers="stat_2">0.2 (-0.2, 0.8)</td>
+<td class="gt_row gt_center" headers="stat_3">0.1 (-0.3, 0.5)</td>
+<td class="gt_row gt_center" headers="stat_4">-0.6 (-1.2, -0.1)</td>
+<td class="gt_row gt_center" headers="stat_5">0.4 (0.1, 0.8)</td>
+<td class="gt_row gt_center" headers="stat_0">0.4 (-0.2, 0.9)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">-1.8, 3.2</td>
+<td class="gt_row gt_center" headers="stat_2">-2.2, 2.2</td>
+<td class="gt_row gt_center" headers="stat_3">-2.3, 2.7</td>
+<td class="gt_row gt_center" headers="stat_4">-3.3, 2.2</td>
+<td class="gt_row gt_center" headers="stat_5">-0.8, 1.2</td>
+<td class="gt_row gt_center" headers="stat_0">-3.3, 3.2</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">746</td>
+<td class="gt_row gt_center" headers="stat_2">51</td>
+<td class="gt_row gt_center" headers="stat_3">294</td>
+<td class="gt_row gt_center" headers="stat_4">190</td>
+<td class="gt_row gt_center" headers="stat_5">401</td>
+<td class="gt_row gt_center" headers="stat_0">1,682</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label" style="font-weight: bold">Harmonized Language</td>
+<td class="gt_row gt_center" headers="stat_1"><br></td>
+<td class="gt_row gt_center" headers="stat_2"><br></td>
+<td class="gt_row gt_center" headers="stat_3"><br></td>
+<td class="gt_row gt_center" headers="stat_4"><br></td>
+<td class="gt_row gt_center" headers="stat_5"><br></td>
+<td class="gt_row gt_center" headers="stat_0"><br></td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Mean (SD)</td>
+<td class="gt_row gt_center" headers="stat_1">0.9 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_2">0.5 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_3">0.2 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_4">-0.5 (0.7)</td>
+<td class="gt_row gt_center" headers="stat_5">0.9 (0.6)</td>
+<td class="gt_row gt_center" headers="stat_0">0.5 (0.8)</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    Median (Q1, Q3)</td>
+<td class="gt_row gt_center" headers="stat_1">0.8 (0.5, 1.3)</td>
+<td class="gt_row gt_center" headers="stat_2">0.4 (0.1, 0.8)</td>
+<td class="gt_row gt_center" headers="stat_3">0.2 (-0.1, 0.6)</td>
+<td class="gt_row gt_center" headers="stat_4">-0.4 (-0.9, 0.0)</td>
+<td class="gt_row gt_center" headers="stat_5">0.9 (0.6, 1.3)</td>
+<td class="gt_row gt_center" headers="stat_0">0.5 (0.0, 1.0)</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="label">    Range</td>
+<td class="gt_row gt_center" headers="stat_1">-1.2, 3.3</td>
+<td class="gt_row gt_center" headers="stat_2">-1.2, 2.3</td>
+<td class="gt_row gt_center" headers="stat_3">-1.9, 2.6</td>
+<td class="gt_row gt_center" headers="stat_4">-2.9, 1.5</td>
+<td class="gt_row gt_center" headers="stat_5">0.0, 2.4</td>
+<td class="gt_row gt_center" headers="stat_0">-2.9, 3.3</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="label">    (Missing)</td>
+<td class="gt_row gt_center" headers="stat_1">746</td>
+<td class="gt_row gt_center" headers="stat_2">51</td>
+<td class="gt_row gt_center" headers="stat_3">293</td>
+<td class="gt_row gt_center" headers="stat_4">182</td>
+<td class="gt_row gt_center" headers="stat_5">401</td>
+<td class="gt_row gt_center" headers="stat_0">1,673</td>
+</tr>
+</tbody>
+<tfoot><tr class="gt_footnotes odd">
+<td colspan="7" class="gt_footnote">
+<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;line-height:0;"><sup>1</sup></span> Row-wise percentage; n (%)</td>
+</tr></tfoot>
+</table>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section><section class="level2"><h3 id="all-participants">All participants<a class="anchor" aria-label="anchor" href="#all-participants"></a>
+</h3>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  by <span class="op">=</span> <span class="va">NACCUDSD</span>,</span>
+<span>  include <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Etiology"</span>, <span class="st">"Age"</span>, <span class="st">"SEX"</span>, <span class="st">"EDUC"</span>, <span class="st">"RACE"</span>, <span class="st">"HISPANIC"</span>, <span class="st">"AMYLOID_STATUS"</span>, <span class="st">"CENTILOIDS"</span>, <span class="st">"HIPPOCAMPUS"</span>, <span class="st">"Tau_PET"</span>, <span class="st">"Tau_TRACER"</span>, <span class="st">"PHC_MEM"</span>, <span class="st">"PHC_EXF"</span>, <span class="st">"PHC_LAN"</span><span class="op">)</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"continuous2"</span>,</span>
+<span>  statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"{mean} ({sd})"</span>,</span>
+<span>    <span class="st">"{median} ({p25}, {p75})"</span>,</span>
+<span>    <span class="st">"{min}, {max}"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_categorical</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"{n} ({p}%)"</span><span class="op">)</span>,</span>
+<span>  digits <span class="op">=</span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_continuous</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>,</span>
+<span>  percent <span class="op">=</span> <span class="st">"row"</span>,</span>
+<span>  missing_text <span class="op">=</span> <span class="st">"(Missing)"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_overall.html" class="external-link">add_overall</a></span><span class="op">(</span>last <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/add_stat_label.html" class="external-link">add_stat_label</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_continuous2</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mean (SD)"</span>, <span class="st">"Median (Q1, Q3)"</span>, <span class="st">"Range"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/modify_caption.html" class="external-link">modify_caption</a></span><span class="op">(</span>caption <span class="op">=</span> <span class="st">"Characteristics of all participants by baseline UDS diagnosis."</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/modify_footnote2.html" class="external-link">modify_footnote_header</a></span><span class="op">(</span></span>
+<span>    footnote <span class="op">=</span> <span class="st">"Row-wise percentage; n (%)"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/select_helpers.html" class="external-link">all_stat_cols</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html" class="external-link">bold_labels</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</details><div id="tbl-all-char" class="cell quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-all-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 4: Characteristics of all participants by baseline UDS diagnosis.
+</figcaption><div aria-describedby="tbl-all-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<div id="dpdgzhleun" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dpdgzhleun table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#dpdgzhleun thead, #dpdgzhleun tbody, #dpdgzhleun tfoot, #dpdgzhleun tr, #dpdgzhleun td, #dpdgzhleun th {
+  border-style: none;
+}
+
+#dpdgzhleun p {
+  margin: 0;
+  padding: 0;
+}
+
+#dpdgzhleun .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dpdgzhleun .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dpdgzhleun .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dpdgzhleun .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dpdgzhleun .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dpdgzhleun .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dpdgzhleun .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dpdgzhleun .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dpdgzhleun .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dpdgzhleun .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dpdgzhleun .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dpdgzhleun .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dpdgzhleun .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dpdgzhleun .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dpdgzhleun .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpdgzhleun .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dpdgzhleun .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dpdgzhleun .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dpdgzhleun .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpdgzhleun .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dpdgzhleun .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpdgzhleun .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dpdgzhleun .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpdgzhleun .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dpdgzhleun .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dpdgzhleun .gt_left {
+  text-align: left;
+}
+
+#dpdgzhleun .gt_center {
+  text-align: center;
+}
+
+#dpdgzhleun .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dpdgzhleun .gt_font_normal {
+  font-weight: normal;
+}
+
+#dpdgzhleun .gt_font_bold {
+  font-weight: bold;
+}
+
+#dpdgzhleun .gt_font_italic {
+  font-style: italic;
+}
+
+#dpdgzhleun .gt_super {
+  font-size: 65%;
+}
+
+#dpdgzhleun .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#dpdgzhleun .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dpdgzhleun .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dpdgzhleun .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dpdgzhleun .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dpdgzhleun .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dpdgzhleun .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#dpdgzhleun .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#dpdgzhleun div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3022,7 +4240,7 @@ N = 51,050<span class="gt_footnote_marks" style="white-space:nowrap;font-style:i
 </section><section class="level2"><h3 id="participants-with-hippocampal-volumes">Participants with hippocampal volumes<a class="anchor" aria-label="anchor" href="#participants-with-hippocampal-volumes"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">HIPPOCAMPUS</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -3049,26 +4267,26 @@ N = 51,050<span class="gt_footnote_marks" style="white-space:nowrap;font-style:i
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html" class="external-link">bold_labels</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </details><div id="tbl-mri-char" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mri-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 4: Characteristics of all participants with MRI data by baseline UDS diagnosis.
+Table 5: Characteristics of all participants with MRI data by baseline UDS diagnosis.
 </figcaption><div aria-describedby="tbl-mri-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="bkqqcyuloo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bkqqcyuloo table {
+<div id="jxuxlmwqwh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jxuxlmwqwh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bkqqcyuloo thead, #bkqqcyuloo tbody, #bkqqcyuloo tfoot, #bkqqcyuloo tr, #bkqqcyuloo td, #bkqqcyuloo th {
+#jxuxlmwqwh thead, #jxuxlmwqwh tbody, #jxuxlmwqwh tfoot, #jxuxlmwqwh tr, #jxuxlmwqwh td, #jxuxlmwqwh th {
   border-style: none;
 }
 
-#bkqqcyuloo p {
+#jxuxlmwqwh p {
   margin: 0;
   padding: 0;
 }
 
-#bkqqcyuloo .gt_table {
+#jxuxlmwqwh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -3094,12 +4312,12 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-left-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_caption {
+#jxuxlmwqwh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bkqqcyuloo .gt_title {
+#jxuxlmwqwh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3111,7 +4329,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-bottom-width: 0;
 }
 
-#bkqqcyuloo .gt_subtitle {
+#jxuxlmwqwh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3123,7 +4341,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-top-width: 0;
 }
 
-#bkqqcyuloo .gt_heading {
+#jxuxlmwqwh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3135,13 +4353,13 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-right-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_bottom_border {
+#jxuxlmwqwh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_col_headings {
+#jxuxlmwqwh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3156,7 +4374,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-right-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_col_heading {
+#jxuxlmwqwh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3176,7 +4394,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   overflow-x: hidden;
 }
 
-#bkqqcyuloo .gt_column_spanner_outer {
+#jxuxlmwqwh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3188,15 +4406,15 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   padding-right: 4px;
 }
 
-#bkqqcyuloo .gt_column_spanner_outer:first-child {
+#jxuxlmwqwh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bkqqcyuloo .gt_column_spanner_outer:last-child {
+#jxuxlmwqwh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bkqqcyuloo .gt_column_spanner {
+#jxuxlmwqwh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3208,11 +4426,11 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   width: 100%;
 }
 
-#bkqqcyuloo .gt_spanner_row {
+#jxuxlmwqwh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bkqqcyuloo .gt_group_heading {
+#jxuxlmwqwh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3238,7 +4456,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   text-align: left;
 }
 
-#bkqqcyuloo .gt_empty_group_heading {
+#jxuxlmwqwh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3253,15 +4471,15 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   vertical-align: middle;
 }
 
-#bkqqcyuloo .gt_from_md > :first-child {
+#jxuxlmwqwh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bkqqcyuloo .gt_from_md > :last-child {
+#jxuxlmwqwh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bkqqcyuloo .gt_row {
+#jxuxlmwqwh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3280,7 +4498,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   overflow-x: hidden;
 }
 
-#bkqqcyuloo .gt_stub {
+#jxuxlmwqwh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3293,7 +4511,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   padding-right: 5px;
 }
 
-#bkqqcyuloo .gt_stub_row_group {
+#jxuxlmwqwh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3307,15 +4525,15 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   vertical-align: top;
 }
 
-#bkqqcyuloo .gt_row_group_first td {
+#jxuxlmwqwh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bkqqcyuloo .gt_row_group_first th {
+#jxuxlmwqwh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bkqqcyuloo .gt_summary_row {
+#jxuxlmwqwh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3325,16 +4543,16 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   padding-right: 5px;
 }
 
-#bkqqcyuloo .gt_first_summary_row {
+#jxuxlmwqwh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_first_summary_row.thick {
+#jxuxlmwqwh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bkqqcyuloo .gt_last_summary_row {
+#jxuxlmwqwh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3344,7 +4562,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-bottom-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_grand_summary_row {
+#jxuxlmwqwh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3354,7 +4572,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   padding-right: 5px;
 }
 
-#bkqqcyuloo .gt_first_grand_summary_row {
+#jxuxlmwqwh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3364,7 +4582,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-top-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_last_grand_summary_row_top {
+#jxuxlmwqwh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3374,11 +4592,11 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-bottom-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_striped {
+#jxuxlmwqwh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bkqqcyuloo .gt_table_body {
+#jxuxlmwqwh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3387,7 +4605,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-bottom-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_footnotes {
+#jxuxlmwqwh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3401,7 +4619,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-right-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_footnote {
+#jxuxlmwqwh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -3410,7 +4628,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   padding-right: 5px;
 }
 
-#bkqqcyuloo .gt_sourcenotes {
+#jxuxlmwqwh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3424,7 +4642,7 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   border-right-color: #D3D3D3;
 }
 
-#bkqqcyuloo .gt_sourcenote {
+#jxuxlmwqwh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3432,72 +4650,72 @@ Table 4: Characteristics of all participants with MRI data by baseline UDS diag
   padding-right: 5px;
 }
 
-#bkqqcyuloo .gt_left {
+#jxuxlmwqwh .gt_left {
   text-align: left;
 }
 
-#bkqqcyuloo .gt_center {
+#jxuxlmwqwh .gt_center {
   text-align: center;
 }
 
-#bkqqcyuloo .gt_right {
+#jxuxlmwqwh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bkqqcyuloo .gt_font_normal {
+#jxuxlmwqwh .gt_font_normal {
   font-weight: normal;
 }
 
-#bkqqcyuloo .gt_font_bold {
+#jxuxlmwqwh .gt_font_bold {
   font-weight: bold;
 }
 
-#bkqqcyuloo .gt_font_italic {
+#jxuxlmwqwh .gt_font_italic {
   font-style: italic;
 }
 
-#bkqqcyuloo .gt_super {
+#jxuxlmwqwh .gt_super {
   font-size: 65%;
 }
 
-#bkqqcyuloo .gt_footnote_marks {
+#jxuxlmwqwh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bkqqcyuloo .gt_asterisk {
+#jxuxlmwqwh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bkqqcyuloo .gt_indent_1 {
+#jxuxlmwqwh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bkqqcyuloo .gt_indent_2 {
+#jxuxlmwqwh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bkqqcyuloo .gt_indent_3 {
+#jxuxlmwqwh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bkqqcyuloo .gt_indent_4 {
+#jxuxlmwqwh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bkqqcyuloo .gt_indent_5 {
+#jxuxlmwqwh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bkqqcyuloo .katex-display {
+#jxuxlmwqwh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bkqqcyuloo div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jxuxlmwqwh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -4211,7 +5429,7 @@ N = 7,126<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </section><section class="level2"><h3 id="participants-with-tau-pet">Participants with tau PET<a class="anchor" aria-label="anchor" href="#participants-with-tau-pet"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Tau_PET</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -4236,26 +5454,26 @@ N = 7,126<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html" class="external-link">bold_labels</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </details><div id="tbl-tau-char" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tau-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 5: Characteristics of all participants with tau PET data by baseline UDS diagnosis.
+Table 6: Characteristics of all participants with tau PET data by baseline UDS diagnosis.
 </figcaption><div aria-describedby="tbl-tau-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="njkzkyobgq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#njkzkyobgq table {
+<div id="ktkjpgowdl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ktkjpgowdl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#njkzkyobgq thead, #njkzkyobgq tbody, #njkzkyobgq tfoot, #njkzkyobgq tr, #njkzkyobgq td, #njkzkyobgq th {
+#ktkjpgowdl thead, #ktkjpgowdl tbody, #ktkjpgowdl tfoot, #ktkjpgowdl tr, #ktkjpgowdl td, #ktkjpgowdl th {
   border-style: none;
 }
 
-#njkzkyobgq p {
+#ktkjpgowdl p {
   margin: 0;
   padding: 0;
 }
 
-#njkzkyobgq .gt_table {
+#ktkjpgowdl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -4281,12 +5499,12 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-left-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_caption {
+#ktkjpgowdl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#njkzkyobgq .gt_title {
+#ktkjpgowdl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4298,7 +5516,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-bottom-width: 0;
 }
 
-#njkzkyobgq .gt_subtitle {
+#ktkjpgowdl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4310,7 +5528,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-top-width: 0;
 }
 
-#njkzkyobgq .gt_heading {
+#ktkjpgowdl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4322,13 +5540,13 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-right-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_bottom_border {
+#ktkjpgowdl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_col_headings {
+#ktkjpgowdl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4343,7 +5561,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-right-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_col_heading {
+#ktkjpgowdl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4363,7 +5581,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   overflow-x: hidden;
 }
 
-#njkzkyobgq .gt_column_spanner_outer {
+#ktkjpgowdl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4375,15 +5593,15 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   padding-right: 4px;
 }
 
-#njkzkyobgq .gt_column_spanner_outer:first-child {
+#ktkjpgowdl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#njkzkyobgq .gt_column_spanner_outer:last-child {
+#ktkjpgowdl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#njkzkyobgq .gt_column_spanner {
+#ktkjpgowdl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4395,11 +5613,11 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   width: 100%;
 }
 
-#njkzkyobgq .gt_spanner_row {
+#ktkjpgowdl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#njkzkyobgq .gt_group_heading {
+#ktkjpgowdl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4425,7 +5643,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   text-align: left;
 }
 
-#njkzkyobgq .gt_empty_group_heading {
+#ktkjpgowdl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4440,15 +5658,15 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   vertical-align: middle;
 }
 
-#njkzkyobgq .gt_from_md > :first-child {
+#ktkjpgowdl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#njkzkyobgq .gt_from_md > :last-child {
+#ktkjpgowdl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#njkzkyobgq .gt_row {
+#ktkjpgowdl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4467,7 +5685,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   overflow-x: hidden;
 }
 
-#njkzkyobgq .gt_stub {
+#ktkjpgowdl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4480,7 +5698,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   padding-right: 5px;
 }
 
-#njkzkyobgq .gt_stub_row_group {
+#ktkjpgowdl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4494,15 +5712,15 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   vertical-align: top;
 }
 
-#njkzkyobgq .gt_row_group_first td {
+#ktkjpgowdl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#njkzkyobgq .gt_row_group_first th {
+#ktkjpgowdl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#njkzkyobgq .gt_summary_row {
+#ktkjpgowdl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4512,16 +5730,16 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   padding-right: 5px;
 }
 
-#njkzkyobgq .gt_first_summary_row {
+#ktkjpgowdl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_first_summary_row.thick {
+#ktkjpgowdl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#njkzkyobgq .gt_last_summary_row {
+#ktkjpgowdl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4531,7 +5749,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-bottom-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_grand_summary_row {
+#ktkjpgowdl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4541,7 +5759,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   padding-right: 5px;
 }
 
-#njkzkyobgq .gt_first_grand_summary_row {
+#ktkjpgowdl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4551,7 +5769,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-top-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_last_grand_summary_row_top {
+#ktkjpgowdl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4561,11 +5779,11 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-bottom-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_striped {
+#ktkjpgowdl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#njkzkyobgq .gt_table_body {
+#ktkjpgowdl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4574,7 +5792,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-bottom-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_footnotes {
+#ktkjpgowdl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4588,7 +5806,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-right-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_footnote {
+#ktkjpgowdl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -4597,7 +5815,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   padding-right: 5px;
 }
 
-#njkzkyobgq .gt_sourcenotes {
+#ktkjpgowdl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4611,7 +5829,7 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   border-right-color: #D3D3D3;
 }
 
-#njkzkyobgq .gt_sourcenote {
+#ktkjpgowdl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -4619,72 +5837,72 @@ Table 5: Characteristics of all participants with tau PET data by baseline UDS 
   padding-right: 5px;
 }
 
-#njkzkyobgq .gt_left {
+#ktkjpgowdl .gt_left {
   text-align: left;
 }
 
-#njkzkyobgq .gt_center {
+#ktkjpgowdl .gt_center {
   text-align: center;
 }
 
-#njkzkyobgq .gt_right {
+#ktkjpgowdl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#njkzkyobgq .gt_font_normal {
+#ktkjpgowdl .gt_font_normal {
   font-weight: normal;
 }
 
-#njkzkyobgq .gt_font_bold {
+#ktkjpgowdl .gt_font_bold {
   font-weight: bold;
 }
 
-#njkzkyobgq .gt_font_italic {
+#ktkjpgowdl .gt_font_italic {
   font-style: italic;
 }
 
-#njkzkyobgq .gt_super {
+#ktkjpgowdl .gt_super {
   font-size: 65%;
 }
 
-#njkzkyobgq .gt_footnote_marks {
+#ktkjpgowdl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#njkzkyobgq .gt_asterisk {
+#ktkjpgowdl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#njkzkyobgq .gt_indent_1 {
+#ktkjpgowdl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#njkzkyobgq .gt_indent_2 {
+#ktkjpgowdl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#njkzkyobgq .gt_indent_3 {
+#ktkjpgowdl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#njkzkyobgq .gt_indent_4 {
+#ktkjpgowdl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#njkzkyobgq .gt_indent_5 {
+#ktkjpgowdl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#njkzkyobgq .katex-display {
+#ktkjpgowdl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#njkzkyobgq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ktkjpgowdl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -5380,7 +6598,7 @@ N = 2,604<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </section><section class="level2"><h3 id="participants-with-amyloid-pet">Participants with amyloid PET<a class="anchor" aria-label="anchor" href="#participants-with-amyloid-pet"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_summary.html" class="external-link">tbl_summary</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">dd_cross</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">CENTILOIDS</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>, <span class="va">fct_drop</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -5406,26 +6624,26 @@ N = 2,604<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_italicize_labels_levels.html" class="external-link">bold_labels</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </details><div id="tbl-amyloid-char" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-amyloid-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 6: Characteristics of NACC ADRC participants with amyloid PET data by baseline UDS diagnosis.
+Table 7: Characteristics of NACC ADRC participants with amyloid PET data by baseline UDS diagnosis.
 </figcaption><div aria-describedby="tbl-amyloid-char-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="fnjytbdusf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fnjytbdusf table {
+<div id="qaatflcneb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qaatflcneb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fnjytbdusf thead, #fnjytbdusf tbody, #fnjytbdusf tfoot, #fnjytbdusf tr, #fnjytbdusf td, #fnjytbdusf th {
+#qaatflcneb thead, #qaatflcneb tbody, #qaatflcneb tfoot, #qaatflcneb tr, #qaatflcneb td, #qaatflcneb th {
   border-style: none;
 }
 
-#fnjytbdusf p {
+#qaatflcneb p {
   margin: 0;
   padding: 0;
 }
 
-#fnjytbdusf .gt_table {
+#qaatflcneb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -5451,12 +6669,12 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-left-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_caption {
+#qaatflcneb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fnjytbdusf .gt_title {
+#qaatflcneb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -5468,7 +6686,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-bottom-width: 0;
 }
 
-#fnjytbdusf .gt_subtitle {
+#qaatflcneb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5480,7 +6698,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-top-width: 0;
 }
 
-#fnjytbdusf .gt_heading {
+#qaatflcneb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5492,13 +6710,13 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-right-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_bottom_border {
+#qaatflcneb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_col_headings {
+#qaatflcneb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5513,7 +6731,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-right-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_col_heading {
+#qaatflcneb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5533,7 +6751,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   overflow-x: hidden;
 }
 
-#fnjytbdusf .gt_column_spanner_outer {
+#qaatflcneb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5545,15 +6763,15 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   padding-right: 4px;
 }
 
-#fnjytbdusf .gt_column_spanner_outer:first-child {
+#qaatflcneb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fnjytbdusf .gt_column_spanner_outer:last-child {
+#qaatflcneb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fnjytbdusf .gt_column_spanner {
+#qaatflcneb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5565,11 +6783,11 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   width: 100%;
 }
 
-#fnjytbdusf .gt_spanner_row {
+#qaatflcneb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fnjytbdusf .gt_group_heading {
+#qaatflcneb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5595,7 +6813,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   text-align: left;
 }
 
-#fnjytbdusf .gt_empty_group_heading {
+#qaatflcneb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5610,15 +6828,15 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   vertical-align: middle;
 }
 
-#fnjytbdusf .gt_from_md > :first-child {
+#qaatflcneb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fnjytbdusf .gt_from_md > :last-child {
+#qaatflcneb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fnjytbdusf .gt_row {
+#qaatflcneb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5637,7 +6855,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   overflow-x: hidden;
 }
 
-#fnjytbdusf .gt_stub {
+#qaatflcneb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5650,7 +6868,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   padding-right: 5px;
 }
 
-#fnjytbdusf .gt_stub_row_group {
+#qaatflcneb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5664,15 +6882,15 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   vertical-align: top;
 }
 
-#fnjytbdusf .gt_row_group_first td {
+#qaatflcneb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fnjytbdusf .gt_row_group_first th {
+#qaatflcneb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fnjytbdusf .gt_summary_row {
+#qaatflcneb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5682,16 +6900,16 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   padding-right: 5px;
 }
 
-#fnjytbdusf .gt_first_summary_row {
+#qaatflcneb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_first_summary_row.thick {
+#qaatflcneb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fnjytbdusf .gt_last_summary_row {
+#qaatflcneb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5701,7 +6919,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-bottom-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_grand_summary_row {
+#qaatflcneb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5711,7 +6929,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   padding-right: 5px;
 }
 
-#fnjytbdusf .gt_first_grand_summary_row {
+#qaatflcneb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5721,7 +6939,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-top-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_last_grand_summary_row_top {
+#qaatflcneb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5731,11 +6949,11 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-bottom-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_striped {
+#qaatflcneb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fnjytbdusf .gt_table_body {
+#qaatflcneb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5744,7 +6962,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-bottom-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_footnotes {
+#qaatflcneb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5758,7 +6976,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-right-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_footnote {
+#qaatflcneb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -5767,7 +6985,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   padding-right: 5px;
 }
 
-#fnjytbdusf .gt_sourcenotes {
+#qaatflcneb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5781,7 +6999,7 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   border-right-color: #D3D3D3;
 }
 
-#fnjytbdusf .gt_sourcenote {
+#qaatflcneb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -5789,72 +7007,72 @@ Table 6: Characteristics of NACC ADRC participants with amyloid PET data by bas
   padding-right: 5px;
 }
 
-#fnjytbdusf .gt_left {
+#qaatflcneb .gt_left {
   text-align: left;
 }
 
-#fnjytbdusf .gt_center {
+#qaatflcneb .gt_center {
   text-align: center;
 }
 
-#fnjytbdusf .gt_right {
+#qaatflcneb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fnjytbdusf .gt_font_normal {
+#qaatflcneb .gt_font_normal {
   font-weight: normal;
 }
 
-#fnjytbdusf .gt_font_bold {
+#qaatflcneb .gt_font_bold {
   font-weight: bold;
 }
 
-#fnjytbdusf .gt_font_italic {
+#qaatflcneb .gt_font_italic {
   font-style: italic;
 }
 
-#fnjytbdusf .gt_super {
+#qaatflcneb .gt_super {
   font-size: 65%;
 }
 
-#fnjytbdusf .gt_footnote_marks {
+#qaatflcneb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fnjytbdusf .gt_asterisk {
+#qaatflcneb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fnjytbdusf .gt_indent_1 {
+#qaatflcneb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fnjytbdusf .gt_indent_2 {
+#qaatflcneb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fnjytbdusf .gt_indent_3 {
+#qaatflcneb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fnjytbdusf .gt_indent_4 {
+#qaatflcneb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fnjytbdusf .gt_indent_5 {
+#qaatflcneb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fnjytbdusf .katex-display {
+#qaatflcneb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fnjytbdusf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qaatflcneb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -6552,7 +7770,7 @@ N = 4,206<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 <section class="level2"><h3 id="loess-trends">LOESS Trends<a class="anchor" aria-label="anchor" href="#loess-trends"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pd1</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NACCID</span>, <span class="va">Age</span>, <span class="va">Etiology</span>, <span class="va">NACCUDSD</span>, <span class="va">NACCETPR</span>,</span>
 <span>    <span class="va">CENTILOIDS</span>, <span class="va">HIPPOCAMPUS</span>, <span class="va">Tau_PET_ComBat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -6641,7 +7859,7 @@ N = 4,206<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </section><section class="level2"><h3 id="spaghetti-plots">Spaghetti plots<a class="anchor" aria-label="anchor" href="#spaghetti-plots"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NACCID</span>, SOURCE <span class="op">=</span> <span class="va">Amyloid_SOURCE</span>, <span class="va">Etiology</span>, <span class="va">Age</span>, <span class="va">NACCUDSD</span>, <span class="va">NACCETPR</span>, <span class="va">CENTILOIDS</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">CENTILOIDS</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -6675,7 +7893,7 @@ N = 4,206<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NACCID</span>, SOURCE <span class="op">=</span> <span class="va">Tau_SOURCE</span>, <span class="va">Etiology</span>, <span class="va">Age</span>, <span class="va">NACCUDSD</span>, <span class="va">NACCETPR</span>, <span class="va">Tau_PET_ComBat</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Tau_PET_ComBat</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -6709,7 +7927,7 @@ N = 4,206<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NACCID</span>, SOURCE <span class="op">=</span> <span class="va">MRI_SOURCE</span>, <span class="va">Etiology</span>, <span class="va">Age</span>, <span class="va">NACCUDSD</span>, <span class="va">NACCETPR</span>, <span class="va">HIPPOCAMPUS</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">HIPPOCAMPUS</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Age</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -6743,7 +7961,7 @@ N = 4,206<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pd</span> <span class="op">&lt;-</span> <span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">NACCID</span>, <span class="va">Age</span>, <span class="va">Etiology</span>, <span class="va">NACCUDSD</span>, <span class="va">NACCETPR</span>,</span>
 <span>    <span class="va">PHC_MEM</span>, <span class="va">PHC_EXF</span>, <span class="va">PHC_LAN</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -6780,7 +7998,7 @@ N = 4,206<span class="gt_footnote_marks" style="white-space:nowrap;font-style:it
 </section><section class="level2"><h3 id="combat-harmonization-of-tau-pet-tracers">ComBat Harmonization of tau PET (tracers)<a class="anchor" aria-label="anchor" href="#combat-harmonization-of-tau-pet-tracers"></a>
 </h3>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dd</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Tau_PET_ComBat</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Tau_PET</span>, y <span class="op">=</span> <span class="va">Tau_PET_ComBat</span>, color <span class="op">=</span> <span class="va">Tau_TRACER</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
