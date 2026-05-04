@@ -166,7 +166,11 @@ SCAN_id <- dd %>%
   pull(NACCID) %>% unique() %>%
   setdiff(CLARiTI_id)
 
-Mixed_id <- setdiff(dd$NACCID, c(CLARiTI_id, SCAN_id))
+Mixed_id <- dd %>%
+  filter(MRI_SOURCE == 'Mixed protocol' | Tau_SOURCE == 'SCAN MP' | 
+    Amyloid_SOURCE == 'SCAN MP') %>%
+  pull(NACCID) %>% unique() %>%
+  setdiff(c(CLARiTI_id, SCAN_id))
 
 # harmonize tau PET data ----
 tmp <- dd %>% filter(!is.na(Tau_PET) & !is.na(Age)) %>%
@@ -192,8 +196,9 @@ dd_cross <- dd %>%
       NACCID %in% clariti_edc$NACCID ~ 'CLARiTI',
       NACCID %in% CLARiTI_id ~ 'CLARiTI',
       NACCID %in% SCAN_id ~ 'SCAN',
-      TRUE ~ 'Mixed protocol') %>%
-      factor(levels = c('CLARiTI', 'SCAN', 'Mixed protocol')),
+      NACCID %in% Mixed_id ~ 'Mixed protocol',
+      TRUE ~ 'UDS only') %>%
+      factor(levels = c('CLARiTI', 'SCAN', 'Mixed protocol', 'UDS only')),
     PHC_MEM = structure(PHC_MEM, label = 'Harmonized Memory'),
     PHC_EXF = structure(PHC_EXF, label = 'Harmonized Exec Function'), 
     PHC_LAN = structure(PHC_LAN, label = 'Harmonized Language'),
@@ -264,18 +269,18 @@ ggplot(plot_data, aes(x = n, y = Etiology)) +
   labs(y = "", x = "Count (N)")
 ```
 
-```{r fig-all-barplots}
+```{r fig-all-imaging-barplots}
 #| code-fold: true
-#| fig-cap: "Number of pariticpants including CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical diagnosis."
+#| fig-cap: "Number of pariticpants with any imaging data including CLARiTI, SCAN, and mixed-protocol by etiology and UDS clinical diagnosis."
 
 count_data <- dd_cross %>% 
-  filter(NACCUDSD != 'Unknown') %>%
+  filter(NACCUDSD != 'Unknown', Cohort != 'UDS only') %>%
   mutate(across(where(is.factor), fct_drop)) %>%
   group_by(NACCUDSD, Etiology) %>%
   summarise(n = n(), .groups = "drop")
 
 dd_cross %>% 
-  filter(NACCUDSD != 'Unknown') %>%
+  filter(NACCUDSD != 'Unknown', Cohort != 'UDS only') %>%
   mutate(across(where(is.factor), fct_drop)) %>%
   group_by(NACCUDSD, Etiology, Cohort) %>%
   summarise(n = n(), .groups = "drop") %>%
@@ -388,6 +393,15 @@ upset(subset(dd_upset, Cohort %in% c('CLARiTI', 'SCAN')),
   order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
 ```
 
+```{r fig-any-imaging-upset}
+#| code-fold: true
+#| fig-cap: "UpSet plot of participants with any imaging."
+
+upset(subset(dd_upset, Cohort %in% c('CLARiTI', 'SCAN', 'Mixed protocol')), 
+  nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
+  order.by = c("freq", "degree"), decreasing = c(TRUE,FALSE))
+```
+
 ```{r fig-all-upset}
 #| code-fold: true
 #| fig-cap: "UpSet plot of all participants."
@@ -476,6 +490,36 @@ tbl_summary(
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of CLARiTI participants by baseline UDS diagnosis. Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.") %>%
+  modify_footnote_header(
+    footnote = "Row-wise percentage; n (%)",
+    columns = all_stat_cols(),
+    replace = TRUE) %>%
+  bold_labels()
+```
+
+## Participants with any imaging
+
+```{r tbl-any-imaging-char}
+#| code-fold: true
+
+tbl_summary(
+  data = dd_cross %>%
+    filter(Cohort != 'UDS only') %>%
+    mutate(across(where(is.factor), fct_drop)),
+  by = NACCUDSD,
+  include = c("Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
+  type = all_continuous() ~ "continuous2",
+  statistic = list(all_continuous() ~ c(
+    "{mean} ({sd})",
+    "{median} ({p25}, {p75})",
+    "{min}, {max}"),
+    all_categorical() ~ "{n} ({p}%)"),
+  digits = all_continuous() ~ 1,
+  percent = "row",
+  missing_text = "(Missing)") %>%
+  add_overall(last = TRUE) %>%
+  add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
+  modify_caption(caption = "Characteristics of participants with any imaging by baseline UDS diagnosis.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
