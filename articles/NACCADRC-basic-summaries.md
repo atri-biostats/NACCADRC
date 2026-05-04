@@ -17,13 +17,6 @@ library(sva)
 data(mrisbm, taupetnpdka, phc_cognition, amyloidpetgaain, 
 uds_ftldlbd, clariti_edc, uds_mri)
 
-# Data print function
-datatable <- function(data, paging = FALSE, searchable = TRUE, bInfo = FALSE, ...) {
-  DT::datatable(
-    data = data, ...,
-    options = list(paging = paging, searchable = searchable, bInfo = bInfo, ...))
-}
-
 theme_set(theme_minimal())
 
 scale_colour_discrete <-

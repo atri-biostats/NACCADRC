@@ -150,8 +150,7 @@ Code
 
 ``` r
 
-file_manifest %>%
-  datatable(., paging = TRUE)
+reactable(file_manifest)
 ```
 
 Beekly, Duane L, Erin M Ramos, William W Lee, Woodrow D Deitrich, Mary E
