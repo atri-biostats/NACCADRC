@@ -24,16 +24,17 @@ file.remove(file.path('..', 'data', list.files('../data')))
 
 # Store release number and date ----
 # These need to be manually updated with each data release
-data_release_date <- as.Date("2026-04-10")
-uds_version <- "73"
+data_release_date <- as.Date("2026-07-03")
+uds_version <- "74"
 minor_update <- '1'
 package_version <- paste(
   uds_version, 
   format(data_release_date, "%Y%m%d"), 
   minor_update, sep = '.')
-phc_version <- "2024"
-phc_manifest_file <- "NACC_ADSP-PHC_Dec2024_Return-to-Cohort.xlsx"
-clariti_dictionary_file <- "CLARiTI Data Freeze Clean Data Dictionary for Test Freeze v2 01APR2026.xlsx"
+phc_version <- "042026"
+phc_date_stamp <- "2026.02.18"
+# phc_manifest_file <- "NACC_ADSP-PHC_Dec2024_Return-to-Cohort.xlsx"
+edc_dictionary_file <- "edc-data-dictionary.xlsx"
 use_data(phc_version, overwrite = TRUE)
 use_data(data_release_date, overwrite = TRUE)
 use_data(uds_version, overwrite = TRUE)
@@ -45,60 +46,65 @@ xlsx_files <- list.files(pattern = "\\.xlsx$", full.names = TRUE, recursive = TR
 docx_files <- list.files(pattern = "\\.docx$", full.names = TRUE, recursive = TRUE)
 pdf_files <- list.files(pattern = "\\.pdf$", full.names = TRUE, recursive = TRUE)
 
-dict_files_uds <- c(
-  "https://files.alz.washington.edu/documentation/uds3-rdd.csv",
-  "https://files.alz.washington.edu/documentation/rdd-np.csv",
-  "https://files.alz.washington.edu/documentation/rdd-gen.csv")
+# dict_files_uds <- c(
+#   "https://files.alz.washington.edu/documentation/uds3-rdd.csv",
+#   "https://files.alz.washington.edu/documentation/rdd-np.csv",
+#   "https://files.alz.washington.edu/documentation/rdd-gen.csv")
 
 # Build manifest ----
-phc_manifest <- readxl::read_excel(
-  grep(pattern = phc_manifest_file, xlsx_files, value = TRUE), sheet = 1) %>%
-  rename(FileName = `File Name`,
-    FileDescription = `File Description`)
 
 file_manifest <- tibble(
-  FilePath = c(csv_files, xlsx_files, docx_files, pdf_files, dict_files_uds),
-  FileType = c(rep("csv", length(csv_files)), rep("xlsx", length(xlsx_files)),
-    rep("docx", length(docx_files)), rep("pdf", length(pdf_files)),
-    rep("csv", length(dict_files_uds))),
-  FileSize = file.size(c(csv_files, xlsx_files, docx_files, pdf_files, dict_files_uds)),
-  FileMD5 = tools::md5sum(c(csv_files, xlsx_files, docx_files, pdf_files, dict_files_uds))) %>%
+  FilePath = c(csv_files, xlsx_files, docx_files, pdf_files),
+  FileSize = file.size(c(csv_files, xlsx_files, docx_files, pdf_files)),
+  FileMD5 = tools::md5sum(c(csv_files, xlsx_files, docx_files, pdf_files))) %>%
   mutate(
     FileName = basename(FilePath),
     FilePath = dirname(FilePath),
+    FileExt = tools::file_ext(FileName),
     FileType = case_when(
       grepl("_DD_", FileName) ~ "dictionary",
-      grepl("https://", FilePath, fixed = TRUE) ~ "dictionary",
-      grepl(phc_manifest_file, FileName) ~ "documentation",
+      grepl("dictionary", FileName) ~ "dictionary",
       grepl(".docx", FileName, fixed = TRUE) ~ "documentation",
       grepl(".pdf", FileName, fixed = TRUE) ~ "documentation",
       TRUE ~ "data"),
     FileSource = case_when(
-      grepl("NACC_ADSP", FileName, fixed = TRUE) ~ "ADSP PHC",
+      grepl("ADSP_PHC", FileName, fixed = TRUE) ~ "ADSP PHC",
+      grepl("scan_clariti", FileName, fixed = TRUE) ~ "SCAN/CLARiTI",
       grepl("_scan_", FileName, fixed = TRUE) ~ "SCAN",
+      grepl("SCAN-", FileName, fixed = TRUE) ~ "SCAN",
       TRUE ~ "UDS")) %>%
-  left_join(phc_manifest, by = 'FileName') %>%
   mutate(
     Domain = NA,
     Domain = case_when(
       grepl("_edc_", FileName) ~ "Electronic Data Capture (EDC)",
       grepl("mri", FileName) ~ "Imaging MRI",
-      grepl("amyloidpet", FileName) ~ "Imaging Amyloid PET",
-      grepl("fdgpet", FileName) ~ "Imaging FDG PET",
+      grepl("amyloidpet", FileName) ~ "Imaging PET",
+      grepl("fdgpet", FileName) ~ "Imaging PET",
       grepl("pet", FileName) ~ "Imaging PET",
-      grepl("T1_MUSE", FileName) ~ "Imaging _T1",
-      grepl("Biomarker", FileName) ~ "Biomarker",
-      grepl("Cognition", FileName) ~ "Cognition",
-      grepl("FLAIR", FileName) ~ "Imaging _FLAIR"),
+      grepl("T1_MUSE", FileName) ~ "Imaging T1",
+      grepl("FLAIR", FileName) ~ "Imaging FLAIR",
+      grepl("_fcsf_", FileName) ~ "Biomarker",
+      grepl("_ftldlbd_", FileName) ~ "FTLD and LBD modules",
+      grepl("Cardiovascular_Risk", FilePath) ~ "Cardiovascular Risk",
+      grepl("Demographics_Diagnosis", FilePath) ~ "Demographics",
+      grepl("Biomarker", FilePath) ~ "Biomarker",
+      grepl("Cognition", FilePath) ~ "Cognition",
+      grepl("Imaging_DTI", FilePath) ~ "Imaging DTI",
+      grepl("Imaging_FLAIR", FilePath) ~ "Imaging FLAIR",
+      grepl("Imaging_PET", FilePath) ~ "Imaging_PET",
+      grepl("Imaging_T1", FilePath) ~ "Imaging_T1",
+      grepl("Neuropath", FilePath) ~ "Neuropath"),
     Domain = gsub(" _", " ", Domain, fixed = TRUE),
     Domain = gsub("_", " ", Domain, fixed = TRUE),
     Domain = case_when(
       FileType == 'dictionary' ~ 'Data Dictionary',
+      grepl("rdd", FileName) & !grepl(".pdf", FileName) ~ 'Data Dictionary',
       FileType == 'documentation' ~ 'Documentation',
       TRUE ~ Domain),
     DataName = tools::file_path_sans_ext(basename(FileName)),
     DataName = tolower(DataName),
     DataName = gsub("nacc_adsp_phc_", "phc_", DataName, fixed = TRUE),
+    DataName = gsub("nacc-nonuds_adsp_phc_", "phc_nonuds_", DataName, fixed = TRUE),
     DataName = gsub(paste0("_nacc", uds_version), "", DataName, fixed = TRUE),
     DataName = gsub(paste0("_", phc_version), "", DataName, fixed = TRUE),
     DataName = gsub("investigator_scan_", "scan_", DataName, fixed = TRUE),
@@ -107,8 +113,10 @@ file_manifest <- tibble(
     DataName = gsub("_dd", "", DataName, fixed = TRUE),
     DataName = gsub("uds_uds_", "uds_", DataName, fixed = TRUE),
     DataName = gsub("_naccdev", "", DataName, fixed = TRUE),
+    DataName = gsub(paste0("_", phc_date_stamp), "", DataName, fixed = TRUE),
     FileType = case_when(
       grepl(pattern = 'dictionary', x = FileName, ignore.case = TRUE) ~ 'dictionary',
+      grepl("rdd", FileName) & !grepl(".pdf", FileName) ~ 'dictionary',
       TRUE ~ FileType),
     AssociatedData = case_when(
       FileType != 'data' & FileSource == "ADSP PHC" ~ DataName,
@@ -121,6 +129,24 @@ file_manifest <- tibble(
       grepl('return-to-cohort', AssociatedData) ~ '',
       TRUE ~ AssociatedData),
     AssociatedData = gsub("_readme", "", AssociatedData),
+    AssociatedData = gsub("scan_adsp_phc_", "phc_", AssociatedData),
+    AssociatedData = case_when(
+      grepl("biomarker-ee2-csf-ded.pdf", FileName) ~ "uds_fcsf",
+      grepl("data-freeze-read-me.pdf", FileName) ~ "data_dictionary",
+      grepl("imaging-quick-start-guide.pdf", FileName) ~ "data_dictionary",
+      grepl("investigator_fcsf_nacc73.pdf", FileName) ~ "uds_fcsf",
+      grepl("lbd3_1-fvp-ded.pdf", FileName) ~ "uds_ftldlbd",
+      grepl("rdd-genetic-data.pdf", FileName) ~ "uds_ftldlbd",
+      grepl("rdd-imaging-mri.pdf", FileName) ~ "uds_mri",
+      grepl("rdd-imaging-pet.pdf", FileName) ~ "data_dictionary",
+      grepl("rdd-np.pdf", FileName) ~ "phc_neuropath",
+      grepl("SCAN-MRI-Imaging-RDD.pdf", FileName) ~ "data_dictionary",
+      grepl("SCAN-PET-Imaging-RDD.pdf", FileName) ~ "data_dictionary",
+      grepl("rdd-np.pdf", FileName) ~ "data_dictionary",
+      grepl("SCAN-PET-Imaging-RDD.pdf", FileName) ~ "data_dictionary",
+      grepl("SCAN-PET-Imaging-RDD.pdf", FileName) ~ "data_dictionary",
+      grepl("SCAN-PET-Imaging-RDD.pdf", FileName) ~ "data_dictionary",
+      TRUE ~ AssociatedData),
     FileDescription = case_when(
       grepl("investigator_ftldlbd_nacc", FileName) ~ "UDS with NP and Genetics plus FTLD and LBD modules",
       grepl("investigator_mri_nacc", FileName) ~ "Mixed protocol (non-SCAN compliant) MRI",
@@ -128,35 +154,80 @@ file_manifest <- tibble(
       grepl("investigator_scan_mri_nacc", FileName) ~ "SCAN MRI",
       grepl("investigator_scan_pet_nacc", FileName) ~ "SCAN PET")) %>%
   select(DataName, FileName, FileType, AssociatedData, Domain, FileDescription,
-    FileSource, FilePath, FileSize, FileMD5)
+    FileSource, FilePath, FileExt, FileSize, FileMD5)
 
 View(file_manifest)
+DataNames <- file_manifest$DataName
+## check for dictionaries with missing AssociatedData ----
+file_manifest %>% 
+  filter(FileType == 'dictionary' & 
+      (!AssociatedData %in% DataNames | AssociatedData == ''))
+## check for dictionaries with invalid AssociatedData ----
+setdiff(file_manifest$AssociatedData, DataNames)
+
+## check for docs with missing AssociatedData ----
+file_manifest %>% 
+  filter(FileType == 'documentation' & 
+      (!AssociatedData %in% DataNames | AssociatedData == ''))
+## check for docs with invalid AssociatedData ----
+setdiff(file_manifest$AssociatedData, DataNames)
+
+file_manifest0 <- file_manifest
+write.csv(file_manifest0, "file_manifest0.csv", row.names = FALSE)
+file_manifest <- read_csv("file_manifest_manual.csv")
 usethis::use_data(file_manifest, overwrite = TRUE, compress = "xz")
 
 # Read data dictionary files ----
 
-data_dictionary_uds <- lapply(dict_files_uds, function(file_name) {
-  df_name <- basename(file_name) %>%
-    gsub(pattern = "\\.csv$", replacement = "") %>%
-    gsub(pattern = ' ', replacement = '_') %>%
-    gsub(pattern = '-', replacement = '_')
-  fread(file_name, encoding = "Latin-1") %>%
-    mutate(Source = df_name,
-      AllowableCodes = gsub("\u0096", "-", AllowableCodes),
-      ShortDescriptor = gsub("\u0097", "-", ShortDescriptor))
-}) %>% bind_rows() %>%
+data_dictionary_uds <- file_manifest0 %>% 
+  filter(FileType == 'dictionary', FileSource == 'UDS') %>% 
+  mutate(fullpath = file.path(FilePath, FileName)) %>%
+  pull(fullpath) %>%
+  lapply(function(file_name) {
+    print(file_name)
+    df_name <- basename(file_name) %>%
+      gsub(pattern = "\\.csv$", replacement = "") %>%
+      gsub(pattern = ' ', replacement = '_') %>%
+      gsub(pattern = '-', replacement = '_')
+    if(tools::file_ext(file_name) == 'csv')
+      tmp <- fread(file_name, encoding = "UTF-8")
+    if(tools::file_ext(file_name) == 'xlsx'){
+      tmp <- readxl::read_excel(file_name, sheet = "REDCap CLARiTI EDC DD")
+      tmp <- tmp %>% 
+        rename(
+          VariableName = `Freeze \r\nVariable / Field Name`,
+          AllowableCodes = `Choices, Calculations, OR Slider Labels`,
+          ShortDescriptor = `Field Label`)
+    }
+    if("allowable_codes" %in% colnames(tmp))
+      tmp <- tmp %>%
+        rename(
+          VariableName = variable_name,
+          AllowableCodes = allowable_codes,
+          ShortDescriptor = short_descriptor,
+          VariableType = variable_type)
+    tmp %>%
+      mutate(
+        Dictionary = basename(file_name),
+        AllowableCodes = gsub("\u0096", "-", AllowableCodes),
+        ShortDescriptor = gsub("\u0097", "-", ShortDescriptor),
+        VariableName = toupper(VariableName))
+  }) %>% bind_rows() %>%
   filter(!duplicated(VariableName))
 
-dictionary_files_phc <- file_manifest %>%
+dictionary_files_phc <- file_manifest0 %>%
   filter(FileSource == 'ADSP PHC', FileType == 'dictionary') %>%
   pull(FileName)
 
 data_dictionary_phc <- lapply(dictionary_files_phc, function(file_name) {
   message(file_name)
-  man.sub <- file_manifest %>%
+  man.sub <- file_manifest0 %>%
     filter(FileName == file_name)
-  tmp <- readxl::read_excel(file.path(man.sub %>% pull(FilePath),
-    file_name), sheet = 1)
+  if(tools::file_ext(file_name) == 'xlsx')
+    tmp <- readxl::read_excel(file.path(man.sub %>% pull(FilePath),
+      file_name), sheet = 1)
+  if(tools::file_ext(file_name) == 'csv')
+    tmp <- read_csv(file.path(man.sub %>% pull(FilePath), file_name))
   if("Variables" %in% colnames(tmp))
     tmp <- tmp %>% rename(Variable = Variables)
   if(any(grepl("...", colnames(tmp), fixed = TRUE)))
@@ -172,30 +243,16 @@ data_dictionary_phc <- lapply(dictionary_files_phc, function(file_name) {
       AllowableCodes = Values) %>%
     mutate(
       DataName = man.sub$AssociatedData,
-      Source = file_name)
+      Dictionary = file_name)
 }) %>% bind_rows()
 
-data_dictionary_clariti_mri <- readxl::read_excel(
-  clariti_dictionary_file, sheet = "CLARiTI MRI DD", skip = 2) %>%
-  rename(
-    DataName = `Dataset Name`,
-    VariableName = `Variable name`,
-    ShortDescriptor = `Short descriptor`,
-    AllowableCodes = `Allowable codes`)
-
-data_dictionary_clariti_pet <- readxl::read_excel(
-  clariti_dictionary_file, sheet = "CLARiTI PET DD", skip = 2) %>%
-  rename(
-    DataName = `Dataset name`,
-    VariableName = `Source variable name`,
-    ShortDescriptor = `Short descriptor`,
-    AllowableCodes = `Allowable codes`)
+setdiff(
+  file_manifest$Dictionary,
+  unique(c(data_dictionary_phc$Dictionary, data_dictionary_uds$Dictionary)))
 
 # Read and store csv data files, combine dictionaries ----
 
-data_files <- file_manifest %>%
-  filter(FileType == 'data') %>%
-  pull(FileName)
+data_files <- file_manifest %>% pull(FileName)
 
 data_dictionary <- NULL
 for (file_name in data_files) {
@@ -203,8 +260,16 @@ for (file_name in data_files) {
   man.sub <- file_manifest %>%
     filter(FileName == file_name)
   df <- NULL
+  
   if(tools::file_ext(file_name) == "csv"){
-    df <- fread(file.path(man.sub$FilePath, file_name))
+    if(file_name == "investigator_mri_nacc74.csv"){
+      df <- fread(file.path(man.sub$FilePath, file_name),
+        na.strings = c("8888.888", "888.8888", "88.8888", "8.8888", 
+                       "9999.999", "999.9999", "99.9999", "9.9999",
+                       "8888.8888"))
+    }else{
+      df <- fread(file.path(man.sub$FilePath, file_name))
+    }
   }
   if(tools::file_ext(file_name) == "xlsx"){
     df <- readxl::read_excel(file.path(man.sub$FilePath, file_name),
@@ -215,32 +280,18 @@ for (file_name in data_files) {
   # using defaults from use_data
   do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
 
-  if(man.sub$FileSource %in% c("UDS", "SCAN")){
+  if(man.sub$Dictionary %in% data_dictionary_uds$Dictionary){
     tmp <- data_dictionary_uds %>%
       filter(VariableName %in% colnames(df)) %>%
       filter(!duplicated(VariableName)) %>%
       mutate(DataName = df_name)
   }
-  if(man.sub$FileSource == "ADSP PHC"){
+  if(man.sub$Dictionary %in% data_dictionary_phc$Dictionary){
     tmp <- data_dictionary_phc %>%
+      filter(Dictionary == man.sub$Dictionary) %>%
       filter(DataName == df_name) %>%
       filter(VariableName %in% colnames(df)) %>%
       filter(!duplicated(VariableName))
-  }
-  if(man.sub$DataName %in% c("clariti_amyloidpetgaain", "clariti_amyloidpetnpdka", 
-    "clariti_taupetnpdka", "clariti_fdgpetnpdka", "clariti_petqc")){
-    tmp <- data_dictionary_clariti_pet %>%
-      filter(grepl(pattern = df_name, x = DataName)) %>%
-      filter(VariableName %in% colnames(df)) %>%
-      filter(!duplicated(VariableName)) %>%
-      mutate(DataName = df_name)
-  }
-  if(man.sub$DataName %in% c("clariti_mriqc", "clariti_mrisbm")){
-    tmp <- data_dictionary_clariti_mri %>%
-      filter(grepl(pattern = df_name, x = DataName)) %>%
-      filter(VariableName %in% colnames(df)) %>%
-      filter(!duplicated(VariableName)) %>%
-      mutate(DataName = df_name)
   }
   data_dictionary <- bind_rows(data_dictionary, tmp)
 }
@@ -249,7 +300,8 @@ data_dictionary <- data_dictionary %>%
   mutate(AllowableCodes = case_when(
     AllowableCodes == '' ~ NA_character_,
     TRUE ~ AllowableCodes)) %>%
-  select(DataName, everything())
+  select(DataName, everything()) %>%
+  select(where(\(x) any(!is.na(x))))
 
 View(data_dictionary)
 
@@ -259,6 +311,11 @@ if(any(duplicated(with(data_dictionary, paste(DataName, VariableName))))){
     filter(duplicated(paste(DataName, VariableName))) %>%
     View()
 }
+
+# Any data files missing from the data dictionary?
+file_manifest %>%
+  filter(!DataName %in% data_dictionary$DataName) %>%
+  View()
 
 # using defaults from use_data
 usethis::use_data(data_dictionary, overwrite = TRUE, compress = "xz")
@@ -276,7 +333,8 @@ for(file_name in data_files){
         !grepl("-", AllowableCodes))
     if(nrow(dic.sub)>1){
       dic.sub <- dic.sub %>%
-        filter(grepl(df_name, Source))}
+        filter(DataName == df_name)
+    }
     if(nrow(dic.sub)==1){
       levs <- get_levels(dic.sub$AllowableCodes)
       if(all(!is.na(levs))){
@@ -295,7 +353,7 @@ for(file_name in data_files){
   do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
 }
 
-# bind_rows for SCAN, CLARiIT ----
+# bind_rows for SCAN, CLARiIT, MP ----
 
 dup_dir <- file.path('..', 'reports', 'duplicates')
 dir.create(dup_dir, recursive = TRUE)
@@ -305,28 +363,22 @@ file.remove(file.path(dup_dir, list.files(dup_dir)))
 for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
   'taupetnpdka', 'petqc')){
   
-  SCAN <- get(paste0('scan_', df_name))
+  SCAN_CLARiTI <- get(paste0('scan_clariti_', df_name))
   SCAN_MP <- try(get(paste0('scan_mp_', df_name)), silent = TRUE)
-  CLARiTI <- get(paste0('clariti_', df_name))
-  
+
   if(!'try-error' %in% class(SCAN_MP)){
     all_source <- bind_rows(
-      SCAN %>% 
-        mutate(SOURCE = 'SCAN', LONIUID = as.character(LONIUID)),
+      SCAN_CLARiTI %>% 
+        mutate(LONIUID = as.character(LONIUID)),
       SCAN_MP %>% 
-        mutate(SOURCE = 'SCAN MP', LONIUID = as.character(LONIUID)),
-      CLARiTI %>% 
-        mutate(SOURCE = 'CLARiTI', LONIUID = as.character(LONIUID))) %>%
-      select(SOURCE, everything())
+        mutate(PROJECT = 'SCAN MP', LONIUID = as.character(LONIUID))) %>%
+      select(PROJECT, everything())
   }
   
   if('try-error' %in% class(SCAN_MP)){
-    all_source <- bind_rows(
-      SCAN %>% 
-        mutate(SOURCE = 'SCAN', LONIUID = as.character(LONIUID)),
-      CLARiTI %>% 
-        mutate(SOURCE = 'CLARiTI', LONIUID = as.character(LONIUID))) %>%
-      select(SOURCE, everything())
+    all_source <- SCAN_CLARiTI %>% 
+      mutate(LONIUID = as.character(LONIUID)) %>%
+      select(PROJECT, everything())
   }
   
   if("SCANDATE" %in% colnames(all_source)){
@@ -335,7 +387,7 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
       filter(n() > 1) %>%
       ungroup() %>%
       arrange(NACCID, SCANDATE) %>% 
-      select(SOURCE, NACCID, SCANDATE, LONIUID, PROCESSDATE)
+      select(PROJECT, NACCID, SCANDATE, LONIUID)
   }
   
   if("SCAN_DATE" %in% colnames(all_source)){
@@ -344,7 +396,7 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
       filter(n() > 1) %>%
       ungroup() %>%
       arrange(NACCID, SCAN_DATE) %>% 
-      select(SOURCE, NACCID, SCAN_DATE, LONIUID)
+      select(PROJECT, NACCID, SCAN_DATE, LONIUID)
   }
   
   if(nrow(duplicates) > 0){
@@ -359,103 +411,55 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
 }
 
 # Combine files from SCAN, SCAN MP, and CLARiTI for MRI data, if they exist.
-for(df_name in c('mriqc', 'mrisbm')){
-  
-  SCAN <- get(paste0('scan_', df_name))
-  SCAN_MP <- try(get(paste0('scan_mp_', df_name)), silent = TRUE)
-  CLARiTI <- get(paste0('clariti_', df_name))
-  
-  if('try-error' %in% class(SCAN_MP)){
-    all_source <- bind_rows(
-      SCAN %>% 
-        mutate(SOURCE = 'SCAN'),
-      CLARiTI %>% 
-        mutate(SOURCE = 'CLARiTI')) %>%
-      select(SOURCE, everything())
-  }
-  
-  if(!'try-error' %in% class(SCAN_MP)){
-    all_source <- bind_rows(
-      SCAN %>% 
-        mutate(SOURCE = 'SCAN'),
-      SCAN_MP %>% 
-        mutate(SOURCE = 'SCAN MP'),
-      CLARiTI %>% 
-        mutate(SOURCE = 'CLARiTI')) %>%
-      select(SOURCE, everything())
-  }
-  
-  if("STUDYDATE" %in% colnames(all_source)){
-    duplicates <- all_source %>%
-      group_by(NACCID, STUDYDATE) %>%
-      filter(n() > 1) %>%
-      ungroup() %>%
-      arrange(NACCID, STUDYDATE) %>% 
-      select(SOURCE, NACCID, STUDYDATE)
-  }
-  
-  if("SCANDT" %in% colnames(all_source)){
-    duplicates <- all_source %>%
-      group_by(NACCID, SCANDT) %>%
-      filter(n() > 1) %>%
-      ungroup() %>%
-      arrange(NACCID, SCANDT) %>% 
-      select(SOURCE, NACCID, SCANDT)
-  }
-  
-  if(nrow(duplicates) > 0){
-    warning(paste("Duplicate NACCID and SCANDATE combinations in", df_name, "after combining sources."))
-    write.csv(duplicates, 
-      file.path(dup_dir, paste0(df_name, "_duplicates.csv")), 
-      row.names = FALSE)
-  }
-  
-  assign(df_name, all_source)
-  do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
+df_name <- "mrisbm"
+mrisbm <- scan_clariti_mrisbm %>%
+  bind_rows(uds_mri %>% 
+      filter(NACCMVOL == 1) %>%
+      unite("SCANDT", MRIYR, MRIMO, MRIDY, sep = '-') %>%
+      mutate(
+        PROJECT = 'SCAN MP',
+        SCANDT = as.IDate(SCANDT))) %>%
+  select(PROJECT, everything())
+
+duplicates <- mrisbm %>%
+  group_by(NACCID, SCANDT) %>%
+  filter(n() > 1) %>%
+  ungroup() %>%
+  arrange(NACCID, SCANDT) %>% 
+  select(PROJECT, NACCID, SCANDT)
+
+if(nrow(duplicates) > 0){
+  warning(paste("Duplicate NACCID and SCANDATE combinations in", df_name, "after combining sources."))
+  write.csv(duplicates, 
+    file.path(dup_dir, paste0("mrisbm", "_duplicates.csv")), 
+    row.names = FALSE)
 }
+
+do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
 
 ## remove individual files that have been combined ----
 for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
-  'taupetnpdka', 'mriqc', 'mrisbm', 'petqc')){
+  'taupetnpdka', 'mrisbm', 'petqc')){
   
-  for(x in c("scan_", "scan_mp_", "clariti_")){
+  for(x in c("scan_clariti_", "scan_mp_")){
     df_name1 <- paste0(x, df_name)
     if(exists(df_name1)){
       rm(list = df_name1)
       file.remove(file.path("..", "data", paste0(df_name1, ".rda")))
+      data_dictionary <- data_dictionary %>%
+        mutate(DataName = case_when(
+          DataName == df_name1 ~ df_name,
+          TRUE ~ DataName)) %>%
+        filter(!duplicated(paste(DataName, VariableName)))
+      file_manifest <- file_manifest %>%
+        mutate(DataName = case_when(
+          DataName == df_name1 ~ df_name,
+          TRUE ~ DataName))
     }}
 }
 
-## relabel manifest ----
-file_manifest <- file_manifest %>%
-  mutate(
-    DataName = case_when(
-      grepl('amyloidpetgaain', DataName) ~ 'amyloidpetgaain',
-      grepl('amyloidpetnpdka', DataName) ~ 'amyloidpetnpdka',
-      grepl('fdgpetnpdka', DataName) ~ 'fdgpetnpdka',
-      grepl('taupetnpdka', DataName) ~ 'taupetnpdka',
-      grepl('mriqc', DataName) ~ 'mriqc',
-      grepl('mrisbm', DataName) ~ 'mrisbm',
-      grepl('petqc', DataName) ~ 'petqc',
-      TRUE ~ DataName))
-
 View(file_manifest)
 usethis::use_data(file_manifest, overwrite = TRUE, compress = "xz")
-
-## relabel data dictionary ----
-data_dictionary <- data_dictionary %>%
-  mutate(
-    DataName = case_when(
-      grepl('amyloidpetgaain', DataName) ~ 'amyloidpetgaain',
-      grepl('amyloidpetnpdka', DataName) ~ 'amyloidpetnpdka',
-      grepl('fdgpetnpdka', DataName) ~ 'fdgpetnpdka',
-      grepl('taupetnpdka', DataName) ~ 'taupetnpdka',
-      grepl('mriqc', DataName) ~ 'mriqc',
-      grepl('mrisbm', DataName) ~ 'mrisbm',
-      grepl('petqc', DataName) ~ 'petqc',
-      TRUE ~ DataName)) %>%
-  distinct(DataName, VariableName, .keep_all = TRUE)
-
 View(data_dictionary)
 
 if(any(duplicated(with(data_dictionary, paste(DataName, VariableName)))))
@@ -465,7 +469,9 @@ if(any(duplicated(with(data_dictionary, paste(DataName, VariableName)))))
 usethis::use_data(data_dictionary, overwrite = TRUE, compress = "xz")
 
 # Add vignettes for static docx documents ----
-dir.create(file.path("..", "vignettes"))
+vign_path <- file.path("..", "vignettes")
+dir.create(vign_path)
+# Note: remove pdf files, etc.
 
 for (file_name in docx_files) {
   doc_name <- gsub(' ', '_', tools::file_path_sans_ext(basename(file_name)))
@@ -516,6 +522,10 @@ cat('', file = file.path("..", "R", "data.R"))
 for (tt in sort(setdiff(unique(file_manifest$DataName),''))) {
   man.sub <- file_manifest %>% 
     filter(DataName == tt)
+  Vignettes <- strsplit(man.sub$Methods, "; ")[[1]] %>%
+    basename() %>%
+    tools::file_path_sans_ext()
+  Vignettes <- paste0(paste0("#' vignette('", Vignettes, "')"), collapse = "\n")
   if(nrow(man.sub)>0){
     man.sub <- as.data.frame(man.sub)
     man.sub[is.na(man.sub)] <- ''
@@ -530,7 +540,6 @@ for (tt in sort(setdiff(unique(file_manifest$DataName),''))) {
   }
   dd <- get(tt)
   message('Documenting ', tt)
-  vignette <- grep(tt, docx_files, value = TRUE)
   dic.sub <- subset(data_dictionary, VariableName %in% colnames(dd)) %>%
     filter(!duplicated(VariableName))
   if(any(!colnames(dd) %in% dic.sub$VariableName)){
@@ -575,9 +584,7 @@ for (tt in sort(setdiff(unique(file_manifest$DataName),''))) {
     "#' @source \\href{https://www.naccdata.org/about-nacc-data/}{https://www.naccdata.org/about-nacc-data/}.",
     "#' @examples",
     "#' \\dontrun{",
-    ifelse(length(vignette)==1, 
-      paste0("#' vignette('", tools::file_path_sans_ext(basename(vignette)), "')"),
-      ""),
+    ifelse(length(Vignettes)>0, Vignettes, ""),
     "#' browseVignettes('NACCADRC')",
     "#' }",
     "NULL\n", sep = "\n",
@@ -602,6 +609,7 @@ taupetnpdka <- taupetnpdka %>%
 usethis::use_data(taupetnpdka, overwrite = TRUE, compress = "xz")
 
 ## amyloidpetgaain ----
+# data_dictionary %>% filter(VariableName == "TRACER")
 amyloidpetgaain <- amyloidpetgaain %>%
   mutate(
     AMYLOID_STATUS = factor(AMYLOID_STATUS, 
@@ -632,14 +640,14 @@ uds_ftldlbd <- uds_ftldlbd %>%
       NACCUDSD == 8 ~ 'No cognitive impairment, only behavioral impairment') %>%
       factor(levels = c('Normal cognition', 'Impaired-not-MCI', 'MCI',
         'Dementia', 'No cognitive impairment, only behavioral impairment')),
-    NACCSEX = case_when(
-      NACCSEX == 1 ~ 'Male',
-      NACCSEX == 2 ~ 'Female',
-      NACCSEX == 8 ~ 'Prefer not to answer',
-      NACCSEX == 9 ~ 'Unknown') %>% 
-      factor(levels = c('Male', 'Female', 'Prefer not to answer', 'Unknown')),
-    NACCHISP = factor(NACCHISP, 
-      levels = c(0,1,9), labels = c("No", "Yes", "Unknown")),
+    # NACCSEX = case_when(
+    #   NACCSEX == 1 ~ 'Male',
+    #   NACCSEX == 2 ~ 'Female',
+    #   NACCSEX == 8 ~ 'Prefer not to answer',
+    #   NACCSEX == 9 ~ 'Unknown') %>% 
+    #   factor(levels = c('Male', 'Female', 'Prefer not to answer', 'Unknown')),
+    # NACCHISP = factor(NACCHISP, 
+    #   levels = c(0,1,9), labels = c("No", "Yes", "Unknown")),
     NACCETPR = case_when(
       NACCETPR == 1 ~ "Alzheimer's disease (AD)",
       NACCETPR == 2 ~ 'Lewy body disease (LBD)',
@@ -672,6 +680,9 @@ uds_ftldlbd <- uds_ftldlbd %>%
       NACCETPR == 29 ~ 'Cognitive impairment due to medications',
       NACCETPR == 30 ~ 'Cognitive impairment for other specified reasons (i.e., written-in values)',
       NACCETPR == 31 ~ 'Developmental neuropsychiatric disorders (e.g., autism spectrum disorder (ASD), attention-deficit hyperactivity disorder (ADHD), dyslexia)',
+      NACCETPR == 32 ~ 'Chronic traumatic encephalopathy (CTE)',
+      NACCETPR == 33 ~ 'Cerebral amyloid angiopathy (CAA)',
+      NACCETPR == 34 ~ 'Limbic-predominant age-related TDP-43 Encephalopathy (LATE)',
       NACCETPR == 88 ~ 'Not applicable, not cognitively impaired',
       NACCETPR == 99 ~ 'Missing/unknown') %>%
       factor(levels = c(
@@ -706,6 +717,9 @@ uds_ftldlbd <- uds_ftldlbd %>%
         'Cognitive impairment due to medications',
         'Cognitive impairment for other specified reasons (i.e., written-in values)',
         'Developmental neuropsychiatric disorders (e.g., autism spectrum disorder (ASD), attention-deficit hyperactivity disorder (ADHD), dyslexia)',
+        'Chronic traumatic encephalopathy (CTE)',
+        'Cerebral amyloid angiopathy (CAA)',
+        'Limbic-predominant age-related TDP-43 Encephalopathy (LATE)',
         'Not applicable, not cognitively impaired',
         'Missing/unknown')))
 
@@ -721,15 +735,15 @@ qc_dir <- file.path('..', 'reports', 'qc')
 dir.create(qc_dir, recursive = TRUE)
 file.remove(file.path(qc_dir, list.files(qc_dir)))
 
-mrisbm %>% filter(SOURCE == 'CLARiTI' & !NACCID %in% clariti_edc$NACCID) %>%
+mrisbm %>% filter(grepl("CLARITI", PROJECT) & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, SCANDT) %>%
   write.csv(file.path(qc_dir, "mrisbm_clariti_no_edc.csv"), row.names = FALSE)
 
-amyloidpetgaain %>% filter(SOURCE == 'CLARiTI' & !NACCID %in% clariti_edc$NACCID) %>%
+amyloidpetgaain %>% filter(PROJECT == 'CLARITI' & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, SCANDATE) %>%
   write.csv(file.path(qc_dir, "amyloidpetgaain_clariti_no_edc.csv"), row.names = FALSE)
 
-taupetnpdka %>% filter(SOURCE == 'CLARiTI' & !NACCID %in% clariti_edc$NACCID) %>%
+taupetnpdka %>% filter(PROJECT == 'CLARITI' & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, LONIUID, SCANDATE, PROCESSDATE) %>%
   write.csv(file.path(qc_dir, "taupetnpdka_clariti_no_edc.csv"), row.names = FALSE)
 

@@ -8,14 +8,14 @@ reference:
     contents:
     - starts_with("data_dictionary")
 
-  - title: Combined Imaging Datasets
+  - title: Imaging Datasets
     desc: > 
        Mixed-Protocol, SCAN, and CLARiTI imaging data.
     contents:
     - starts_with("amyloidpetgaain")
     - starts_with("amyloidpetnpdka")
     - starts_with("fdgpetnpdka")
-    - starts_with("mriqc")
+    - starts_with("scan_clariti_mriqc")
     - starts_with("mrisbm")
     - starts_with("petqc")
     - starts_with("taupetnpdka")

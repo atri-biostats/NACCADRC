@@ -9,7 +9,7 @@ To obtain ADSP PHC data, you will need to have an AWS account with permissions t
 ```
 aws configure
 aws s3 ls s3://adsp-phc-quickaccess/investigator/
-aws s3 cp s3://adsp-phc-quickaccess/investigator/ADSP-PHC-[<update>]-investigator.zip
+aws s3 cp s3://adsp-phc-quickaccess/investigator/ADSP-PHC-[<update>]-investigator.zip ./
 ```
 
 Unzip the downloaded file and save the contents to `data-raw`.
