@@ -1,8 +1,10 @@
 # petqc
 
-NACCADRC UDS, SCAN Imaging PET dataset. The data is sourced from the
-file(s) investigator_clariti_petqc_naccDEV.csv,
-investigator_scan_petqc_nacc73.csv.
+NACCADRC SCAN/CLARiTI Imaging PET dataset. SCAN FDG PET data processed
+through SCAN PET Core (Contains SCAN-compliant data on ADRC participants
+funded through any mechanism, including P30 funds, CLARiTI funded, or
+other sources). The data is sourced from the file(s)
+investigator_scan_clariti_petqc_nacc74.csv.
 
 ## Usage
 
@@ -12,39 +14,43 @@ data(petqc)
 
 ## Format
 
-A data frame with 8284 rows and 13 variables:
+A data frame with 8759 rows and 14 variables:
 
-- SOURCE:
-
-- NACCID:
-
-  Participant ID
+- PROJECT:
 
 - NACCADC:
 
-  ADC at which participant was seen (100 –9999)
+  ADC at which subject was seen (100-9999)
 
-- SCAN_DATE:
+- NACCID:
 
-- SCAN_TIME:
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
+
+- SCANDATE:
+
+  Date of PET Scan
+
+- SCANTIME:
 
 - RADIOTRACER:
 
 - LONIUID:
 
-  LONI Image ID (Prefix “I” followed by 8 numerals)
+  LONI Image ID
 
-- SCANNER_MODEL:
+- SCANNERMODEL:
 
-- PASS_FAIL:
+- PASSFAIL:
 
-- FAIL_REASON:
+- FAILREASON:
 
-- FAIL_REASON_OTHER:
+- FAILREASONOTHER:
 
-- FAIL_STATUS:
+- FAILSTATUS:
 
-- FUNDING_SOURCE:
+- FUNDINGSOURCE:
+
+- QCUPDATESTAMP:
 
 ## Source
 
@@ -54,6 +60,7 @@ A data frame with 8284 rows and 13 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('SCAN-PET-Imaging-RDD')
 browseVignettes('NACCADRC')
 } # }
 ```

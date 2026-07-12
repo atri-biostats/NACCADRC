@@ -1,18 +1,18 @@
-# phc_neuropath
+# phc_nonuds_neuropath
 
 NACCADRC ADSP PHC Neuropath dataset. ADSP Phenotype Harmonization
 Consortium Neuropath. The data is sourced from the file(s)
-NACC_ADSP_PHC_Neuropath_2026.02.18.csv.
+NACC-nonUDS_ADSP_PHC_Neuropath_2026.02.18.csv.
 
 ## Usage
 
 ``` r
-data(phc_neuropath)
+data(phc_nonuds_neuropath)
 ```
 
 ## Format
 
-A data frame with 7931 rows and 35 variables:
+A data frame with 12464 rows and 39 variables:
 
 - NACCID:
 
@@ -25,6 +25,25 @@ A data frame with 7931 rows and 35 variables:
 - PHC_AgeDeath:
 
   Age at Death
+
+- PHC_Sex:
+
+  Sex (1 = Male 2 = Female)
+
+- PHC_Race:
+
+  NIH Racial Categories (1 = American Indian or Alaska Native 2 = Asian
+  3 = Black or African American 4 = Native Hawaiian or Other Pacific
+  Islander 5 = White 6 = Other, Unknown, or More than one race)
+
+- PHC_Ethnicity:
+
+  Hispanic or Latino or Not Hispanic or Latino (1 = Hispanic or Latino 2
+  = Not Hispanic or Latino NA = Not available)
+
+- PHC_Education:
+
+  Years of Education
 
 - PHC_BRAINWT:
 
@@ -183,7 +202,7 @@ A data frame with 7931 rows and 35 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
-vignette('NACC_ADSP_PHC_Neuropath_ReadME_2026.02.18')
+vignette('NACC-nonUDS_ADSP_PHC_Neuropath_ReadME_2026.02.18')
 browseVignettes('NACCADRC')
 } # }
 ```

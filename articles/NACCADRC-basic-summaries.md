@@ -24,7 +24,10 @@ scale_colour_discrete <-
 scale_fill_discrete <-
   function(...) ggsci::scale_fill_jama()
 
-cohort_color <- c(CLARiTI = "#C02126", SCAN = "#173058", "Mixed protocol" = "#42B540FF", "SCAN MP" = "#42B540FF")
+cohort_color <- c(CLARITI = "#C02126", CLARiTI = "#C02126", 
+  SCAN = "#173058", 
+  "Mixed protocol" = "#42B540FF", "SCAN MP" = "#42B540FF",
+  PENDING = "#80796BFF")
 ```
 
 ## Merge key imaging and PHC cognitive data
@@ -35,13 +38,7 @@ Code
 
 ## Combine hippocampal volume from SCAN and Mixed Protocol (UDS) ----
 mri_hipp <- mrisbm %>%          # SCAN volumes
-  select(SOURCE, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV = CEREBRUMTCV) %>%
-  bind_rows(uds_mri %>%         # Mixed Protocol (UDS) volumes
-    select(NACCID, MRIYR, MRIMO, MRIDY, HIPPOCAMPUS = HIPPOVOL, ICV = NACCICV) %>%
-    filter(HIPPOCAMPUS != 88.8888, ICV != 9999.999, !is.na(HIPPOCAMPUS)) %>%
-    mutate(
-      DATE = as.IDate(paste(MRIYR, MRIMO, MRIDY, sep='-')),
-      SOURCE = 'Mixed protocol')) %>%
+  select(PROJECT, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV = CEREBRUMTCV) %>%
   distinct(NACCID, DATE, .keep_all = TRUE)
 
 NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
@@ -50,20 +47,20 @@ NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
 dd_atn <- clariti_edc %>% 
   select(NACCID) %>% distinct() %>% mutate(`CLARiTI EDC` = 'Yes') %>%
   full_join(mri_hipp %>%                 # Hippocampal volumes
-      select(NACCID, MRI_SOURCE = SOURCE, DATE, HIPPOCAMPUS, ICV),
+      select(NACCID, MRI_PROJECT = PROJECT, DATE, HIPPOCAMPUS, ICV),
     by = 'NACCID') %>%
   full_join(taupetnpdka %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, Tau_PET = META_TEMPORAL_SUVR, 
-        Tau_TRACER = TRACER, Tau_SOURCE = SOURCE) %>%
+        Tau_TRACER = TRACER, Tau_PROJECT = PROJECT) %>%
       distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
   full_join(amyloidpetgaain %>%          # Amyloid PET
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, AMYLOID_STATUS, CENTILOIDS, 
-        Amyloid_TRACER = TRACER, Amyloid_SOURCE = SOURCE) %>%
+        Amyloid_TRACER = TRACER, Amyloid_PROJECT = PROJECT) %>%
       distinct(NACCID, DATE, .keep_all = TRUE),
     by = c('NACCID', 'DATE')) %>%
   full_join(phc_cognition %>%            # Harmonized cognition
@@ -120,17 +117,17 @@ dd <- dd_atn %>%
 stopifnot(with(dd, !any(duplicated(paste(NACCID, DATE)))))
 
 CLARiTI_id <- dd %>%
-  filter(MRI_SOURCE == 'CLARiTI' | Tau_SOURCE == 'CLARiTI' | Amyloid_SOURCE == 'CLARiTI') %>%
+  filter(grepl("CLARITI", MRI_PROJECT) | grepl("CLARITI", Tau_PROJECT) | 
+    grepl("CLARITI", Amyloid_PROJECT)) %>%
   pull(NACCID) %>% unique()
 
 SCAN_id <- dd %>%
-  filter(MRI_SOURCE == 'SCAN' | Tau_SOURCE == 'SCAN' | Amyloid_SOURCE == 'SCAN') %>%
+  filter(MRI_PROJECT == 'SCAN' | Tau_PROJECT == 'SCAN' | Amyloid_PROJECT == 'SCAN') %>%
   pull(NACCID) %>% unique() %>%
   setdiff(CLARiTI_id)
 
 Mixed_id <- dd %>%
-  filter(MRI_SOURCE == 'Mixed protocol' | Tau_SOURCE == 'SCAN MP' | 
-    Amyloid_SOURCE == 'SCAN MP') %>%
+  filter(MRI_PROJECT == 'SCAN MP' | Tau_PROJECT == 'SCAN MP' | Amyloid_PROJECT == 'SCAN MP') %>%
   pull(NACCID) %>% unique() %>%
   setdiff(c(CLARiTI_id, SCAN_id))
 
@@ -195,14 +192,14 @@ dd_cross %>%
       NACCUDSD == "Normal cognition" ~ "NC",
       NACCETPR == "Alzheimer's disease (AD)" ~ "CI-AD",
       TRUE ~ "CI-nonAD") %>% factor(c("NC", "CI-AD", "CI-nonAD"))) %>%
-  filter(!is.na(Diagnosis), !is.na(CENTILOIDS), !is.na(Tau_PET_ComBat),
-    !is.na(HIPPOCAMPUS)) %>%
+  filter(!is.na(Diagnosis)) %>%
   select(NACCID, Diagnosis, 
     `Amyloid (CL)` = CENTILOIDS, 
     `Tau PET MTL (SUVR)` = Tau_PET_ComBat, 
     `Hippocampal volume (mm3)` = HIPPOCAMPUS) %>%
   pivot_longer(`Amyloid (CL)`:`Hippocampal volume (mm3)`, 
     names_to = 'Measure', values_to = 'Value') %>%
+  filter(!is.na(Value)) %>%
 ggplot(aes(x = Diagnosis, y = Value)) +
   geom_violin(fill = "gray80", color = "gray50") +
   ggbeeswarm::geom_beeswarm(color = "blue", alpha = 0.5) +
@@ -439,11 +436,11 @@ with(tmp, table(Type, `Serial scans`)) %>%
   knitr::kable(caption = "Number of individuals who have received the given number serial scans for each scan type.")
 ```
 
-|                |    1 |    2 |   3 |   4 |   5 |   6 |   7 |   9 |
-|:---------------|-----:|-----:|----:|----:|----:|----:|----:|----:|
-| Amyloid PET    | 3665 |  494 |  40 |   7 |   0 |   0 |   0 |   0 |
-| Tau PET        | 2107 |  293 |  27 |   2 |   0 |   0 |   0 |   0 |
-| Volumetric MRI | 5175 | 1310 | 470 | 122 |  27 |  18 |   3 |   1 |
+|                |    1 |    2 |   3 |   4 |   5 |   6 |
+|:---------------|-----:|-----:|----:|----:|----:|----:|
+| Amyloid PET    | 3941 |  517 |  50 |   6 |   1 |   0 |
+| Tau PET        |  516 |   48 |   2 |   0 |   0 |   0 |
+| Volumetric MRI | 4301 | 1024 | 237 |  47 |   8 |   2 |
 
 Table 1: Number of individuals who have received the given number serial
 scans for each scan type.
@@ -806,7 +803,7 @@ Code
 ``` r
 
 pd <- dd %>% 
-  select(NACCID, SOURCE = Amyloid_SOURCE, Etiology, Age, NACCUDSD, NACCETPR, CENTILOIDS) %>%
+  select(NACCID, PROJECT = Amyloid_PROJECT, Etiology, Age, NACCUDSD, NACCETPR, CENTILOIDS) %>%
   filter(!is.na(CENTILOIDS), !is.na(Age)) %>%
   group_by(NACCID) %>%
   mutate(
@@ -819,7 +816,7 @@ pd <- dd %>%
   tidyr::fill(all_of("Initial Dx"), .direction = "down")
 
 ggplot(pd, aes(x = Years, y = CENTILOIDS)) +
-  geom_point(aes(color = SOURCE, shape = Etiology), alpha = 0.5) +
+  geom_point(aes(color = PROJECT, shape = Etiology), alpha = 0.5) +
   geom_line(aes(group = NACCID), alpha=0.1) +
   geom_density(aes(y = CENTILOIDS, 
     x = after_stat(-scaled)), 
@@ -841,7 +838,7 @@ Code
 ``` r
 
 pd <- dd %>% 
-  select(NACCID, SOURCE = Tau_SOURCE, Etiology, Age, NACCUDSD, NACCETPR, Tau_PET_ComBat) %>%
+  select(NACCID, PROJECT = Tau_PROJECT, Etiology, Age, NACCUDSD, NACCETPR, Tau_PET_ComBat) %>%
   filter(!is.na(Tau_PET_ComBat), !is.na(Age)) %>%
   group_by(NACCID) %>%
   mutate(
@@ -854,7 +851,7 @@ pd <- dd %>%
   tidyr::fill(all_of("Initial Dx"), .direction = "down")
 
 ggplot(pd, aes(x=Years, y=Tau_PET_ComBat)) +
-  geom_point(aes(color=SOURCE, shape = Etiology), alpha=1) +
+  geom_point(aes(color=PROJECT, shape = Etiology), alpha=1) +
   geom_line(aes(group = NACCID), alpha=0.1) +
   geom_density(aes(y = Tau_PET_ComBat, 
     x = after_stat(-scaled)), 
@@ -876,7 +873,7 @@ Code
 ``` r
 
 pd <- dd %>% 
-  select(NACCID, SOURCE = MRI_SOURCE, Etiology, Age, NACCUDSD, NACCETPR, HIPPOCAMPUS) %>%
+  select(NACCID, PROJECT = MRI_PROJECT, Etiology, Age, NACCUDSD, NACCETPR, HIPPOCAMPUS) %>%
   filter(!is.na(HIPPOCAMPUS), !is.na(Age)) %>%
   group_by(NACCID) %>%
   mutate(
@@ -889,7 +886,7 @@ pd <- dd %>%
   tidyr::fill(all_of("Initial Dx"), .direction = "down")
 
 ggplot(pd, aes(x=Years, y=HIPPOCAMPUS)) +
-  geom_point(aes(color=SOURCE, shape = Etiology), alpha=1) +
+  geom_point(aes(color=PROJECT, shape = Etiology), alpha=1) +
   geom_line(aes(group = NACCID), alpha=0.1) +
   geom_density(aes(y = HIPPOCAMPUS, 
     x = after_stat(-scaled)), 

@@ -1,8 +1,10 @@
 # fdgpetnpdka
 
-NACCADRC UDS, SCAN Imaging FDG PET dataset. The data is sourced from the
-file(s) investigator_clariti_fdgpetnpdka_naccDEV.csv,
-investigator_scan_fdgpetnpdka_nacc73.csv.
+NACCADRC SCAN/CLARiTI Imaging PET dataset. SCAN FDG PET data processed
+through SCAN PET Core (Contains SCAN-compliant data on ADRC participants
+funded through any mechanism, including P30 funds, CLARiTI funded, or
+other sources). The data is sourced from the file(s)
+investigator_scan_clariti_fdgpetnpdka_nacc74.csv.
 
 ## Usage
 
@@ -12,911 +14,361 @@ data(fdgpetnpdka)
 
 ## Format
 
-A data frame with 839 rows and 174 variables:
+A data frame with 885 rows and 172 variables:
 
-- SOURCE:
-
-- NACCID:
-
-  Participant ID
+- PROJECT:
 
 - NACCADC:
 
-  ADC at which participant was seen (100 –9999)
+  ADC at which subject was seen (100-9999)
+
+- NACCID:
+
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
 
 - LONIUID:
 
-  LONI Image ID (Prefix “I” followed by 8 numerals)
+  LONI Image ID
 
 - SCANDATE:
 
-  Scan acquisition date (YYYY-MM-DD)
+  Date of PET Scan
 
 - PROCESSDATE:
 
-  Date quantification pipeline was run (YYYY-MM-DD)
+  Date scan was processed
 
 - TRACER:
 
-  PET Radiotracer ((1) FDG (2) PIB (3) Florbetapir (4) Florbetaben (5)
-  NAV4694 (6) Flortaucipir (7) MK6240 (8) PI2620 (9) GTP1 (10)
-  Flutemetamol (99) Unknown)
+- ACQUISITIONTIME:
 
-- ACQUISITION_TIME:
+- QCSTATUS:
 
-  Acquisition start-stop time post-injection (minutes) ((1) 30-60 (2)
-  40-60 (3) 40-70 (4) 45-75 (5) 45-90 (6) 50-70 (7) 60-90 (8) 70-90 (9)
-  70-110 (10) 80-100 (11) 90-110)
+- FDGMETAROISUVR:
 
-- IN_CLARITI_PROJECT:
+- TOP50PONSVERMISSUVR:
 
-- QC_STATUS:
+- BRAINSTEMSUVR:
 
-- FDG_METAROI_SUVR:
+- CCANTERIORSUVR:
 
-  FDG MetaROI SUVR
+- CCCENTRALSUVR:
 
-- TOP50PONSVERMIS_SUVR:
+- CCMIDANTERIORSUVR:
 
-  Reference region - SUVR of the top 50 percent of voxels of the
-  pons/vermis
+- CCMIDPOSTERIORSUVR:
 
-- BRAINSTEM_SUVR:
+- CCPOSTERIORSUVR:
 
-  brain-stem SUVR normalized by whole cerebellum; ROI volume is provided
-  in MRI-Free NPDKA Appendix CSV on LONI
+- CSFSUVR:
 
-- CC_ANTERIOR_SUVR:
+- VENTRICLE3RDSUVR:
 
-  cc-anterior SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- VENTRICLE4THSUVR:
 
-- CC_CENTRAL_SUVR:
+- VENTRICLE5THSUVR:
 
-  cc-central SUVR normalized by whole cerebellum; ROI volume is provided
-  in MRI-Free NPDKA Appendix CSV on LONI
+- WMHYPOINTENSITIESSUVR:
 
-- CC_MID_ANTERIOR_SUVR:
+- NONWMHYPOINTENSITIESSUVR:
 
-  cc-mid-anterior SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXBANKSSTSSUVR:
 
-- CC_MID_POSTERIOR_SUVR:
+- CTXCAUDALANTERIORCINGULATESUVR:
 
-  cc-mid-posterior SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXCAUDALMIDDLEFRONTALSUVR:
 
-- CC_POSTERIOR_SUVR:
+- CTXCUNEUSSUVR:
 
-  cc-posterior SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXENTORHINALSUVR:
 
-- CSF_SUVR:
+- CTXFRONTALPOLESUVR:
 
-  csf SUVR normalized by whole cerebellum; ROI volume is provided in
-  MRI-Free NPDKA Appendix CSV on LONI
+- CTXFUSIFORMSUVR:
 
-- VENTRICLE_3RD_SUVR:
+- CTXINFERIORPARIETALSUVR:
 
-  3rd-ventricle SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXINFERIORTEMPORALSUVR:
 
-- VENTRICLE_4TH_SUVR:
+- CTXINSULASUVR:
 
-  4th-ventricle SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXISTHMUSCINGULATESUVR:
 
-- VENTRICLE_5TH_SUVR:
+- CTXLATERALOCCIPITALSUVR:
 
-  5th-ventricle SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLATERALORBITOFRONTALSUVR:
 
-- WM_HYPOINTENSITIES_SUVR:
+- CTXLINGUALSUVR:
 
-  wm-hypointensities SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXMEDIALORBITOFRONTALSUVR:
 
-- NON_WM_HYPOINTENSITIES_SUVR:
+- CTXMIDDLETEMPORALSUVR:
 
-  non-wm-hypointensities SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXPARACENTRALSUVR:
 
-- CTX_BANKSSTS_SUVR:
+- CTXPARAHIPPOCAMPALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-bankssts and ctx-rh-bankssts
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXPARSOPERCULARISSUVR:
 
-- CTX_CAUDALANTERIORCINGULATE_SUVR:
+- CTXPARSORBITALISSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-caudalanteriorcingulate and
-  ctx-rh-caudalanteriorcingulate normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXPARSTRIANGULARISSUVR:
 
-- CTX_CAUDALMIDDLEFRONTAL_SUVR:
+- CTXPERICALCARINESUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-caudalmiddlefrontal and
-  ctx-rh-caudalmiddlefrontal normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXPOSTCENTRALSUVR:
 
-- CTX_CUNEUS_SUVR:
+- CTXPOSTERIORCINGULATESUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-cuneus and ctx-rh-cuneus
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXPRECENTRALSUVR:
 
-- CTX_ENTORHINAL_SUVR:
+- CTXPRECUNEUSSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-entorhinal and ctx-rh-entorhinal
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXROSTRALANTERIORCINGULATESUVR:
 
-- CTX_FRONTALPOLE_SUVR:
+- CTXROSTRALMIDDLEFRONTALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-frontalpole and ctx-rh-frontalpole
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXSUPERIORFRONTALSUVR:
 
-- CTX_FUSIFORM_SUVR:
+- CTXSUPERIORPARIETALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-fusiform and ctx-rh-fusiform
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXSUPERIORTEMPORALSUVR:
 
-- CTX_INFERIORPARIETAL_SUVR:
+- CTXSUPRAMARGINALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-inferiorparietal and
-  ctx-rh-inferiorparietal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXTEMPORALPOLESUVR:
 
-- CTX_INFERIORTEMPORAL_SUVR:
+- CTXTRANSVERSETEMPORALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-inferiortemporal and
-  ctx-rh-inferiortemporal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- ACCUMBENSAREASUVR:
 
-- CTX_INSULA_SUVR:
+- AMYGDALASUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-insula and ctx-rh-insula
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CAUDATESUVR:
 
-- CTX_ISTHMUSCINGULATE_SUVR:
+- CEREBELLUMCORTEXSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-isthmuscingulate and
-  ctx-rh-isthmuscingulate normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CEREBELLUMWHITEMATTERSUVR:
 
-- CTX_LATERALOCCIPITAL_SUVR:
+- CEREBRALWHITEMATTERSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-lateraloccipital and
-  ctx-rh-lateraloccipital normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CHOROIDPLEXUSSUVR:
 
-- CTX_LATERALORBITOFRONTAL_SUVR:
+- HIPPOCAMPUSSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-lateralorbitofrontal and
-  ctx-rh-lateralorbitofrontal normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
+- OPTICCHIASMSUVR:
 
-- CTX_LINGUAL_SUVR:
+- INFLATVENTSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-lingual and ctx-rh-lingual
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- LATERALVENTRICLESUVR:
 
-- CTX_MEDIALORBITOFRONTAL_SUVR:
+- PALLIDUMSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-medialorbitofrontal and
-  ctx-rh-medialorbitofrontal normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
+- PUTAMENSUVR:
 
-- CTX_MIDDLETEMPORAL_SUVR:
+- THALAMUSPROPERSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-middletemporal and
-  ctx-rh-middletemporal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- VENTRALDCSUVR:
 
-- CTX_PARACENTRAL_SUVR:
+- VESSELSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-paracentral and ctx-rh-paracentral
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXLHBANKSSTSSUVR:
 
-- CTX_PARAHIPPOCAMPAL_SUVR:
+- CTXLHCAUDALANTERIORCINGULATESUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-parahippocampal and
-  ctx-rh-parahippocampal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHCAUDALMIDDLEFRONTALSUVR:
 
-- CTX_PARSOPERCULARIS_SUVR:
+- CTXLHCUNEUSSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-parsopercularis and
-  ctx-rh-parsopercularis normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHENTORHINALSUVR:
 
-- CTX_PARSORBITALIS_SUVR:
+- CTXLHFRONTALPOLESUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-parsorbitalis and
-  ctx-rh-parsorbitalis normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHFUSIFORMSUVR:
 
-- CTX_PARSTRIANGULARIS_SUVR:
+- CTXLHINFERIORPARIETALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-parstriangularis and
-  ctx-rh-parstriangularis normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHINFERIORTEMPORALSUVR:
 
-- CTX_PERICALCARINE_SUVR:
+- CTXLHINSULASUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-pericalcarine and
-  ctx-rh-pericalcarine normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHISTHMUSCINGULATESUVR:
 
-- CTX_POSTCENTRAL_SUVR:
+- CTXLHLATERALOCCIPITALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-postcentral and ctx-rh-postcentral
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXLHLATERALORBITOFRONTALSUVR:
 
-- CTX_POSTERIORCINGULATE_SUVR:
+- CTXLHLINGUALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-posteriorcingulate and
-  ctx-rh-posteriorcingulate normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHMEDIALORBITOFRONTALSUVR:
 
-- CTX_PRECENTRAL_SUVR:
+- CTXLHMIDDLETEMPORALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-precentral and ctx-rh-precentral
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXLHPARACENTRALSUVR:
 
-- CTX_PRECUNEUS_SUVR:
+- CTXLHPARAHIPPOCAMPALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-precuneus and ctx-rh-precuneus
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXLHPARSOPERCULARISSUVR:
 
-- CTX_ROSTRALANTERIORCINGULATE_SUVR:
+- CTXLHPARSORBITALISSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-rostralanteriorcingulate and
-  ctx-rh-rostralanteriorcingulate normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHPARSTRIANGULARISSUVR:
 
-- CTX_ROSTRALMIDDLEFRONTAL_SUVR:
+- CTXLHPERICALCARINESUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-rostralmiddlefrontal and
-  ctx-rh-rostralmiddlefrontal normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHPOSTCENTRALSUVR:
 
-- CTX_SUPERIORFRONTAL_SUVR:
+- CTXLHPOSTERIORCINGULATESUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-superiorfrontal and
-  ctx-rh-superiorfrontal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHPRECENTRALSUVR:
 
-- CTX_SUPERIORPARIETAL_SUVR:
+- CTXLHPRECUNEUSSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-superiorparietal and
-  ctx-rh-superiorparietal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHROSTRALANTERIORCINGULATESUVR:
 
-- CTX_SUPERIORTEMPORAL_SUVR:
+- CTXLHROSTRALMIDDLEFRONTALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-superiortemporal and
-  ctx-rh-superiortemporal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHSUPERIORFRONTALSUVR:
 
-- CTX_SUPRAMARGINAL_SUVR:
+- CTXLHSUPERIORPARIETALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-supramarginal and
-  ctx-rh-supramarginal normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHSUPERIORTEMPORALSUVR:
 
-- CTX_TEMPORALPOLE_SUVR:
+- CTXLHSUPRAMARGINALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-temporalpole and
-  ctx-rh-temporalpole normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXLHTEMPORALPOLESUVR:
 
-- CTX_TRANSVERSETEMPORAL_SUVR:
+- CTXLHTRANSVERSETEMPORALSUVR:
 
-  Volume-weighted mean SUVR of ctx-lh-transversetemporal and
-  ctx-rh-transversetemporal normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHBANKSSTSSUVR:
 
-- ACCUMBENS_AREA_SUVR:
+- CTXRHCAUDALANTERIORCINGULATESUVR:
 
-  Volume-weighted mean SUVR of left-accumbens-area and
-  right-accumbens-area normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHCAUDALMIDDLEFRONTALSUVR:
 
-- AMYGDALA_SUVR:
+- CTXRHCUNEUSSUVR:
 
-  Volume-weighted mean SUVR of left-amygdala and right-amygdala
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXRHENTORHINALSUVR:
 
-- CAUDATE_SUVR:
+- CTXRHFRONTALPOLESUVR:
 
-  Volume-weighted mean SUVR of left-caudate and right-caudate normalized
-  by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix
-  CSV on LONI
+- CTXRHFUSIFORMSUVR:
 
-- CEREBELLUM_CORTEX_SUVR:
+- CTXRHINFERIORPARIETALSUVR:
 
-  Volume-weighted mean SUVR of left-cerebellum-cortex and
-  right-cerebellum-cortex normalized by inferior cerebellar grey matter;
-  ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHINFERIORTEMPORALSUVR:
 
-- CEREBELLUM_WHITE_MATTER_SUVR:
+- CTXRHINSULASUVR:
 
-  Volume-weighted mean SUVR of left-cerebellum-white-matter and
-  right-cerebellum-white-matter normalized by inferior cerebellar grey
-  matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHISTHMUSCINGULATESUVR:
 
-- CEREBRAL_WHITE_MATTER_SUVR:
+- CTXRHLATERALOCCIPITALSUVR:
 
-  Volume-weighted mean SUVR of left-cerebral-white-matter and
-  right-cerebral-white-matter normalized by inferior cerebellar grey
-  matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHLATERALORBITOFRONTALSUVR:
 
-- CHOROID_PLEXUS_SUVR:
+- CTXRHLINGUALSUVR:
 
-  Volume-weighted mean SUVR of left-choroid-plexus and
-  right-choroid-plexus normalized by inferior cerebellar grey matter;
-  ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHMEDIALORBITOFRONTALSUVR:
 
-- HIPPOCAMPUS_SUVR:
+- CTXRHMIDDLETEMPORALSUVR:
 
-  Volume-weighted mean SUVR of left-hippocampus and right-hippocampus
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXRHPARACENTRALSUVR:
 
-- OPTIC_CHIASM_SUVR:
+- CTXRHPARAHIPPOCAMPALSUVR:
 
-  optic-chiasm SUVR normalized by inferior cerebellar grey matter; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHPARSOPERCULARISSUVR:
 
-- INF_LAT_VENT_SUVR:
+- CTXRHPARSORBITALISSUVR:
 
-  Volume-weighted mean SUVR of left-inf-lat-vent and right-inf-lat-vent
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXRHPARSTRIANGULARISSUVR:
 
-- LATERAL_VENTRICLE_SUVR:
+- CTXRHPERICALCARINESUVR:
 
-  Volume-weighted mean SUVR of left-lateral-ventricle and
-  right-lateral-ventricle normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHPOSTCENTRALSUVR:
 
-- PALLIDUM_SUVR:
+- CTXRHPOSTERIORCINGULATESUVR:
 
-  Volume-weighted mean SUVR of left-pallidum and right-pallidum
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXRHPRECENTRALSUVR:
 
-- PUTAMEN_SUVR:
+- CTXRHPRECUNEUSSUVR:
 
-  Volume-weighted mean SUVR of left-putamen and right-putamen normalized
-  by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix
-  CSV on LONI
+- CTXRHROSTRALANTERIORCINGULATESUVR:
 
-- THALAMUS_PROPER_SUVR:
+- CTXRHROSTRALMIDDLEFRONTALSUVR:
 
-  Volume-weighted mean SUVR of left-thalamus-proper and
-  right-thalamus-proper normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- CTXRHSUPERIORFRONTALSUVR:
 
-- VENTRALDC_SUVR:
+- CTXRHSUPERIORPARIETALSUVR:
 
-  Volume-weighted mean SUVR of left-ventraldc and right-ventraldc
-  normalized by whole cerebellum; ROI volume is provided in MRI-Free
-  NPDKA Appendix CSV on LONI
+- CTXRHSUPERIORTEMPORALSUVR:
 
-- VESSEL_SUVR:
+- CTXRHSUPRAMARGINALSUVR:
 
-  Volume-weighted mean SUVR of left-vessel and right-vessel normalized
-  by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix
-  CSV on LONI
+- CTXRHTEMPORALPOLESUVR:
 
-- CTX_LH_BANKSSTS_SUVR:
+- CTXRHTRANSVERSETEMPORALSUVR:
 
-  ctx-lh-bankssts SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTACCUMBENSAREASUVR:
 
-- CTX_LH_CAUDALANTERIORCINGULATE_SUVR:
+- LEFTAMYGDALASUVR:
 
-  ctx-lh-caudalanteriorcingulate SUVR normalized by whole cerebellum;
-  ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTCAUDATESUVR:
 
-- CTX_LH_CAUDALMIDDLEFRONTAL_SUVR:
+- LEFTCEREBELLUMCORTEXSUVR:
 
-  ctx-lh-caudalmiddlefrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTCEREBELLUMWHITEMATTERSUVR:
 
-- CTX_LH_CUNEUS_SUVR:
+- LEFTCEREBRALWHITEMATTERSUVR:
 
-  ctx-lh-cuneus SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTCHOROIDPLEXUSSUVR:
 
-- CTX_LH_ENTORHINAL_SUVR:
+- LEFTHIPPOCAMPUSSUVR:
 
-  ctx-lh-entorhinal SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTINFLATVENTSUVR:
 
-- CTX_LH_FRONTALPOLE_SUVR:
+- LEFTLATERALVENTRICLESUVR:
 
-  ctx-lh-frontalpole SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTPALLIDUMSUVR:
 
-- CTX_LH_FUSIFORM_SUVR:
+- LEFTPUTAMENSUVR:
 
-  ctx-lh-fusiform SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTTHALAMUSPROPERSUVR:
 
-- CTX_LH_INFERIORPARIETAL_SUVR:
+- LEFTVENTRALDCSUVR:
 
-  ctx-lh-inferiorparietal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- LEFTVESSELSUVR:
 
-- CTX_LH_INFERIORTEMPORAL_SUVR:
+- RIGHTACCUMBENSAREASUVR:
 
-  ctx-lh-inferiortemporal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTAMYGDALASUVR:
 
-- CTX_LH_INSULA_SUVR:
+- RIGHTCAUDATESUVR:
 
-  ctx-lh-insula SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTCEREBELLUMCORTEXSUVR:
 
-- CTX_LH_ISTHMUSCINGULATE_SUVR:
+- RIGHTCEREBELLUMWHITEMATTERSUVR:
 
-  ctx-lh-isthmuscingulate SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTCEREBRALWHITEMATTERSUVR:
 
-- CTX_LH_LATERALOCCIPITAL_SUVR:
+- RIGHTCHOROIDPLEXUSSUVR:
 
-  ctx-lh-lateraloccipital SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTHIPPOCAMPUSSUVR:
 
-- CTX_LH_LATERALORBITOFRONTAL_SUVR:
+- RIGHTINFLATVENTSUVR:
 
-  ctx-lh-lateralorbitofrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTLATERALVENTRICLESUVR:
 
-- CTX_LH_LINGUAL_SUVR:
+- RIGHTPALLIDUMSUVR:
 
-  ctx-lh-lingual SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTPUTAMENSUVR:
 
-- CTX_LH_MEDIALORBITOFRONTAL_SUVR:
+- RIGHTTHALAMUSPROPERSUVR:
 
-  ctx-lh-medialorbitofrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTVENTRALDCSUVR:
 
-- CTX_LH_MIDDLETEMPORAL_SUVR:
-
-  ctx-lh-middletemporal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PARACENTRAL_SUVR:
-
-  ctx-lh-paracentral SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PARAHIPPOCAMPAL_SUVR:
-
-  ctx-lh-parahippocampal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PARSOPERCULARIS_SUVR:
-
-  ctx-lh-parsopercularis SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PARSORBITALIS_SUVR:
-
-  ctx-lh-parsorbitalis SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PARSTRIANGULARIS_SUVR:
-
-  ctx-lh-parstriangularis SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PERICALCARINE_SUVR:
-
-  ctx-lh-pericalcarine SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_POSTCENTRAL_SUVR:
-
-  ctx-lh-postcentral SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_POSTERIORCINGULATE_SUVR:
-
-  ctx-lh-posteriorcingulate SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PRECENTRAL_SUVR:
-
-  ctx-lh-precentral SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_PRECUNEUS_SUVR:
-
-  ctx-lh-precuneus SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_ROSTRALANTERIORCINGULATE_SUVR:
-
-  ctx-lh-rostralanteriorcingulate SUVR normalized by whole cerebellum;
-  ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_ROSTRALMIDDLEFRONTAL_SUVR:
-
-  ctx-lh-rostralmiddlefrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_SUPERIORFRONTAL_SUVR:
-
-  ctx-lh-superiorfrontal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_SUPERIORPARIETAL_SUVR:
-
-  ctx-lh-superiorparietal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_SUPERIORTEMPORAL_SUVR:
-
-  ctx-lh-superiortemporal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_SUPRAMARGINAL_SUVR:
-
-  ctx-lh-supramarginal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_TEMPORALPOLE_SUVR:
-
-  ctx-lh-temporalpole SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_LH_TRANSVERSETEMPORAL_SUVR:
-
-  ctx-lh-transversetemporal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_BANKSSTS_SUVR:
-
-  ctx-rh-bankssts SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_CAUDALANTERIORCINGULATE_SUVR:
-
-  ctx-rh-caudalanteriorcingulate SUVR normalized by whole cerebellum;
-  ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_CAUDALMIDDLEFRONTAL_SUVR:
-
-  ctx-rh-caudalmiddlefrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_CUNEUS_SUVR:
-
-  ctx-rh-cuneus SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_ENTORHINAL_SUVR:
-
-  ctx-rh-entorhinal SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_FRONTALPOLE_SUVR:
-
-  ctx-rh-frontalpole SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_FUSIFORM_SUVR:
-
-  ctx-rh-fusiform SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_INFERIORPARIETAL_SUVR:
-
-  ctx-rh-inferiorparietal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_INFERIORTEMPORAL_SUVR:
-
-  ctx-rh-inferiortemporal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_INSULA_SUVR:
-
-  ctx-rh-insula SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_ISTHMUSCINGULATE_SUVR:
-
-  ctx-rh-isthmuscingulate SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_LATERALOCCIPITAL_SUVR:
-
-  ctx-rh-lateraloccipital SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_LATERALORBITOFRONTAL_SUVR:
-
-  ctx-rh-lateralorbitofrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_LINGUAL_SUVR:
-
-  ctx-rh-lingual SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_MEDIALORBITOFRONTAL_SUVR:
-
-  ctx-rh-medialorbitofrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_MIDDLETEMPORAL_SUVR:
-
-  ctx-rh-middletemporal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PARACENTRAL_SUVR:
-
-  ctx-rh-paracentral SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PARAHIPPOCAMPAL_SUVR:
-
-  ctx-rh-parahippocampal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PARSOPERCULARIS_SUVR:
-
-  ctx-rh-parsopercularis SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PARSORBITALIS_SUVR:
-
-  ctx-rh-parsorbitalis SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PARSTRIANGULARIS_SUVR:
-
-  ctx-rh-parstriangularis SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PERICALCARINE_SUVR:
-
-  ctx-rh-pericalcarine SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_POSTCENTRAL_SUVR:
-
-  ctx-rh-postcentral SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_POSTERIORCINGULATE_SUVR:
-
-  ctx-rh-posteriorcingulate SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PRECENTRAL_SUVR:
-
-  ctx-rh-precentral SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_PRECUNEUS_SUVR:
-
-  ctx-rh-precuneus SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_ROSTRALANTERIORCINGULATE_SUVR:
-
-  ctx-rh-rostralanteriorcingulate SUVR normalized by whole cerebellum;
-  ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_ROSTRALMIDDLEFRONTAL_SUVR:
-
-  ctx-rh-rostralmiddlefrontal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_SUPERIORFRONTAL_SUVR:
-
-  ctx-rh-superiorfrontal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_SUPERIORPARIETAL_SUVR:
-
-  ctx-rh-superiorparietal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_SUPERIORTEMPORAL_SUVR:
-
-  ctx-rh-superiortemporal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_SUPRAMARGINAL_SUVR:
-
-  ctx-rh-supramarginal SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_TEMPORALPOLE_SUVR:
-
-  ctx-rh-temporalpole SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- CTX_RH_TRANSVERSETEMPORAL_SUVR:
-
-  ctx-rh-transversetemporal SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_ACCUMBENS_AREA_SUVR:
-
-  left-accumbens-area SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_AMYGDALA_SUVR:
-
-  left-amygdala SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_CAUDATE_SUVR:
-
-  left-caudate SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_CEREBELLUM_CORTEX_SUVR:
-
-  left-cerebellum-cortex SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_CEREBELLUM_WHITE_MATTER_SUVR:
-
-  left-cerebellum-white-matter SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_CEREBRAL_WHITE_MATTER_SUVR:
-
-  left-cerebral-white-matter SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_CHOROID_PLEXUS_SUVR:
-
-  left-choroid-plexus SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_HIPPOCAMPUS_SUVR:
-
-  left-hippocampus SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_INF_LAT_VENT_SUVR:
-
-  left-inf-lat-vent SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_LATERAL_VENTRICLE_SUVR:
-
-  left-lateral-ventricle SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_PALLIDUM_SUVR:
-
-  left-pallidum SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_PUTAMEN_SUVR:
-
-  left-putamen SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_THALAMUS_PROPER_SUVR:
-
-  left-thalamus-proper SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_VENTRALDC_SUVR:
-
-  left-ventraldc SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- LEFT_VESSEL_SUVR:
-
-  left-vessel SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_ACCUMBENS_AREA_SUVR:
-
-  right-accumbens-area SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_AMYGDALA_SUVR:
-
-  right-amygdala SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_CAUDATE_SUVR:
-
-  right-caudate SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_CEREBELLUM_CORTEX_SUVR:
-
-  right-cerebellum-cortex SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_CEREBELLUM_WHITE_MATTER_SUVR:
-
-  right-cerebellum-white-matter SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_CEREBRAL_WHITE_MATTER_SUVR:
-
-  right-cerebral-white-matter SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_CHOROID_PLEXUS_SUVR:
-
-  right-choroid-plexus SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_HIPPOCAMPUS_SUVR:
-
-  right-hippocampus SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_INF_LAT_VENT_SUVR:
-
-  right-inf-lat-vent SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_LATERAL_VENTRICLE_SUVR:
-
-  right-lateral-ventricle SUVR normalized by whole cerebellum; ROI
-  volume is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_PALLIDUM_SUVR:
-
-  right-pallidum SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_PUTAMEN_SUVR:
-
-  right-putamen SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_THALAMUS_PROPER_SUVR:
-
-  right-thalamus-proper SUVR normalized by whole cerebellum; ROI volume
-  is provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_VENTRALDC_SUVR:
-
-  right-ventraldc SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
-
-- RIGHT_VESSEL_SUVR:
-
-  right-vessel SUVR normalized by whole cerebellum; ROI volume is
-  provided in MRI-Free NPDKA Appendix CSV on LONI
+- RIGHTVESSELSUVR:
 
 - VISIT:
-
-  Visit Type ((BL) Baseline (FU) Followup)
-
-- IN_SCAN_PROJECT:
-
-  Is this record also in the SCAN project? ((0) No (1) Yes)
 
 ## Source
 
@@ -926,6 +378,7 @@ A data frame with 839 rows and 174 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('SCAN-PET-Imaging-RDD')
 browseVignettes('NACCADRC')
 } # }
 ```

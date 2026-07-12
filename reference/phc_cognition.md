@@ -1,7 +1,8 @@
 # phc_cognition
 
-NACCADRC ADSP PHC Cognition dataset. The data is sourced from the
-file(s) NACC_ADSP_PHC_Cognition_2024.csv.
+NACCADRC ADSP PHC Cognition dataset. ADSP Phenotype Harmonization
+Consortium Cognition. The data is sourced from the file(s)
+NACC_ADSP_PHC_Cognition_2026.02.18.csv.
 
 ## Usage
 
@@ -11,15 +12,27 @@ data(phc_cognition)
 
 ## Format
 
-A data frame with 160618 rows and 11 variables:
+A data frame with 171834 rows and 14 variables:
 
 - NACCID:
 
-  Participant ID
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
+
+- SUBJID:
+
+  ADSP Subject ID
 
 - NACCVNUM:
 
   Visit Number
+
+- PHC_Visit:
+
+  Harmonized Visit Number
+
+- PHC_Age_Cognition:
+
+  Age at Each Cognitive Visit
 
 - PHC_MEM:
 
@@ -71,6 +84,7 @@ A data frame with 160618 rows and 11 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('NACC_ADSP_PHC_Cognition_ReadME_2026.02.18')
 browseVignettes('NACCADRC')
 } # }
 ```

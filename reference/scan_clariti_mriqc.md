@@ -1,28 +1,28 @@
-# mriqc
+# scan_clariti_mriqc
 
-NACCADRC UDS, SCAN Imaging MRI dataset. The data is sourced from the
-file(s) investigator_clariti_mriqc_naccDEV.csv,
-investigator_scan_mriqc_nacc73.csv.
+NACCADRC SCAN/CLARiTI Imaging MRI dataset. SCAN MRI QC data from the
+SCAN MRI Core (Contains SCAN-compliant data on ADRC participants funded
+through any mechanism, including P30 funds, CLARiTI funded, or other
+sources). The data is sourced from the file(s)
+investigator_scan_clariti_mriqc_nacc74.csv.
 
 ## Usage
 
 ``` r
-data(mriqc)
+data(scan_clariti_mriqc)
 ```
 
 ## Format
 
-A data frame with 29982 rows and 40 variables:
-
-- SOURCE:
-
-- NACCID:
-
-  Participant ID
+A data frame with 31213 rows and 41 variables:
 
 - NACCADC:
 
-  ADC at which participant was seen (100 –9999)
+  ADC at which subject was seen (100-9999)
+
+- NACCID:
+
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
 
 - STUDYDATE:
 
@@ -96,7 +96,11 @@ A data frame with 29982 rows and 40 variables:
 
 - LONIIMAGE:
 
-- FUNDING_SOURCE:
+- FUNDINGSOURCE:
+
+- QCUPDATESTAMP:
+
+- PROJECT:
 
 ## Source
 
@@ -106,6 +110,7 @@ A data frame with 29982 rows and 40 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('SCAN-MRI-Imaging-RDD')
 browseVignettes('NACCADRC')
 } # }
 ```

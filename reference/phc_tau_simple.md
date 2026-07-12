@@ -1,7 +1,8 @@
 # phc_tau_simple
 
-NACCADRC ADSP PHC dataset. The data is sourced from the file(s)
-NACC_ADSP_PHC_Tau_Simple_2024.csv.
+NACCADRC ADSP PHC Imaging PET dataset. ADSP Phenotype Harmonization
+Consortium Tau Simple. The data is sourced from the file(s)
+NACC_ADSP_PHC_Tau_Simple_2026.02.18.csv.
 
 ## Usage
 
@@ -11,23 +12,43 @@ data(phc_tau_simple)
 
 ## Format
 
-A data frame with 497 rows and 21 variables:
+A data frame with 2245 rows and 26 variables:
 
 - NACCID:
 
-  Participant ID
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
 
-- PHC_Age_Cognition:
+- SUBJID:
 
-  Participant's Age at nearest Cognitive Data Collection
+  ADSP Subject ID
 
-- PHC_Age_PET:
+- NACCVNUM:
+
+  Visit Number
+
+- PHC_Visit:
+
+  Harmonized Visit Number
+
+- PHC_Age_PET_Tau:
 
   Participant's Age at PET Data Collection
 
-- PHC_SCANDATE:
+- LONIUID:
+
+  LONI Image ID
+
+- LONIUID_multi:
+
+  LONI Image IDs (multiple listed)
+
+- SCANDATE:
 
   Date of PET Scan
+
+- PROCESSDATE:
+
+  Date scan was processed
 
 - PHC_TRACER:
 
@@ -125,6 +146,7 @@ A data frame with 497 rows and 21 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('NACC_ADSP_PHC_PET_ReadMe_2026.02.18')
 browseVignettes('NACCADRC')
 } # }
 ```

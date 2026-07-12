@@ -1,7 +1,9 @@
 # uds_mri
 
-NACCADRC UDS Imaging MRI dataset. Mixed protocol (non-SCAN compliant)
-MRI. The data is sourced from the file(s) investigator_mri_nacc73.csv.
+NACCADRC UDS Imaging MRI dataset. Legacy (Mixed Protocol) MRI data
+processed through DeCarli Lab. Contains data spanning multiple MRI
+sequences (Contains legacy/mixed protocol data). The data is sourced
+from the file(s) investigator_mri_nacc74.csv.
 
 ## Usage
 
@@ -15,11 +17,11 @@ A data frame with 12180 rows and 191 variables:
 
 - NACCADC:
 
-  ADC at which participant was seen (100 –9999)
+  ADC at which subject was seen (100-9999)
 
 - NACCID:
 
-  Participant ID
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
 
 - MRIMO:
 
@@ -393,8 +395,7 @@ A data frame with 12180 rows and 191 variables:
 
 - NACCNMRI:
 
-  Total number of MRI session ( 1 - 20 88 = Not applicable / no MRI
-  available)
+  Total number of mixed-protocol MRI sessions (0 - no limit)
 
 - NACCDICO:
 
@@ -404,8 +405,9 @@ A data frame with 12180 rows and 191 variables:
 
 - NACCMRSA:
 
-  At least one MRI scan available ( 0 = No; does not have at least one
-  MRI available at NACC 1 = Yes; has at least one MRI available at NACC)
+  At least one mixed-protocol MRI scan available (0 = No; does not have
+  at least one mixed-protocol MRI available at NACC 1 = Yes; has at
+  least one mixed-protocol MRI available at NACC)
 
 ## Source
 
@@ -415,6 +417,7 @@ A data frame with 12180 rows and 191 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('rdd-imaging-mri')
 browseVignettes('NACCADRC')
 } # }
 ```

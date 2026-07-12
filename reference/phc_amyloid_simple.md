@@ -1,7 +1,10 @@
 # phc_amyloid_simple
 
-NACCADRC ADSP PHC dataset. The data is sourced from the file(s)
-NACC_ADSP_PHC_Amyloid_Simple_2024.csv.
+NACCADRC ADSP PHC Imaging PET dataset. All NACC Amyloid PET data
+processed through PHC (Contains legacy/mixed protocol data, as well as
+SCAN-compliant data on ADRC participants funded through any mechanism,
+including P30 funds, CLARiTI funded, or other sources). The data is
+sourced from the file(s) NACC_ADSP_PHC_Amyloid_Simple_2026.02.18.csv.
 
 ## Usage
 
@@ -11,23 +14,43 @@ data(phc_amyloid_simple)
 
 ## Format
 
-A data frame with 1903 rows and 18 variables:
+A data frame with 4392 rows and 23 variables:
 
 - NACCID:
 
-  Participant ID
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
 
-- PHC_Age_Cognition:
+- SUBJID:
 
-  Participant's Age at nearest Cognitive Data Collection
+  ADSP Subject ID
 
-- PHC_Age_PET:
+- NACCVNUM:
+
+  Visit Number
+
+- PHC_Visit:
+
+  Harmonized Visit Number
+
+- PHC_Age_PET_Amyloid:
 
   Participant's Age at PET Data Collection
 
-- PHC_SCANDATE:
+- LONIUID:
+
+  LONI Image ID
+
+- LONIUID_multi:
+
+  LONI Image IDs (multiple listed)
+
+- SCANDATE:
 
   Date of PET Scan
+
+- PROCESSDATE:
+
+  Date scan was processed
 
 - PHC_TRACER:
 
@@ -88,7 +111,7 @@ A data frame with 1903 rows and 18 variables:
 
   Centiloids (CLs) values converted from GAAIN summary cortical SUVR
   normalized by GAAIN whole cerebellum; See ADSP MRI-Free PET Methods
-  document (6 = Early start 7 = Front of brain cut 8 = High glucose)
+  document
 
 - PHC_AMYLOID_STATUS:
 
@@ -108,6 +131,7 @@ A data frame with 1903 rows and 18 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('NACC_ADSP_PHC_PET_ReadMe_2026.02.18')
 browseVignettes('NACCADRC')
 } # }
 ```

@@ -107,7 +107,7 @@ data(data_release_date, data_dictionary, file_manifest)
 The NACCADRC package contains a data stamped date of which the raw data
 was downloaded to build the package. For instance, the current package
 contains data that downloaded from the [NACC](https://www.naccdata.org/)
-as of 2026-04-10.
+as of 2026-07-03.
 
 Code
 
@@ -115,7 +115,7 @@ Code
 
 # Data source downloaded date
 data_release_date
-#> [1] "2026-04-10"
+#> [1] "2026-07-03"
 ```
 
 ### Data dictionary
@@ -128,17 +128,62 @@ Code
 ``` r
 
 head(data_dictionary, 6)
-#> # A tibble: 6 × 15
-#>   DataName      VariableName ShortDescriptor          Comment AllowableCodes Source Data Freeze variable…¹ `Data type` `Data source` `Variable Length`
-#>   <chr>         <chr>        <chr>                    <chr>   <chr>          <chr>  <chr>                  <chr>       <chr>         <chr>            
-#> 1 phc_biomarker NACCID       Participant ID           <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
-#> 2 phc_biomarker NACCVNUM     Visit Number             <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
-#> 3 phc_biomarker AB42_RAW     Raw AB42 Biomarker Leve… <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
-#> 4 phc_biomarker PHC_AB42     Harmonized Z-Score for … <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
-#> 5 phc_biomarker Tau_RAW      Raw Tau Biomarker Levels <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
-#> 6 phc_biomarker PHC_Tau      Harmonized Z-Score for … <NA>    <NA>           NACC_… <NA>                   <NA>        <NA>          <NA>             
-#> # ℹ abbreviated name: ¹​`Data Freeze variable name`
-#> # ℹ 5 more variables: `Description / derivation` <chr>, Form <chr>, VariableType <chr>, DataType <chr>, `Source variable` <chr>
+#>       DataName VariableName   Form          VariableType
+#>         <char>       <char> <char>                <char>
+#> 1: clariti_edc       NACCID     np NACC Derived Variable
+#> 2: clariti_edc      NACCADC     np NACC Derived Variable
+#> 3: clariti_edc     SCREENDT   <NA>                  <NA>
+#> 4: clariti_edc      CNSTDT1   <NA>                  <NA>
+#> 5: clariti_edc      CNSTDT2   <NA>                  <NA>
+#> 6: clariti_edc     BDPREVDT   <NA>                  <NA>
+#>                                                                                                                                                                                                                                                                ShortDescriptor
+#>                                                                                                                                                                                                                                                                         <char>
+#> 1:                                                                                                                                                                                                                                                                  Subject ID
+#> 2:                                                                                                                                                                                                                                               ADC at which subject was seen
+#> 3:                                                                                                                                                                                                                                                       0a. Date of Screening
+#> 4:                                                                                                                                                                                                                       2. CLARiTI Study Consent Signature Date (MM-DD-YYYY):
+#> 5: <div class="rich-text-field-label"><p>6. Additional CLARiTI Study Consent signed date and time (MM-DD-YYYY): <br><span style="color: #ba372a;">*Any subsequent changes to the data will need to be made directly into the NACC REDCap CLARiTI EDC Project.</span></p></div>
+#> 6:                                                                                                                                                                                                                             1a2. Date of most recent blood draw collection:
+#>                     DataType                           AllowableCodes               Dictionary   form version data_type EDC \r\nVariable / Field Name
+#>                       <char>                                   <char>                   <char> <char>  <char>    <char>                        <char>
+#> 1: Character cross-sectional  Prefix ""NACC"" followed by six numbers               rdd-np.csv   <NA>    <NA>      <NA>                          <NA>
+#> 2:   Numeric cross-sectional                                 100-9999               rdd-np.csv   <NA>    <NA>      <NA>                          <NA>
+#> 3:                      <NA>                                     <NA> edc-data-dictionary.xlsx   <NA>    <NA>      <NA>                      screendt
+#> 4:                      <NA>                                     <NA> edc-data-dictionary.xlsx   <NA>    <NA>      <NA>                       cnstdt1
+#> 5:                      <NA>                                     <NA> edc-data-dictionary.xlsx   <NA>    <NA>      <NA>                       cnstdt2
+#> 6:                      <NA>                                     <NA> edc-data-dictionary.xlsx   <NA>    <NA>      <NA>                      bdprevdt
+#>                                    Form Name Field Type Text Validation Type OR Show Slider Number Text Validation Min Text Validation Max
+#>                                       <char>     <char>                                     <char>              <char>              <char>
+#> 1:                                      <NA>       <NA>                                       <NA>                <NA>                <NA>
+#> 2:                                      <NA>       <NA>                                       <NA>                <NA>                <NA>
+#> 3:  b1_clariti_screening_and_eligibility_crf       text                                   date_mdy               45169               today
+#> 4: b2_clariti_participant_consent_status_crf       text                                   date_mdy          [screendt]               today
+#> 5: b2_clariti_participant_consent_status_crf       text                                   date_mdy           [cnstdt1]               today
+#> 6: c1_clariti_adcfb_biosample_collection_crf       text                                   date_mdy                <NA>               today
+#>    Branching Logic (Show field only if...) Required Field?                         Field Annotation Critical Field for Spring Analysis
+#>                                     <char>          <char>                                   <char>                             <char>
+#> 1:                                    <NA>            <NA>                                     <NA>                               <NA>
+#> 2:                                    <NA>            <NA>                                     <NA>                               <NA>
+#> 3:                                    <NA>               y @HIDEBUTTON\r\n@PLACEHOLDER='MM/DD/YYYY'                                  y
+#> 4:                            [cnstyn]='1'               y                                     <NA>                                  y
+#> 5:                [loc_addl_cons(1)] = '1'               y                              @HIDEBUTTON                                  y
+#> 6:                         [bdcondnrs]='8'            <NA> @HIDEBUTTON\r\n@PLACEHOLDER='MM/DD/YYYY'                                  y
+#>    Overlap with UDS? Overlap with LONI? Include in Data Freeze?
+#>               <char>             <char>                  <char>
+#> 1:              <NA>               <NA>                    <NA>
+#> 2:              <NA>               <NA>                    <NA>
+#> 3:              <NA>               <NA>                       y
+#> 4:                 n                  n                       y
+#> 5:                 n               <NA>                       y
+#> 6:              <NA>               <NA>                       y
+#>                                                                                                                      Missingness Handling Comment
+#>                                                                                                                                    <char>  <char>
+#> 1:                                                                                                                                   <NA>    <NA>
+#> 2:                                                                                                                                   <NA>    <NA>
+#> 3:                                                                                                                     If missing then -4    <NA>
+#> 4:                                                                                                                     If missing then -4    <NA>
+#> 5: For missing:\r\n-If [loc_addl_cons(1)] = '1', then value should be -4\r\n-If [loc_addl_cons(1)] = '0 or null', then value should be -4    <NA>
+#> 6:                                                                      If missing:\r\n- bdconyn=1 then -4\r\n- bdconyn=0 then 88/88/8888    <NA>
 ```
 
 ### File manifest

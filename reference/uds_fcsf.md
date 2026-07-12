@@ -1,7 +1,7 @@
 # uds_fcsf
 
-NACCADRC UDS dataset. CSF link. The data is sourced from the file(s)
-investigator_fcsf_nacc73.csv.
+NACCADRC UDS Biomarker dataset. CSF Biomarker Data. The data is sourced
+from the file(s) investigator_fcsf_nacc74.csv.
 
 ## Usage
 
@@ -11,15 +11,15 @@ data(uds_fcsf)
 
 ## Format
 
-A data frame with 3046 rows and 23 variables:
+A data frame with 3040 rows and 23 variables:
 
 - NACCADC:
 
-  ADC at which participant was seen (100 –9999)
+  ADC at which subject was seen (100-9999)
 
 - NACCID:
 
-  Participant ID
+  Subject ID ( Prefix ""NACC"" followed by six numbers)
 
 - CSFABETA:
 
@@ -71,6 +71,7 @@ A data frame with 3046 rows and 23 variables:
 
 ``` r
 if (FALSE) { # \dontrun{
+vignette('biomarker-ee2-csf-ded')
 browseVignettes('NACCADRC')
 } # }
 ```
