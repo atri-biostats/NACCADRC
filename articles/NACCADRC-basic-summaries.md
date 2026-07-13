@@ -50,6 +50,11 @@ dd_atn <- clariti_edc %>%
       select(NACCID, MRI_PROJECT = PROJECT, DATE, HIPPOCAMPUS, ICV),
     by = 'NACCID') %>%
   full_join(taupetnpdka %>%
+      mutate(
+        META_TEMPORAL_SUVR = case_when(
+          !is.na(META_TEMPORAL_SUVR) ~ META_TEMPORAL_SUVR,
+          !is.na(METATEMPORALSUVR) ~ METATEMPORALSUVR,
+          TRUE ~ NA)) %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, Tau_PET = META_TEMPORAL_SUVR, 
@@ -439,7 +444,7 @@ with(tmp, table(Type, `Serial scans`)) %>%
 |                |    1 |    2 |   3 |   4 |   5 |   6 |
 |:---------------|-----:|-----:|----:|----:|----:|----:|
 | Amyloid PET    | 3941 |  517 |  50 |   6 |   1 |   0 |
-| Tau PET        |  516 |   48 |   2 |   0 |   0 |   0 |
+| Tau PET        | 2369 |  304 |  29 |   4 |   0 |   0 |
 | Volumetric MRI | 4301 | 1024 | 237 |  47 |   8 |   2 |
 
 Table 1: Number of individuals who have received the given number serial
