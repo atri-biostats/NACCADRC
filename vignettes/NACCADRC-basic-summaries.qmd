@@ -81,6 +81,11 @@ dd_atn <- clariti_edc %>%
       select(NACCID, MRI_PROJECT = PROJECT, DATE, HIPPOCAMPUS, ICV),
     by = 'NACCID') %>%
   full_join(taupetnpdka %>%
+      mutate(
+        META_TEMPORAL_SUVR = case_when(
+          !is.na(META_TEMPORAL_SUVR) ~ META_TEMPORAL_SUVR,
+          !is.na(METATEMPORALSUVR) ~ METATEMPORALSUVR,
+          TRUE ~ NA)) %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
       distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
       select(NACCID, DATE = SCANDATE, Tau_PET = META_TEMPORAL_SUVR, 
