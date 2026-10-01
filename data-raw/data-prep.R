@@ -8,6 +8,23 @@ library(doconv)     # for docx to pdf conversion
 
 source(file.path("..", "R", "nacc-codes.R")) # parse_codes(), nacc_na()
 
+# label each column with its data dictionary ShortDescriptor (shown by View(),
+# gtsummary, etc.); set by reference to avoid copying large tables.
+# IDate/ITime columns are skipped: dplyr (vctrs) can only join or bind these
+# classes when their attributes match, so a label on one VISITDATE would break
+# joins with unlabelled dates.
+add_labels <- function(df, df_names) {
+  dic <- data_dictionary %>%
+    filter(DataName %in% df_names, !is.na(ShortDescriptor), ShortDescriptor != "") %>%
+    filter(!duplicated(VariableName))
+  for(cc in intersect(colnames(df), dic$VariableName)) {
+    if(inherits(df[[cc]], c("IDate", "ITime"))) next
+    setattr(df[[cc]], "label",
+      trimws(gsub("\\s+", " ", dic$ShortDescriptor[dic$VariableName == cc])))
+  }
+  df
+}
+
 escape <- function(x){
   y <- gsub("{", "\\{", x, fixed = TRUE)
   y <- gsub("%", "\\%", y, fixed = TRUE)
@@ -329,7 +346,7 @@ usethis::use_data(data_dictionary, overwrite = TRUE, compress = "xz")
 # A variable is left numeric, and listed in reports/qc/factor_coding_skipped.csv,
 # if its data contain values the dictionary does not list.
 # Variables recoded manually below are skipped.
-manual_factors <- c("NACCUDSD", "NACCETPR", "TRACER", "AMYLOID_STATUS")
+manual_factors <- c("NACCUDSD", "NACCETPR", "TRACER", "AMYLOIDSTATUS")
 factor_skipped <- NULL
 for(file_name in data_files){
   df_name <- file_manifest %>%
@@ -357,6 +374,7 @@ for(file_name in data_files){
     }
     df[[cc]] <- factor(df[[cc]], levels = codes$code, labels = codes$label)
   }
+  df <- add_labels(df, df_name)
   assign(df_name, df)
   do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
 }
@@ -379,6 +397,15 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
   SCAN_MP <- try(get(paste0('scan_mp_', df_name)), silent = TRUE)
 
   if(!'try-error' %in% class(SCAN_MP)){
+    # SCAN MP column names have underscores (e.g. META_TEMPORAL_SUVR,
+    # AMYLOID_STATUS) where SCAN/CLARiTI names do not (METATEMPORALSUVR,
+    # AMYLOIDSTATUS); use the SCAN/CLARiTI names so each measure is one column
+    mp_names <- colnames(SCAN_MP)
+    scan_names <- gsub("_", "", mp_names)
+    rename <- mp_names != scan_names & scan_names %in% colnames(SCAN_CLARiTI) &
+      !mp_names %in% colnames(SCAN_CLARiTI)
+    names(SCAN_MP)[rename] <- scan_names[rename]
+    message(df_name, ": ", sum(rename), " SCAN MP columns renamed to SCAN/CLARiTI names")
     all_source <- bind_rows(
       SCAN_CLARiTI %>% 
         mutate(LONIUID = as.character(LONIUID)),
@@ -418,6 +445,8 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
       row.names = FALSE)
   }
   
+  all_source <- add_labels(all_source,
+    paste0(c("scan_clariti_", "scan_mp_"), df_name))
   assign(df_name, all_source)
   do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
 }
@@ -463,6 +492,162 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
           TRUE ~ DataName))
     }}
 }
+
+# Manual data cleaning ----
+# Done before documenting datasets, so R/data.R describes the final columns.
+## taupetnpdka ----
+taupetnpdka <- taupetnpdka %>%
+  mutate(TRACER = case_when(
+    TRACER == 1 ~ 'FDG',
+    TRACER == 2 ~ 'PIB',
+    TRACER == 3 ~ 'Florbetapir',
+    TRACER == 4 ~ 'Florbetaben',
+    TRACER == 5 ~ 'NAV4694',
+    TRACER == 6 ~ 'Flortaucipir',
+    TRACER == 7 ~ 'MK6240',
+    TRACER == 8 ~ 'PI2620',
+    TRACER == 9 ~ 'GTP1',
+    TRACER == 10 ~ 'Flutemetamol',
+    TRACER == 99 ~ 'Unknown') %>% as.factor())
+taupetnpdka <- add_labels(taupetnpdka, "taupetnpdka")
+usethis::use_data(taupetnpdka, overwrite = TRUE, compress = "xz")
+
+## amyloidpetgaain ----
+# data_dictionary %>% filter(VariableName == "TRACER")
+amyloidpetgaain <- amyloidpetgaain %>%
+  mutate(
+    AMYLOIDSTATUS = factor(AMYLOIDSTATUS, 
+      levels = c(0, 1), 
+      labels = c("Negative", "Positive")),
+    TRACER = case_when(
+      TRACER == 1 ~ 'FDG',
+      TRACER == 2 ~ 'PIB',
+      TRACER == 3 ~ 'Florbetapir',
+      TRACER == 4 ~ 'Florbetaben',
+      TRACER == 5 ~ 'NAV4694',
+      TRACER == 6 ~ 'Flortaucipir',
+      TRACER == 7 ~ 'MK6240',
+      TRACER == 8 ~ 'PI2620',
+      TRACER == 9 ~ 'GTP1',
+      TRACER == 99 ~ 'Unknown') %>% as.factor())
+amyloidpetgaain <- add_labels(amyloidpetgaain, "amyloidpetgaain")
+usethis::use_data(amyloidpetgaain, overwrite = TRUE, compress = "xz")
+
+## uds_ftldlbd ----
+uds_ftldlbd <- uds_ftldlbd %>%
+  mutate(
+    # birth date with day set to 15 (day of birth is not released)
+    BIRTHDATE = as.IDate(
+      ifelse(BIRTHYR >= 1875 & BIRTHMO %in% 1:12,
+        sprintf("%d-%02d-15", BIRTHYR, BIRTHMO), NA_character_),
+      format = "%Y-%m-%d"),
+    NACCUDSD = case_when(
+      NACCUDSD == 1 ~ 'Normal cognition',
+      NACCUDSD == 2 ~ 'Impaired-not-MCI', 
+      NACCUDSD == 3 ~ 'MCI',
+      NACCUDSD == 4 ~ 'Dementia',
+      NACCUDSD == 8 ~ 'No cognitive impairment, only behavioral impairment') %>%
+      factor(levels = c('Normal cognition', 'Impaired-not-MCI', 'MCI',
+        'Dementia', 'No cognitive impairment, only behavioral impairment')),
+    # NACCSEX = case_when(
+    #   NACCSEX == 1 ~ 'Male',
+    #   NACCSEX == 2 ~ 'Female',
+    #   NACCSEX == 8 ~ 'Prefer not to answer',
+    #   NACCSEX == 9 ~ 'Unknown') %>% 
+    #   factor(levels = c('Male', 'Female', 'Prefer not to answer', 'Unknown')),
+    # NACCHISP = factor(NACCHISP, 
+    #   levels = c(0,1,9), labels = c("No", "Yes", "Unknown")),
+    NACCETPR = case_when(
+      NACCETPR == 1 ~ "Alzheimer's disease (AD)",
+      NACCETPR == 2 ~ 'Lewy body disease (LBD)',
+      NACCETPR == 3 ~ 'Multiple system atrophy (MSA)',
+      NACCETPR == 4 ~ 'Progressive supranuclear palsy (PSP)',
+      NACCETPR == 5 ~ 'Corticobasal degeneration (CBD)',
+      NACCETPR == 6 ~ 'FTLD with motor neuron disease (e.g., ALS)',
+      NACCETPR == 7 ~ 'FTLD, other',
+      NACCETPR == 8 ~ 'Vascular brain injury or vascular dementia including stroke',
+      NACCETPR == 9 ~ 'Essential tremor',
+      NACCETPR == 10 ~ 'Down syndrome',
+      NACCETPR == 11 ~ "Huntington's disease",
+      NACCETPR == 12 ~ 'Prion disease (CJD, other)',
+      NACCETPR == 13 ~ 'Traumatic brain injury (TBI)',
+      NACCETPR == 14 ~ 'Normal-pressure hydrocephalus (NPH)',
+      NACCETPR == 15 ~ 'Epilepsy',
+      NACCETPR == 16 ~ 'CNS neoplasm',
+      NACCETPR == 17 ~ 'Human immunodeficiency virus (HIV)',
+      NACCETPR == 18 ~ 'Other neurologic, genetic, or infectious condition',
+      NACCETPR == 19 ~ 'Depression',
+      NACCETPR == 20 ~ 'Bipolar disorder',
+      NACCETPR == 21 ~ 'Schizophrenia or other psychosis',
+      NACCETPR == 22 ~ 'Anxiety disorder',
+      NACCETPR == 23 ~ 'Delirium',
+      NACCETPR == 24 ~ 'Post-traumatic stress disorder (PTSD)',
+      NACCETPR == 25 ~ 'Other psychiatric disease',
+      NACCETPR == 26 ~ 'Cognitive impairment due to alcohol abuse',
+      NACCETPR == 27 ~ 'Cognitive impairment due to other substance abuse',
+      NACCETPR == 28 ~ 'Cognitive impairment due to systemic disease or medical illness',
+      NACCETPR == 29 ~ 'Cognitive impairment due to medications',
+      NACCETPR == 30 ~ 'Cognitive impairment for other specified reasons (i.e., written-in values)',
+      NACCETPR == 31 ~ 'Developmental neuropsychiatric disorders (e.g., autism spectrum disorder (ASD), attention-deficit hyperactivity disorder (ADHD), dyslexia)',
+      NACCETPR == 32 ~ 'Chronic traumatic encephalopathy (CTE)',
+      NACCETPR == 33 ~ 'Cerebral amyloid angiopathy (CAA)',
+      NACCETPR == 34 ~ 'Limbic-predominant age-related TDP-43 Encephalopathy (LATE)',
+      NACCETPR == 88 ~ 'Not applicable, not cognitively impaired',
+      NACCETPR == 99 ~ 'Missing/unknown') %>%
+      factor(levels = c(
+        "Alzheimer's disease (AD)", 
+        'Lewy body disease (LBD)', 
+        'Multiple system atrophy (MSA)', 
+        'Progressive supranuclear palsy (PSP)', 
+        'Corticobasal degeneration (CBD)',
+        'FTLD with motor neuron disease (e.g., ALS)',
+        'FTLD, other',
+        'Vascular brain injury or vascular dementia including stroke',
+        'Essential tremor',
+        'Down syndrome',
+        "Huntington's disease",
+        'Prion disease (CJD, other)',
+        'Traumatic brain injury (TBI)',
+        'Normal-pressure hydrocephalus (NPH)',
+        'Epilepsy',
+        'CNS neoplasm',
+        'Human immunodeficiency virus (HIV)',
+        'Other neurologic, genetic, or infectious condition',
+        'Depression',
+        'Bipolar disorder',
+        'Schizophrenia or other psychosis',
+        'Anxiety disorder',
+        'Delirium',
+        'Post-traumatic stress disorder (PTSD)',
+        'Other psychiatric disease',
+        'Cognitive impairment due to alcohol abuse',
+        'Cognitive impairment due to other substance abuse',
+        'Cognitive impairment due to systemic disease or medical illness',
+        'Cognitive impairment due to medications',
+        'Cognitive impairment for other specified reasons (i.e., written-in values)',
+        'Developmental neuropsychiatric disorders (e.g., autism spectrum disorder (ASD), attention-deficit hyperactivity disorder (ADHD), dyslexia)',
+        'Chronic traumatic encephalopathy (CTE)',
+        'Cerebral amyloid angiopathy (CAA)',
+        'Limbic-predominant age-related TDP-43 Encephalopathy (LATE)',
+        'Not applicable, not cognitively impaired',
+        'Missing/unknown')))
+
+uds_ftldlbd <- uds_ftldlbd %>%
+  relocate(BIRTHDATE, .after = BIRTHYR)
+
+data_dictionary <- data_dictionary %>%
+  filter(!(DataName == "uds_ftldlbd" & VariableName == "BIRTHDATE")) %>%
+  bind_rows(tibble(DataName = "uds_ftldlbd", VariableName = "BIRTHDATE",
+    ShortDescriptor = "Date of birth (derived from BIRTHYR and BIRTHMO; day set to 15)",
+    Dictionary = "derived in data-raw/data-prep.R"))
+
+# to help with lazyload problem
+uds_ftldlbd <- uds_ftldlbd %>%
+  mutate(across(where(is.character), as.factor))
+
+uds_ftldlbd <- add_labels(uds_ftldlbd, "uds_ftldlbd")
+
+usethis::use_data(uds_ftldlbd, overwrite = TRUE, compress = "xz")
 
 View(file_manifest)
 usethis::use_data(file_manifest, overwrite = TRUE, compress = "xz")
@@ -596,144 +781,6 @@ for (tt in sort(setdiff(unique(file_manifest$DataName),''))) {
     "NULL\n", sep = "\n",
     file = file.path("..", "R", "data.R"), append = TRUE)          
 }
-
-# Manual data cleaning ----
-## scan_taupetnpdka ----
-taupetnpdka <- taupetnpdka %>%
-  mutate(TRACER = case_when(
-    TRACER == 1 ~ 'FDG',
-    TRACER == 2 ~ 'PIB',
-    TRACER == 3 ~ 'Florbetapir',
-    TRACER == 4 ~ 'Florbetaben',
-    TRACER == 5 ~ 'NAV4694',
-    TRACER == 6 ~ 'Flortaucipir',
-    TRACER == 7 ~ 'MK6240',
-    TRACER == 8 ~ 'PI2620',
-    TRACER == 9 ~ 'GTP1',
-    TRACER == 10 ~ 'Flutemetamol',
-    TRACER == 99 ~ 'Unknown') %>% as.factor())
-usethis::use_data(taupetnpdka, overwrite = TRUE, compress = "xz")
-
-## amyloidpetgaain ----
-# data_dictionary %>% filter(VariableName == "TRACER")
-amyloidpetgaain <- amyloidpetgaain %>%
-  mutate(
-    AMYLOID_STATUS = factor(AMYLOID_STATUS, 
-      levels = c(0, 1), 
-      labels = c("Negative", "Positive")),
-    TRACER = case_when(
-      TRACER == 1 ~ 'FDG',
-      TRACER == 2 ~ 'PIB',
-      TRACER == 3 ~ 'Florbetapir',
-      TRACER == 4 ~ 'Florbetaben',
-      TRACER == 5 ~ 'NAV4694',
-      TRACER == 6 ~ 'Flortaucipir',
-      TRACER == 7 ~ 'MK6240',
-      TRACER == 8 ~ 'PI2620',
-      TRACER == 9 ~ 'GTP1',
-      TRACER == 99 ~ 'Unknown') %>% as.factor())
-usethis::use_data(amyloidpetgaain, overwrite = TRUE, compress = "xz")
-
-## uds_ftldlbd ----
-uds_ftldlbd <- uds_ftldlbd %>%
-  mutate(
-    EDUC = case_when(EDUC == 99 ~ NA, TRUE ~ EDUC),
-    NACCUDSD = case_when(
-      NACCUDSD == 1 ~ 'Normal cognition',
-      NACCUDSD == 2 ~ 'Impaired-not-MCI', 
-      NACCUDSD == 3 ~ 'MCI',
-      NACCUDSD == 4 ~ 'Dementia',
-      NACCUDSD == 8 ~ 'No cognitive impairment, only behavioral impairment') %>%
-      factor(levels = c('Normal cognition', 'Impaired-not-MCI', 'MCI',
-        'Dementia', 'No cognitive impairment, only behavioral impairment')),
-    # NACCSEX = case_when(
-    #   NACCSEX == 1 ~ 'Male',
-    #   NACCSEX == 2 ~ 'Female',
-    #   NACCSEX == 8 ~ 'Prefer not to answer',
-    #   NACCSEX == 9 ~ 'Unknown') %>% 
-    #   factor(levels = c('Male', 'Female', 'Prefer not to answer', 'Unknown')),
-    # NACCHISP = factor(NACCHISP, 
-    #   levels = c(0,1,9), labels = c("No", "Yes", "Unknown")),
-    NACCETPR = case_when(
-      NACCETPR == 1 ~ "Alzheimer's disease (AD)",
-      NACCETPR == 2 ~ 'Lewy body disease (LBD)',
-      NACCETPR == 3 ~ 'Multiple system atrophy (MSA)',
-      NACCETPR == 4 ~ 'Progressive supranuclear palsy (PSP)',
-      NACCETPR == 5 ~ 'Corticobasal degeneration (CBD)',
-      NACCETPR == 6 ~ 'FTLD with motor neuron disease (e.g., ALS)',
-      NACCETPR == 7 ~ 'FTLD, other',
-      NACCETPR == 8 ~ 'Vascular brain injury or vascular dementia including stroke',
-      NACCETPR == 9 ~ 'Essential tremor',
-      NACCETPR == 10 ~ 'Down syndrome',
-      NACCETPR == 11 ~ "Huntington's disease",
-      NACCETPR == 12 ~ 'Prion disease (CJD, other)',
-      NACCETPR == 13 ~ 'Traumatic brain injury (TBI)',
-      NACCETPR == 14 ~ 'Normal-pressure hydrocephalus (NPH)',
-      NACCETPR == 15 ~ 'Epilepsy',
-      NACCETPR == 16 ~ 'CNS neoplasm',
-      NACCETPR == 17 ~ 'Human immunodeficiency virus (HIV)',
-      NACCETPR == 18 ~ 'Other neurologic, genetic, or infectious condition',
-      NACCETPR == 19 ~ 'Depression',
-      NACCETPR == 20 ~ 'Bipolar disorder',
-      NACCETPR == 21 ~ 'Schizophrenia or other psychosis',
-      NACCETPR == 22 ~ 'Anxiety disorder',
-      NACCETPR == 23 ~ 'Delirium',
-      NACCETPR == 24 ~ 'Post-traumatic stress disorder (PTSD)',
-      NACCETPR == 25 ~ 'Other psychiatric disease',
-      NACCETPR == 26 ~ 'Cognitive impairment due to alcohol abuse',
-      NACCETPR == 27 ~ 'Cognitive impairment due to other substance abuse',
-      NACCETPR == 28 ~ 'Cognitive impairment due to systemic disease or medical illness',
-      NACCETPR == 29 ~ 'Cognitive impairment due to medications',
-      NACCETPR == 30 ~ 'Cognitive impairment for other specified reasons (i.e., written-in values)',
-      NACCETPR == 31 ~ 'Developmental neuropsychiatric disorders (e.g., autism spectrum disorder (ASD), attention-deficit hyperactivity disorder (ADHD), dyslexia)',
-      NACCETPR == 32 ~ 'Chronic traumatic encephalopathy (CTE)',
-      NACCETPR == 33 ~ 'Cerebral amyloid angiopathy (CAA)',
-      NACCETPR == 34 ~ 'Limbic-predominant age-related TDP-43 Encephalopathy (LATE)',
-      NACCETPR == 88 ~ 'Not applicable, not cognitively impaired',
-      NACCETPR == 99 ~ 'Missing/unknown') %>%
-      factor(levels = c(
-        "Alzheimer's disease (AD)", 
-        'Lewy body disease (LBD)', 
-        'Multiple system atrophy (MSA)', 
-        'Progressive supranuclear palsy (PSP)', 
-        'Corticobasal degeneration (CBD)',
-        'FTLD with motor neuron disease (e.g., ALS)',
-        'FTLD, other',
-        'Vascular brain injury or vascular dementia including stroke',
-        'Essential tremor',
-        'Down syndrome',
-        "Huntington's disease",
-        'Prion disease (CJD, other)',
-        'Traumatic brain injury (TBI)',
-        'Normal-pressure hydrocephalus (NPH)',
-        'Epilepsy',
-        'CNS neoplasm',
-        'Human immunodeficiency virus (HIV)',
-        'Other neurologic, genetic, or infectious condition',
-        'Depression',
-        'Bipolar disorder',
-        'Schizophrenia or other psychosis',
-        'Anxiety disorder',
-        'Delirium',
-        'Post-traumatic stress disorder (PTSD)',
-        'Other psychiatric disease',
-        'Cognitive impairment due to alcohol abuse',
-        'Cognitive impairment due to other substance abuse',
-        'Cognitive impairment due to systemic disease or medical illness',
-        'Cognitive impairment due to medications',
-        'Cognitive impairment for other specified reasons (i.e., written-in values)',
-        'Developmental neuropsychiatric disorders (e.g., autism spectrum disorder (ASD), attention-deficit hyperactivity disorder (ADHD), dyslexia)',
-        'Chronic traumatic encephalopathy (CTE)',
-        'Cerebral amyloid angiopathy (CAA)',
-        'Limbic-predominant age-related TDP-43 Encephalopathy (LATE)',
-        'Not applicable, not cognitively impaired',
-        'Missing/unknown')))
-
-# to help with lazyload problem
-uds_ftldlbd <- uds_ftldlbd %>%
-  mutate(across(where(is.character), as.factor))
-
-usethis::use_data(uds_ftldlbd, overwrite = TRUE, compress = "xz")
 
 # QC ----
 

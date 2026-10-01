@@ -9,6 +9,11 @@
 * New `parse_codes()` parses data dictionary `AllowableCodes` into valid ranges and coded values
 * New `nacc_na()` replaces coded missing values (e.g. -4, 88.8, 888, 995--998, 9999) with `NA`
 * `data_dictionary` gains `MissingCodes` and `UnknownCodes` columns, and is now documented
+* Combined PET datasets (`amyloidpetgaain`, `amyloidpetnpdka`, `taupetnpdka`): SCAN MP columns are renamed to the SCAN/CLARiTI names, which have no underscores (e.g. `AMYLOID_STATUS` is now `AMYLOIDSTATUS`, `META_TEMPORAL_SUVR` is now `METATEMPORALSUVR`). Previously each measure was split across two columns, one filled only for SCAN MP rows, so code using `AMYLOID_STATUS` saw only SCAN MP scans
+* `uds_ftldlbd` gains `BIRTHDATE` (from `BIRTHYR` and `BIRTHMO`, day set to 15)
+* `EDUC` = 99 (unknown) is no longer set to `NA` at build, consistent with other variables; use `nacc_na()`
+* Dataset columns carry a `label` attribute from the data dictionary `ShortDescriptor` (used by `View()`, gtsummary, etc.)
+* Basic summaries vignette: LBD etiology uses `NACCLBDS` (UDS v1-v4) instead of `PARK` (UDS v3 only); CLARiTI imaging panels ordered amyloid, tau, hippocampus; UDS v4 "No cognitive impairment, only behavioral impairment" kept as "Behavioral impairment only" (previously recoded to `NA`); longitudinal plots drop participants with unknown initial diagnosis and report how many in the caption; new SCAN-only UpSet plot. Data preparation and plotting code moved to `vignettes/_basic-summaries-data.qmd`, shared with the CLARiTI PowerPoint slides (`reports/clariti-nacc-slides.qmd`)
 * Factor coding uses `parse_codes()`: many more categorical UDS variables (e.g. `PARK`) are now factors. Missing codes such as -4 are kept as factor levels (use `nacc_na()` to drop them) instead of silently becoming `NA`. Variables whose data contain values not listed in the dictionary are left numeric and listed in `reports/qc/factor_coding_skipped.csv`
 
 # NACCADRC 73.20260410.1

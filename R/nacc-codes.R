@@ -172,7 +172,10 @@ nacc_na <- function(data, dataname = deparse(substitute(data)),
       parsed <- parse_codes(dictionary$AllowableCodes[i])
       labs <- parsed$label[parsed$code %in% codes]
       hit <- x %in% labs
-      if (any(hit)) x <- factor(x, levels = setdiff(levels(x), labs))
+      if (any(hit)) {
+        x <- structure(factor(x, levels = setdiff(levels(x), labs)),
+          label = attr(x, "label"))
+      }
     } else if (is.numeric(x)) {
       hit <- x %in% codes
       x[hit] <- NA

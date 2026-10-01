@@ -1,0 +1,469 @@
+<!-- Shared data preparation and plotting code for NACCADRC-basic-summaries.qmd
+and reports/clariti-nacc-slides.qmd. Included with {{< include >}}; not rendered
+on its own. -->
+
+```{r packages, message = FALSE}
+#| code-fold: true
+#| cache: false
+
+library(NACCADRC)
+library(ggplot2)
+library(tidyverse)
+library(nlme)
+library(data.table)
+library(gtsummary)
+library(UpSetR)
+library(patchwork)
+library(sva)
+
+data(mrisbm, taupetnpdka, phc_cognition, amyloidpetgaain,
+uds_ftldlbd, clariti_edc, uds_version, data_release_date)
+
+# set coded missing values (e.g. -4 = Not available, 9999 = Unknown) to NA
+uds_ftldlbd <- nacc_na(uds_ftldlbd)
+
+theme_set(theme_minimal())
+
+scale_colour_discrete <-
+  function(...) ggsci::scale_color_jama()
+scale_fill_discrete <-
+  function(...) ggsci::scale_fill_jama()
+
+cohort_color <- c(CLARITI = "#C02126", CLARiTI = "#C02126",
+  SCAN = "#173058",
+  "Mixed protocol" = "#42B540FF", "SCAN MP" = "#42B540FF",
+  PENDING = "#80796BFF")
+```
+
+```{r merge-data}
+#| code-fold: true
+
+## Combine hippocampal volume from SCAN and Mixed Protocol (UDS) ----
+mri_hipp <- mrisbm %>%          # SCAN volumes
+  select(PROJECT, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV = CEREBRUMTCV) %>%
+  distinct(NACCID, DATE, .keep_all = TRUE)
+
+NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
+
+## Combine hipp volume, tau PET, amyloid PET, cognition, and demographics ----
+dd_atn <- clariti_edc %>%
+  select(NACCID) %>% distinct() %>% mutate(`CLARiTI EDC` = 'Yes') %>%
+  full_join(mri_hipp %>%                 # Hippocampal volumes
+      select(NACCID, MRI_PROJECT = PROJECT, DATE, HIPPOCAMPUS, ICV),
+    by = 'NACCID') %>%
+  full_join(taupetnpdka %>%
+      arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
+      distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
+      select(NACCID, DATE = SCANDATE, Tau_PET = METATEMPORALSUVR,
+        Tau_TRACER = TRACER, Tau_PROJECT = PROJECT) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
+    by = c('NACCID', 'DATE')) %>%
+  full_join(amyloidpetgaain %>%          # Amyloid PET
+      arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
+      distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
+      select(NACCID, DATE = SCANDATE, AMYLOID_STATUS = AMYLOIDSTATUS, CENTILOIDS,
+        Amyloid_TRACER = TRACER, Amyloid_PROJECT = PROJECT) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
+    by = c('NACCID', 'DATE')) %>%
+  full_join(phc_cognition %>%            # Harmonized cognition
+      select(NACCID, NACCVNUM, PHC_MEM, PHC_EXF, PHC_LAN) %>%
+      distinct(NACCID, NACCVNUM, .keep_all = TRUE) %>%
+      left_join(uds_ftldlbd %>%          # UDS visit dates
+          select(NACCID, NACCVNUM, DATE = VISITDATE),
+        by = c('NACCID', 'NACCVNUM')) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
+    by = c('NACCID', 'DATE'))
+
+stopifnot(with(dd_atn, !any(duplicated(paste(NACCID, DATE)))))
+
+dd <- dd_atn %>%
+  full_join(uds_ftldlbd %>%              # UDS diagnosis, etiology over time
+      filter(NACCID %in% c(dd_atn$NACCID, clariti_edc$NACCID)) %>%
+      mutate(
+        NACCETPR = factor(NACCETPR, levels = NACCETPR_levels)) %>%
+      # NACCLBDS (Lewy body syndrome, UDS v1-v4) replaces PARK (UDS v3 only)
+      select(NACCID, DATE = VISITDATE, NACCUDSD, NACCETPR, NACCLBDS) %>%
+      distinct(NACCID, DATE, .keep_all = TRUE),
+    by = c('NACCID', 'DATE')) %>%
+  left_join(uds_ftldlbd %>%              # UDS demographics
+      filter(!is.na(BIRTHDATE)) %>%          # BIRTHYR, BIRTHMO, day 15
+      arrange(NACCID, NACCVNUM) %>%
+      select(NACCID, BIRTHDATE, RACE, SEX = NACCSEX, EDUC, HISPANIC = NACCHISP) %>%
+      group_by(NACCID) %>%               # Carry information back/forward
+      tidyr::fill(.direction = "updown") %>% # to impute missing data
+      ungroup() %>%
+      filter(!duplicated(NACCID)),       # One row of demographics per NACCID
+    by = 'NACCID') %>%
+  arrange(NACCID, DATE) %>%
+  group_by(NACCID) %>%                   # Carry Dx information forward/back
+  tidyr::fill(all_of(c("NACCUDSD", "NACCETPR", "NACCLBDS")), .direction = "downup") %>%
+  mutate(ICV = mean(ICV, na.rm = TRUE)) %>% # Average ICV over visits
+  ungroup() %>%
+  mutate(
+    Age = as.numeric(DATE - BIRTHDATE)/365.25,
+    Etiology = case_when(                     # Simplified/collapse diagnosis
+      NACCETPR == "Alzheimer's disease (AD)" ~ 'AD',
+      # NACCLBDS = 1: Lewy body syndrome among impaired participants
+      NACCETPR == 'Lewy body disease (LBD)' | NACCLBDS == 1 ~ 'LBD',
+      NACCETPR %in% c("FTLD, other", "FTLD with motor neuron disease (e.g., ALS)") ~
+        "FTLD (any)",
+      NACCETPR == "Vascular brain injury or vascular dementia including stroke" ~ "Vascular",
+      NACCETPR == 'Not applicable, not cognitively impaired' ~ 'Not impaired',
+      TRUE ~ 'Other') %>%
+      factor(levels = c('Not impaired', 'LBD', "FTLD (any)", 'AD', "Vascular", 'Other')),
+    NACCUDSD = case_when(
+      is.na(NACCUDSD) ~ 'Unknown',
+      NACCUDSD == "No cognitive impairment, only behavioral impairment" ~
+        "Behavioral impairment only",            # UDS v4
+      TRUE ~ NACCUDSD) %>%
+      factor(levels = c("Normal cognition", "Behavioral impairment only",
+        "Impaired-not-MCI", "MCI", "Dementia", 'Unknown')))
+
+stopifnot(with(dd, !any(duplicated(paste(NACCID, DATE)))))
+
+CLARiTI_id <- dd %>%
+  filter(grepl("CLARITI", MRI_PROJECT) | grepl("CLARITI", Tau_PROJECT) |
+    grepl("CLARITI", Amyloid_PROJECT)) %>%
+  pull(NACCID) %>% unique()
+
+SCAN_id <- dd %>%
+  filter(MRI_PROJECT == 'SCAN' | Tau_PROJECT == 'SCAN' | Amyloid_PROJECT == 'SCAN') %>%
+  pull(NACCID) %>% unique() %>%
+  setdiff(CLARiTI_id)
+
+Mixed_id <- dd %>%
+  filter(MRI_PROJECT == 'SCAN MP' | Tau_PROJECT == 'SCAN MP' | Amyloid_PROJECT == 'SCAN MP') %>%
+  pull(NACCID) %>% unique() %>%
+  setdiff(c(CLARiTI_id, SCAN_id))
+
+# harmonize tau PET data ----
+tmp <- dd %>% filter(!is.na(Tau_PET) & !is.na(Age)) %>%
+  mutate(across(where(is.factor), fct_drop))
+set.seed(42)
+tmp$Tau_PET_ComBat <- sva::ComBat(
+  dat=rbind(tmp$Tau_PET, jitter(tmp$Tau_PET)), # ComBat needs two rows
+  batch=tmp$Tau_TRACER,
+  mod=model.matrix(~Age + SEX, tmp), par.prior=TRUE, prior.plots=FALSE)[1,]
+
+dd <- dd %>%
+  left_join(tmp %>% select(NACCID, DATE, Tau_PET_ComBat),
+    by = c('NACCID', 'DATE'))
+
+# x-sectional data ----
+dd_cross <- dd %>%
+  group_by(NACCID) %>%
+  fill(everything(), .direction = "updown") %>%
+  filter(!duplicated(NACCID)) %>%
+  ungroup() %>%
+  mutate(    # add labels for tables
+    Cohort = case_when(
+      NACCID %in% clariti_edc$NACCID ~ 'CLARiTI',
+      NACCID %in% CLARiTI_id ~ 'CLARiTI',
+      NACCID %in% SCAN_id ~ 'SCAN',
+      NACCID %in% Mixed_id ~ 'Mixed protocol',
+      TRUE ~ 'UDS only') %>%
+      factor(levels = c('CLARiTI', 'SCAN', 'Mixed protocol', 'UDS only')),
+    PHC_MEM = structure(PHC_MEM, label = 'Harmonized Memory'),
+    PHC_EXF = structure(PHC_EXF, label = 'Harmonized Exec Function'),
+    PHC_LAN = structure(PHC_LAN, label = 'Harmonized Language'),
+    EDUC = structure(EDUC, label = 'Education (yrs)'),
+    Age = structure(Age, label = 'Age (yrs)'),
+    SEX = structure(SEX, label = 'Sex'),
+    RACE = structure(RACE, label = 'Race'),
+    HISPANIC = structure(HISPANIC, label = 'Hispanic'),
+    AMYLOID_STATUS = structure(AMYLOID_STATUS, label = 'Amyloid status'),
+    CENTILOIDS = structure(CENTILOIDS, label = 'Amyloid (CL)'),
+    HIPPOCAMPUS = structure(HIPPOCAMPUS, label = 'Hippocampal volume (mm3)'),
+    Tau_PET = structure(Tau_PET, label = 'Tau PET (SUVR)'),
+    Tau_PET_ComBat = structure(Tau_PET_ComBat, label = 'Tau PET (SUVR)'),
+    Tau_TRACER = structure(Tau_TRACER, label = 'Tau PET tracer'),
+    NACCETPR = structure(NACCETPR, label = 'Primary etiologic diagnosis'),
+    NACCUDSD = structure(NACCUDSD, label = 'Cognitive status at UDS visit'))
+
+# data availability indicators for UpSet plots ----
+dd_upset <- dd_cross %>%
+  mutate(
+    `CLARiTI EDC` = case_when(`CLARiTI EDC` == 'Yes' ~ 1, TRUE ~ 0),
+    Diagnosis = case_when(!is.na(NACCUDSD) &  NACCUDSD != "Unknown" ~ 1, TRUE ~ 0),
+    MRI = case_when(!is.na(HIPPOCAMPUS) ~ 1, TRUE ~ 0),
+    `Amyloid PET` = case_when(!is.na(CENTILOIDS) ~ 1, TRUE ~ 0),
+    `Tau PET` = case_when(!is.na(Tau_PET) ~ 1, TRUE ~ 0)) %>%
+  select(NACCID, Cohort, `CLARiTI EDC`, Diagnosis:`Tau PET`) %>%
+  as.data.frame()
+```
+
+```{r clariti-uds}
+#| code-fold: true
+
+## UDS visit closest to each CLARiTI participant's screening date ----
+clariti_screen <- clariti_edc %>%
+  distinct(NACCID, .keep_all = TRUE) %>%
+  transmute(NACCID, SCREENDT = as.IDate(SCREENDT))
+
+clariti_uds <- uds_ftldlbd %>%
+  filter(NACCID %in% clariti_screen$NACCID) %>%
+  select(NACCID, VISITDATE, FORMVER, PACKET, NACCUDSD, NACCEDULVL, NACCNIHR,
+    NACCHISP, SCD, MBI, TRTBIOMARK, BIOMARKDX) %>%
+  inner_join(clariti_screen, by = "NACCID") %>%
+  mutate(Delay = as.numeric(VISITDATE - SCREENDT)) %>%  # days; < 0: UDS first
+  group_by(NACCID) %>%
+  slice_min(abs(Delay), n = 1, with_ties = FALSE) %>%
+  ungroup() %>%
+  mutate(
+    `UDS version` = case_when(
+      FORMVER >= 4 ~ "UDS v4",
+      FORMVER >= 3 ~ "UDS v3",
+      TRUE ~ "UDS v1-2") %>%
+      factor(levels = c("UDS v4", "UDS v3", "UDS v1-2")),
+    Packet = case_when(
+      PACKET %in% c("I", "I4") ~ "Initial visit",
+      PACKET == "F" ~ "Follow-up visit",
+      PACKET == "IT" ~ "Telephone initial visit",
+      PACKET == "T" ~ "Telephone follow-up visit") %>%
+      factor(levels = c("Initial visit", "Follow-up visit",
+        "Telephone initial visit", "Telephone follow-up visit")))
+
+## CLARiTI participant counts ----
+clariti_ids <- unique(clariti_edc$NACCID)
+clariti_n <- list(
+  edc = length(clariti_ids),
+  uds = sum(clariti_ids %in% uds_ftldlbd$NACCID),
+  imaging = sum(clariti_ids %in% CLARiTI_id),
+  imaging_uds = sum(clariti_ids %in% CLARiTI_id & clariti_ids %in% uds_ftldlbd$NACCID),
+  complete = dd_upset %>%  # UDS diagnosis, MRI, amyloid PET, and tau PET
+    filter(NACCID %in% clariti_ids, Diagnosis == 1, MRI == 1,
+      `Amyloid PET` == 1, `Tau PET` == 1) %>%
+    nrow())
+clariti_n$pending_uds <- clariti_n$edc - clariti_n$uds
+clariti_n$pending_imaging <- clariti_n$edc - clariti_n$imaging
+clariti_n$uds_pending_imaging <- clariti_n$uds - clariti_n$imaging_uds
+```
+
+```{r plot-functions}
+#| code-fold: true
+
+# Flow of CLARiTI EDC participants into UDS and SCAN data ----
+plot_clariti_flow <- function(clariti_n, clariti_uds, uds_version) {
+  fmt <- function(x) format(x, big.mark = ",")
+  n_version <- table(clariti_uds$`UDS version`)
+  n_packet <- table(clariti_uds$Packet)
+  boxes <- tribble(
+    ~x, ~y, ~label, ~main,
+    9, 6.3, paste0("CLARiTI EDC: ", fmt(clariti_n$edc), " unique participants\n",
+      "investigator_clariti_edc_nacc", uds_version, ".csv"), TRUE,
+    9, 4.1, paste0(fmt(clariti_n$uds), " with UDS\n",
+      "investigator_ftldlbd_nacc", uds_version, ".csv"), TRUE,
+    12, 5.2, paste0(fmt(clariti_n$pending_uds), " pending UDS"), FALSE,
+    12, 3.0, paste0(fmt(clariti_n$uds_pending_imaging), " pending SCAN data"), FALSE,
+    9, 1.8, paste0(fmt(clariti_n$imaging_uds), " with SCAN data and UDS\n(",
+      fmt(clariti_n$complete), " with complete data)"), TRUE,
+    5.4, 4.1, paste(fmt(n_version[n_version > 0]), "with", names(n_version)[n_version > 0],
+      collapse = "\n"), FALSE,
+    2.0, 4.1, paste(fmt(as.numeric(n_packet)), tolower(names(n_packet)), collapse = "\n"), FALSE)
+  arrows <- tribble(
+    ~x, ~y, ~xend, ~yend,
+    9, 5.75, 9, 4.65,       # EDC -> UDS
+    9, 5.2, 10.95, 5.2,     # -> pending UDS
+    9, 3.55, 9, 2.35,       # UDS -> SCAN and UDS
+    9, 3.0, 10.75, 3.0,     # -> pending SCAN
+    7.3, 4.1, 6.35, 4.1,    # UDS -> version
+    4.5, 4.1, 3.55, 4.1)    # version -> packet
+  arrow_labels <- tibble(x = c(6.85, 4.05), y = 4.35, label = c("FORMVER", "PACKET"))
+
+  ggplot() +
+    geom_segment(data = arrows, aes(x = x, y = y, xend = xend, yend = yend),
+      arrow = arrow(length = unit(0.12, "inches"), type = "closed"), color = "gray40") +
+    geom_label(data = boxes, aes(x = x, y = y, label = label, color = main),
+      size = 3.6, lineheight = 1.1, label.padding = unit(0.5, "lines"),
+      label.r = unit(0.1, "lines"), fill = "white") +
+    geom_text(data = arrow_labels, aes(x = x, y = y, label = label),
+      size = 3.2, fontface = "italic", color = "gray30") +
+    scale_color_manual(values = c(`TRUE` = cohort_color[["CLARiTI"]], `FALSE` = "gray40"),
+      guide = "none") +
+    coord_cartesian(xlim = c(0.3, 13.5), ylim = c(1.2, 6.9), expand = FALSE) +
+    theme_void()
+}
+
+# Distribution of imaging summaries among CLARiTI participants ----
+plot_clariti_imaging <- function(dd_cross) {
+  measures <- c("Amyloid (CL)", "Tau PET MTL (SUVR)", "Hippocampal volume (mm3)")
+  dd_cross %>%
+    filter(Cohort == 'CLARiTI') %>%
+    filter(NACCUDSD != 'Unknown') %>%
+    mutate(
+      Diagnosis = case_when(
+        NACCUDSD == "Normal cognition" ~ "NC",
+        NACCUDSD == "Behavioral impairment only" ~ NA,  # not NC or CI
+        NACCETPR == "Alzheimer's disease (AD)" ~ "CI-AD",
+        TRUE ~ "CI-nonAD") %>% factor(c("NC", "CI-AD", "CI-nonAD"))) %>%
+    filter(!is.na(Diagnosis)) %>%
+    select(NACCID, Diagnosis,
+      `Amyloid (CL)` = CENTILOIDS,
+      `Tau PET MTL (SUVR)` = Tau_PET_ComBat,
+      `Hippocampal volume (mm3)` = HIPPOCAMPUS) %>%
+    pivot_longer(all_of(measures), names_to = 'Measure', values_to = 'Value') %>%
+    filter(!is.na(Value)) %>%
+    mutate(Measure = factor(Measure, levels = measures)) %>%  # panel order
+  ggplot(aes(x = Diagnosis, y = Value)) +
+    geom_violin(fill = "gray80", color = "gray50") +
+    ggbeeswarm::geom_beeswarm(color = "blue", alpha = 0.5) +
+    facet_wrap(vars(Measure), nrow = 1, scales = 'free', strip.position = "left") +
+    labs(x = "", y = "") +
+    theme(legend.position = "none", strip.placement = "outside")
+}
+
+# Counts by etiology and UDS diagnosis, stacked by cohort ----
+plot_etiology_bars <- function(data, by_cohort = TRUE) {
+  data <- data %>%
+    filter(NACCUDSD != 'Unknown') %>%
+    mutate(across(where(is.factor), fct_drop))
+  count_data <- data %>%
+    group_by(NACCUDSD, Etiology) %>%
+    summarise(n = n(), .groups = "drop")
+  p <- ggplot(count_data, aes(x = n, y = Etiology))
+  p <- if (by_cohort) {
+    p + geom_bar(data = data %>% count(NACCUDSD, Etiology, Cohort),
+        aes(fill = Cohort), stat = "identity") +
+      scale_fill_manual(values = cohort_color)
+  } else {
+    p + geom_bar(stat = "identity", fill = cohort_color["CLARiTI"])
+  }
+  p +
+    geom_text(aes(label = n), hjust = -0.2, size = 3) +
+    expand_limits(x = max(count_data$n) * 1.2) +
+    facet_wrap(vars(NACCUDSD)) +
+    labs(y = "", x = "Count (N)")
+}
+
+# UpSet plot of data availability ----
+plot_upset <- function(data) {
+  upset(data, nsets = 7, nintersects = 30, mb.ratio = c(0.5, 0.5),
+    order.by = c("freq", "degree"), decreasing = c(TRUE, FALSE))
+}
+
+# Initial diagnosis: UDS diagnosis at each participant's first observation ----
+# Rows without age are dropped first so they cannot make Age0 missing.
+add_initial_dx <- function(pd) {
+  pd %>%
+    filter(!is.na(Age)) %>%
+    group_by(NACCID) %>%
+    mutate(
+      Age0 = min(Age),
+      `Initial Dx` = NACCUDSD[which.min(Age)],
+      Years = Age - Age0) %>%
+    arrange(NACCID, Years)
+}
+
+# Drop participants with unknown initial diagnosis from longitudinal plots;
+# the number dropped is stored in attr(, "n_unknown") for the plot caption
+known_initial_dx <- function(pd) {
+  unknown <- is.na(pd$`Initial Dx`) | pd$`Initial Dx` == "Unknown"
+  structure(pd[!unknown, ] %>% ungroup() %>% mutate(`Initial Dx` = fct_drop(`Initial Dx`)),
+    n_unknown = n_distinct(pd$NACCID[unknown]))
+}
+
+unknown_dx_caption <- function(n) {
+  if (n > 0) paste(format(n, big.mark = ","),
+    "participants with unknown initial UDS diagnosis not shown")
+}
+
+# Spaghetti plot of a longitudinal measure by initial diagnosis ----
+plot_spaghetti <- function(dd, value, project, ylab, alpha = 1) {
+  pd <- dd %>%
+    select(NACCID, PROJECT = all_of(project), Etiology, Age, NACCUDSD, NACCETPR,
+      value = all_of(value)) %>%
+    filter(!is.na(value)) %>%
+    add_initial_dx() %>%
+    known_initial_dx()
+  n_unknown <- attr(pd, "n_unknown")
+
+  ggplot(pd, aes(x = Years, y = value)) +
+    geom_point(aes(color = PROJECT, shape = Etiology), alpha = alpha) +
+    geom_line(aes(group = NACCID), alpha = 0.1) +
+    geom_density(aes(y = value, x = after_stat(-scaled)),
+      color = "darkgray", fill = "gray", alpha = 0.3,
+      orientation = "y", inherit.aes = FALSE) +
+    scale_x_continuous(labels = function(x) ifelse(x < 0, "", x)) +
+    facet_grid(. ~ `Initial Dx`, scales = 'free_x',
+      labeller = label_wrap_gen(width = 15)) +
+    guides(colour = guide_legend(override.aes = list(alpha = 1))) +
+    labs(y = ylab, caption = unknown_dx_caption(n_unknown)) +
+    scale_color_manual(values = cohort_color)
+}
+
+# LOESS trends of imaging by age and by imputed memory ----
+plot_loess <- function(dd) {
+  pd1 <- dd %>%
+    select(NACCID, Age, Etiology, NACCUDSD, NACCETPR,
+      CENTILOIDS, HIPPOCAMPUS, Tau_PET_ComBat) %>%
+    rename(
+      `Amyloid PET (CL)` = CENTILOIDS, `Hipp. volume` = HIPPOCAMPUS,
+      `Tau PET (MTL SUVR)` = Tau_PET_ComBat) %>%
+    add_initial_dx() %>%
+    pivot_longer(`Amyloid PET (CL)`:`Tau PET (MTL SUVR)`) %>%
+    filter(!is.na(value), !is.na(NACCUDSD)) %>%
+    mutate(name = factor(name, levels = c(
+      "Amyloid PET (CL)", "Tau PET (MTL SUVR)", "Hipp. volume"))) %>%
+    known_initial_dx()
+
+  pd2_0 <- dd %>%
+    select(NACCID, Age, Memory = PHC_MEM, Etiology, NACCUDSD, NACCETPR,
+      CENTILOIDS, HIPPOCAMPUS, Tau_PET_ComBat) %>%
+    add_initial_dx() %>%
+    mutate(
+      Dx0 = `Initial Dx`,
+      Memory_int = zoo::na.approx(Memory, na.rm = FALSE)) %>%
+    select(NACCID, Age, `Initial Dx`, Dx0, Memory, Memory_int, Etiology,
+      NACCUDSD, NACCETPR, CENTILOIDS, HIPPOCAMPUS, Tau_PET_ComBat) %>%
+    filter(!is.na(Age), !is.na(Dx0)) %>%
+    ungroup()
+
+  # model only initial diagnoses with observed memory scores (e.g. none for
+  # "Behavioral impairment only"); others cannot be imputed
+  dx_with_memory <- unique(pd2_0$Dx0[!is.na(pd2_0$Memory)])
+  pd2_0 <- pd2_0 %>%
+    filter(Dx0 %in% dx_with_memory) %>%
+    mutate(Dx0 = fct_drop(Dx0))
+
+  fit_mem <- lme(Memory ~ I(Age^3)*Dx0,
+    random = ~ Age | NACCID, data = pd2_0, na.action = na.omit)
+  pd2_0$Memory_lme <- predict(fit_mem, newdata = pd2_0 %>% select(-Memory)) %>%
+    as.numeric()
+
+  pd2 <- pd2_0 %>%
+    mutate(
+      Memory_i = case_when(
+        !is.na(Memory) ~ Memory,
+        !is.na(Memory_int) ~ Memory_int,
+        !is.na(Memory_lme) ~ Memory_lme)) %>%
+    rename(
+      `Amyloid PET (CL)` = CENTILOIDS, `Hipp. volume` = HIPPOCAMPUS,
+      `Tau PET (MTL SUVR)` = Tau_PET_ComBat) %>%
+    pivot_longer(`Amyloid PET (CL)`:`Tau PET (MTL SUVR)`) %>%
+    filter(!is.na(value), !is.na(Memory_i), !is.na(NACCUDSD)) %>%
+    mutate(name = factor(name, levels = c(
+      "Amyloid PET (CL)", "Tau PET (MTL SUVR)", "Hipp. volume"))) %>%
+    known_initial_dx()
+
+  p1 <- ggplot(pd1, aes(x=Age, y=value, color = `Initial Dx`)) +
+    facet_wrap(vars(name), scales = 'free_y', ncol = 3, strip.position = "left") +
+    geom_smooth(method = 'gam', formula = y ~ s(x, bs = "cs", fx = TRUE, k = 1)) +
+    coord_cartesian(xlim = c(50, 90)) +
+    ylab('') +
+    theme(strip.placement = "outside")
+
+  p2 <- ggplot(pd2, aes(x=Memory_i, y=value, color = `Initial Dx`)) +
+    facet_wrap(vars(name), scales = 'free_y', ncol = 3, strip.position = "left") +
+    geom_smooth(method = 'gam',
+      formula = y ~ s(x, bs = "cs", k = 2, sp = 1)) +
+    coord_cartesian(xlim = c(-1.5, 1.5)) +
+    xlab('Harmonized Memory (imputed)') +
+    scale_x_reverse() +
+    ylab('') +
+    theme(strip.placement = "outside")
+
+  p1 / p2 + plot_layout(guides = "collect") +
+    plot_annotation(caption = unknown_dx_caption(
+      max(attr(pd1, "n_unknown"), attr(pd2, "n_unknown"))))
+}
+```

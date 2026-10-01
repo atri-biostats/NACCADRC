@@ -1,6 +1,6 @@
 #' amyloidpetgaain
-#' @description NACCADRC SCAN/CLARiTI, SCAN Imaging PET dataset. SCAN Amyloid PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources), Legacy (Mixed Protocol) PET data processed by the Stanford University lab (Director: Dr. Beth Mormino) spanning multiple PET sequences (Contains legacy/mixed protocol data). The data is sourced from the file(s) investigator_scan_clariti_amyloidpetgaain_nacc74.csv, investigator_scan_mp_amyloidpetgaain_nacc74.csv. 
-#' @format A data frame with 6168 rows and 38 variables:
+#' @description NACCADRC SCAN/CLARiTI, SCAN Imaging PET dataset. SCAN Amyloid PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources), Legacy (Mixed Protocol) PET data processed by the Stanford University lab (Director: Dr. Beth Mormino) spanning multiple PET sequences (Contains legacy/mixed protocol data). The data is sourced from the file(s) investigator_scan_clariti_amyloidpetgaain_nacc75.csv, investigator_scan_mp_amyloidpetgaain_nacc74.csv. 
+#' @format A data frame with 6738 rows and 31 variables:
 #' \describe{
 #'   \item{PROJECT}{}
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
@@ -21,10 +21,8 @@
 #'   \item{NPDKAERODEDSUBCORTICALWMSUVR}{}
 #'   \item{VISIT}{}
 #'   \item{LONIUID_MULTI}{}
-#'   \item{TRACER_SUVR_WARNING}{}
 #'   \item{ACQUISITION_START}{}
 #'   \item{ACQUISITION_END}{}
-#'   \item{ACQUISITION_TIME}{}
 #'   \item{QC_IMAGE}{}
 #'   \item{QC_TIMING}{}
 #'   \item{QC_NOTES}{}
@@ -33,12 +31,7 @@
 #'   \item{INJECTED_DOSE}{}
 #'   \item{DYNAMIC}{}
 #'   \item{SCAN_PROJECT}{}
-#'   \item{AMYLOID_STATUS}{}
 #'   \item{CL_FAIL}{}
-#'   \item{GAAIN_SUMMARY_SUVR}{GAAIN summary cortical SUVR normalized by GAAIN whole cerebellum}
-#'   \item{GAAIN_WHOLECEREBELLUM_SUVR}{Reference region - SUVR of GAAIN whole cerebellum normalized by GAAIN whole cerebellum}
-#'   \item{GAAIN_COMPOSITE_REF_SUVR}{Reference region -  SUVR of composite ref region (volume-weighted mean of GAAIN whole cerebellum, GAAIN brainstem and NPDKA eroded WM) normalized by GAAIN whole cerebellum}
-#'   \item{GAAIN_CEREBELLUM_CORTEX}{}
 #'   \item{NPDKA_ERODED_SUBCORTICALWM_GAAINWC_SUVR}{Reference region -  SUVR of NPDKA eroded subcortical white matter normalized by GAAIN whole cerebellum; See SCAN MRI-Free Amyloid PET Methods document on LONI}
 #' }
 #' @docType data
@@ -54,8 +47,8 @@
 NULL
 
 #' amyloidpetnpdka
-#' @description NACCADRC SCAN/CLARiTI, SCAN Imaging PET dataset. NASCAN Amyloid PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources), Legacy (Mixed Protocol) PET data processed by the Stanford University lab (Director: Dr. Beth Mormino) spanning multiple PET sequences (Contains legacy/mixed protocol data). The data is sourced from the file(s) investigator_scan_clariti_amyloidpetnpdka_nacc74.csv, investigator_scan_mp_amyloidpetnpdka_nacc74.csv. 
-#' @format A data frame with 6168 rows and 345 variables:
+#' @description NACCADRC SCAN/CLARiTI, SCAN Imaging PET dataset. NASCAN Amyloid PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources), Legacy (Mixed Protocol) PET data processed by the Stanford University lab (Director: Dr. Beth Mormino) spanning multiple PET sequences (Contains legacy/mixed protocol data). The data is sourced from the file(s) investigator_scan_clariti_amyloidpetnpdka_nacc75.csv, investigator_scan_mp_amyloidpetnpdka_nacc74.csv. 
+#' @format A data frame with 6738 rows and 180 variables:
 #' \describe{
 #'   \item{PROJECT}{}
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
@@ -233,175 +226,10 @@ NULL
 #'   \item{RIGHTVESSELSUVR}{}
 #'   \item{VISIT}{}
 #'   \item{LONIUID_MULTI}{}
-#'   \item{TRACER_SUVR_WARNING}{}
 #'   \item{ACQUISITION_START}{}
 #'   \item{ACQUISITION_END}{}
-#'   \item{ACQUISITION_TIME}{}
 #'   \item{SCAN_PROJECT}{}
-#'   \item{NPDKA_SUMMARY_SUVR}{NPDKA summary cortical SUVR (volume-weighted mean of frontal, cingulate, parietal and temporal regions) normalized by NPDKA whole cerebellum; See SCAN MRI-Free Amyloid PET Methods document on LONI}
-#'   \item{NPDKA_WHOLECEREBELLUM_SUVR}{Reference region - SUVR of NPDKA whole cerebellum normalized by NPDKA whole cerebellum}
-#'   \item{NPDKA_COMPOSITE_REF_SUVR}{Reference region -  SUVR of composite ref region (volume-weighted mean of NPDKA whole cerebellum, NPDKA brainstem and NPDKA eroded WM) normalized by NPDKA whole cerebellum}
-#'   \item{NPDKA_CEREBELLUM_CORTEX_SUVR}{Reference region -  SUVR of NPDKA cerebellum grey matter normalized by NPDKA whole cerebellum}
 #'   \item{NPDKA_ERODED_SUBCORTICALWM_NPDKAWC_SUVR}{Reference region -  SUVR of NPDKA eroded subcortical white matter normalized by NPDKA whole cerebellum; See SCAN MRI-Free Amyloid PET Methods document on LONI}
-#'   \item{BRAINSTEM_SUVR}{brain-stem SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_ANTERIOR_SUVR}{cc-anterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_CENTRAL_SUVR}{cc-central SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_MID_ANTERIOR_SUVR}{cc-mid-anterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_MID_POSTERIOR_SUVR}{cc-mid-posterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_POSTERIOR_SUVR}{cc-posterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CSF_SUVR}{csf SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRICLE_3RD_SUVR}{3rd-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRICLE_4TH_SUVR}{4th-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRICLE_5TH_SUVR}{5th-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{WM_HYPOINTENSITIES_SUVR}{wm-hypointensities SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{NON_WM_HYPOINTENSITIES_SUVR}{non-wm-hypointensities SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_BANKSSTS_SUVR}{Volume-weighted mean SUVR of ctx-lh-bankssts and ctx-rh-bankssts normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_CAUDALANTERIORCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-caudalanteriorcingulate and ctx-rh-caudalanteriorcingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_CAUDALMIDDLEFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-caudalmiddlefrontal and ctx-rh-caudalmiddlefrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_CUNEUS_SUVR}{Volume-weighted mean SUVR of ctx-lh-cuneus and ctx-rh-cuneus normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_ENTORHINAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-entorhinal and ctx-rh-entorhinal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_FRONTALPOLE_SUVR}{Volume-weighted mean SUVR of ctx-lh-frontalpole and ctx-rh-frontalpole normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_FUSIFORM_SUVR}{Volume-weighted mean SUVR of ctx-lh-fusiform and ctx-rh-fusiform normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_INFERIORPARIETAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-inferiorparietal and ctx-rh-inferiorparietal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_INFERIORTEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-inferiortemporal and ctx-rh-inferiortemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_INSULA_SUVR}{Volume-weighted mean SUVR of ctx-lh-insula and ctx-rh-insula normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_ISTHMUSCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-isthmuscingulate and ctx-rh-isthmuscingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LATERALOCCIPITAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-lateraloccipital and ctx-rh-lateraloccipital normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LATERALORBITOFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-lateralorbitofrontal and ctx-rh-lateralorbitofrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LINGUAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-lingual and ctx-rh-lingual normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_MEDIALORBITOFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-medialorbitofrontal and ctx-rh-medialorbitofrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_MIDDLETEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-middletemporal and ctx-rh-middletemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARACENTRAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-paracentral and ctx-rh-paracentral normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARAHIPPOCAMPAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-parahippocampal and ctx-rh-parahippocampal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARSOPERCULARIS_SUVR}{Volume-weighted mean SUVR of ctx-lh-parsopercularis and ctx-rh-parsopercularis normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARSORBITALIS_SUVR}{Volume-weighted mean SUVR of ctx-lh-parsorbitalis and ctx-rh-parsorbitalis normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARSTRIANGULARIS_SUVR}{Volume-weighted mean SUVR of ctx-lh-parstriangularis and ctx-rh-parstriangularis normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PERICALCARINE_SUVR}{Volume-weighted mean SUVR of ctx-lh-pericalcarine and ctx-rh-pericalcarine normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_POSTCENTRAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-postcentral and ctx-rh-postcentral normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_POSTERIORCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-posteriorcingulate and ctx-rh-posteriorcingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PRECENTRAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-precentral and ctx-rh-precentral normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PRECUNEUS_SUVR}{Volume-weighted mean SUVR of ctx-lh-precuneus and ctx-rh-precuneus normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_ROSTRALANTERIORCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-rostralanteriorcingulate and ctx-rh-rostralanteriorcingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_ROSTRALMIDDLEFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-rostralmiddlefrontal and ctx-rh-rostralmiddlefrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPERIORFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-superiorfrontal and ctx-rh-superiorfrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPERIORPARIETAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-superiorparietal and ctx-rh-superiorparietal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPERIORTEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-superiortemporal and ctx-rh-superiortemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPRAMARGINAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-supramarginal and ctx-rh-supramarginal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_TEMPORALPOLE_SUVR}{Volume-weighted mean SUVR of ctx-lh-temporalpole and ctx-rh-temporalpole normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_TRANSVERSETEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-transversetemporal and ctx-rh-transversetemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{ACCUMBENS_AREA_SUVR}{Volume-weighted mean SUVR of left-accumbens-area and right-accumbens-area normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{AMYGDALA_SUVR}{Volume-weighted mean SUVR of left-amygdala and right-amygdala normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CAUDATE_SUVR}{Volume-weighted mean SUVR of left-caudate and right-caudate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CEREBELLUM_WHITE_MATTER_SUVR}{Volume-weighted mean SUVR of left-cerebellum-white-matter and right-cerebellum-white-matter normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CEREBRAL_WHITE_MATTER_SUVR}{Volume-weighted mean SUVR of left-cerebral-white-matter and right-cerebral-white-matter normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CHOROID_PLEXUS_SUVR}{Volume-weighted mean SUVR of left-choroid-plexus and right-choroid-plexus normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{HIPPOCAMPUS_SUVR}{Volume-weighted mean SUVR of left-hippocampus and right-hippocampus normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{OPTIC_CHIASM_SUVR}{optic-chiasm SUVR normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{INF_LAT_VENT_SUVR}{Volume-weighted mean SUVR of left-inf-lat-vent and right-inf-lat-vent normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LATERAL_VENTRICLE_SUVR}{Volume-weighted mean SUVR of left-lateral-ventricle and right-lateral-ventricle normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{PALLIDUM_SUVR}{Volume-weighted mean SUVR of left-pallidum and right-pallidum normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{PUTAMEN_SUVR}{Volume-weighted mean SUVR of left-putamen and right-putamen normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{THALAMUS_PROPER_SUVR}{Volume-weighted mean SUVR of left-thalamus-proper and right-thalamus-proper normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRALDC_SUVR}{Volume-weighted mean SUVR of left-ventraldc and right-ventraldc normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VESSEL_SUVR}{Volume-weighted mean SUVR of left-vessel and right-vessel normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_BANKSSTS_SUVR}{ctx-lh-bankssts SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_CAUDALANTERIORCINGULATE_SUVR}{ctx-lh-caudalanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_CAUDALMIDDLEFRONTAL_SUVR}{ctx-lh-caudalmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_CUNEUS_SUVR}{ctx-lh-cuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ENTORHINAL_SUVR}{ctx-lh-entorhinal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_FRONTALPOLE_SUVR}{ctx-lh-frontalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_FUSIFORM_SUVR}{ctx-lh-fusiform SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_INFERIORPARIETAL_SUVR}{ctx-lh-inferiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_INFERIORTEMPORAL_SUVR}{ctx-lh-inferiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_INSULA_SUVR}{ctx-lh-insula SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ISTHMUSCINGULATE_SUVR}{ctx-lh-isthmuscingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_LATERALOCCIPITAL_SUVR}{ctx-lh-lateraloccipital SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_LATERALORBITOFRONTAL_SUVR}{ctx-lh-lateralorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_LINGUAL_SUVR}{ctx-lh-lingual SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_MEDIALORBITOFRONTAL_SUVR}{ctx-lh-medialorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_MIDDLETEMPORAL_SUVR}{ctx-lh-middletemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARACENTRAL_SUVR}{ctx-lh-paracentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARAHIPPOCAMPAL_SUVR}{ctx-lh-parahippocampal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARSOPERCULARIS_SUVR}{ctx-lh-parsopercularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARSORBITALIS_SUVR}{ctx-lh-parsorbitalis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARSTRIANGULARIS_SUVR}{ctx-lh-parstriangularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PERICALCARINE_SUVR}{ctx-lh-pericalcarine SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_POSTCENTRAL_SUVR}{ctx-lh-postcentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_POSTERIORCINGULATE_SUVR}{ctx-lh-posteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PRECENTRAL_SUVR}{ctx-lh-precentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PRECUNEUS_SUVR}{ctx-lh-precuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ROSTRALANTERIORCINGULATE_SUVR}{ctx-lh-rostralanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ROSTRALMIDDLEFRONTAL_SUVR}{ctx-lh-rostralmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPERIORFRONTAL_SUVR}{ctx-lh-superiorfrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPERIORPARIETAL_SUVR}{ctx-lh-superiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPERIORTEMPORAL_SUVR}{ctx-lh-superiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPRAMARGINAL_SUVR}{ctx-lh-supramarginal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_TEMPORALPOLE_SUVR}{ctx-lh-temporalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_TRANSVERSETEMPORAL_SUVR}{ctx-lh-transversetemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_BANKSSTS_SUVR}{ctx-rh-bankssts SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_CAUDALANTERIORCINGULATE_SUVR}{ctx-rh-caudalanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_CAUDALMIDDLEFRONTAL_SUVR}{ctx-rh-caudalmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_CUNEUS_SUVR}{ctx-rh-cuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ENTORHINAL_SUVR}{ctx-rh-entorhinal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_FRONTALPOLE_SUVR}{ctx-rh-frontalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_FUSIFORM_SUVR}{ctx-rh-fusiform SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_INFERIORPARIETAL_SUVR}{ctx-rh-inferiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_INFERIORTEMPORAL_SUVR}{ctx-rh-inferiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_INSULA_SUVR}{ctx-rh-insula SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ISTHMUSCINGULATE_SUVR}{ctx-rh-isthmuscingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_LATERALOCCIPITAL_SUVR}{ctx-rh-lateraloccipital SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_LATERALORBITOFRONTAL_SUVR}{ctx-rh-lateralorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_LINGUAL_SUVR}{ctx-rh-lingual SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_MEDIALORBITOFRONTAL_SUVR}{ctx-rh-medialorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_MIDDLETEMPORAL_SUVR}{ctx-rh-middletemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARACENTRAL_SUVR}{ctx-rh-paracentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARAHIPPOCAMPAL_SUVR}{ctx-rh-parahippocampal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARSOPERCULARIS_SUVR}{ctx-rh-parsopercularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARSORBITALIS_SUVR}{ctx-rh-parsorbitalis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARSTRIANGULARIS_SUVR}{ctx-rh-parstriangularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PERICALCARINE_SUVR}{ctx-rh-pericalcarine SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_POSTCENTRAL_SUVR}{ctx-rh-postcentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_POSTERIORCINGULATE_SUVR}{ctx-rh-posteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PRECENTRAL_SUVR}{ctx-rh-precentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PRECUNEUS_SUVR}{ctx-rh-precuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ROSTRALANTERIORCINGULATE_SUVR}{ctx-rh-rostralanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ROSTRALMIDDLEFRONTAL_SUVR}{ctx-rh-rostralmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPERIORFRONTAL_SUVR}{ctx-rh-superiorfrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPERIORPARIETAL_SUVR}{ctx-rh-superiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPERIORTEMPORAL_SUVR}{ctx-rh-superiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPRAMARGINAL_SUVR}{ctx-rh-supramarginal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_TEMPORALPOLE_SUVR}{ctx-rh-temporalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_TRANSVERSETEMPORAL_SUVR}{ctx-rh-transversetemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_ACCUMBENS_AREA_SUVR}{left-accumbens-area SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_AMYGDALA_SUVR}{left-amygdala SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CAUDATE_SUVR}{left-caudate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CEREBELLUM_CORTEX_SUVR}{left-cerebellum-cortex SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CEREBELLUM_WHITE_MATTER_SUVR}{left-cerebellum-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CEREBRAL_WHITE_MATTER_SUVR}{left-cerebral-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CHOROID_PLEXUS_SUVR}{left-choroid-plexus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_HIPPOCAMPUS_SUVR}{left-hippocampus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_INF_LAT_VENT_SUVR}{left-inf-lat-vent SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_LATERAL_VENTRICLE_SUVR}{left-lateral-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_PALLIDUM_SUVR}{left-pallidum SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_PUTAMEN_SUVR}{left-putamen SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_THALAMUS_PROPER_SUVR}{left-thalamus-proper SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_VENTRALDC_SUVR}{left-ventraldc SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_VESSEL_SUVR}{left-vessel SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_ACCUMBENS_AREA_SUVR}{right-accumbens-area SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_AMYGDALA_SUVR}{right-amygdala SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CAUDATE_SUVR}{right-caudate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CEREBELLUM_CORTEX_SUVR}{right-cerebellum-cortex SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CEREBELLUM_WHITE_MATTER_SUVR}{right-cerebellum-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CEREBRAL_WHITE_MATTER_SUVR}{right-cerebral-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CHOROID_PLEXUS_SUVR}{right-choroid-plexus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_HIPPOCAMPUS_SUVR}{right-hippocampus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_INF_LAT_VENT_SUVR}{right-inf-lat-vent SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_LATERAL_VENTRICLE_SUVR}{right-lateral-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_PALLIDUM_SUVR}{right-pallidum SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_PUTAMEN_SUVR}{right-putamen SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_THALAMUS_PROPER_SUVR}{right-thalamus-proper SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_VENTRALDC_SUVR}{right-ventraldc SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_VESSEL_SUVR}{right-vessel SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -416,8 +244,8 @@ NULL
 NULL
 
 #' clariti_edc
-#' @description NACCADRC UDS Electronic Data Capture (EDC) dataset. CLARiTI EDC data (Contains only information on ADRC participants enrolled into CLARiTI). The data is sourced from the file(s) investigator_clariti_edc_nacc74.csv. 
-#' @format A data frame with 857 rows and 56 variables:
+#' @description NACCADRC UDS Electronic Data Capture (EDC) dataset. CLARiTI EDC data (Contains only information on ADRC participants enrolled into CLARiTI). The data is sourced from the file(s) investigator_clariti_edc_nacc75.csv. 
+#' @format A data frame with 1245 rows and 56 variables:
 #' \describe{
 #'   \item{NACCID}{Subject ID ( Prefix ""NACC"" followed by six numbers)}
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
@@ -489,8 +317,8 @@ NULL
 NULL
 
 #' fdgpetnpdka
-#' @description NACCADRC SCAN/CLARiTI Imaging PET dataset. SCAN FDG PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_fdgpetnpdka_nacc74.csv. 
-#' @format A data frame with 885 rows and 172 variables:
+#' @description NACCADRC SCAN/CLARiTI Imaging PET dataset. SCAN FDG PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_fdgpetnpdka_nacc75.csv. 
+#' @format A data frame with 1240 rows and 172 variables:
 #' \describe{
 #'   \item{PROJECT}{}
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
@@ -678,8 +506,8 @@ NULL
 NULL
 
 #' mrisbm
-#' @description NACCADRC SCAN/CLARiTI Imaging MRI dataset. SCAN MRI data processed through SCAN MRI Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_mrisbm_nacc74.csv. 
-#' @format A data frame with 11981 rows and 439 variables:
+#' @description NACCADRC SCAN/CLARiTI Imaging MRI dataset. SCAN MRI data processed through SCAN MRI Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_mrisbm_nacc75.csv. 
+#' @format A data frame with 8899 rows and 253 variables:
 #' \describe{
 #'   \item{PROJECT}{}
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
@@ -934,192 +762,6 @@ NULL
 #'   \item{CCMIDANTERIOR}{}
 #'   \item{CCANTERIOR}{}
 #'   \item{VISITCODE}{}
-#'   \item{NACCMRIA}{}
-#'   \item{NACCMRFI}{}
-#'   \item{NACCMNUM}{}
-#'   \item{NACCMRDY}{}
-#'   \item{MRIT1}{}
-#'   \item{MRIT2}{}
-#'   \item{MRIDTI}{}
-#'   \item{MRIDWI}{}
-#'   \item{MRIFLAIR}{}
-#'   \item{MRIOTHER}{}
-#'   \item{MRIFIELD}{}
-#'   \item{MRIMANU}{}
-#'   \item{MRIMODL}{}
-#'   \item{NACCMVOL}{}
-#'   \item{NACCICV}{}
-#'   \item{NACCBRNV}{}
-#'   \item{NACCWMVL}{}
-#'   \item{NACCNIFT}{}
-#'   \item{FRONTGRY}{}
-#'   \item{FRONTWHT}{}
-#'   \item{FRONTCSF}{}
-#'   \item{OCCIPGRY}{}
-#'   \item{OCCIPWHT}{}
-#'   \item{OCCIPCSF}{}
-#'   \item{PARGRY}{}
-#'   \item{PARWHT}{}
-#'   \item{PARCSF}{}
-#'   \item{TEMPGRY}{}
-#'   \item{TEMPWHT}{}
-#'   \item{TEMPCSF}{}
-#'   \item{CSFVOL}{}
-#'   \item{GRAYVOL}{}
-#'   \item{WHITEVOL}{}
-#'   \item{WMHVOL}{}
-#'   \item{HIPPOVOL}{}
-#'   \item{CEREALL}{}
-#'   \item{CERETISS}{}
-#'   \item{CERECSF}{}
-#'   \item{CEREGR}{}
-#'   \item{CEREWH}{}
-#'   \item{LHIPPO}{}
-#'   \item{RHIPPO}{}
-#'   \item{LLATVENT}{}
-#'   \item{RLATVENT}{}
-#'   \item{LATVENT}{}
-#'   \item{THIRVENT}{}
-#'   \item{LFRCORT}{}
-#'   \item{RFRCORT}{}
-#'   \item{FRCORT}{}
-#'   \item{LOCCORT}{}
-#'   \item{ROCCORT}{}
-#'   \item{OCCCORT}{}
-#'   \item{LPARCORT}{}
-#'   \item{RPARCORT}{}
-#'   \item{PARCORT}{}
-#'   \item{LTEMPCOR}{}
-#'   \item{RTEMPCOR}{}
-#'   \item{TEMPCOR}{}
-#'   \item{LCAC}{}
-#'   \item{LCACM}{}
-#'   \item{LCMF}{}
-#'   \item{LCMFM}{}
-#'   \item{LCUN}{}
-#'   \item{LCUNM}{}
-#'   \item{LENT}{}
-#'   \item{LENTM}{}
-#'   \item{LFUS}{}
-#'   \item{LFUSM}{}
-#'   \item{LINFPAR}{}
-#'   \item{LINFPARM}{}
-#'   \item{LINFTEMP}{}
-#'   \item{LINFTEMM}{}
-#'   \item{LINSULA}{}
-#'   \item{LINSULAM}{}
-#'   \item{LISTHC}{}
-#'   \item{LISTHCM}{}
-#'   \item{LLATOCC}{}
-#'   \item{LLATOCCM}{}
-#'   \item{LLATORBF}{}
-#'   \item{LLATORBM}{}
-#'   \item{LLING}{}
-#'   \item{LLINGM}{}
-#'   \item{LMEDORBF}{}
-#'   \item{LMEDORBM}{}
-#'   \item{LMIDTEMP}{}
-#'   \item{LMIDTEMM}{}
-#'   \item{LPARCEN}{}
-#'   \item{LPARCENM}{}
-#'   \item{LPARHIP}{}
-#'   \item{LPARHIPM}{}
-#'   \item{LPARSOP}{}
-#'   \item{LPARSOPM}{}
-#'   \item{LPARORB}{}
-#'   \item{LPARORBM}{}
-#'   \item{LPARTRI}{}
-#'   \item{LPARTRIM}{}
-#'   \item{LPERCAL}{}
-#'   \item{LPERCALM}{}
-#'   \item{LPOSCEN}{}
-#'   \item{LPOSCENM}{}
-#'   \item{LPOSCIN}{}
-#'   \item{LPOSCINM}{}
-#'   \item{LPRECEN}{}
-#'   \item{LPRECENM}{}
-#'   \item{LPRECUN}{}
-#'   \item{LPRECUNM}{}
-#'   \item{LROSANC}{}
-#'   \item{LROSANCM}{}
-#'   \item{LROSMF}{}
-#'   \item{LROSMFM}{}
-#'   \item{LSUPFR}{}
-#'   \item{LSUPFRM}{}
-#'   \item{LSUPPAR}{}
-#'   \item{LSUPPARM}{}
-#'   \item{LSUPTEM}{}
-#'   \item{LSUPTEMM}{}
-#'   \item{LSUPMAR}{}
-#'   \item{LSUPMARM}{}
-#'   \item{LTRTEM}{}
-#'   \item{LTRTEMM}{}
-#'   \item{RCAC}{}
-#'   \item{RCACM}{}
-#'   \item{RCMF}{}
-#'   \item{RCMFM}{}
-#'   \item{RCUN}{}
-#'   \item{RCUNM}{}
-#'   \item{RENT}{}
-#'   \item{RENTM}{}
-#'   \item{RFUS}{}
-#'   \item{RFUSM}{}
-#'   \item{RINFPAR}{}
-#'   \item{RINFPARM}{}
-#'   \item{RINFTEMP}{}
-#'   \item{RINFTEMM}{}
-#'   \item{RINSULA}{}
-#'   \item{RINSULAM}{}
-#'   \item{RISTHC}{}
-#'   \item{RISTHCM}{}
-#'   \item{RLATOCC}{}
-#'   \item{RLATOCCM}{}
-#'   \item{RLATORBF}{}
-#'   \item{RLATORBM}{}
-#'   \item{RLING}{}
-#'   \item{RLINGM}{}
-#'   \item{RMEDORBF}{}
-#'   \item{RMEDORBM}{}
-#'   \item{RMIDTEMP}{}
-#'   \item{RMIDTEMM}{}
-#'   \item{RPARCEN}{}
-#'   \item{RPARCENM}{}
-#'   \item{RPARHIP}{}
-#'   \item{RPARHIPM}{}
-#'   \item{RPARSOP}{}
-#'   \item{RPARSOPM}{}
-#'   \item{RPARORB}{}
-#'   \item{RPARORBM}{}
-#'   \item{RPARTRI}{}
-#'   \item{RPARTRIM}{}
-#'   \item{RPERCAL}{}
-#'   \item{RPERCALM}{}
-#'   \item{RPOSCEN}{}
-#'   \item{RPOSCENM}{}
-#'   \item{RPOSCIN}{}
-#'   \item{RPOSCINM}{}
-#'   \item{RPRECEN}{}
-#'   \item{RPRECENM}{}
-#'   \item{RPRECUN}{}
-#'   \item{RPRECUNM}{}
-#'   \item{RROSANC}{}
-#'   \item{RROSANCM}{}
-#'   \item{RROSMF}{}
-#'   \item{RROSMFM}{}
-#'   \item{RSUPFR}{}
-#'   \item{RSUPFRM}{}
-#'   \item{RSUPPAR}{}
-#'   \item{RSUPPARM}{}
-#'   \item{RSUPTEM}{}
-#'   \item{RSUPTEMM}{}
-#'   \item{RSUPMAR}{}
-#'   \item{RSUPMARM}{}
-#'   \item{RTRTEM}{}
-#'   \item{RTRTEMM}{}
-#'   \item{NACCNMRI}{Total number of mixed-protocol MRI sessions (0 - no limit)}
-#'   \item{NACCDICO}{}
-#'   \item{NACCVNUM}{Visit Number}
-#'   \item{NACCMRSA}{At least one mixed-protocol MRI scan available (0 = No; does not have at least one mixed-protocol MRI available at NACC 1 = Yes; has at least one mixed-protocol MRI available at NACC)}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -1134,8 +776,8 @@ NULL
 NULL
 
 #' petqc
-#' @description NACCADRC SCAN/CLARiTI Imaging PET dataset. SCAN FDG PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_petqc_nacc74.csv. 
-#' @format A data frame with 8759 rows and 14 variables:
+#' @description NACCADRC SCAN/CLARiTI Imaging PET dataset. SCAN FDG PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_petqc_nacc75.csv. 
+#' @format A data frame with 9705 rows and 14 variables:
 #' \describe{
 #'   \item{PROJECT}{}
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
@@ -15271,8 +14913,8 @@ NULL
 NULL
 
 #' scan_clariti_mriqc
-#' @description NACCADRC SCAN/CLARiTI Imaging MRI dataset. SCAN MRI QC data from the SCAN MRI Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_mriqc_nacc74.csv. 
-#' @format A data frame with 31213 rows and 41 variables:
+#' @description NACCADRC SCAN/CLARiTI Imaging MRI dataset. SCAN MRI QC data from the SCAN MRI Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources). The data is sourced from the file(s) investigator_scan_clariti_mriqc_nacc75.csv. 
+#' @format A data frame with 34137 rows and 41 variables:
 #' \describe{
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
 #'   \item{NACCID}{Subject ID ( Prefix ""NACC"" followed by six numbers)}
@@ -15329,8 +14971,8 @@ NULL
 NULL
 
 #' taupetnpdka
-#' @description NACCADRC SCAN/CLARiTI, SCAN Imaging PET dataset. SCAN Tau PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources), Legacy (Mixed Protocol) PET data processed by the Stanford University lab (Director: Dr. Beth Mormino) spanning multiple PET sequences (Contains legacy/mixed protocol data). The data is sourced from the file(s) investigator_scan_clariti_taupetnpdka_nacc74.csv, investigator_scan_mp_taupetnpdka_nacc74.csv. 
-#' @format A data frame with 3324 rows and 350 variables:
+#' @description NACCADRC SCAN/CLARiTI, SCAN Imaging PET dataset. SCAN Tau PET data processed through SCAN PET Core (Contains SCAN-compliant data on ADRC participants funded through any mechanism, including P30 funds, CLARiTI funded, or other sources), Legacy (Mixed Protocol) PET data processed by the Stanford University lab (Director: Dr. Beth Mormino) spanning multiple PET sequences (Contains legacy/mixed protocol data). The data is sourced from the file(s) investigator_scan_clariti_taupetnpdka_nacc75.csv, investigator_scan_mp_taupetnpdka_nacc74.csv. 
+#' @format A data frame with 3876 rows and 185 variables:
 #' \describe{
 #'   \item{PROJECT}{}
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
@@ -15507,10 +15149,8 @@ NULL
 #'   \item{RIGHTVESSELSUVR}{}
 #'   \item{VISIT}{}
 #'   \item{LONIUID_MULTI}{}
-#'   \item{TRACER_SUVR_WARNING}{}
 #'   \item{ACQUISITION_START}{}
 #'   \item{ACQUISITION_END}{}
-#'   \item{ACQUISITION_TIME}{}
 #'   \item{QC_IMAGE}{}
 #'   \item{QC_TIMING}{}
 #'   \item{QC_NOTES}{}
@@ -15519,169 +15159,6 @@ NULL
 #'   \item{INJECTED_DOSE}{}
 #'   \item{DYNAMIC}{}
 #'   \item{SCAN_PROJECT}{}
-#'   \item{META_TEMPORAL_SUVR}{Meta temporal SUVR normalized by inferior cerebellar grey matter.}
-#'   \item{CTX_ENTORHINAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-entorhinal and ctx-rh-entorhinal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{INFERIORCEREBELLUM_SUVR}{Reference region -  SUVR of NPDKA inferior cerebellar grey matter; See SCAN MRI-Free Tau PET methods document on LONI}
-#'   \item{ERODED_SUBCORTICALWM_SUVR}{Reference region -  SUVR of NPDKA eroded subcortical white matter normalized by NPDKA inferior cerebellar grey matter; See SCAN MRI-Free Tau PET Methods document on LONI}
-#'   \item{BRAINSTEM_SUVR}{brain-stem SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_ANTERIOR_SUVR}{cc-anterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_CENTRAL_SUVR}{cc-central SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_MID_ANTERIOR_SUVR}{cc-mid-anterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_MID_POSTERIOR_SUVR}{cc-mid-posterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CC_POSTERIOR_SUVR}{cc-posterior SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CSF_SUVR}{csf SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRICLE_3RD_SUVR}{3rd-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRICLE_4TH_SUVR}{4th-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRICLE_5TH_SUVR}{5th-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{WM_HYPOINTENSITIES_SUVR}{wm-hypointensities SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{NON_WM_HYPOINTENSITIES_SUVR}{non-wm-hypointensities SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_BANKSSTS_SUVR}{Volume-weighted mean SUVR of ctx-lh-bankssts and ctx-rh-bankssts normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_CAUDALANTERIORCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-caudalanteriorcingulate and ctx-rh-caudalanteriorcingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_CAUDALMIDDLEFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-caudalmiddlefrontal and ctx-rh-caudalmiddlefrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_CUNEUS_SUVR}{Volume-weighted mean SUVR of ctx-lh-cuneus and ctx-rh-cuneus normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_FRONTALPOLE_SUVR}{Volume-weighted mean SUVR of ctx-lh-frontalpole and ctx-rh-frontalpole normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_FUSIFORM_SUVR}{Volume-weighted mean SUVR of ctx-lh-fusiform and ctx-rh-fusiform normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_INFERIORPARIETAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-inferiorparietal and ctx-rh-inferiorparietal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_INFERIORTEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-inferiortemporal and ctx-rh-inferiortemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_INSULA_SUVR}{Volume-weighted mean SUVR of ctx-lh-insula and ctx-rh-insula normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_ISTHMUSCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-isthmuscingulate and ctx-rh-isthmuscingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LATERALOCCIPITAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-lateraloccipital and ctx-rh-lateraloccipital normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LATERALORBITOFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-lateralorbitofrontal and ctx-rh-lateralorbitofrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LINGUAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-lingual and ctx-rh-lingual normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_MEDIALORBITOFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-medialorbitofrontal and ctx-rh-medialorbitofrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_MIDDLETEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-middletemporal and ctx-rh-middletemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARACENTRAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-paracentral and ctx-rh-paracentral normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARAHIPPOCAMPAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-parahippocampal and ctx-rh-parahippocampal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARSOPERCULARIS_SUVR}{Volume-weighted mean SUVR of ctx-lh-parsopercularis and ctx-rh-parsopercularis normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARSORBITALIS_SUVR}{Volume-weighted mean SUVR of ctx-lh-parsorbitalis and ctx-rh-parsorbitalis normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PARSTRIANGULARIS_SUVR}{Volume-weighted mean SUVR of ctx-lh-parstriangularis and ctx-rh-parstriangularis normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PERICALCARINE_SUVR}{Volume-weighted mean SUVR of ctx-lh-pericalcarine and ctx-rh-pericalcarine normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_POSTCENTRAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-postcentral and ctx-rh-postcentral normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_POSTERIORCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-posteriorcingulate and ctx-rh-posteriorcingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PRECENTRAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-precentral and ctx-rh-precentral normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_PRECUNEUS_SUVR}{Volume-weighted mean SUVR of ctx-lh-precuneus and ctx-rh-precuneus normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_ROSTRALANTERIORCINGULATE_SUVR}{Volume-weighted mean SUVR of ctx-lh-rostralanteriorcingulate and ctx-rh-rostralanteriorcingulate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_ROSTRALMIDDLEFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-rostralmiddlefrontal and ctx-rh-rostralmiddlefrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPERIORFRONTAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-superiorfrontal and ctx-rh-superiorfrontal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPERIORPARIETAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-superiorparietal and ctx-rh-superiorparietal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPERIORTEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-superiortemporal and ctx-rh-superiortemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_SUPRAMARGINAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-supramarginal and ctx-rh-supramarginal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_TEMPORALPOLE_SUVR}{Volume-weighted mean SUVR of ctx-lh-temporalpole and ctx-rh-temporalpole normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_TRANSVERSETEMPORAL_SUVR}{Volume-weighted mean SUVR of ctx-lh-transversetemporal and ctx-rh-transversetemporal normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{ACCUMBENS_AREA_SUVR}{Volume-weighted mean SUVR of left-accumbens-area and right-accumbens-area normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{AMYGDALA_SUVR}{Volume-weighted mean SUVR of left-amygdala and right-amygdala normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CAUDATE_SUVR}{Volume-weighted mean SUVR of left-caudate and right-caudate normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CEREBELLUM_CORTEX_SUVR}{Volume-weighted mean SUVR of left-cerebellum-cortex and right-cerebellum-cortex normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CEREBELLUM_WHITE_MATTER_SUVR}{Volume-weighted mean SUVR of left-cerebellum-white-matter and right-cerebellum-white-matter normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CEREBRAL_WHITE_MATTER_SUVR}{Volume-weighted mean SUVR of left-cerebral-white-matter and right-cerebral-white-matter normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CHOROID_PLEXUS_SUVR}{Volume-weighted mean SUVR of left-choroid-plexus and right-choroid-plexus normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{HIPPOCAMPUS_SUVR}{Volume-weighted mean SUVR of left-hippocampus and right-hippocampus normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{OPTIC_CHIASM_SUVR}{optic-chiasm SUVR normalized by inferior cerebellar grey matter; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{INF_LAT_VENT_SUVR}{Volume-weighted mean SUVR of left-inf-lat-vent and right-inf-lat-vent normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LATERAL_VENTRICLE_SUVR}{Volume-weighted mean SUVR of left-lateral-ventricle and right-lateral-ventricle normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{PALLIDUM_SUVR}{Volume-weighted mean SUVR of left-pallidum and right-pallidum normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{PUTAMEN_SUVR}{Volume-weighted mean SUVR of left-putamen and right-putamen normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{THALAMUS_PROPER_SUVR}{Volume-weighted mean SUVR of left-thalamus-proper and right-thalamus-proper normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VENTRALDC_SUVR}{Volume-weighted mean SUVR of left-ventraldc and right-ventraldc normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{VESSEL_SUVR}{Volume-weighted mean SUVR of left-vessel and right-vessel normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_BANKSSTS_SUVR}{ctx-lh-bankssts SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_CAUDALANTERIORCINGULATE_SUVR}{ctx-lh-caudalanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_CAUDALMIDDLEFRONTAL_SUVR}{ctx-lh-caudalmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_CUNEUS_SUVR}{ctx-lh-cuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ENTORHINAL_SUVR}{ctx-lh-entorhinal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_FRONTALPOLE_SUVR}{ctx-lh-frontalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_FUSIFORM_SUVR}{ctx-lh-fusiform SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_INFERIORPARIETAL_SUVR}{ctx-lh-inferiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_INFERIORTEMPORAL_SUVR}{ctx-lh-inferiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_INSULA_SUVR}{ctx-lh-insula SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ISTHMUSCINGULATE_SUVR}{ctx-lh-isthmuscingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_LATERALOCCIPITAL_SUVR}{ctx-lh-lateraloccipital SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_LATERALORBITOFRONTAL_SUVR}{ctx-lh-lateralorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_LINGUAL_SUVR}{ctx-lh-lingual SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_MEDIALORBITOFRONTAL_SUVR}{ctx-lh-medialorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_MIDDLETEMPORAL_SUVR}{ctx-lh-middletemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARACENTRAL_SUVR}{ctx-lh-paracentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARAHIPPOCAMPAL_SUVR}{ctx-lh-parahippocampal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARSOPERCULARIS_SUVR}{ctx-lh-parsopercularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARSORBITALIS_SUVR}{ctx-lh-parsorbitalis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PARSTRIANGULARIS_SUVR}{ctx-lh-parstriangularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PERICALCARINE_SUVR}{ctx-lh-pericalcarine SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_POSTCENTRAL_SUVR}{ctx-lh-postcentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_POSTERIORCINGULATE_SUVR}{ctx-lh-posteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PRECENTRAL_SUVR}{ctx-lh-precentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_PRECUNEUS_SUVR}{ctx-lh-precuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ROSTRALANTERIORCINGULATE_SUVR}{ctx-lh-rostralanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_ROSTRALMIDDLEFRONTAL_SUVR}{ctx-lh-rostralmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPERIORFRONTAL_SUVR}{ctx-lh-superiorfrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPERIORPARIETAL_SUVR}{ctx-lh-superiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPERIORTEMPORAL_SUVR}{ctx-lh-superiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_SUPRAMARGINAL_SUVR}{ctx-lh-supramarginal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_TEMPORALPOLE_SUVR}{ctx-lh-temporalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_LH_TRANSVERSETEMPORAL_SUVR}{ctx-lh-transversetemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_BANKSSTS_SUVR}{ctx-rh-bankssts SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_CAUDALANTERIORCINGULATE_SUVR}{ctx-rh-caudalanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_CAUDALMIDDLEFRONTAL_SUVR}{ctx-rh-caudalmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_CUNEUS_SUVR}{ctx-rh-cuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ENTORHINAL_SUVR}{ctx-rh-entorhinal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_FRONTALPOLE_SUVR}{ctx-rh-frontalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_FUSIFORM_SUVR}{ctx-rh-fusiform SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_INFERIORPARIETAL_SUVR}{ctx-rh-inferiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_INFERIORTEMPORAL_SUVR}{ctx-rh-inferiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_INSULA_SUVR}{ctx-rh-insula SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ISTHMUSCINGULATE_SUVR}{ctx-rh-isthmuscingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_LATERALOCCIPITAL_SUVR}{ctx-rh-lateraloccipital SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_LATERALORBITOFRONTAL_SUVR}{ctx-rh-lateralorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_LINGUAL_SUVR}{ctx-rh-lingual SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_MEDIALORBITOFRONTAL_SUVR}{ctx-rh-medialorbitofrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_MIDDLETEMPORAL_SUVR}{ctx-rh-middletemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARACENTRAL_SUVR}{ctx-rh-paracentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARAHIPPOCAMPAL_SUVR}{ctx-rh-parahippocampal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARSOPERCULARIS_SUVR}{ctx-rh-parsopercularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARSORBITALIS_SUVR}{ctx-rh-parsorbitalis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PARSTRIANGULARIS_SUVR}{ctx-rh-parstriangularis SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PERICALCARINE_SUVR}{ctx-rh-pericalcarine SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_POSTCENTRAL_SUVR}{ctx-rh-postcentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_POSTERIORCINGULATE_SUVR}{ctx-rh-posteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PRECENTRAL_SUVR}{ctx-rh-precentral SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_PRECUNEUS_SUVR}{ctx-rh-precuneus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ROSTRALANTERIORCINGULATE_SUVR}{ctx-rh-rostralanteriorcingulate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_ROSTRALMIDDLEFRONTAL_SUVR}{ctx-rh-rostralmiddlefrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPERIORFRONTAL_SUVR}{ctx-rh-superiorfrontal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPERIORPARIETAL_SUVR}{ctx-rh-superiorparietal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPERIORTEMPORAL_SUVR}{ctx-rh-superiortemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_SUPRAMARGINAL_SUVR}{ctx-rh-supramarginal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_TEMPORALPOLE_SUVR}{ctx-rh-temporalpole SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{CTX_RH_TRANSVERSETEMPORAL_SUVR}{ctx-rh-transversetemporal SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_ACCUMBENS_AREA_SUVR}{left-accumbens-area SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_AMYGDALA_SUVR}{left-amygdala SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CAUDATE_SUVR}{left-caudate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CEREBELLUM_CORTEX_SUVR}{left-cerebellum-cortex SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CEREBELLUM_WHITE_MATTER_SUVR}{left-cerebellum-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CEREBRAL_WHITE_MATTER_SUVR}{left-cerebral-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_CHOROID_PLEXUS_SUVR}{left-choroid-plexus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_HIPPOCAMPUS_SUVR}{left-hippocampus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_INF_LAT_VENT_SUVR}{left-inf-lat-vent SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_LATERAL_VENTRICLE_SUVR}{left-lateral-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_PALLIDUM_SUVR}{left-pallidum SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_PUTAMEN_SUVR}{left-putamen SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_THALAMUS_PROPER_SUVR}{left-thalamus-proper SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_VENTRALDC_SUVR}{left-ventraldc SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{LEFT_VESSEL_SUVR}{left-vessel SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_ACCUMBENS_AREA_SUVR}{right-accumbens-area SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_AMYGDALA_SUVR}{right-amygdala SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CAUDATE_SUVR}{right-caudate SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CEREBELLUM_CORTEX_SUVR}{right-cerebellum-cortex SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CEREBELLUM_WHITE_MATTER_SUVR}{right-cerebellum-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CEREBRAL_WHITE_MATTER_SUVR}{right-cerebral-white-matter SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_CHOROID_PLEXUS_SUVR}{right-choroid-plexus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_HIPPOCAMPUS_SUVR}{right-hippocampus SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_INF_LAT_VENT_SUVR}{right-inf-lat-vent SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_LATERAL_VENTRICLE_SUVR}{right-lateral-ventricle SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_PALLIDUM_SUVR}{right-pallidum SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_PUTAMEN_SUVR}{right-putamen SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_THALAMUS_PROPER_SUVR}{right-thalamus-proper SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_VENTRALDC_SUVR}{right-ventraldc SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
-#'   \item{RIGHT_VESSEL_SUVR}{right-vessel SUVR normalized by whole cerebellum; ROI volume is provided in MRI-Free NPDKA Appendix CSV on LONI}
 #' }
 #' @docType data
 #' @keywords datasets
@@ -15696,8 +15173,8 @@ NULL
 NULL
 
 #' uds_fcsf
-#' @description NACCADRC UDS Biomarker dataset. CSF Biomarker Data. The data is sourced from the file(s) investigator_fcsf_nacc74.csv. 
-#' @format A data frame with 3040 rows and 23 variables:
+#' @description NACCADRC UDS Biomarker dataset. CSF Biomarker Data. The data is sourced from the file(s) investigator_fcsf_nacc75.csv. 
+#' @format A data frame with 3039 rows and 23 variables:
 #' \describe{
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
 #'   \item{NACCID}{Subject ID ( Prefix ""NACC"" followed by six numbers)}
@@ -15736,8 +15213,8 @@ NULL
 NULL
 
 #' uds_ftldlbd
-#' @description NACCADRC UDS FTLD and LBD modules dataset. UDS with NP and Genetics plus FTLD and LBD modules. The data is sourced from the file(s) investigator_ftldlbd_nacc74.csv. 
-#' @format A data frame with 217598 rows and 2649 variables:
+#' @description NACCADRC UDS FTLD and LBD modules dataset. UDS with NP and Genetics plus FTLD and LBD modules. The data is sourced from the file(s) investigator_ftldlbd_nacc75.csv. 
+#' @format A data frame with 218535 rows and 2649 variables:
 #' \describe{
 #'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
 #'   \item{NACCID}{Subject ID ( Prefix ""NACC"" followed by six numbers)}
@@ -15746,7 +15223,6 @@ NULL
 #'   \item{VISITDATE}{UDS visit date}
 #'   \item{NACCVNUM}{Visit Number}
 #'   \item{NACCAVST}{Total number of all UDS visits made (1 - 20)}
-#'   \item{NACCNVST}{Number of in-person UDS visits made (1 - 20)}
 #'   \item{NACCDAYS}{Days from initial visit to most recent visit (0 - no limit)}
 #'   \item{NACCFDYS}{Days from initial visit to each follow-up visit (0 - no limit)}
 #'   \item{NACCCORE}{}
@@ -15774,6 +15250,7 @@ NULL
 #'   \item{NACCAGEB}{Participant's age at initial visit (18  - 120)}
 #'   \item{BIRTHMO}{Participant's month of birth (1- 12)}
 #'   \item{BIRTHYR}{Participant's year of birth (1875 to (current year minus 15))}
+#'   \item{BIRTHDATE}{Date of birth (derived from BIRTHYR and BIRTHMO; day set to 15)}
 #'   \item{CHLDHDCTRY}{Country or region in which participant spent most of their childhood (AFG, AFG - Afghanistan|XQZ, XQZ - Akrotiri|ALB, ALB - Albania|DZA, DZA - Algeria|ASM, ASM - American Samoa|AND, AND - Andorra|AGO, AGO - Angola|AIA, AIA - Anguilla|ATA, ATA - Antarctica|ATG, ATG - Antigua and Barbuda|ARG, ARG - Argentina|ARM, ARM - Armenia|ABW, ABW - Aruba|XAC, XAC - Ashmore and Cartier Islands|AUS, AUS - Australia|AUT, AUT - Austria|AZE, AZE - Azerbaijan|BHS, BHS - The Bahamas|BHR, BHR - Bahrain|XBK, XBK - Baker Island|BGD, BGD - Bangladesh|BRB, BRB - Barbados|XBI, XBI - Bassas da India|BLR, BLR - Belarus|BEL, BEL - Belgium|BLZ, BLZ - Belize|BEN, BEN - Benin|BMU, BMU - Bermuda|BTN, BTN - Bhutan|BOL, BOL - Bolivia|BES, BES - Bonaire, Sint Eustatius, and Saba|BIH, BIH - Bosnia and Herzegovina|BWA, BWA - Botswana|BVT, BVT - Bouvet Island|BRA, BRA - Brazil|IOT, IOT - British Indian Ocean Territory|BRN, BRN - Brunei|BGR, BGR - Bulgaria|BFA, BFA - Burkina Faso|MMR, MMR - Burma|BDI, BDI - Burundi|KHM, KHM - Cambodia|CMR, CMR - Cameroon|CAN, CAN - Canada|CPV, CPV - Cabo Verde|CYM, CYM - Cayman Islands|CAF, CAF - Central African Republic|TCD, TCD - Chad|CHL, CHL - Chile|CHN, CHN - China|CXR, CXR - Christmas Island|CPT, CPT - Clipperton Island|CCK, CCK - Cocos (Keeling) Islands|COL, COL - Colombia|COM, COM - Comoros|COG, COG - Congo (Brazzaville)|COD, COD - Congo (Kinshasa)|COK, COK - Cook Islands|XCS, XCS - Coral Sea Islands|CRI, CRI - Costa Rica|CIV, CIV - CÃ´te dIvoire|HRV, HRV - Croatia|CUB, CUB - Cuba|CUW, CUW - CuraÃ§ao|CYP, CYP - Cyprus|CZE, CZE - Czech Republic|DNK, DNK - Denmark|XXD, XXD - Dhekelia|DGA, DGA - Diego Garcia|DJI, DJI - Djibouti|DMA, DMA - Dominica|DOM, DOM - Dominican Republic|ECU, ECU - Ecuador|EGY, EGY - Egypt|SLV, SLV - El Salvador|GNQ, GNQ - Equatorial Guinea|ERI, ERI - Eritrea|EST, EST - Estonia|ETH, ETH - Ethiopia|XEU, XEU - Europa Island|FLK, FLK - Falkland Islands (Islas Malvinas)|FRO, FRO - Faroe Islands|FJI, FJI - Fiji|FIN, FIN - Finland|FRA, FRA - France|GUF, GUF - French Guiana|PYF, PYF - French Polynesia|ATF, ATF - French Southern and Antarctic Lands|GAB, GAB - Gabon|GMB, GMB - The Gambia|XGZ, XGZ - Gaza Strip|GEO, GEO - Georgia|DEU, DEU - Germany|GHA, GHA - Ghana|GIB, GIB - Gibraltar|XGL, XGL - Glorioso Islands|GRC, GRC - Greece|GRL, GRL - Greenland|GRD, GRD - Grenada|GLP, GLP - Guadeloupe|GUM, GUM - Guam|AX2, AX2 - Guantanamo Bay Naval Base|GTM, GTM - Guatemala|GGY, GGY - Guernsey|GIN, GIN - Guinea|GNB, GNB - Guinea-Bissau|GUY, GUY - Guyana|HTI, HTI - Haiti|HMD, HMD - Heard Island and McDonald Islands|HND, HND - Honduras|HKG, HKG - Hong Kong|XHO, XHO - Howland Island|HUN, HUN - Hungary|ISL, ISL - Iceland|IND, IND - India|IDN, IDN - Indonesia|IRN, IRN - Iran|IRQ, IRQ - Iraq|IRL, IRL - Ireland|IMN, IMN - Isle of Man|ISR, ISR - Israel|ITA, ITA - Italy|JAM, JAM - Jamaica|XJM, XJM - Jan Mayen|JPN, JPN - Japan|XJV, XJV - Jarvis Island|JEY, JEY - Jersey|XJA, XJA - Johnston Atoll|JOR, JOR - Jordan|XJN, XJN - Juan de Nova Island|KAZ, KAZ - Kazakhstan|KEN, KEN - Kenya|XKR, XKR - Kingman Reef|KIR, KIR - Kiribati|PRK, PRK - North Korea|KOR, KOR - South Korea|XKS, XKS - Kosovo|KWT, KWT - Kuwait|KGZ, KGZ - Kyrgyzstan|LAO, LAO - Laos|LVA, LVA - Latvia|LBN, LBN - Lebanon|LSO, LSO - Lesotho|LBR, LBR - Liberia|LBY, LBY - Libya|LIE, LIE - Liechtenstein|LTU, LTU - Lithuania|LUX, LUX - Luxembourg|MAC, MAC - Macau|MKD, MKD - North Macedonia|MDG, MDG - Madagascar|MWI, MWI - Malawi|MYS, MYS - Malaysia|MDV, MDV - Maldives|MLI, MLI - Mali|MLT, MLT - Malta|MHL, MHL - Marshall Islands|MTQ, MTQ - Martinique|MRT, MRT - Mauritania|MUS, MUS - Mauritius|MYT, MYT - Mayotte|MEX, MEX - Mexico|FSM, FSM - Federated States of Micronesia|XMW, XMW - Midway Islands|MDA, MDA - Moldova|MCO, MCO - Monaco|MNG, MNG - Mongolia|MNE, MNE - Montenegro|MSR, MSR - Montserrat|MAR, MAR - Morocco|MOZ, MOZ - Mozambique|NAM, NAM - Namibia|NRU, NRU - Nauru|XNV, XNV - Navassa Island|NPL, NPL - Nepal|NLD, NLD - Netherlands|NCL, NCL - New Caledonia|NZL, NZL - New Zealand|NIC, NIC - Nicaragua|NER, NER - Niger|NGA, NGA - Nigeria|NIU, NIU - Niue|NFK, NFK - Norfolk Island|MNP, MNP - Northern Mariana Islands|NOR, NOR - Norway|OMN, OMN - Oman|PAK, PAK - Pakistan|PLW, PLW - Palau|XPL, XPL - Palmyra Atoll|PAN, PAN - Panama|PNG, PNG - Papua New Guinea|XPR, XPR - Paracel Islands|PRY, PRY - Paraguay|PER, PER - Peru|PHL, PHL - Philippines|PCN, PCN - Pitcairn Islands|POL, POL - Poland|PRT, PRT - Portugal|PRI, PRI - Puerto Rico|QAT, QAT - Qatar|REU, REU - Reunion|ROU, ROU - Romania|RUS, RUS - Russia|RWA, RWA - Rwanda|BLM, BLM - Saint Barthelemy|SHN, SHN - Saint Helena, Ascension, and Tristan da Cunha|KNA, KNA - Saint Kitts and Nevis|LCA, LCA - Saint Lucia|MAF, MAF - Saint Martin|SPM, SPM - Saint Pierre and Miquelon|VCT, VCT - Saint Vincent and the Grenadines|WSM, WSM - Samoa|SMR, SMR - San Marino|STP, STP - Sao Tome and Principe|SAU, SAU - Saudi Arabia|SEN, SEN - Senegal|SRB, SRB - Serbia|SYC, SYC - Seychelles|SLE, SLE - Sierra Leone|SGP, SGP - Singapore|SXM, SXM - Sint Maarten|SVK, SVK - Slovakia|SVN, SVN - Slovenia|SLB, SLB - Solomon Islands|SOM, SOM - Somalia|ZAF, ZAF - South Africa|SGS, SGS - South Georgia and South Sandwich Islands|SSD, SSD - South Sudan|ESP, ESP - Spain|XSP, XSP - Spratly Islands|LKA, LKA - Sri Lanka|SDN, SDN - Sudan|SUR, SUR - Suriname|XSV, XSV - Svalbard|SWE, SWE - Sweden|CHE, CHE - Switzerland|SYR, SYR - Syria|TWN, TWN - Taiwan|TJK, TJK - Tajikistan|TZA, TZA - Tanzania|THA, THA - Thailand|TLS, TLS - Timor-Leste|TGO, TGO - Togo|TKL, TKL - Tokelau|TON, TON - Tonga|TTO, TTO - Trinidad and Tobago|XTR, XTR - Tromelin Island|TUN, TUN - Tunisia|TUR, TUR - Turkey|TKM, TKM - Turkmenistan|TCA, TCA - Turks and Caicos Islands|TUV, TUV - Tuvalu|UGA, UGA - Uganda|UKR, UKR - Ukraine|ARE, ARE - United Arab Emirates|GBR, GBR - United Kingdom|USA, USA - United States|AX1, AX1 - Unknown|URY, URY - Uruguay|UZB, UZB - Uzbekistan|VUT, VUT - Vanuatu|VAT, VAT - Vatican City|VEN, VEN - Venezuela|VNM, VNM - Vietnam|VGB, VGB - British Virgin Islands|VIR, VIR - U.S. Virgin Islands|XWK, XWK - Wake Island|WLF, WLF - Wallis and Futuna|XWB, XWB - West Bank|ESH, ESH - Western Sahara|YEM, YEM - Yemen|ZMB, ZMB - Zambia|ZWE, ZWE - Zimbabwe)}
 #'   \item{NACCNIHR}{Derived NIH race definitions (1 = White 2 = Black or African American 3 = American Indian or Alaska Native 4 = Native Hawaiian or Pacific Islander 5 = Asian 6 = Multiracial 7 = Middle Eastern or Northern African 99 = Unknown or ambiguous)}
 #'   \item{RACE}{Race (1 = White 2 = Black or African American 3 = American Indian or Alaska Native 4 = Native Hawaiian or Other Pacific Islander 5 = Asian 50 = Other (specify) 99 = Unknown)}
@@ -18397,214 +17874,6 @@ NULL
 #' @examples
 #' \dontrun{
 #' vignette('lbd3_1-fvp-ded')
-#' browseVignettes('NACCADRC')
-#' }
-NULL
-
-#' uds_mri
-#' @description NACCADRC UDS Imaging MRI dataset. Legacy (Mixed Protocol) MRI data processed through DeCarli Lab.  Contains data spanning multiple MRI sequences (Contains legacy/mixed protocol data). The data is sourced from the file(s) investigator_mri_nacc74.csv. 
-#' @format A data frame with 12180 rows and 191 variables:
-#' \describe{
-#'   \item{NACCADC}{ADC at which subject was seen (100-9999)}
-#'   \item{NACCID}{Subject ID ( Prefix ""NACC"" followed by six numbers)}
-#'   \item{MRIMO}{}
-#'   \item{MRIDY}{}
-#'   \item{MRIYR}{}
-#'   \item{NACCMRIA}{}
-#'   \item{NACCMRFI}{}
-#'   \item{NACCMNUM}{}
-#'   \item{NACCMRDY}{}
-#'   \item{MRIT1}{}
-#'   \item{MRIT2}{}
-#'   \item{MRIDTI}{}
-#'   \item{MRIDWI}{}
-#'   \item{MRIFLAIR}{}
-#'   \item{MRIOTHER}{}
-#'   \item{MRIFIELD}{}
-#'   \item{MRIMANU}{}
-#'   \item{MRIMODL}{}
-#'   \item{NACCMVOL}{}
-#'   \item{NACCICV}{}
-#'   \item{NACCBRNV}{}
-#'   \item{NACCWMVL}{}
-#'   \item{NACCNIFT}{}
-#'   \item{FRONTGRY}{}
-#'   \item{FRONTWHT}{}
-#'   \item{FRONTCSF}{}
-#'   \item{OCCIPGRY}{}
-#'   \item{OCCIPWHT}{}
-#'   \item{OCCIPCSF}{}
-#'   \item{PARGRY}{}
-#'   \item{PARWHT}{}
-#'   \item{PARCSF}{}
-#'   \item{TEMPGRY}{}
-#'   \item{TEMPWHT}{}
-#'   \item{TEMPCSF}{}
-#'   \item{CSFVOL}{}
-#'   \item{GRAYVOL}{}
-#'   \item{WHITEVOL}{}
-#'   \item{WMHVOL}{}
-#'   \item{HIPPOVOL}{}
-#'   \item{CEREALL}{}
-#'   \item{CERETISS}{}
-#'   \item{CERECSF}{}
-#'   \item{CEREGR}{}
-#'   \item{CEREWH}{}
-#'   \item{LHIPPO}{}
-#'   \item{RHIPPO}{}
-#'   \item{LLATVENT}{}
-#'   \item{RLATVENT}{}
-#'   \item{LATVENT}{}
-#'   \item{THIRVENT}{}
-#'   \item{LFRCORT}{}
-#'   \item{RFRCORT}{}
-#'   \item{FRCORT}{}
-#'   \item{LOCCORT}{}
-#'   \item{ROCCORT}{}
-#'   \item{OCCCORT}{}
-#'   \item{LPARCORT}{}
-#'   \item{RPARCORT}{}
-#'   \item{PARCORT}{}
-#'   \item{LTEMPCOR}{}
-#'   \item{RTEMPCOR}{}
-#'   \item{TEMPCOR}{}
-#'   \item{LCAC}{}
-#'   \item{LCACM}{}
-#'   \item{LCMF}{}
-#'   \item{LCMFM}{}
-#'   \item{LCUN}{}
-#'   \item{LCUNM}{}
-#'   \item{LENT}{}
-#'   \item{LENTM}{}
-#'   \item{LFUS}{}
-#'   \item{LFUSM}{}
-#'   \item{LINFPAR}{}
-#'   \item{LINFPARM}{}
-#'   \item{LINFTEMP}{}
-#'   \item{LINFTEMM}{}
-#'   \item{LINSULA}{}
-#'   \item{LINSULAM}{}
-#'   \item{LISTHC}{}
-#'   \item{LISTHCM}{}
-#'   \item{LLATOCC}{}
-#'   \item{LLATOCCM}{}
-#'   \item{LLATORBF}{}
-#'   \item{LLATORBM}{}
-#'   \item{LLING}{}
-#'   \item{LLINGM}{}
-#'   \item{LMEDORBF}{}
-#'   \item{LMEDORBM}{}
-#'   \item{LMIDTEMP}{}
-#'   \item{LMIDTEMM}{}
-#'   \item{LPARCEN}{}
-#'   \item{LPARCENM}{}
-#'   \item{LPARHIP}{}
-#'   \item{LPARHIPM}{}
-#'   \item{LPARSOP}{}
-#'   \item{LPARSOPM}{}
-#'   \item{LPARORB}{}
-#'   \item{LPARORBM}{}
-#'   \item{LPARTRI}{}
-#'   \item{LPARTRIM}{}
-#'   \item{LPERCAL}{}
-#'   \item{LPERCALM}{}
-#'   \item{LPOSCEN}{}
-#'   \item{LPOSCENM}{}
-#'   \item{LPOSCIN}{}
-#'   \item{LPOSCINM}{}
-#'   \item{LPRECEN}{}
-#'   \item{LPRECENM}{}
-#'   \item{LPRECUN}{}
-#'   \item{LPRECUNM}{}
-#'   \item{LROSANC}{}
-#'   \item{LROSANCM}{}
-#'   \item{LROSMF}{}
-#'   \item{LROSMFM}{}
-#'   \item{LSUPFR}{}
-#'   \item{LSUPFRM}{}
-#'   \item{LSUPPAR}{}
-#'   \item{LSUPPARM}{}
-#'   \item{LSUPTEM}{}
-#'   \item{LSUPTEMM}{}
-#'   \item{LSUPMAR}{}
-#'   \item{LSUPMARM}{}
-#'   \item{LTRTEM}{}
-#'   \item{LTRTEMM}{}
-#'   \item{RCAC}{}
-#'   \item{RCACM}{}
-#'   \item{RCMF}{}
-#'   \item{RCMFM}{}
-#'   \item{RCUN}{}
-#'   \item{RCUNM}{}
-#'   \item{RENT}{}
-#'   \item{RENTM}{}
-#'   \item{RFUS}{}
-#'   \item{RFUSM}{}
-#'   \item{RINFPAR}{}
-#'   \item{RINFPARM}{}
-#'   \item{RINFTEMP}{}
-#'   \item{RINFTEMM}{}
-#'   \item{RINSULA}{}
-#'   \item{RINSULAM}{}
-#'   \item{RISTHC}{}
-#'   \item{RISTHCM}{}
-#'   \item{RLATOCC}{}
-#'   \item{RLATOCCM}{}
-#'   \item{RLATORBF}{}
-#'   \item{RLATORBM}{}
-#'   \item{RLING}{}
-#'   \item{RLINGM}{}
-#'   \item{RMEDORBF}{}
-#'   \item{RMEDORBM}{}
-#'   \item{RMIDTEMP}{}
-#'   \item{RMIDTEMM}{}
-#'   \item{RPARCEN}{}
-#'   \item{RPARCENM}{}
-#'   \item{RPARHIP}{}
-#'   \item{RPARHIPM}{}
-#'   \item{RPARSOP}{}
-#'   \item{RPARSOPM}{}
-#'   \item{RPARORB}{}
-#'   \item{RPARORBM}{}
-#'   \item{RPARTRI}{}
-#'   \item{RPARTRIM}{}
-#'   \item{RPERCAL}{}
-#'   \item{RPERCALM}{}
-#'   \item{RPOSCEN}{}
-#'   \item{RPOSCENM}{}
-#'   \item{RPOSCIN}{}
-#'   \item{RPOSCINM}{}
-#'   \item{RPRECEN}{}
-#'   \item{RPRECENM}{}
-#'   \item{RPRECUN}{}
-#'   \item{RPRECUNM}{}
-#'   \item{RROSANC}{}
-#'   \item{RROSANCM}{}
-#'   \item{RROSMF}{}
-#'   \item{RROSMFM}{}
-#'   \item{RSUPFR}{}
-#'   \item{RSUPFRM}{}
-#'   \item{RSUPPAR}{}
-#'   \item{RSUPPARM}{}
-#'   \item{RSUPTEM}{}
-#'   \item{RSUPTEMM}{}
-#'   \item{RSUPMAR}{}
-#'   \item{RSUPMARM}{}
-#'   \item{RTRTEM}{}
-#'   \item{RTRTEMM}{}
-#'   \item{NACCNMRI}{Total number of mixed-protocol MRI sessions (0 - no limit)}
-#'   \item{NACCDICO}{}
-#'   \item{NACCVNUM}{Visit Number}
-#'   \item{NACCMRSA}{At least one mixed-protocol MRI scan available (0 = No; does not have at least one mixed-protocol MRI available at NACC 1 = Yes; has at least one mixed-protocol MRI available at NACC)}
-#' }
-#' @docType data
-#' @keywords datasets
-#' @name uds_mri
-#' @usage data(uds_mri)
-#' @source \href{https://www.naccdata.org/about-nacc-data/}{https://www.naccdata.org/about-nacc-data/}.
-#' @examples
-#' \dontrun{
-#' vignette('rdd-imaging-mri')
 #' browseVignettes('NACCADRC')
 #' }
 NULL
