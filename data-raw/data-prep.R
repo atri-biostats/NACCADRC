@@ -6,11 +6,7 @@ library(doconv)     # for docx to pdf conversion
 
 # functions ----
 
-get_levels <- function(x){
-  clean_string <- str_remove(x, "^\\d+-\\d+\\s+")
-  matches <- str_match_all(clean_string, "(\\d+)\\s+=\\s+(.*?)(?=\\s+\\d+\\s+=|$)")[[1]]
-  set_names(matches[, 3], matches[, 2])
-}
+source(file.path("..", "R", "nacc-codes.R")) # parse_codes(), nacc_na()
 
 escape <- function(x){
   y <- gsub("{", "\\{", x, fixed = TRUE)
@@ -24,8 +20,8 @@ file.remove(file.path('..', 'data', list.files('../data')))
 
 # Store release number and date ----
 # These need to be manually updated with each data release
-data_release_date <- as.Date("2026-07-03")
-uds_version <- "74"
+data_release_date <- as.Date("2026-09-30")
+uds_version <- "75"
 minor_update <- '1'
 package_version <- paste(
   uds_version, 
@@ -105,7 +101,8 @@ file_manifest <- tibble(
     DataName = tolower(DataName),
     DataName = gsub("nacc_adsp_phc_", "phc_", DataName, fixed = TRUE),
     DataName = gsub("nacc-nonuds_adsp_phc_", "phc_nonuds_", DataName, fixed = TRUE),
-    DataName = gsub(paste0("_nacc", uds_version), "", DataName, fixed = TRUE),
+    # strip any release number (some files, e.g. SCAN MP, lag the current release)
+    DataName = gsub("_nacc\\d+$", "", DataName),
     DataName = gsub(paste0("_", phc_version), "", DataName, fixed = TRUE),
     DataName = gsub("investigator_scan_", "scan_", DataName, fixed = TRUE),
     DataName = gsub("investigator_clariti_", "clariti_", DataName, fixed = TRUE),
@@ -137,7 +134,8 @@ file_manifest <- tibble(
       grepl("investigator_fcsf_nacc73.pdf", FileName) ~ "uds_fcsf",
       grepl("lbd3_1-fvp-ded.pdf", FileName) ~ "uds_ftldlbd",
       grepl("rdd-genetic-data.pdf", FileName) ~ "uds_ftldlbd",
-      grepl("rdd-imaging-mri.pdf", FileName) ~ "uds_mri",
+      grepl("rdd-imaging-mri.pdf", FileName) ~ "data_dictionary",
+      grepl("uds4-rdd.pdf", FileName) ~ "data_dictionary",
       grepl("rdd-imaging-pet.pdf", FileName) ~ "data_dictionary",
       grepl("rdd-np.pdf", FileName) ~ "phc_neuropath",
       grepl("SCAN-MRI-Imaging-RDD.pdf", FileName) ~ "data_dictionary",
@@ -149,7 +147,6 @@ file_manifest <- tibble(
       TRUE ~ AssociatedData),
     FileDescription = case_when(
       grepl("investigator_ftldlbd_nacc", FileName) ~ "UDS with NP and Genetics plus FTLD and LBD modules",
-      grepl("investigator_mri_nacc", FileName) ~ "Mixed protocol (non-SCAN compliant) MRI",
       grepl("investigator_fcsf_nacc", FileName) ~ "CSF link",
       grepl("investigator_scan_mri_nacc", FileName) ~ "SCAN MRI",
       grepl("investigator_scan_pet_nacc", FileName) ~ "SCAN PET")) %>%
@@ -262,14 +259,10 @@ for (file_name in data_files) {
   df <- NULL
   
   if(tools::file_ext(file_name) == "csv"){
-    if(file_name == "investigator_mri_nacc74.csv"){
-      df <- fread(file.path(man.sub$FilePath, file_name),
-        na.strings = c("8888.888", "888.8888", "88.8888", "8.8888", 
-                       "9999.999", "999.9999", "99.9999", "9.9999",
-                       "8888.8888"))
-    }else{
-      df <- fread(file.path(man.sub$FilePath, file_name))
-    }
+    df <- fread(file.path(man.sub$FilePath, file_name))
+    # UDS dictionary names are uppercased; some UDS columns (e.g. frmdatea1 in
+    # nacc75) arrive lowercase
+    if(man.sub$FileSource == "UDS") setnames(df, toupper)
   }
   if(tools::file_ext(file_name) == "xlsx"){
     df <- readxl::read_excel(file.path(man.sub$FilePath, file_name),
@@ -303,6 +296,16 @@ data_dictionary <- data_dictionary %>%
   select(DataName, everything()) %>%
   select(where(\(x) any(!is.na(x))))
 
+## parse AllowableCodes into missing-value codes ----
+# see parse_codes() in R/nacc-codes.R; used by nacc_na()
+parsed_codes <- lapply(data_dictionary$AllowableCodes, parse_codes)
+codes_string <- function(x) if (length(x)) paste(x, collapse = "; ") else NA_character_
+data_dictionary <- data_dictionary %>%
+  mutate(
+    MissingCodes = sapply(parsed_codes, \(z) codes_string(z$code[z$missing])),
+    UnknownCodes = sapply(parsed_codes, \(z) codes_string(
+      z$code[z$unknown & !z$missing])))
+
 View(data_dictionary)
 
 if(any(duplicated(with(data_dictionary, paste(DataName, VariableName))))){
@@ -321,36 +324,45 @@ file_manifest %>%
 usethis::use_data(data_dictionary, overwrite = TRUE, compress = "xz")
 
 # Code any factors ----
+# Categorical variables (see parse_codes()) are coded as factors, keeping
+# missing codes (e.g. -4 "Not available") as levels; nacc_na() drops them.
+# A variable is left numeric, and listed in reports/qc/factor_coding_skipped.csv,
+# if its data contain values the dictionary does not list.
+# Variables recoded manually below are skipped.
+manual_factors <- c("NACCUDSD", "NACCETPR", "TRACER", "AMYLOID_STATUS")
+factor_skipped <- NULL
 for(file_name in data_files){
-  df_name <- file_manifest %>% 
+  df_name <- file_manifest %>%
     filter(FileName == basename(file_name)) %>%
     pull(DataName)
   df <- get(df_name)
   message('Table: ', df_name)
-  for(cc in colnames(df)){
-    dic.sub <- subset(data_dictionary, VariableName==cc & 
-        grepl("=", AllowableCodes) & !is.na(AllowableCodes) &
-        !grepl("-", AllowableCodes))
-    if(nrow(dic.sub)>1){
-      dic.sub <- dic.sub %>%
-        filter(DataName == df_name)
+  for(cc in setdiff(colnames(df), manual_factors)){
+    i <- which(data_dictionary$VariableName == cc)
+    if(length(i) > 1) i <- i[data_dictionary$DataName[i] == df_name]
+    if(length(i) != 1 || !is.numeric(df[[cc]])) next
+    codes <- parsed_codes[[i]]
+    if(!identical(attr(codes, "type"), "categorical")) next
+    obs <- unique(df[[cc]])
+    obs <- obs[!is.na(obs)]
+    codes <- codes %>% filter(!implied | code %in% obs)
+    extra <- setdiff(obs, codes$code)
+    if(length(extra) || anyDuplicated(codes$code) || anyDuplicated(codes$label)){
+      factor_skipped <- bind_rows(factor_skipped, tibble(
+        DataName = df_name, VariableName = cc,
+        UnlistedValues = paste(sort(extra), collapse = "; "),
+        DuplicatedCodes = anyDuplicated(codes$code) > 0 | anyDuplicated(codes$label) > 0,
+        AllowableCodes = data_dictionary$AllowableCodes[i]))
+      next
     }
-    if(nrow(dic.sub)==1){
-      levs <- get_levels(dic.sub$AllowableCodes)
-      if(all(!is.na(levs))){
-        message('Coding: ', cc)
-        df[, cc] <- factor(df %>% pull(cc), 
-          levels = as.numeric(names(levs)),
-          labels = levs)}
-      if(any(is.na(levs)))
-        message(paste(df_name, cc, "NA codes:", dic.sub$AllowableCodes))
-    }
-    if(nrow(dic.sub)>1){
-      message(paste(df_name, cc, "Multi codes:", dic.sub$AllowableCodes))
-    }
+    df[[cc]] <- factor(df[[cc]], levels = codes$code, labels = codes$label)
   }
   assign(df_name, df)
   do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
+}
+if(!is.null(factor_skipped)){
+  warning(nrow(factor_skipped), " categorical variables left numeric; see factor_skipped")
+  View(factor_skipped)
 }
 
 # bind_rows for SCAN, CLARiIT, MP ----
@@ -410,15 +422,9 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
   do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
 }
 
-# Combine files from SCAN, SCAN MP, and CLARiTI for MRI data, if they exist.
+# SCAN/CLARiTI MRI data (legacy investigator_mri_nacc*.csv dropped as of nacc75)
 df_name <- "mrisbm"
 mrisbm <- scan_clariti_mrisbm %>%
-  bind_rows(uds_mri %>% 
-      filter(NACCMVOL == 1) %>%
-      unite("SCANDT", MRIYR, MRIMO, MRIDY, sep = '-') %>%
-      mutate(
-        PROJECT = 'SCAN MP',
-        SCANDT = as.IDate(SCANDT))) %>%
   select(PROJECT, everything())
 
 duplicates <- mrisbm %>%
@@ -734,6 +740,11 @@ usethis::use_data(uds_ftldlbd, overwrite = TRUE, compress = "xz")
 qc_dir <- file.path('..', 'reports', 'qc')
 dir.create(qc_dir, recursive = TRUE)
 file.remove(file.path(qc_dir, list.files(qc_dir)))
+
+# categorical variables left numeric because data contain unlisted values
+if(!is.null(factor_skipped))
+  write.csv(factor_skipped, file.path(qc_dir, "factor_coding_skipped.csv"),
+    row.names = FALSE)
 
 mrisbm %>% filter(grepl("CLARITI", PROJECT) & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, SCANDT) %>%

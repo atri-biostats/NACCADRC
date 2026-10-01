@@ -27,7 +27,10 @@ library(patchwork)
 library(sva)
 
 data(mrisbm, taupetnpdka, phc_cognition, amyloidpetgaain, 
-uds_ftldlbd, clariti_edc, uds_mri)
+uds_ftldlbd, clariti_edc)
+
+# set coded missing values (e.g. -4 = Not available, 9999 = Unknown) to NA
+uds_ftldlbd <- nacc_na(uds_ftldlbd)
 
 theme_set(theme_minimal())
 
