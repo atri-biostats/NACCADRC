@@ -313,9 +313,19 @@ plot_clariti_imaging <- function(dd_cross) {
 }
 
 # Counts by etiology and UDS diagnosis, stacked by cohort ----
-plot_etiology_bars <- function(data, by_cohort = TRUE) {
+# (one row per participant; diagnosis panels with fewer than min_n
+# participants are dropped and listed in the caption)
+plot_etiology_bars <- function(data, by_cohort = TRUE, min_n = 10) {
   data <- data %>%
     filter(NACCUDSD != 'Unknown') %>%
+    mutate(across(where(is.factor), fct_drop))
+  n_by_dx <- table(data$NACCUDSD)
+  small <- n_by_dx[n_by_dx < min_n]
+  caption <- if (length(small)) paste0("Not shown: ",
+    paste0(small, ' participants with UDS diagnosis "', names(small), '"', collapse = "; "),
+    " (fewer than ", min_n, " per panel)")
+  data <- data %>%
+    filter(!NACCUDSD %in% names(small)) %>%
     mutate(across(where(is.factor), fct_drop))
   count_data <- data %>%
     group_by(NACCUDSD, Etiology) %>%
@@ -332,7 +342,7 @@ plot_etiology_bars <- function(data, by_cohort = TRUE) {
     geom_text(aes(label = n), hjust = -0.2, size = 3) +
     expand_limits(x = max(count_data$n) * 1.2) +
     facet_wrap(vars(NACCUDSD)) +
-    labs(y = "", x = "Count (N)")
+    labs(y = "", x = "Count (N)", caption = caption)
 }
 
 # UpSet plot of data availability ----
@@ -354,17 +364,30 @@ add_initial_dx <- function(pd) {
     arrange(NACCID, Years)
 }
 
-# Drop participants with unknown initial diagnosis from longitudinal plots;
-# the number dropped is stored in attr(, "n_unknown") for the plot caption
-known_initial_dx <- function(pd) {
-  unknown <- is.na(pd$`Initial Dx`) | pd$`Initial Dx` == "Unknown"
-  structure(pd[!unknown, ] %>% ungroup() %>% mutate(`Initial Dx` = fct_drop(`Initial Dx`)),
-    n_unknown = n_distinct(pd$NACCID[unknown]))
+# Drop participants with unknown initial diagnosis, and initial diagnosis
+# groups with fewer than min_n participants (e.g. "Behavioral impairment only"),
+# from longitudinal plots. Participants dropped per group are stored in
+# attr(, "dropped") for the plot caption.
+known_initial_dx <- function(pd, min_n = 10) {
+  dx <- pd$`Initial Dx`
+  unknown <- is.na(dx) | dx == "Unknown"
+  n_by_dx <- tapply(pd$NACCID[!unknown], droplevels(dx[!unknown]), n_distinct)
+  small <- names(n_by_dx)[n_by_dx < min_n]
+  drop <- unknown | dx %in% small
+  structure(pd[!drop, ] %>% ungroup() %>% mutate(`Initial Dx` = fct_drop(`Initial Dx`)),
+    dropped = c(Unknown = n_distinct(pd$NACCID[unknown]), n_by_dx[small]),
+    min_n = min_n)
 }
 
-unknown_dx_caption <- function(n) {
-  if (n > 0) paste(format(n, big.mark = ","),
-    "participants with unknown initial UDS diagnosis not shown")
+dropped_dx_caption <- function(pd) {
+  dropped <- attr(pd, "dropped")
+  dropped <- dropped[dropped > 0]
+  if (!length(dropped)) return(NULL)
+  txt <- ifelse(names(dropped) == "Unknown",
+    paste(dropped, "participants with unknown initial UDS diagnosis"),
+    paste0(dropped, ' participants with initial diagnosis "', names(dropped),
+      '" (fewer than ', attr(pd, "min_n"), " per group)"))
+  paste0("Not shown: ", paste(txt, collapse = "; "))
 }
 
 # Spaghetti plot of a longitudinal measure by initial diagnosis ----
@@ -375,7 +398,6 @@ plot_spaghetti <- function(dd, value, project, ylab, alpha = 1) {
     filter(!is.na(value)) %>%
     add_initial_dx() %>%
     known_initial_dx()
-  n_unknown <- attr(pd, "n_unknown")
 
   ggplot(pd, aes(x = Years, y = value)) +
     geom_point(aes(color = PROJECT, shape = Etiology), alpha = alpha) +
@@ -387,7 +409,7 @@ plot_spaghetti <- function(dd, value, project, ylab, alpha = 1) {
     facet_grid(. ~ `Initial Dx`, scales = 'free_x',
       labeller = label_wrap_gen(width = 15)) +
     guides(colour = guide_legend(override.aes = list(alpha = 1))) +
-    labs(y = ylab, caption = unknown_dx_caption(n_unknown)) +
+    labs(y = ylab, caption = dropped_dx_caption(pd)) +
     scale_color_manual(values = cohort_color)
 }
 
@@ -449,7 +471,7 @@ plot_loess <- function(dd) {
     facet_wrap(vars(name), scales = 'free_y', ncol = 3, strip.position = "left") +
     geom_smooth(method = 'gam', formula = y ~ s(x, bs = "cs", fx = TRUE, k = 1)) +
     coord_cartesian(xlim = c(50, 90)) +
-    ylab('') +
+    labs(y = '', caption = dropped_dx_caption(pd1)) +
     theme(strip.placement = "outside")
 
   p2 <- ggplot(pd2, aes(x=Memory_i, y=value, color = `Initial Dx`)) +
@@ -459,11 +481,9 @@ plot_loess <- function(dd) {
     coord_cartesian(xlim = c(-1.5, 1.5)) +
     xlab('Harmonized Memory (imputed)') +
     scale_x_reverse() +
-    ylab('') +
+    labs(y = '', caption = dropped_dx_caption(pd2)) +
     theme(strip.placement = "outside")
 
-  p1 / p2 + plot_layout(guides = "collect") +
-    plot_annotation(caption = unknown_dx_caption(
-      max(attr(pd1, "n_unknown"), attr(pd2, "n_unknown"))))
+  p1 / p2 + plot_layout(guides = "collect")
 }
 ```

@@ -432,7 +432,7 @@ ggplot(pd, aes(x=Years, y=value)) +
   facet_grid(name ~ `Initial Dx`, scales = 'free_y',
     labeller = label_wrap_gen(width = 15)) +
   guides(colour = guide_legend(override.aes = list(alpha=1))) +
-  labs(y = '', caption = unknown_dx_caption(attr(pd, "n_unknown")))
+  labs(y = '', caption = dropped_dx_caption(pd))
 ```
 
 ## ComBat Harmonization of tau PET (tracers)
