@@ -44,6 +44,11 @@ reference:
     - starts_with("file_manifest")
     - starts_with("package_version")
 
+  - title: Helper functions
+    contents:
+    - starts_with("nacc_na")
+    - starts_with("parse_codes")
+
 navbar:
   structure:
     left:  [intro, reference, articles, news]

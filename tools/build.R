@@ -17,7 +17,6 @@ build_readme()
 # Build website ----
 # run once:
 # usethis::use_pkgdown()
-# setwd('../')
-pkgdown::build_site()
+pkgdown::build_site('../')
 # publish online: (commit changes first)
-# pkgdown::deploy_to_branch()
+# pkgdown::deploy_to_branch('../')

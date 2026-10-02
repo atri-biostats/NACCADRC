@@ -45,7 +45,7 @@ pkgFilename <- paste0('NACCADRC_', packageVersion('NACCADRC'), '.tar.gz')
 
 ```{r fig-clariti-imaging}
 #| code-fold: true
-#| fig-cap: "Distribution of imaging summaries among CLARiTI participants with known UDS cognitive status, amyloid PET (CL), tau PET (SUVR), and hippocampal volume (mm$^3$). Tau PET is shown as SUVR harmonized across tracers by ComBat."
+#| fig-cap: "Distribution of imaging summaries among CLARiTI participants with known UDS cognitive status, amyloid PET (CL), tau PET (SUVR), and hippocampal volume (cm$^3$). Tau PET is shown as SUVR harmonized across tracers by ComBat."
 
 plot_clariti_imaging(dd_cross)
 ```
@@ -215,7 +215,7 @@ tbl_summary(
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of CLARiTI participants by baseline UDS diagnosis. Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.") %>%
+  modify_caption(caption = "Characteristics of CLARiTI participants by UDS diagnosis at the visit closest to the CLARiTI visit (first consent date). Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -245,7 +245,7 @@ tbl_summary(
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of participants with any imaging by baseline UDS diagnosis.") %>%
+  modify_caption(caption = "Characteristics of participants with any imaging by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -274,7 +274,7 @@ tbl_summary(
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of all participants by baseline UDS diagnosis.") %>%
+  modify_caption(caption = "Characteristics of all participants by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -305,7 +305,7 @@ tbl_summary(
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", 
     "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of all participants with MRI data by baseline UDS diagnosis.") %>%
+  modify_caption(caption = "Characteristics of all participants with MRI data by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -334,7 +334,7 @@ tbl_summary(
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of all participants with tau PET data by baseline UDS diagnosis.") %>%
+  modify_caption(caption = "Characteristics of all participants with tau PET data by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -364,7 +364,7 @@ tbl_summary(
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of NACC ADRC participants with amyloid PET data by baseline UDS diagnosis.") %>%
+  modify_caption(caption = "Characteristics of NACC ADRC participants with amyloid PET data by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
     footnote = "Row-wise percentage; n (%)",
     columns = all_stat_cols(),
@@ -433,6 +433,37 @@ ggplot(pd, aes(x=Years, y=value)) +
     labeller = label_wrap_gen(width = 15)) +
   guides(colour = guide_legend(override.aes = list(alpha=1))) +
   labs(y = '', caption = dropped_dx_caption(pd))
+```
+
+## CLARiTI spaghetti plots from the CLARiTI visit
+
+Time 0 is each CLARiTI participant's CLARiTI visit (first consent date, CNSTDT1;
+screening date if not available). Scans before the CLARiTI visit, e.g. from
+SCAN or legacy mixed protocol imaging, have negative times. Panels are the UDS
+diagnosis at the visit closest to the CLARiTI visit.
+
+```{r Spaghetti-clariti-centiloids}
+#| code-fold: true
+#| fig-cap: "Amyloid PET of CLARiTI participants by years from the CLARiTI visit."
+
+plot_spaghetti_clariti(dd, value = "CENTILOIDS", project = "Amyloid_PROJECT",
+  ylab = 'Amyloid PET (CL)', alpha = 0.5)
+```
+
+```{r Spaghetti-clariti-tau-pet}
+#| code-fold: true
+#| fig-cap: "Tau PET of CLARiTI participants by years from the CLARiTI visit."
+
+plot_spaghetti_clariti(dd, value = "Tau_PET_ComBat", project = "Tau_PROJECT",
+  ylab = 'Tau PET (MTL SUVR)')
+```
+
+```{r Spaghetti-clariti-hippocampus}
+#| code-fold: true
+#| fig-cap: "Hippocampal volumes of CLARiTI participants by years from the CLARiTI visit."
+
+plot_spaghetti_clariti(dd, value = "HIPPOCAMPUS", project = "MRI_PROJECT",
+  ylab = 'Hippocampal volume (cm3)')
 ```
 
 ## ComBat Harmonization of tau PET (tracers)

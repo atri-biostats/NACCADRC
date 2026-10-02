@@ -151,7 +151,7 @@ file_manifest <- tibble(
       grepl("investigator_fcsf_nacc73.pdf", FileName) ~ "uds_fcsf",
       grepl("lbd3_1-fvp-ded.pdf", FileName) ~ "uds_ftldlbd",
       grepl("rdd-genetic-data.pdf", FileName) ~ "uds_ftldlbd",
-      grepl("rdd-imaging-mri.pdf", FileName) ~ "data_dictionary",
+      grepl("rdd-imaging-mri.pdf", FileName) ~ "uds_mri",
       grepl("uds4-rdd.pdf", FileName) ~ "data_dictionary",
       grepl("rdd-imaging-pet.pdf", FileName) ~ "data_dictionary",
       grepl("rdd-np.pdf", FileName) ~ "phc_neuropath",
@@ -164,6 +164,7 @@ file_manifest <- tibble(
       TRUE ~ AssociatedData),
     FileDescription = case_when(
       grepl("investigator_ftldlbd_nacc", FileName) ~ "UDS with NP and Genetics plus FTLD and LBD modules",
+      grepl("investigator_mri_nacc", FileName) ~ "Mixed protocol (non-SCAN compliant) MRI",
       grepl("investigator_fcsf_nacc", FileName) ~ "CSF link",
       grepl("investigator_scan_mri_nacc", FileName) ~ "SCAN MRI",
       grepl("investigator_scan_pet_nacc", FileName) ~ "SCAN PET")) %>%
@@ -276,7 +277,15 @@ for (file_name in data_files) {
   df <- NULL
   
   if(tools::file_ext(file_name) == "csv"){
-    df <- fread(file.path(man.sub$FilePath, file_name))
+    if(grepl("^investigator_mri_nacc\\d+\\.csv$", file_name)){
+      # legacy MRI volumes code missing values as 8888.888, 9999.999, etc.
+      df <- fread(file.path(man.sub$FilePath, file_name),
+        na.strings = c("8888.888", "888.8888", "88.8888", "8.8888",
+                       "9999.999", "999.9999", "99.9999", "9.9999",
+                       "8888.8888"))
+    }else{
+      df <- fread(file.path(man.sub$FilePath, file_name))
+    }
     # UDS dictionary names are uppercased; some UDS columns (e.g. frmdatea1 in
     # nacc75) arrive lowercase
     if(man.sub$FileSource == "UDS") setnames(df, toupper)
@@ -420,26 +429,21 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
       select(PROJECT, everything())
   }
   
-  if("SCANDATE" %in% colnames(all_source)){
-    duplicates <- all_source %>%
-      group_by(NACCID, SCANDATE) %>%
-      filter(n() > 1) %>%
-      ungroup() %>%
-      arrange(NACCID, SCANDATE) %>% 
-      select(PROJECT, NACCID, SCANDATE, LONIUID)
-  }
-  
-  if("SCAN_DATE" %in% colnames(all_source)){
-    duplicates <- all_source %>%
-      group_by(NACCID, SCAN_DATE) %>%
-      filter(n() > 1) %>%
-      ungroup() %>%
-      arrange(NACCID, SCAN_DATE) %>% 
-      select(PROJECT, NACCID, SCAN_DATE, LONIUID)
-  }
-  
+  # duplicates: more than one scan per participant, date, and radiotracer
+  # (an amyloid and a tau PET on the same day are not duplicates). The tracer
+  # column is TRACER, or RADIOTRACER in petqc.
+  date_col <- intersect(c("SCANDATE", "SCAN_DATE"), colnames(all_source))[1]
+  tracer_col <- intersect(c("TRACER", "RADIOTRACER"), colnames(all_source))[1]
+  key <- c("NACCID", date_col, na.omit(tracer_col))
+  duplicates <- all_source %>%
+    group_by(across(all_of(key))) %>%
+    filter(n() > 1) %>%
+    ungroup() %>%
+    arrange(across(all_of(key))) %>%
+    select(PROJECT, all_of(key), LONIUID)
+
   if(nrow(duplicates) > 0){
-    warning(paste("Duplicate NACCID and SCANDATE combinations in", df_name, "after combining sources."))
+    warning(paste("Duplicate NACCID, scan date, and tracer combinations in", df_name, "after combining sources."))
     write.csv(duplicates, 
       file.path(dup_dir, paste0(df_name, "_duplicates.csv")), 
       row.names = FALSE)
@@ -451,10 +455,17 @@ for(df_name in c('amyloidpetgaain', 'amyloidpetnpdka', 'fdgpetnpdka',
   do.call(usethis::use_data, list(as.name(df_name), overwrite = TRUE, compress = "xz"))
 }
 
-# SCAN/CLARiTI MRI data (legacy investigator_mri_nacc*.csv dropped as of nacc75)
+# Combine SCAN/CLARiTI MRI with legacy mixed protocol (UDS) MRI volumes
 df_name <- "mrisbm"
 mrisbm <- scan_clariti_mrisbm %>%
-  select(PROJECT, everything())
+  bind_rows(uds_mri %>%
+      filter(NACCMVOL == 1) %>%               # volumetric data available
+      unite("SCANDT", MRIYR, MRIMO, MRIDY, sep = '-') %>%
+      mutate(
+        PROJECT = 'SCAN MP',
+        SCANDT = as.IDate(SCANDT))) %>%
+  select(PROJECT, everything()) %>%
+  add_labels(c("scan_clariti_mrisbm", "uds_mri"))
 
 duplicates <- mrisbm %>%
   group_by(NACCID, SCANDT) %>%
