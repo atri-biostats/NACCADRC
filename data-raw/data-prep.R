@@ -804,17 +804,25 @@ if(!is.null(factor_skipped))
   write.csv(factor_skipped, file.path(qc_dir, "factor_coding_skipped.csv"),
     row.names = FALSE)
 
+# write a QC table only if it has rows
+write_qc <- function(df, file_name) {
+  message(file_name, ": ", nrow(df), " rows")
+  if(nrow(df) > 0)
+    write.csv(df, file.path(qc_dir, file_name), row.names = FALSE)
+}
+
+# CLARiTI scans without a CLARiTI EDC record
 mrisbm %>% filter(grepl("CLARITI", PROJECT) & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, SCANDT) %>%
-  write.csv(file.path(qc_dir, "mrisbm_clariti_no_edc.csv"), row.names = FALSE)
+  write_qc("mrisbm_clariti_no_edc.csv")
 
 amyloidpetgaain %>% filter(PROJECT == 'CLARITI' & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, SCANDATE) %>%
-  write.csv(file.path(qc_dir, "amyloidpetgaain_clariti_no_edc.csv"), row.names = FALSE)
+  write_qc("amyloidpetgaain_clariti_no_edc.csv")
 
 taupetnpdka %>% filter(PROJECT == 'CLARITI' & !NACCID %in% clariti_edc$NACCID) %>%
   select(NACCID, LONIUID, SCANDATE, PROCESSDATE) %>%
-  write.csv(file.path(qc_dir, "taupetnpdka_clariti_no_edc.csv"), row.names = FALSE)
+  write_qc("taupetnpdka_clariti_no_edc.csv")
 
 # Build ----
 
