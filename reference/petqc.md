@@ -4,7 +4,7 @@ NACCADRC SCAN/CLARiTI Imaging PET dataset. SCAN FDG PET data processed
 through SCAN PET Core (Contains SCAN-compliant data on ADRC participants
 funded through any mechanism, including P30 funds, CLARiTI funded, or
 other sources). The data is sourced from the file(s)
-investigator_scan_clariti_petqc_nacc74.csv.
+investigator_scan_clariti_petqc_nacc75.csv.
 
 ## Usage
 
@@ -14,7 +14,7 @@ data(petqc)
 
 ## Format
 
-A data frame with 8759 rows and 14 variables:
+A data frame with 9705 rows and 14 variables:
 
 - PROJECT:
 

@@ -9,7 +9,7 @@ the agreement at <https://www.naccdata.org>.
 
 Useful links:
 
-- <https:https://www.naccdata.org>
+- <https://www.naccdata.org>
 
 - <https://atri-biostats.github.io/NACCADRC>
 
@@ -18,3 +18,7 @@ Useful links:
 ## Author
 
 **Maintainer**: ATRI Biostatistics <biostat_request@atrihub.io>
+
+Authors:
+
+- ATRI Biostatistics <biostat_request@atrihub.io>

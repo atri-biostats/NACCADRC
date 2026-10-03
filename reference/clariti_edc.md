@@ -3,7 +3,7 @@
 NACCADRC UDS Electronic Data Capture (EDC) dataset. CLARiTI EDC data
 (Contains only information on ADRC participants enrolled into CLARiTI).
 The data is sourced from the file(s)
-investigator_clariti_edc_nacc74.csv.
+investigator_clariti_edc_nacc75.csv.
 
 ## Usage
 
@@ -13,7 +13,7 @@ data(clariti_edc)
 
 ## Format
 
-A data frame with 857 rows and 56 variables:
+A data frame with 1245 rows and 56 variables:
 
 - NACCID:
 

@@ -3,7 +3,7 @@
 NACCADRC UDS Imaging MRI dataset. Legacy (Mixed Protocol) MRI data
 processed through DeCarli Lab. Contains data spanning multiple MRI
 sequences (Contains legacy/mixed protocol data). The data is sourced
-from the file(s) investigator_mri_nacc74.csv.
+from the file(s) investigator_mri_nacc75.csv.
 
 ## Usage
 

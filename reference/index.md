@@ -2,6 +2,9 @@
 
 ## Data Dictionary
 
+- [`data_dictionary`](https://atri-biostats.github.io/NACCADRC/reference/data_dictionary.md)
+  : data_dictionary
+
 ## Imaging Datasets
 
 Mixed-Protocol, SCAN, and CLARiTI imaging data.
@@ -87,3 +90,10 @@ Consortium (ADSP-PHC)
   : file_manifest
 - [`package_version`](https://atri-biostats.github.io/NACCADRC/reference/package_version.md)
   : package_version
+
+## Helper functions
+
+- [`nacc_na()`](https://atri-biostats.github.io/NACCADRC/reference/nacc_na.md)
+  : Replace NACC missing-value codes with NA
+- [`parse_codes()`](https://atri-biostats.github.io/NACCADRC/reference/parse_codes.md)
+  : Parse NACC allowable codes

@@ -10,7 +10,7 @@ from the [NACC](https://www.naccdata.org/).
 ## Installation
 
 To install the package locally, run
-`install.packages("path/to/NACCADRC_73.20260410.1.tar.gz", repos = NULL, type = "source")`.
+`install.packages("path/to/NACCADRC_75.20260930.1.tar.gz", repos = NULL, type = "source")`.
 
 ## Usage
 

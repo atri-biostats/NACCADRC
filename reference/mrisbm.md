@@ -4,7 +4,7 @@ NACCADRC SCAN/CLARiTI Imaging MRI dataset. SCAN MRI data processed
 through SCAN MRI Core (Contains SCAN-compliant data on ADRC participants
 funded through any mechanism, including P30 funds, CLARiTI funded, or
 other sources). The data is sourced from the file(s)
-investigator_scan_clariti_mrisbm_nacc74.csv.
+investigator_scan_clariti_mrisbm_nacc75.csv.
 
 ## Usage
 
@@ -14,7 +14,7 @@ data(mrisbm)
 
 ## Format
 
-A data frame with 11981 rows and 439 variables:
+A data frame with 13484 rows and 439 variables:
 
 - PROJECT:
 

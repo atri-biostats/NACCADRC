@@ -2,7 +2,7 @@
 
 NACCADRC UDS FTLD and LBD modules dataset. UDS with NP and Genetics plus
 FTLD and LBD modules. The data is sourced from the file(s)
-investigator_ftldlbd_nacc74.csv.
+investigator_ftldlbd_nacc75.csv.
 
 ## Usage
 
@@ -12,7 +12,7 @@ data(uds_ftldlbd)
 
 ## Format
 
-A data frame with 217598 rows and 2649 variables:
+A data frame with 218535 rows and 2649 variables:
 
 - NACCADC:
 
@@ -42,10 +42,6 @@ A data frame with 217598 rows and 2649 variables:
 - NACCAVST:
 
   Total number of all UDS visits made (1 - 20)
-
-- NACCNVST:
-
-  Number of in-person UDS visits made (1 - 20)
 
 - NACCDAYS:
 
@@ -185,6 +181,10 @@ A data frame with 217598 rows and 2649 variables:
 - BIRTHYR:
 
   Participant's year of birth (1875 to (current year minus 15))
+
+- BIRTHDATE:
+
+  Date of birth (derived from BIRTHYR and BIRTHMO; day set to 15)
 
 - CHLDHDCTRY:
 

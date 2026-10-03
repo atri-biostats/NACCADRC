@@ -86,7 +86,7 @@ To install the package locally, run
 
 ``` r
 
-install.packages("path/to/NACCADRC_73.20260410.1.tar.gz", repos = NULL, type = "source")
+install.packages("path/to/NACCADRC_75.20260930.1.tar.gz", repos = NULL, type = "source")
 ```
 
 ## Package usage and key meta data
@@ -107,7 +107,7 @@ data(data_release_date, data_dictionary, file_manifest)
 The NACCADRC package contains a data stamped date of which the raw data
 was downloaded to build the package. For instance, the current package
 contains data that downloaded from the [NACC](https://www.naccdata.org/)
-as of 2026-07-03.
+as of 2026-09-30.
 
 Code
 
@@ -115,7 +115,7 @@ Code
 
 # Data source downloaded date
 data_release_date
-#> [1] "2026-07-03"
+#> [1] "2026-09-30"
 ```
 
 ### Data dictionary
@@ -184,6 +184,14 @@ head(data_dictionary, 6)
 #> 4:                                                                                                                     If missing then -4    <NA>
 #> 5: For missing:\r\n-If [loc_addl_cons(1)] = '1', then value should be -4\r\n-If [loc_addl_cons(1)] = '0 or null', then value should be -4    <NA>
 #> 6:                                                                      If missing:\r\n- bdconyn=1 then -4\r\n- bdconyn=0 then 88/88/8888    <NA>
+#>    MissingCodes UnknownCodes
+#>          <char>       <char>
+#> 1:         <NA>         <NA>
+#> 2:         <NA>         <NA>
+#> 3:         <NA>         <NA>
+#> 4:         <NA>         <NA>
+#> 5:         <NA>         <NA>
+#> 6:         <NA>         <NA>
 ```
 
 ### File manifest

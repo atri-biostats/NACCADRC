@@ -7,7 +7,7 @@ funded, or other sources), Legacy (Mixed Protocol) PET data processed by
 the Stanford University lab (Director: Dr. Beth Mormino) spanning
 multiple PET sequences (Contains legacy/mixed protocol data). The data
 is sourced from the file(s)
-investigator_scan_clariti_amyloidpetgaain_nacc74.csv,
+investigator_scan_clariti_amyloidpetgaain_nacc75.csv,
 investigator_scan_mp_amyloidpetgaain_nacc74.csv.
 
 ## Usage
@@ -18,7 +18,7 @@ data(amyloidpetgaain)
 
 ## Format
 
-A data frame with 6168 rows and 38 variables:
+A data frame with 6738 rows and 31 variables:
 
 - PROJECT:
 
@@ -68,13 +68,9 @@ A data frame with 6168 rows and 38 variables:
 
 - LONIUID_MULTI:
 
-- TRACER_SUVR_WARNING:
-
 - ACQUISITION_START:
 
 - ACQUISITION_END:
-
-- ACQUISITION_TIME:
 
 - QC_IMAGE:
 
@@ -92,26 +88,7 @@ A data frame with 6168 rows and 38 variables:
 
 - SCAN_PROJECT:
 
-- AMYLOID_STATUS:
-
 - CL_FAIL:
-
-- GAAIN_SUMMARY_SUVR:
-
-  GAAIN summary cortical SUVR normalized by GAAIN whole cerebellum
-
-- GAAIN_WHOLECEREBELLUM_SUVR:
-
-  Reference region - SUVR of GAAIN whole cerebellum normalized by GAAIN
-  whole cerebellum
-
-- GAAIN_COMPOSITE_REF_SUVR:
-
-  Reference region - SUVR of composite ref region (volume-weighted mean
-  of GAAIN whole cerebellum, GAAIN brainstem and NPDKA eroded WM)
-  normalized by GAAIN whole cerebellum
-
-- GAAIN_CEREBELLUM_CORTEX:
 
 - NPDKA_ERODED_SUBCORTICALWM_GAAINWC_SUVR:
 
