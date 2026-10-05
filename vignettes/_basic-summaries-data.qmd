@@ -257,7 +257,12 @@ dd_upset <- dd_cross %>%
   mutate(
     `CLARiTI EDC` = case_when(`CLARiTI EDC` == 'Yes' ~ 1, TRUE ~ 0),
     Diagnosis = case_when(!is.na(NACCUDSD) &  NACCUDSD != "Unknown" ~ 1, TRUE ~ 0),
-    MRI = case_when(!is.na(HIPPOCAMPUS) ~ 1, TRUE ~ 0),
+    # CLARiTI participants: SCAN or CLARiTI MRI only, matching "complete
+    # data" and the completers (legacy mixed protocol MRI does not count)
+    MRI = case_when(
+      Cohort == 'CLARiTI' ~ as.numeric(NACCID %in% scan_mri_id),
+      !is.na(HIPPOCAMPUS) ~ 1,
+      TRUE ~ 0),
     `Amyloid PET` = case_when(!is.na(CENTILOIDS) ~ 1, TRUE ~ 0),
     `Tau PET` = case_when(!is.na(Tau_PET) ~ 1, TRUE ~ 0)) %>%
   select(NACCID, Cohort, `CLARiTI EDC`, Diagnosis:`Tau PET`) %>%
