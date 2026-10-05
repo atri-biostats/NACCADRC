@@ -16,32 +16,19 @@ execute:
 ---
 
 <!--
-This QMD reorganizes the exploratory work in `lctjm-clariti-report.Rmd` into a
-single pipeline that fits, screens, and compares a pre-specified grid of
-latent-time / latent-class joint models, then summarizes the best-fitting
-model. It is written to be run end-to-end by the user; no model fitting is
-executed as part of drafting this file (fitting chunks are `eval: false` and
-read from cached `.RDS` files once you have run them).
-
-Two new Stan files generalize the four hand-written models in the original
-draft (`ltjm.stan`, `lctjm.stan`, `lctjm-noncentered-delta.stan`,
-`lctjm-noncentered-delta-class-specific.stan`) into two files with
-data-driven toggles, so the whole candidate grid below is fit from just two
-compiled Stan programs:
-
-  - `ltjm_general.stan`   -- K = 1 (single latent class / no mixture)
-  - `lctjm_general.stan`  -- K >= 2 (latent-class mixture)
-
-Both accept an `outcome_specific_intercept` flag and a `weight` vector;
-`lctjm_general.stan` additionally accepts a `class_specific_intercept` flag.
-See the Methods section for the full model definitions.
+Latent-class mixed models for five ATN and cognitive outcomes in NACC
+(including CLARiTI), fit with lcmm::mpjlcmm(): one latent process per outcome,
+linked through a single shared latent-class variable. Data are built by
+build-data.R from the shared NACCADRC data preparation
+(vignettes/_basic-summaries-data.qmd). Model fits are cached under fits/ and
+are run by the analyst, not as part of drafting this document.
 -->
 
 ```{r}
 #| label: packages
-# cmdstanr/posterior/bayesplot/loo/tidybayes/modelr were needed for the
-# abandoned Bayesian Stan grid (@sec-limitations) and are no longer used;
-# lcmm and splines are the new fitting/spline-basis dependencies.
+# lcmm (hlme + mpjlcmm) fits the models; splines builds the age basis.
+# cmdstanr/posterior/bayesplot/loo were only needed for the abandoned
+# Bayesian Stan grid (@sec-limitations).
 library(lcmm)
 library(splines)
 library(tidyverse)
@@ -126,266 +113,73 @@ ecdf.func <- function(x, weights = NULL,
 
 An earlier exploratory analysis (`lctjm-clariti-report.Rmd`) fit a sequence
 of hand-tuned latent-time and latent-class joint models to five harmonized
-CLARiTI outcomes (hippocampal atrophy, amyloid PET, tau PET, memory, and
-executive function) and found evidence, via LOOIC, for three latent classes
-with class-specific intercepts. A systematic follow-up built two
-general-purpose Stan programs (`ltjm_general.stan`/`lctjm_general.stan`)
-around a shared participant-specific *latent time shift* $\delta_i$ and
-swept a candidate grid over disease-time scale, fixed-effect intercept
-structure, class-specific-intercept structure, and outcome weighting. That
-line of work is preserved in full in @sec-limitations, including the exact
-convergence diagnostics from each identifiability scheme tried: every
-variant converged at $K \le 2$ but none reached acceptable convergence at
-$K = 3$ (best case: max_rhat 2.947, 4285 parameters above $\hat R = 1.01$),
-even after removing class-specific intercepts entirely and leaving only
-hippocampal atrophy's slope to distinguish classes.
+outcomes (hippocampal atrophy, amyloid PET, tau PET, memory, and executive
+function) and found evidence, via LOOIC, for three latent classes with
+class-specific intercepts. A systematic follow-up built two general-purpose
+Stan programs (`ltjm_general.stan`/`lctjm_general.stan`) around a shared
+participant-specific *latent time shift* $\delta_i$; every variant converged
+at $K \le 2$ but none reached acceptable convergence at $K = 3$
+(@sec-limitations).
 
-This document now takes a different approach: a **latent-class mixed
-model, jointly across the same five outcomes, with no latent time shift**.
-Each participant's own chronological age at each observation is used
-directly as the time variable (no $\delta_i$, no disease-time
-recentering), and each outcome's trajectory over age is modeled with a
-natural cubic spline (3 degrees of freedom) rather than a single linear
-slope, so curvature in disease progression doesn't have to be captured
-through $\delta_i$ and a linear rate the way the joint-model approach
-required. This is fit with `lcmm::multlcmm()` (Proust-Lima et al.), a
-maximum-likelihood latent-class mixed model for multiple longitudinal
-outcomes, rather than with Stan/CmdStanR -- see @sec-methods for why
-`multlcmm` (not `lcmm::Jointlcmm`, which mandatorily couples the
-longitudinal model to a time-to-event submodel this analysis has no use
-for, and not `rstanarm::stan_jm`, which has the same mandatory
-survival-linkage and, more fundamentally, no discrete latent-class
-mechanism at all) is the right tool for this specification. If a $K$
-converges cleanly here, the natural next step -- not yet implemented in
-this document -- is refitting `ltjm_general.stan` (the $K=1$ latent-time
-model, which converges without difficulty) separately within each
-resulting class, now that the latent-class structure would already be
-resolved by `multlcmm` rather than needing to be estimated jointly with
-$\delta_i$ inside the same Stan model.
+A second attempt used `lcmm::multlcmm()`. `multlcmm` treats all outcomes as
+measurements of a *single* latent process: only that shared process can have
+class-specific trajectories, and `contrast()` terms give outcome-specific
+deviations that are common to every class. The intended model -- each
+outcome with its own class-specific trajectory -- was therefore not one
+`multlcmm` can express, and that specification did not converge.
 
-This document lays out the `multlcmm` model specification, provides the
-data-assembly and model-fitting code, sweeps the number of latent classes
-($K = 1, \dots, 4$), compares candidates using BIC and posterior
-classification quality (mean assignment probability, entropy), and
-summarizes the best-fitting model. A **Methods** section (@sec-methods)
-gives the full statistical description suitable for a manuscript.
+This document fits that intended model with `lcmm::mpjlcmm()`: **one latent
+process per outcome, linked through a single shared latent-class
+variable**. Each participant belongs to one class, and that class determines
+the participant's mean trajectory over age on every outcome; each outcome
+has its own class-specific age spline and its own random effects. There is
+no latent time shift: chronological age is the time scale.
 
-Fitting is far cheaper than the abandoned MCMC grid (maximum-likelihood
-optimization rather than sampling; @sec-fitting), but multiple random
-starting values per $K$ are still needed to guard against local optima
-(`lcmm::gridsearch()`), so the fitting chunks below are still marked
-`eval: false`. Run them once in an interactive session, then re-render for
-the comparison and summary sections, which read the cached `.RDS` fit
-objects from the `fits/` directory.
+If this converges, the next step is to reintroduce a participant-specific
+latent time shift, using the `mpjlcmm` fit -- class-specific trajectory
+shapes, random-effect variances, residual variances, and class proportions
+-- to inform the priors and parameterization of the latent-time model
+(@sec-next-steps).
+
+Data come from all NACC participants with at least one of amyloid PET, tau
+PET, or hippocampal volume, plus memory (the "ATN union" cohort), of whom
+CLARiTI participants are a subgroup. The document sweeps the number of
+latent classes ($K = 1, \dots, 4$), compares candidates using BIC and
+classification quality (mean posterior assignment probability, entropy), and
+summarizes the best-fitting model. Model fitting is run interactively (fits
+are cached in `fits/`); re-render afterwards for the comparison and summary
+sections.
 
 # Data {#sec-data}
 
 ## Long-format data assembly
 
-The long-format participant-visit dataset (demographics, hippocampal
-atrophy, amyloid PET, tau PET, and harmonized cognitive composites) is
-built from the source NACC/CLARiTI tables exactly as in the original
-exploratory report. That derivation is reproduced here for provenance but
-is not re-run (`eval: false`); it produced
-`clariti-long-atn-union-data.RDS`, i.e. `claritilongatnuniondata.RDS`, which
-is the entry point for this document.
+The long-format participant-visit data are built by `build-data.R` (run
+from this directory: `Rscript build-data.R`), which reuses the NACCADRC
+package's shared data preparation (`vignettes/_basic-summaries-data.qmd`):
 
-```{r}
-#| label: clariti-long-data-setup
-#| eval: false
-
-library(NACCADRC)
-data(uds_mri, mrisbm, taupetnpdka, amyloidpetgaain, phc_cognition, uds_ftldlbd)
-
-# demographics ----
-
-demog <- uds_ftldlbd %>%
-  mutate(BIRTHDATE = as.IDate(paste(BIRTHYR, BIRTHMO, 15, sep = '-'))) %>%
-  dplyr::arrange(NACCID, NACCVNUM) %>%
-  select(NACCID, Dx = NACCUDSD, BIRTHDATE, RACE, SEX = NACCSEX, EDUC,
-    HISPANIC = NACCHISP, APOE = NACCAPOE) %>%
-  mutate(
-    APOE = case_when(
-      APOE == 1 ~ 'e3e3',
-      APOE == 2 ~ 'e3e4',
-      APOE == 3 ~ 'e3e2',
-      APOE == 4 ~ 'e4e4',
-      APOE == 5 ~ 'e4e2',
-      APOE == 6 ~ 'e2e2',
-      APOE == 9 ~ NA) %>% 
-      factor(levels = c('e2e2', 'e3e2', 'e4e2', 'e3e3', 'e3e4', 'e4e4'))) %>%
-  dplyr::group_by(NACCID) %>%
-  tidyr::fill(.direction = 'downup') %>%
-  filter(!is.na(BIRTHDATE), !is.na(APOE), APOE != 'Missing/ unknown/ not assessed') %>%
-  dplyr::distinct(NACCID, .keep_all = TRUE) %>%
-  mutate(across(where(is.factor), fct_drop)) %>%
-  dplyr::ungroup()
-
-# hippocampal volume ----
-mri_hipp <- demog %>%
-  dplyr::left_join(
-    mrisbm %>%
-      select(PROJECT, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV = CEREBRUMTCV) %>%
-      dplyr::bind_rows(
-        uds_mri %>%
-          select(NACCID, MRIYR, MRIMO, MRIDY, HIPPOCAMPUS = HIPPOVOL, ICV = NACCICV) %>%
-          filter(HIPPOCAMPUS != 88.8888, ICV != 9999.999, !is.na(HIPPOCAMPUS)) %>%
-          mutate(
-            DATE = as.IDate(paste(MRIYR, MRIMO, MRIDY, sep = '-')),
-            PROJECT = 'Mixed protocol')),
-    by = 'NACCID') %>%
-  dplyr::distinct(NACCID, DATE, .keep_all = TRUE) %>%
-  filter(!is.na(HIPPOCAMPUS), !is.na(ICV))
-
-mri_icv_mod <- lm(HIPPOCAMPUS ~ scale(ICV), data = mri_hipp)
-mri_hipp$Hipp_res <- mri_icv_mod$coefficients[['(Intercept)']] + mri_icv_mod$residuals
-mri_hipp$Hipp_atrophy <- scale(-mri_hipp$Hipp_res)[, 1]
-
-# amyloid PET ----
-amy_pet <- demog %>%
-  dplyr::left_join(
-    amyloidpetgaain %>%
-      dplyr::arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
-      dplyr::distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
-      select(NACCID, DATE = SCANDATE, AMYLOID_STATUS, CENTILOIDS,
-        Amyloid_TRACER = TRACER, Amyloid_PROJECT = PROJECT) %>%
-      dplyr::distinct(NACCID, DATE, .keep_all = TRUE),
-    by = 'NACCID')
-
-# tau PET ----
- tau_pet <- demog %>%
-  dplyr::left_join(
-    taupetnpdka %>%
-      dplyr::arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
-      dplyr::distinct(NACCID, SCANDATE, .keep_all = TRUE) %>%
-      select(NACCID, DATE = SCANDATE, Tau_PET = META_TEMPORAL_SUVR,
-        Tau_TRACER = TRACER, Tau_PROJECT = PROJECT) %>%
-      dplyr::distinct(NACCID, DATE, .keep_all = TRUE),
-    by = 'NACCID') %>%
-  filter(!is.na(Tau_PET)) %>%
-  mutate(age = as.numeric(as.Date(DATE) - as.Date(BIRTHDATE)) / 365.25) %>% mutate(SEX = droplevels(factor(SEX)),
-    Dx  = droplevels(factor(Dx)))
-
-tau_PET_fit <- lme(Tau_PET ~ Tau_TRACER + SEX + age + Dx, data = tau_pet,
-  random = ~ 1 | NACCID,
-  weights = varIdent(form = ~ 1 | Tau_TRACER))
-
-set.seed(42)
-
-tau_pet$Tau_PET_jitter <- tau_pet$Tau_PET + rnorm(nrow(tau_pet), 0, 1e-6)
-
-tau_pet$Tau_PET_ComBat <- as.numeric(
-  sva::ComBat(
-    dat = rbind(Tau_PET = tau_pet$Tau_PET,
-                Tau_PET_jitter = tau_pet$Tau_PET_jitter),
-    batch = factor(tau_pet$Tau_TRACER),
-    mod = model.matrix(~ SEX + age + Dx, data = tau_pet)
-  )["Tau_PET", ])
-
-# cognition ----
-cog <- demog %>%
-  left_join(
-    phc_cognition %>%
-      select(NACCID, NACCVNUM, PHC_MEM, PHC_EXF, PHC_LAN) %>%
-      left_join(
-        uds_ftldlbd %>% select(NACCID, NACCVNUM, DATE = VISITDATE),
-        by = c('NACCID', 'NACCVNUM')
-      ),
-    by = 'NACCID'
-  ) %>%
-  pivot_longer(PHC_MEM:PHC_LAN, names_to = 'Outcome', values_to = 'Y') %>%
-  mutate(
-    Y = -Y,
-    outcome = case_when(
-      Outcome == 'PHC_MEM' ~ 4,
-      Outcome == 'PHC_EXF' ~ 5,
-      Outcome == 'PHC_LAN' ~ 6,
-      TRUE ~ NA_real_
-    ),
-    Outcome = case_when(
-      Outcome == 'PHC_MEM' ~ 'Memory',
-      Outcome == 'PHC_EXF' ~ 'Exec Function',
-      Outcome == 'PHC_LAN' ~ 'Language',
-      TRUE ~ Outcome
-    )
-  )
-
-# long data ----
-
-ddl <- mri_hipp %>%
-  select(NACCID, Dx, BIRTHDATE, RACE, SEX, EDUC, HISPANIC, APOE, DATE, Y = Hipp_atrophy) %>%
-  mutate(outcome = 1, Outcome = 'Hipp. atrophy (Z-score)') %>%
-  bind_rows(
-    amy_pet %>%
-      select(NACCID, Dx, BIRTHDATE, RACE, SEX, EDUC, HISPANIC, APOE, DATE, Y = CENTILOIDS) %>%
-      mutate(outcome = 2, Outcome = 'Amyloid PET (CL)')) %>%
-  bind_rows(
-    tau_pet %>%
-      select(NACCID, Dx, BIRTHDATE, RACE, SEX, EDUC, HISPANIC, APOE, DATE, Y = Tau_PET_ComBat) %>%
-      mutate(outcome = 3, Outcome = 'Tau PET (SUVR)')) %>%
-  bind_rows(
-    cog %>% select(NACCID, Dx, BIRTHDATE, RACE, SEX, EDUC, HISPANIC, APOE, DATE, 
-      Y, outcome, Outcome)) %>%
-  filter(!is.na(Y), !is.na(DATE)) %>%
-  group_by(NACCID) %>%
-  mutate(
-    age = as.numeric(DATE - BIRTHDATE) / 365.25,
-    age0 = min(age, na.rm = TRUE),
-    years = age - age0) %>%
-  ungroup()
-
-complete_covariates <- ddl %>%
-  arrange(NACCID, years) %>%
-  select(NACCID, age0, SEX, APOE, EDUC) %>%
-  filter(SEX %in% c('Female', 'Male')) %>%
-  distinct() %>%
-  na.omit()
-
-ddl <- ddl %>%
-  filter(NACCID %in% complete_covariates$NACCID) %>%
-  mutate(
-    id = factor(NACCID) %>% as.numeric(),
-    across(where(is.factor), fct_drop)
-  ) %>%
-  arrange(id, outcome) %>%
-  group_by(id) %>%
-  mutate(years_c = years ) %>% #consider time centering with years_c = years - mean(years)
-  ungroup()
-
-## Save long data ----
-
-saveRDS(ddl, 'clariti-long-data.RDS')
-
-## Save long atn complete data ----
-
-id.a <- filter(ddl, Outcome == 'Amyloid PET (CL)') %>% pull(NACCID)
-id.t <- filter(ddl, Outcome == 'Tau PET (SUVR)') %>% pull(NACCID)
-id.n <- filter(ddl, Outcome == 'Hipp. atrophy (Z-score)') %>% pull(NACCID)
-id.c <- filter(ddl, Outcome == 'Memory') %>% pull(NACCID)
-
-id.int <- intersect(id.a, id.t) %>% intersect(id.n) %>% intersect(id.c) %>% unique()
-
-ddl_atn_complete <- ddl %>%
-  filter(NACCID %in% id.int) %>%
-  mutate(id = factor(NACCID) %>% as.numeric())
-
-saveRDS(ddl_atn_complete, 'clariti-long-atn-complete-data.RDS')
-
-## Save long atn union data ----
-
-id.union <- c(id.a, id.t, id.n) %>% unique() %>% intersect(id.c)
-
-ddl_atn_union <- ddl %>%
-  filter(NACCID %in% id.union) %>%
-  mutate(id = factor(NACCID) %>% as.numeric())
-
-saveRDS(ddl_atn_union, 'clariti-long-atn-union-data.RDS')
-```
+- **Hippocampal atrophy:** hippocampal volume from SCAN/CLARiTI MRI
+  (`HIPPOCAMPUS`) and legacy mixed protocol MRI (`HIPPOVOL`), with
+  implausible volumes (< 1.5 cm$^3$) removed; adjusted for intracranial
+  volume (`ESTIMATEDTOTALINTRACRANIALVOL`/1000 or `NACCICV`, cm$^3$),
+  Z-scored, and sign flipped so higher values mean more atrophy.
+- **Amyloid PET:** centiloids, latest processing per scan, SCAN, CLARiTI, and
+  legacy mixed protocol.
+- **Tau PET:** meta-temporal SUVR harmonized across tracers by ComBat.
+- **Cognition:** PHC harmonized memory, executive function, and language
+  composites dated by UDS visit, sign flipped so higher values are worse.
+- **Covariates:** sex, education, APOE genotype, and first UDS diagnosis;
+  participants missing any covariate are excluded.
 
 ```{r}
 #| label: load-data
+data(clariti_edc, package = "NACCADRC")
+clariti_ids <- unique(clariti_edc$NACCID)
+
 ddl_atn_union <- readRDS('clariti-long-atn-union-data.RDS')
-ddl <- ddl_atn_union
+ddl <- ddl_atn_union %>%
+  # e3e3 (the most common genotype) as the reference for class membership
+  mutate(APOE = forcats::fct_relevel(APOE, "e3e3"))
 ```
 
 ## Standardizing outcomes to a common severity scale
@@ -404,7 +198,12 @@ outcome coding, are unchanged from the original draft.
 #| label: clariti-q-z-scores
 ddl_ecdf <- ddl %>%
   mutate(
-    Dx_ecdf = forcats::fct_collapse(Dx, MCI = c("MCI", "Impaired-not-MCI"))
+    # behavioral impairment only (UDS v4) has no cognitive impairment, so it
+    # is weighted with normal cognition rather than as its own (tiny) group
+    Dx_ecdf = forcats::fct_collapse(Dx,
+      `Normal cognition` = intersect(c("Normal cognition",
+        "Behavioral impairment only"), levels(Dx)),
+      MCI = c("MCI", "Impaired-not-MCI"))
   )
 
 ecdf_maps_collapsed <- ddl_ecdf %>%
@@ -431,18 +230,7 @@ ddl_qz <- ddl_ecdf %>%
 
 ## Outcome set and coding
 
-As in the original draft, Language is dropped for data-completeness
-reasons, leaving $J = 5$ outcomes. Unlike the abandoned Stan approach
-(@sec-limitations), no outcome needs to be designated an "anchor": there is
-no hard identifying constraint to place anywhere. `multlcmm` handles
-class-label ambiguity differently from the Bayesian MCMC setting -- there
-is no cross-chain label-switching to prevent, since each `multlcmm` fit is
-a single maximum-likelihood optimization, not a collection of chains that
-have to agree on which class is "class 1." The corresponding risk in the
-ML setting is convergence to a local rather than global optimum, which
-`lcmm::gridsearch()` addresses by trying many random starting values and
-keeping the best log-likelihood (@sec-fitting) rather than by constraining
-any one parameter's sign or ordering.
+As in the original draft, Language is dropped, leaving $J = 5$ outcomes.
 
 ```{r}
 #| label: outcome-coding
@@ -472,52 +260,25 @@ outcome_map <- ddl_qz %>% distinct(outcome, Outcome) %>% arrange(outcome)
 
 # Candidate model space {#sec-grid}
 
-## Comparison axis
-
-| Axis | Levels | `multlcmm` mechanism |
-|---|---|---|
-| Number of latent classes ($K$) | 1, 2, 3, 4 | `ng` argument |
-
-Age-at-observation is used directly as the time variable for every $K$
-(no disease-time-scale axis: there is no $\delta_i$ left to recenter
-against, so the age-recentering identifiability concern that drove the
-Stan approach's "Disease-time scale" axis, @sec-limitations, doesn't arise
-here). The trajectory shape over age is a natural cubic spline with 3
-degrees of freedom, fixed rather than swept (@sec-methods) -- 2 df was
-also considered; 3 was chosen for enough flexibility to capture
-non-monotone or accelerating decline without adding enough parameters per
-class to reintroduce the kind of convergence fragility the Stan grid ran
-into. Every outcome gets its own intercept and its own spline coefficients
-(via `contrast()`, @sec-methods) rather than sharing one common-intercept
-vs. outcome-specific-intercept toggle, so that axis from the Stan grid is
-also gone -- it's not a choice being fixed one way, it's a modeling
-question that no longer has the same two discrete answers. There is
-likewise no outcome-weighting axis: `multlcmm` has no case-weighting
-argument, and unlike the Stan grid's pseudo-likelihood weighting, there's
-no straightforward way to add one without changing the likelihood in ways
-that would need to be implemented and validated from scratch. Only $K$
-remains a free axis for comparison below.
-
-## Specification grid
+The number of latent classes, $K = 1, \dots, 4$, is the only axis compared.
+The per-outcome sub-model structure (@sec-methods-model) is fixed in advance
+from how much longitudinal data each outcome has (@tbl-outcome-coverage).
 
 ```{r}
 #| label: spec-grid
-# Only K is being compared; see the "Comparison axis" note above for why
-# every axis from the abandoned Stan grid (disease-time scale, intercept
-# structure, class-specific intercepts, weighting) either no longer
-# applies or no longer has a discrete on/off form under multlcmm.
-spec_grid <- tibble::tibble(K = 1:4) %>%
-  mutate(model_id = paste0("multlcmm_K", K))
-
-nrow(spec_grid)
+# Search settings per K. K = 2 and 3 were fit with one 50-start search;
+# K = 4 uses two independent 15-start searches whose agreement is checked
+# (@sec-stage1). K = 1 has a single solution and needs no search.
+spec_grid <- tibble::tibble(
+  K        = 1:4,
+  n_starts = c(NA, 50, 50, 15),
+  n_runs   = c(1, 1, 1, 2)) %>%
+  mutate(model_id = paste0("mpjlcmm_K", K))
 ```
 
 ```{r}
 #| label: tab-spec-grid
-kable(
-  spec_grid,
-  caption = "Candidate specification grid: number of latent classes only."
-)
+kable(spec_grid, caption = "Candidate specification grid: number of latent classes.")
 ```
 
 # Statistical methods {#sec-methods}
@@ -525,145 +286,71 @@ kable(
 ## Model {#sec-methods-model}
 
 For participant $i$, outcome $j = 1, \dots, J$, and observation $v$ at
-chronological age $a_{iv}$, `multlcmm` models the (already
-severity-standardized, @sec-data) outcome as
+age $a_{ijv}$, outcome $j$'s severity score (@sec-data) follows its own
+linear mixed model,
 
 $$
-Y_{ijv} = \beta_{0j} + f_{jk(i)}(a_{iv}) + \mathbf{x}_i^{\mathsf T}\boldsymbol\beta_j
-  + u_{i} + v_i\, a_{iv} + w_{ij} + \varepsilon_{ijv}, \qquad
+Z_{ijv} = f_{jk(i)}(a_{ijv}) + \mathbf{x}_i^{\mathsf T}\boldsymbol\beta_j
+  + b_{0ij} + b_{1ij}\, a_{ijv} + \varepsilon_{ijv}, \qquad
   \varepsilon_{ijv} \sim \operatorname{Normal}(0, \sigma_j^2),
 $$
 
-where $k(i) \in \{1, \dots, K\}$ is participant $i$'s (unobserved) latent
-class, $\beta_{0j}$ is outcome $j$'s fixed intercept, $\mathbf x_i$ contains
-sex and education, and $f_{jk}(a) = \sum_{m=1}^{3} \gamma_{jkm}\, N_m(a)$ is
-a natural-cubic-spline (3 df, basis functions $N_m$) trajectory over age,
-specific to *both* outcome $j$ and class $k$. Two random effects are
-shared across all $J$ outcomes for a given participant -- a random
-intercept $u_i$ and a random linear slope on age $v_i$, both
-$\operatorname{Normal}(0, \cdot)$ with a freely estimated covariance,
-representing the "common latent process" `multlcmm` is built around -- and
-$w_{ij} \sim \operatorname{Normal}(0, \cdot)$ is an *outcome-specific*
-random intercept (`randomY = TRUE`), letting participant $i$ run
-persistently high or low on outcome $j$ specifically, beyond whatever the
-shared process and the class-specific spline already explain.
+where $k(i) \in \{1, \dots, K\}$ is participant $i$'s latent class,
+**shared across all $J$ outcomes**; $f_{jk}$ is a class- and
+outcome-specific trajectory over age (class-specific intercept plus a
+natural cubic spline); $\mathbf x_i$ contains sex and education with
+outcome-specific effects; and $(b_{0ij}, b_{1ij})$ are outcome-specific
+random effects. The latent class is the only link between outcomes: given
+the class, the $J$ outcome processes are independent. This is
+`lcmm::mpjlcmm()` with one `hlme()` sub-model per outcome.
 
-**Why outcome-specific splines, not one shared latent trajectory.**
-`multlcmm`'s default and most common use (e.g. modeling several cognitive
-test scores as noisy indicators of one underlying cognitive ability) treats
-the outcomes as different-scaled measurements of a *single* latent
-trajectory, with only their loadings/link functions allowed to differ. That
-default would be a poor fit for this application: amyloid, tau, hippocampal
-atrophy, and cognition are understood to become abnormal at different,
-overlapping stages of disease (the premise behind biomarker-staging /
-event-based-disease-progression models), not as proportional readouts of
-one common severity dimension. Wrapping the spline term in `mixture()`
-*and* `contrast()` (rather than leaving it in `fixed`/`mixture` alone) gives
-every outcome $j$ its own class-specific spline coefficients
-$\gamma_{jkm}$, so each outcome's trajectory shape -- including whether and
-when it departs from flat -- is estimated separately, and classes are free
-to differ from each other differently on different outcomes. This is the
-`multlcmm`-native way of reproducing what the abandoned Stan model did by
-giving every outcome its own `beta_s[j,k]` slope (@sec-limitations); the
-shared random intercept/slope ($u_i, v_i$) is what still ties the $J$
-outcomes together for a given participant, rather than $\delta_i$.
+Each outcome's sub-model is matched to its data (@tbl-outcome-coverage):
+amyloid and tau PET are mostly single scans (about 85% of participants), so
+they get a random intercept only and a 2-df spline; hippocampal atrophy,
+memory, and executive function have repeated measures for many participants
+and get a random intercept and slope on age and a 3-df spline.
 
 ## Class membership model
 
-Class membership is modeled with a multinomial logistic regression on APOE
-genotype (`classmb = ~ APOE`), the same predictor used throughout the
-abandoned Stan grid, with class 1 as the reference category in `lcmm`'s
-parameterization (confirm against a given fit's `summary()`/`postprob()`
-output, since which raw class index ends up "class 1" depends on
-`gridsearch()`'s best run, not on any constraint imposed here).
+Class membership follows a multinomial logistic regression on APOE genotype
+(`classmb = ~ APOE`, reference genotype e3e3), with class 1 as the reference
+class.
 
 ## Local optima and multiple starting values {#sec-methods-optima}
 
-A maximum-likelihood latent-class mixture does not have the Stan
-grid's specific failure mode (chains disagreeing about where the posterior
-mass is; @sec-limitations) because there's no posterior and no chains --
-each fit is one optimization run. It has a different, related risk
-instead: the likelihood surface for a $K$-class mixture is generally
-multimodal, so a single optimization run from one starting point can
-converge to a local rather than global maximum, and different starting
-points can converge to genuinely different class solutions (analogous in
-spirit to the Stan grid's mode-trapping, but a property of the likelihood
-surface itself rather than of chain initialization). `lcmm::gridsearch()`
-addresses this directly: it fits the model from many random perturbations
-of an initial (typically $K=1$ or $K-1$) solution and keeps the run with
-the highest converged log-likelihood, playing the same role dispersed
-chain inits played for the Stan grid, but resolved by taking the best
-optimum found rather than by checking whether independent runs agree.
-@sec-fitting uses it for every $K \ge 2$ fit below.
+The likelihood of a $K$-class mixture is multimodal, so a single
+optimization can stop at a local maximum. For each $K \ge 2$,
+`lcmm::gridsearch()` runs a short optimization from many random
+perturbations of the $K = 1$ joint fit and fully optimizes the best start.
 
 ## Estimation
 
-`multlcmm` estimates parameters by maximum likelihood via a
-Marquardt-Levenberg algorithm (a modified Newton-Raphson with numerical
-first and second derivatives), not MCMC -- there are no priors to specify
-and no posterior draws to summarize; parameter uncertainty is instead
-reported via the asymptotic (Wald) standard errors from the converged
-Hessian, and `predictY(..., draws = TRUE)` approximates confidence bands
-for fitted trajectories via Monte Carlo draws from that same asymptotic
-parameter distribution. Convergence is indicated by `multlcmm`'s own
-convergence code (1 = converged) together with a positive-definite
-Hessian; @sec-fitting screens on both, and additionally refits every
-$K \ge 2$ specification from `gridsearch()`'s multiple starts
-(@sec-methods-optima) rather than accepting a single run's convergence
-code alone.
+Parameters are estimated by maximum likelihood with a
+Marquardt-Levenberg algorithm. Uncertainty is reported via Wald standard
+errors from the Hessian; `predictY(..., draws = TRUE)` gives confidence
+bands for fitted trajectories by Monte Carlo draws from the asymptotic
+distribution of the estimates. A fit is accepted only with convergence code
+1 (converged with a positive-definite Hessian).
 
 ## Model comparison
 
-Candidate $K$ are compared using BIC ($-2\times\text{log-likelihood} +
-p\log N$, $p$ = number of parameters, $N$ = number of participants; lower
-is better) rather than WAIC/LOOIC, since there is no posterior to compute
-either from. BIC is reported alongside two classification-quality
-diagnostics that a fit statistic alone can miss: mean posterior
-class-assignment probability (averaged over participants, and within each
-class) and the normalized entropy of the posterior class-membership
-probabilities (`lcmm::postprob()`), both of which indicate how cleanly
-participants are actually being separated into classes, as opposed to how
-well the model fits the data overall -- a low-BIC model whose class
-probabilities are all close to $1/K$ for many participants has found $K$
-components that improve fit without meaningfully classifying anyone, which
-BIC alone would not flag.
+Candidate $K$ are compared by BIC ($-2\times\text{log-likelihood} + p\log N$,
+$p$ parameters, $N$ participants; lower is better), alongside mean posterior
+class-assignment probability and normalized entropy of the posterior
+class-membership probabilities. A lower BIC with posterior probabilities
+near $1/K$ for many participants improves fit without separating
+participants into classes.
 
 # Model fitting {#sec-fitting}
-
-## Compute and storage strategy {#sec-fitting-strategy}
-
-Maximum-likelihood optimization is far cheaper than the abandoned MCMC
-grid -- a single `multlcmm` run takes seconds to low minutes rather than
-the tens of minutes to hours a 4-chain CmdStanR fit needed -- but
-`gridsearch()`'s whole point is to run that optimization from many (here,
-50) random starts per $K \ge 2$ candidate, so total compute is still
-non-trivial and worth caching. `fit_or_load_multlcmm()` below caches by
-`model_id` to a single `.RDS` file per $K$ under `fits/`; unlike the
-two-tier full-vs-scorecard split the abandoned Stan grid needed
-(@sec-limitations), a converged `multlcmm`/`gridsearch` object has no
-posterior draws array to strip out -- it's already just parameter
-estimates, the Hessian, and fitted values -- so one cache file per model is
-enough.
 
 ## Helper functions
 
 ```{r}
-#| label: helper-multlcmm-data
-# Reshape ddl_qz from long-by-outcome (one row per (id, outcome,
-# observation), as the abandoned Stan grid needed) into the wide format
-# multlcmm expects: one row per (id, observation time), with each
-# outcome's severity Z-score in its own column (NA where that outcome
-# wasn't measured at that particular age). Outcomes measured at visits
-# that don't line up exactly in age across outcomes (plausible here, since
-# PET imaging and cognitive testing aren't always done on the same day)
-# simply produce more, sparser rows rather than failing -- multlcmm
-# handles a fully unbalanced multi-outcome panel like this natively; there
-# is no requirement that every outcome be measured at every row's age.
-# values_fn guards against two observations of the same outcome landing on
-# the exact same age for the same id (a rounding collision); this should
-# be rare, but check `nrow(wide) == nrow(distinct(wide))` after building it
-# for a given dataset to confirm it isn't silently averaging anything real.
-build_multlcmm_data <- function(ddl_qz) {
+#| label: helper-wide-data
+# One row per (id, age); each outcome's severity Z-score in its own column
+# (NA where not measured at that age). Each hlme() sub-model uses only the
+# rows where its outcome is observed.
+build_wide_data <- function(ddl_qz) {
   ddl_qz %>%
     transmute(id, outcome, age, SEX, APOE, EDUC, Z,
       outcome_lab = paste0("Z", outcome)) %>%
@@ -676,153 +363,219 @@ build_multlcmm_data <- function(ddl_qz) {
     arrange(id, age)
 }
 
-wide_qz <- build_multlcmm_data(ddl_qz)
+wide_qz <- build_wide_data(ddl_qz)
 stopifnot(nrow(wide_qz) == nrow(distinct(wide_qz, id, age)))
 
-# age_c: age centered at the sample mean, used everywhere in the fitting
-# formulas below IN PLACE OF raw age. This is purely a numerical-
-# conditioning fix, not a re-introduction of the abandoned Stan model's
-# disease-time recentering (that was about relocating a hard-zero
-# identifiability constraint; there is no such constraint here). A random
-# intercept + random slope on raw chronological age (typically ~60-90 in
-# this cohort) strongly correlates the two random effects and is a classic
-# cause of Marquardt-Levenberg convergence failure; centering removes that
-# without changing the model. age_center is kept so any newdata passed to
-# predictY() later can be centered the same way, and so age_c can always
-# be converted back to real age (age = age_c + age_center) for plotting.
+# age_c: age centered at the sample mean, for optimizer conditioning
 age_center <- mean(wide_qz$age, na.rm = TRUE)
 wide_qz <- wide_qz %>% mutate(age_c = age - age_center)
+
+# Natural spline bases computed once and stored as columns. Calling ns()
+# inside a model formula recomputes the knots on any newdata passed to
+# predictY(), giving wrong predicted trajectories; these basis objects are
+# reused for prediction instead (add_age_basis()).
+age_basis <- list(
+  ns2 = splines::ns(wide_qz$age_c, df = 2),
+  ns3 = splines::ns(wide_qz$age_c, df = 3))
+
+add_age_basis <- function(data) {
+  for (nm in names(age_basis)) {
+    b <- predict(age_basis[[nm]], data$age_c)
+    # plain numeric matrix: the "ns"/"basis" class would otherwise carry into
+    # each column, which hlme() cannot handle
+    b <- matrix(as.numeric(b), nrow = nrow(b),
+      dimnames = list(NULL, paste0(nm, "_", seq_len(ncol(b)))))
+    data <- bind_cols(data %>% select(-any_of(colnames(b))), as_tibble(b))
+  }
+  data
+}
+wide_qz <- add_age_basis(wide_qz)
 ```
 
 ```{r}
-#| label: outcome-coverage-summary
-#| tbl-cap: "Per-outcome data coverage: how much information each outcome's contrast()-ed spline actually has to work with."
-# Added while diagnosing multlcmm non-convergence (@sec-fitting): giving
-# every outcome its own fully contrast()-ed age spline (@sec-methods-model)
-# assumes there's enough data, spread widely enough over age, within EACH
-# outcome to estimate that outcome's own 3 spline coefficients (x K classes
-# for the mixture term). If one or two outcomes (plausibly amyloid/tau PET,
-# which are typically collected far less often than cognitive testing or
-# structural MRI) are measured on a small fraction of subjects or over a
-# narrow age range, their contrasted spline coefficients can be weakly
-# identified -- a likely driver of the Hessian/non-convergence problems,
-# distinct from (though related to) missingness itself. Check this BEFORE
-# assuming the fix is architectural (dropping contrast() for sparse
-# outcomes, reducing df, or outcome-specific exclusion) rather than just
-# optimizer tuning.
+#| label: tbl-outcome-coverage
+#| tbl-cap: "Per-outcome data: participants, observations, and how many participants have repeated measures."
 outcome_coverage <- ddl_qz %>%
   filter(!is.na(Z)) %>%
+  count(outcome, Outcome, id, name = "n_obs_id") %>%
   group_by(outcome, Outcome) %>%
   summarise(
-    n_subjects = n_distinct(id),
-    n_obs = n(),
-    age_min = min(age, na.rm = TRUE),
-    age_max = max(age, na.rm = TRUE),
-    .groups = "drop"
-  ) %>%
-  mutate(pct_of_subjects = round(100 * n_subjects / n_distinct(ddl_qz$id), 1)) %>%
-  arrange(desc(n_subjects))
+    n_subjects = n(),
+    n_obs = sum(n_obs_id),
+    pct_2plus = round(100 * mean(n_obs_id >= 2), 1),
+    pct_3plus = round(100 * mean(n_obs_id >= 3), 1),
+    .groups = "drop") %>%
+  left_join(
+    ddl_qz %>% filter(!is.na(Z)) %>% group_by(outcome) %>%
+      summarise(age_min = min(age), age_max = max(age)),
+    by = "outcome")
 
 kable(outcome_coverage, digits = 1)
 ```
 
 ```{r}
-#| label: helper-multlcmm-fit
-# multlcmm's own formula interface, not a hand-built stan_data list, is
-# now the API surface that matters -- see @sec-methods-model for why the
-# age-trajectory spline is wrapped in BOTH mixture() (class-varying) and
-# contrast() (outcome-varying), rather than left as a term shared across
-# classes and/or outcomes the way multlcmm's more common single-latent-
-# process use case would leave it. Double-check this expands to the
-# intended per-outcome, per-class spline coefficients via
-# summary(fit)/fit$Xnames before trusting it on a first run -- this is a
-# less common way to use multlcmm than the package's own vignette
-# examples, and it hasn't been run here (the standing constraint on this
-# whole project is that Claude never fits these models itself).
-outcome_names_z <- paste0("Z", sort(unique(ddl_qz$outcome)))
-fixed_lhs <- paste(outcome_names_z, collapse = " + ")
-# age_c (age centered at the sample mean; see helper-multlcmm-data), not
-# raw age, is what actually enters every formula below -- purely for
-# optimizer conditioning, not a change to the model.
-fixed_formula <- as.formula(paste(
-  fixed_lhs, "~ contrast(splines::ns(age_c, df = 3)) + SEX + EDUC"
-))
-mixture_formula <- ~ contrast(splines::ns(age_c, df = 3))
-classmb_formula <- ~ APOE
+#| label: helper-mpjlcmm-fit
+# One hlme() sub-model per outcome (@sec-methods-model). spline: which age
+# basis; random: random-effects formula.
+outcome_specs <- tibble::tribble(
+  ~outcome, ~spline, ~random,
+  1,        "ns3",   "~ 1 + age_c",   # hippocampal atrophy
+  2,        "ns2",   "~ 1",           # amyloid PET: mostly single scans
+  3,        "ns2",   "~ 1",           # tau PET: mostly single scans
+  4,        "ns3",   "~ 1 + age_c",   # memory
+  5,        "ns3",   "~ 1 + age_c"    # executive function
+) %>%
+  mutate(
+    y = paste0("Z", outcome),
+    basis_terms = map_chr(spline, ~ paste(
+      grep(paste0("^", .x, "_"), names(wide_qz), value = TRUE), collapse = " + ")),
+    fixed = paste(y, "~", basis_terms, "+ SEX + EDUC"),
+    mixture = paste("~", basis_terms))
 
-# Fails loudly and immediately on a non-converged fit rather than caching
-# it -- letting a bad K = 1 fit sit in the cache silently was exactly what
-# turned into a confusing gridsearch() error two steps downstream at K = 2
-# ("The model minit did not converge"), which is gridsearch() refusing to
-# perturb a minit that never converged in the first place. conv codes (see
-# ?multlcmm): 1 = converged; 2 = max iterations reached without meeting the
-# convergence criteria; 3 = a convergence criterion was met but the
-# Hessian isn't positive definite; 4/5 = other numerical problems.
-check_converged <- function(fit, model_id) {
+# hlme() sub-model for one outcome. K = 1: fitted. K >= 2: an unfitted
+# template (maxiter = 0) started from the K = 1 fit (m1_outcome), as
+# mpjlcmm() expects. The formulas and m1_outcome are spliced into the call
+# with bquote() because mpjlcmm() and update() re-evaluate the sub-models'
+# stored calls in the global environment, and hlme() reads B = random(...)
+# unevaluated (so do.call() cannot be used).
+outcome_model <- function(spec, K, m1_outcome = NULL) {
+  fixed <- as.formula(spec$fixed)
+  mixture <- as.formula(spec$mixture)
+  random_f <- as.formula(spec$random)
+  if (K == 1) {
+    fit <- eval(bquote(hlme(fixed = .(fixed), random = .(random_f),
+      subject = "id", data = wide_qz, maxiter = 500, verbose = FALSE)))
+    check_converged(fit, paste0(spec$y, "_K1"))
+  } else {
+    eval(bquote(hlme(fixed = .(fixed), mixture = .(mixture),
+      random = .(random_f), subject = "id", ng = .(K), data = wide_qz,
+      B = random(.(m1_outcome)), maxiter = 0, verbose = FALSE)))
+  }
+}
+
+# K = 1 sub-models (fitted once and cached) and K-class templates
+load_m1 <- function() {
+  map(seq_len(nrow(outcome_specs)), function(r) {
+    spec <- outcome_specs[r, ]
+    fit_or_load(file.path("fits", paste0("hlme_", spec$y, "_K1.RDS")),
+      outcome_model(spec, K = 1))
+  })
+}
+# Each K-class template is assigned to its own global name (template_K2_Z1,
+# ...): with cl, gridsearch() exports the mpjlcmm() sub-models to the worker
+# processes by name, so longitudinal must be list(<names>), not one list
+# object. Returns the names.
+make_templates <- function(K, m1) {
+  nm <- paste0("template_K", K, "_", outcome_specs$y)
+  for (j in seq_along(nm)) {
+    assign(nm[j],
+      outcome_model(outcome_specs[j, ], K = K, m1_outcome = m1[[j]]),
+      envir = globalenv())
+  }
+  nm
+}
+
+# conv codes (see ?hlme): 1 = converged; 2 = maximum iterations reached;
+# 3 = converged but Hessian not positive definite; 4/5 = numerical problems.
+# A non-converged fit is saved to unconverged_path (if given) so long runs
+# are not lost: it can be inspected, or used as a starting point (B =).
+check_converged <- function(fit, model_id, unconverged_path = NULL) {
   if (fit$conv != 1) {
+    if (!is.null(unconverged_path)) saveRDS(fit, unconverged_path)
     stop(sprintf(paste(
-      "%s did not converge (conv = %d; see ?multlcmm for what this code",
-      "means). Not caching this result. Things worth trying, roughly in",
-      "order of how often they help: (1) confirm age_c (centered), not raw",
-      "age, is what's actually in the formula -- an uncentered time",
-      "variable in a random-slope model is a common cause of exactly this;",
-      "(2) raise maxiter further; (3) temporarily simplify the",
-      "random-effects structure (random = ~1 only, or randomY = FALSE) to",
-      "confirm a simpler model converges, then reintroduce complexity one",
-      "piece at a time to isolate which piece is causing it -- the same",
-      "strategy used throughout the abandoned Stan grid's identifiability",
-      "search (@sec-limitations)."
-    ), model_id, fit$conv))
+      "%s did not converge (conv = %d).%s",
+      "Try more iterations, a simpler random-effects structure for the",
+      "sparsest outcomes, or fewer spline df."), model_id, fit$conv,
+      if (is.null(unconverged_path)) "" else
+        paste0(" Saved for inspection to ", unconverged_path, ".")))
   }
   fit
 }
 
-fit_or_load_multlcmm <- function(model_id, K, data, n_starts = 50, seed = 20260101) {
-  path <- file.path("fits", paste0(model_id, ".RDS"))
+fit_or_load <- function(path, expr) {
   if (file.exists(path)) return(readRDS(path))
-
-  set.seed(seed)
-
-  if (K == 1) {
-    fit <- multlcmm(
-      fixed = fixed_formula,
-      random = ~ 1 + age_c,
-      randomY = TRUE,
-      subject = "id",
-      link = rep("linear", J),
-      maxiter = 150,
-      data = data
-    )
-    check_converged(fit, model_id)
-  } else {
-    m1_path <- file.path("fits", "multlcmm_K1.RDS")
-    stopifnot(
-      "Fit and cache K = 1 first; K >= 2 gridsearch() starts are dispersed
-      perturbations of it (minit), not a fresh random start." =
-        file.exists(m1_path)
-    )
-    m1 <- readRDS(m1_path)
-
-    fit <- gridsearch(
-      rep = n_starts, maxiter = 30, minit = m1,
-      multlcmm(
-        fixed = fixed_formula,
-        mixture = mixture_formula,
-        classmb = classmb_formula,
-        random = ~ 1 + age_c,
-        randomY = TRUE,
-        ng = K,
-        subject = "id",
-        link = rep("linear", J),
-        data = data
-      )
-    )
-    check_converged(fit, model_id)
-  }
-
-  dir.create("fits", showWarnings = FALSE)
+  fit <- expr
   saveRDS(fit, path)
   fit
+}
+
+# One gridsearch() for K >= 2: random starts perturbing the K = 1 joint
+# fit (j1), short searches on n_cores workers, then a full optimization of
+# the best start.
+run_gridsearch <- function(K, n_starts, n_cores, m1, j1) {
+  longitudinal <- as.call(c(as.name("list"),
+    lapply(make_templates(K, m1), as.name)))
+  eval(bquote(gridsearch(rep = .(n_starts), maxiter = 30, minit = j1,
+    cl = .(n_cores),
+    mpjlcmm(longitudinal = .(longitudinal), subject = "id", ng = .(K),
+      # verbose = TRUE shows the final estimation's iterations; the search
+      # runs on the workers print nowhere (or to the console if serial)
+      classmb = ~ APOE, data = wide_qz, maxiter = 500, verbose = TRUE))))
+}
+
+# n_runs > 1: repeat the search n_runs times (each cached as
+# <model_id>_run<r>.RDS) and keep the run with the highest log-likelihood.
+# Agreement between runs is checked in run_agreement(). With parallel
+# workers, each run draws different random starts regardless of seed.
+# n_cores: worker processes for gridsearch(); NULL runs serially.
+fit_or_load_mpjlcmm <- function(model_id, K, n_starts = 50, n_runs = 1,
+  seed = 20260101, n_cores = max(1, parallel::detectCores() - 1)) {
+  path <- file.path("fits", paste0(model_id, ".RDS"))
+  if (file.exists(path)) return(readRDS(path))
+  set.seed(seed)
+
+  m1 <- load_m1()
+
+  if (K == 1) {
+    fit <- mpjlcmm(longitudinal = m1, subject = "id", ng = 1,
+      data = wide_qz, verbose = FALSE)
+    check_converged(fit, model_id)
+  } else {
+    j1_path <- file.path("fits", "mpjlcmm_K1.RDS")
+    stopifnot("Fit and cache K = 1 first; K >= 2 starts from it." =
+      file.exists(j1_path))
+    j1 <- readRDS(j1_path)
+
+    run_paths <- if (n_runs == 1) path else
+      file.path("fits", paste0(model_id, "_run", seq_len(n_runs), ".RDS"))
+    runs <- purrr::map(seq_along(run_paths), function(r) {
+      if (file.exists(run_paths[r])) return(readRDS(run_paths[r]))
+      set.seed(seed + r)
+      fit_r <- run_gridsearch(K, n_starts, n_cores, m1, j1)
+      check_converged(fit_r, basename(run_paths[r]),
+        unconverged_path = sub("\\.RDS$", "_unconverged.RDS", run_paths[r]))
+      saveRDS(fit_r, run_paths[r])
+      fit_r
+    })
+    fit <- runs[[which.max(purrr::map_dbl(runs, "loglik"))]]
+  }
+  saveRDS(fit, path)
+  fit
+}
+
+# Agreement between repeated searches for one K: log-likelihood, class
+# proportions (sorted, since class labels are arbitrary), and the share of
+# participants assigned to the same class after the best relabeling.
+run_agreement <- function(model_id, K, n_runs) {
+  run_paths <- file.path("fits", paste0(model_id, "_run", seq_len(n_runs), ".RDS"))
+  if (!all(file.exists(run_paths))) return(NULL)
+  runs <- purrr::map(run_paths, readRDS)
+  class_of <- purrr::map(runs, ~ setNames(.x$pprob$class, .x$pprob[[1]]))
+  ids <- Reduce(intersect, purrr::map(class_of, names))
+  perms <- function(v) if (length(v) <= 1) list(v) else
+    do.call(c, lapply(seq_along(v), function(i)
+      lapply(perms(v[-i]), function(p) c(v[i], p))))
+  best_match <- function(a, b) max(purrr::map_dbl(perms(seq_len(K)),
+    ~ mean(.x[a] == b)))
+  tibble(
+    run = seq_len(n_runs),
+    loglik = purrr::map_dbl(runs, "loglik"),
+    loglik_diff_from_best = loglik - max(loglik),
+    class_proportions = purrr::map_chr(runs, ~ paste(
+      sprintf("%.3f", sort(prop.table(table(factor(.x$pprob$class,
+        levels = seq_len(K)))), decreasing = TRUE)), collapse = " / ")),
+    pct_same_class_as_run1 = purrr::map_dbl(class_of, ~ round(100 *
+      best_match(class_of[[1]][ids], .x[ids]), 1)))
 }
 ```
 
@@ -830,43 +583,41 @@ fit_or_load_multlcmm <- function(model_id, K, data, n_starts = 50, seed = 202601
 
 ```{r}
 #| label: stage1-fit
-stage1_fits <- purrr::map(1:4, function(k) {
-  fit_or_load_multlcmm(model_id = paste0("multlcmm_K", k), K = k, data = wide_qz)
+dir.create("fits", showWarnings = FALSE)
+stage1_fits <- purrr::pmap(spec_grid, function(K, n_starts, n_runs, model_id) {
+  fit_or_load_mpjlcmm(model_id = model_id, K = K,
+    n_starts = n_starts, n_runs = n_runs)
 })
-names(stage1_fits) <- paste0("K", 1:4)
+names(stage1_fits) <- paste0("K", spec_grid$K)
+```
+
+```{r}
+#| label: tbl-run-agreement
+#| tbl-cap: "Agreement between repeated searches (K fit with more than one run). Runs agreeing in log-likelihood (within about 0.1) and class assignment suggest the best solution was found."
+run_agreement_table <- spec_grid %>%
+  filter(n_runs > 1) %>%
+  purrr::pmap_dfr(function(K, n_starts, n_runs, model_id) {
+    agreement <- run_agreement(model_id, K, n_runs)
+    if (!is.null(agreement)) bind_cols(K = K, n_starts = n_starts, agreement)
+  })
+kable(run_agreement_table, digits = 2)
 ```
 
 ```{r}
 #| label: stage1-comparison
-# Built by hand from each fit's own stored fields, rather than via
-# summarytable() (lcmm) -- summarytable() names its rows from the deparsed
-# argument it's given, which would come out as the literal indexing
-# expression ("stage1_fits[[\"K1\"]]") rather than a clean "K1" label when
-# fits are pulled from a list like this, breaking the join below. BIC is
-# computed directly (-2*loglik + npm*log(N)) rather than assumed to be a
-# stored field, so this doesn't depend on exactly which summary fields a
-# given lcmm version attaches to the fit object -- cross-check against
-# summary(fit) once you have real fits, and use its BIC instead if it
-# disagrees with the formula here.
 diagnostics_row <- function(fit, K) {
   npm <- length(fit$best)
-  N <- fit$ns  # number of subjects contributing to the fit
-  bic <- -2 * fit$loglik + npm * log(N)
-
+  N <- fit$ns  # participants contributing to the fit
   class_diag <- if (K == 1) {
     tibble(entropy = NA_real_, mean_postprob = NA_real_)
   } else {
-    pp <- postprob(fit)
-    # pp$pprob's first two columns are id and modal class; the remaining
-    # columns are per-class posterior probabilities. Confirm this layout
-    # against str(pp$pprob) -- it hasn't been checked against a real fit.
-    probs <- as.matrix(pp$pprob[, -(1:2), drop = FALSE])
+    # fit$pprob: subject id, modal class, then probYT1..probYTK
+    probs <- as.matrix(fit$pprob[, grep("^probYT", names(fit$pprob))])
     entropy <- 1 - mean(rowSums(-probs * log(probs + 1e-12)) / log(K))
     tibble(entropy = entropy, mean_postprob = mean(apply(probs, 1, max)))
   }
-
-  tibble(K = K, loglik = fit$loglik, npm = npm, N = N,
-    conv = fit$conv, BIC = bic) %>%
+  tibble(K = K, loglik = fit$loglik, npm = npm, N = N, conv = fit$conv,
+    BIC = -2 * fit$loglik + npm * log(N)) %>%
     bind_cols(class_diag)
 }
 
@@ -879,6 +630,7 @@ diagnostics_summary <- purrr::imap_dfr(stage1_fits, function(fit, nm) {
 #| label: tbl-diagnostics-summary
 kable(
   diagnostics_summary,
+  digits = 3,
   caption = paste(
     "Convergence and classification-quality diagnostics across K.",
     "Lower BIC is better; entropy and mean posterior probability closer",
@@ -889,11 +641,6 @@ kable(
 
 ```{r}
 #| label: converged-models
-# multlcmm's own convergence code is 1 for a proper local-optimum
-# convergence; gridsearch() already selects the best-log-likelihood run
-# across many starts for K >= 2, so a non-1 code surviving that process is
-# a stronger signal of genuine difficulty than a single non-converged run
-# would be.
 converged_ids <- purrr::keep(stage1_fits, ~ .x$conv == 1) %>% names()
 diagnostics_summary_converged <- diagnostics_summary %>% filter(model_id %in% converged_ids)
 ```
@@ -914,14 +661,12 @@ comparison_metrics %>%
   kableExtra::kable_styling(font_size = 9, latex_options = c("repeat_header"))
 ```
 
-BIC alone can favor a larger $K$ that improves fit without actually
-separating participants into distinct classes (@sec-methods). Before
-accepting the BIC-minimizing $K$, check that its entropy and mean posterior
-class-assignment probability (@tbl-diagnostics-summary) are also
-reasonable -- there's no universal cutoff, but entropy well below, say,
-0.6, or a mean assignment probability not much above $1/K$, is a sign that
-$K$'s BIC improvement isn't coming from genuinely separated classes and is
-worth weighing against a smaller, more cleanly separated $K$.
+BIC alone can favor a larger $K$ that improves fit without separating
+participants into distinct classes (@sec-methods). Before accepting the
+BIC-minimizing $K$, check that its entropy and mean posterior
+class-assignment probability are also reasonable: entropy well below 0.6,
+or a mean assignment probability not much above $1/K$, suggests the BIC
+improvement is not coming from well-separated classes.
 
 ## Selecting the best-fitting model
 
@@ -930,10 +675,6 @@ worth weighing against a smaller, more cleanly separated $K$.
 best_row <- comparison_metrics %>%
   slice_min(BIC, n = 1)
 
-# model_id here is stage1_fits' own naming ("K1".."K4"; see
-# stage1-comparison), not spec_grid's separate "multlcmm_K*" cache-file
-# naming -- the two are different labels for the same K and shouldn't be
-# confused when adding columns to either table later.
 K_final <- as.integer(sub("^K", "", best_row$model_id))
 fit_final <- stage1_fits[[paste0("K", K_final)]]
 
@@ -951,22 +692,11 @@ summary(fit_final)
 
 ```{r}
 #| label: tbl-posterior-summary
-#| tbl-cap: "Fixed-effect and variance-component estimates for the selected model (Wald SE/CI from the converged Hessian, not posterior draws)."
-# summarytable()/summary() print to the console rather than returning a
-# tidy object in every lcmm version; if summary(fit_final) above doesn't
-# hand back something kable() can take directly, pull the coefficient
-# table from fit_final$best and fit_final$V (the parameter vector and its
-# variance-covariance matrix) instead -- both are always present on a
-# converged fit regardless of summary()'s exact return type.
-param_table <- tryCatch(
-  as.data.frame(summary(fit_final)),
-  error = function(e) {
-    est <- fit_final$best
-    se <- sqrt(diag(fit_final$V))
-    tibble(parameter = names(est), estimate = est, se = se,
-      wald_p = 2 * pnorm(-abs(est / se)))
-  }
-)
+#| tbl-cap: "Parameter estimates for the selected model (Wald SE from the Hessian)."
+est <- fit_final$best
+se <- sqrt(diag(vcov(fit_final)))
+param_table <- tibble(parameter = names(est), estimate = est, se = se,
+  wald_p = 2 * pnorm(-abs(est / se)))
 
 kable(param_table, digits = 3, booktabs = TRUE, longtable = TRUE)
 ```
@@ -975,19 +705,8 @@ kable(param_table, digits = 3, booktabs = TRUE, longtable = TRUE)
 
 ```{r}
 #| label: extract-class-assignments
-# postprob() gives each participant's posterior class-membership
-# probabilities and modal (hard) class assignment -- the ML-mixture
-# analogue of the abandoned Stan model's per-draw class_prob, but a single
-# point estimate per participant rather than a posterior distribution over
-# assignments (there's no posterior here to characterize assignment
-# uncertainty beyond the probability itself).
 class_lookup <- if (K_final > 1) {
-  pp <- postprob(fit_final)
-  # pp$pprob's exact column names vary slightly by lcmm version; inspect
-  # names(pp$pprob) if the rename() below errors. It should contain the
-  # subject id (as passed via subject = "id"), the modal class number, and
-  # one posterior-probability column per class.
-  as_tibble(pp$pprob) %>%
+  as_tibble(fit_final$pprob) %>%
     rename(id = 1, latent_class_num = class) %>%
     mutate(latent_class = factor(latent_class_num, levels = seq_len(K_final),
       labels = paste("Class", seq_len(K_final))))
@@ -995,13 +714,8 @@ class_lookup <- if (K_final > 1) {
   tibble(id = sort(unique(wide_qz$id)), latent_class = factor("Class 1"))
 }
 
-# Saved separately from fit_final itself (a small, portable id -> class
-# lookup) specifically so a later session can subset ddl/ddl_qz by modal
-# class and refit ltjm_general.stan (the K = 1 latent-time model, which
-# converges without difficulty) within each class on its own -- the
-# natural next step mentioned in the Introduction if this model converges
-# cleanly. That refit is not implemented in this document.
-dir.create("fits", showWarnings = FALSE)
+# Small id -> class lookup, e.g. for refitting a latent-time model within
+# each class later.
 saveRDS(class_lookup, file.path("fits", "class_lookup_final.RDS"))
 ```
 
@@ -1009,10 +723,11 @@ saveRDS(class_lookup, file.path("fits", "class_lookup_final.RDS"))
 
 ```{r}
 #| label: tbl-baseline-by-class
-#| tbl-cap: "Characteristics of CLARiTI participants by modal latent class (best-fitting model)."
+#| tbl-cap: "Characteristics of participants by modal latent class (best-fitting model)."
 dd_subject <- ddl %>%
   select(id, NACCID, Dx, age0, RACE, SEX, EDUC, HISPANIC, APOE) %>%
-  distinct()
+  distinct() %>%
+  mutate(CLARiTI = if_else(NACCID %in% clariti_ids, "Yes", "No"))
 
 dd_subject_class <- dd_subject %>%
   left_join(class_lookup %>% select(id, latent_class), by = "id", relationship = "one-to-one") %>%
@@ -1030,7 +745,7 @@ dd_subject_class <- dd_subject %>%
 gtsummary::tbl_summary(
   data = dd_subject_class,
   by = latent_class,
-  include = c(Dx, age0, SEX, EDUC, RACE, HISPANIC, APOE,
+  include = c(Dx, age0, SEX, EDUC, RACE, HISPANIC, APOE, CLARiTI,
     `Amyloid PET (CL)`, `Tau PET (SUVR)`, `Hipp. atrophy (Z-score)`, Memory, `Exec Function`),
   type = all_continuous() ~ "continuous2",
   statistic = list(
@@ -1048,46 +763,41 @@ gtsummary::tbl_summary(
 
 ```{r}
 #| label: severity-trajectory-prep
-# predictY() over an age grid, at reference covariate levels, is the
-# multlcmm-native way to get fitted trajectories -- the frequentist
-# analogue of the abandoned Stan model's posterior-draw trajectory
-# summary (severity-quantile-prep), but from Monte Carlo draws around the
-# asymptotic (Wald) parameter estimate rather than MCMC draws. Because
-# @sec-methods-model's fixed/mixture terms are fully contrast()-ed (every
-# outcome gets its own class-specific spline, not one shared latent
-# trajectory), double-check predictY's returned column structure with
-# names(pred_grid$pred) before trusting the reshape below -- this is a
-# less common configuration than multlcmm's own single-latent-process
-# vignette examples, and the exact column-naming convention for
-# per-outcome x per-class predictions hasn't been confirmed by an actual
-# run (the standing constraint on this project is that Claude never fits
-# these models itself). If predictY doesn't split cleanly by outcome and
-# class the way the code below assumes, fit_final$pred -- the fitted
-# values at the observed data's own covariate patterns, always present on
-# a converged fit regardless of how predictY handles this configuration --
-# is the fallback: bin it by age and plot observed-vs-fitted directly
-# instead of over a synthetic grid.
+# update() returns the per-outcome hlme() sub-models with the joint
+# estimates; predictY() on each gives class-specific mean trajectories
+# (columns Ypred_class<k>, with lower./upper. bounds when draws = TRUE).
+# update() re-evaluates the fit's stored call, which names the sub-models
+# (m1 for K = 1, template_K<K>_Z<j> for K >= 2), so recreate them first.
+m1 <- load_m1()
+if (K_final > 1) invisible(make_templates(K_final, m1))
+sub_models <- update(fit_final)
+
 age_grid <- seq(min(wide_qz$age, na.rm = TRUE), max(wide_qz$age, na.rm = TRUE), length.out = 100)
 ref_sex  <- names(sort(table(wide_qz$SEX), decreasing = TRUE))[1]
 ref_educ <- mean(wide_qz$EDUC, na.rm = TRUE)
 
-# The fitted model's formulas are in age_c (centered), not raw age
-# (helper-multlcmm-fit), so newdata must supply age_c the same way,
-# reusing the same age_center computed from wide_qz -- raw age is added
-# back afterward purely for plotting.
-newdata_grid <- tibble(age_c = age_grid - age_center, SEX = ref_sex, EDUC = ref_educ)
+newdata_grid <- tibble(
+  age_c = age_grid - age_center,
+  SEX = factor(ref_sex, levels = levels(wide_qz$SEX)),
+  EDUC = ref_educ) %>%
+  add_age_basis()
 
-pred_grid <- predictY(fit_final, newdata = newdata_grid, var.time = "age_c", draws = TRUE)
-
-# Reshape assuming column names of the form "<outcome>_class<k>" or
-# similar; inspect names(pred_grid$pred) and adjust the regex below if the
-# actual naming differs.
-severity_summary_time <- as_tibble(pred_grid$pred, rownames = NULL) %>%
-  mutate(age = age_grid) %>%
-  tidyr::pivot_longer(-age, names_to = "col", values_to = "value") %>%
-  tidyr::extract(col, into = c("outcome_lab", "stat", "k"),
-    regex = "(Z[0-9]+).*class([0-9]+)", remove = FALSE) %>%
-  mutate(outcome = as.integer(sub("Z", "", outcome_lab)), k = as.integer(k)) %>%
+severity_summary_time <- map_dfr(seq_along(sub_models), function(j) {
+  pred <- predictY(sub_models[[j]], newdata = newdata_grid, var.time = "age_c",
+    draws = TRUE)
+  as_tibble(pred$pred) %>%
+    mutate(age = age_grid) %>%
+    pivot_longer(-age, names_to = "col", values_to = "value") %>%
+    mutate(
+      stat = case_when(
+        startsWith(col, "lower.") ~ "lower",
+        startsWith(col, "upper.") ~ "upper",
+        TRUE ~ "estimate"),
+      k = as.integer(sub(".*class([0-9]+)$", "\\1", col)),
+      outcome = outcome_specs$outcome[j]) %>%
+    select(-col) %>%
+    pivot_wider(names_from = stat, values_from = value)
+}) %>%
   left_join(outcome_map, by = "outcome") %>%
   mutate(
     latent_class = factor(k, levels = seq_len(K_final), labels = paste("Class", seq_len(K_final))),
@@ -1101,8 +811,9 @@ severity_summary_time <- as_tibble(pred_grid$pred, rownames = NULL) %>%
 
 ```{r}
 #| label: fig-severity-trajectory
-#| fig-cap: "Modeled population-level severity trajectories by latent class over age, fixed covariates at reference values (best-fitting model)."
-ggplot(severity_summary_time, aes(x = age, y = value, colour = latent_class, fill = latent_class)) +
+#| fig-cap: "Modeled population-level severity trajectories by latent class over age (95% confidence bands), covariates at reference values (best-fitting model)."
+ggplot(severity_summary_time, aes(x = age, y = estimate, colour = latent_class, fill = latent_class)) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.2, colour = NA) +
   geom_line(linewidth = 0.9) +
   facet_wrap(~ Outcome, ncol = 3) +
   scale_colour_brewer(palette = "Set1", name = "Latent class") +
@@ -1149,15 +860,10 @@ ggplot(spaghetti_data, aes(x = age, y = Q, group = interaction(id, Outcome), col
 
 ## Model fit checks
 
-There is no posterior here to run classic Bayesian posterior-predictive
-checks (`ppc_dens_overlay`, `ppc_stat`) against, the way the abandoned Stan
-model's report did. The frequentist analogue available directly from a
-converged `multlcmm` fit is a residual/fitted-value check: `fit_final$pred`
-holds the fitted values at every observed data point (no synthetic grid
-needed), which can be compared to the observed $Z$ values directly (e.g.,
-binned by age, per outcome and class) to check for systematic
-under/over-prediction that the class-specific spline trajectories above
-might be masking at the population level.
+Each sub-model in `sub_models` carries fitted values at the observed data
+(`sub_models[[j]]$pred`), which can be compared with the observed $Z$
+values, binned by age, per outcome and class, to check for systematic
+under- or over-prediction.
 
 # Limitations {#sec-limitations}
 
@@ -1224,45 +930,49 @@ diagnostic scripts built to investigate this (`diagnose_mode_trapping.R`,
 `explore_k3_modes.R`) remain useful for characterizing multi-modality in
 any future MCMC-based model on this data.
 
-## Limitations of the current (`multlcmm`) approach
+## Limitations of the current (`mpjlcmm`) approach
 
-- **Local optima.** `gridsearch()`'s 50 random starts per $K \ge 2$ reduce
-  but don't eliminate the risk of settling on a local rather than global
-  optimum (@sec-methods-optima); a converged, BIC-competitive $K$ that
-  looks qualitatively different across separate `gridsearch()` runs with a
-  different seed or start count is worth another look before treating it
-  as final.
-- **The single-shared-latent-process assumption is only partly relaxed.**
-  Wrapping every outcome's spline term in `contrast()` gives each outcome
-  its own class-specific trajectory shape (@sec-methods-model), but the
-  two subject-level random effects tying the $J$ outcomes together for a
-  given participant ($u_i$, $v_i$) are still shared, not outcome-specific,
-  beyond the outcome-specific random intercept $w_{ij}$. A participant who
-  runs persistently faster or slower than their class average does so by
-  the same amount, in the same direction, on every outcome's spline
-  coefficients (modulated only by each outcome's own loading), which is a
-  narrower within-subject correlation structure than a fully general
-  multivariate mixed model would allow. Confirm this against
-  `summary(fit_final)`/`fit_final$Xnames` once fit, since it wasn't
-  possible to verify by execution here.
-- **BIC/entropy is a different paradigm from WAIC/LOOIC, not a drop-in
-  replacement.** Model-selection numbers reported here (@sec-comparison)
-  are not comparable in magnitude or interpretation to the WAIC/LOOIC
-  values the abandoned Stan grid would have produced; don't carry over any
-  intuition about "how much better" one $K$ is from that earlier framework.
-- **Spline degrees of freedom fixed, not swept.** 3 df was chosen directly
-  rather than compared against 2 df or other choices (@sec-grid); if the
-  fitted class-specific trajectories look overfit or underfit for a given
-  outcome, revisiting this as a genuine comparison axis is a reasonable
-  next step.
-- **No time-to-event component.** This is by design (@sec-methods), not an
-  oversight -- `multlcmm` does not support one, and this analysis has no
-  survival/censoring outcome to link to one anyway.
-- **The latent-time refit per class (if this converges) is not yet
-  implemented.** @sec-summary saves a small id-to-class lookup
-  specifically to support subsetting `ddl`/`ddl_qz` by modal class and
-  refitting `ltjm_general.stan` within each one afterward, but that refit
-  itself is future work, not part of this document.
+- **Mostly cross-sectional PET.** About 85% of participants with amyloid or
+  tau PET have a single scan, so class differences in the PET trajectories
+  rest largely on between-person differences in level by age rather than
+  within-person change. The PET sub-models are kept simple (random
+  intercept, 2-df spline) for this reason.
+- **Outcomes are linked only through the class.** Given the latent class,
+  the outcome processes are independent: there is no correlation between a
+  participant's random effects on different outcomes. A participant who
+  is persistently high on amyloid is not modeled as more likely to be high
+  on tau beyond what their class implies.
+- **Local optima.** `gridsearch()`'s random starts reduce but do not
+  eliminate the risk of a local optimum; a converged, BIC-competitive $K$
+  that looks different under another seed or more starts deserves another
+  look.
+- **Fixed sub-model structure.** Spline df and random-effects structures
+  are set per outcome in advance (`outcome_specs`) rather than compared.
+- **BIC is not comparable with the WAIC/LOOIC values** of the abandoned
+  Stan grid.
+
+# Next steps: reintroducing latent time {#sec-next-steps}
+
+The `mpjlcmm` model uses chronological age, so participants with the same
+disease course but different onset ages follow different age curves, and
+classes can partly reflect onset age rather than subtype. The abandoned Stan
+models addressed this with a latent time shift $\delta_i$ but did not
+converge at $K = 3$ (@sec-limitations). A converged `mpjlcmm` fit can make
+that model easier to identify:
+
+- **Initial values and priors for class trajectories:** the class-specific
+  spline coefficients (`sub_models`) give starting values and informative
+  priors for each class's trajectory shape per outcome.
+- **Variance components:** the random-effect and residual variances per
+  outcome suggest prior scales, and show how much between-person variation
+  a time shift would need to absorb.
+- **Class proportions and membership:** the class proportions and the
+  APOE class-membership effects suggest priors for the mixture weights;
+  posterior class probabilities (`class_lookup`) can initialize class
+  assignments, or the latent-time model can be fitted within each class.
+- **Parameterization:** which outcomes separate the classes (where the class
+  trajectories differ most) suggests which outcome should anchor the class
+  ordering or the time scale.
 
 # Session information
 
