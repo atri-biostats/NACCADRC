@@ -51,7 +51,8 @@ mri_hipp <- mrisbm %>%
     # with HIPPOCAMPUS = 0 (left/right volumes look normal) and a legacy scan
     # with HIPPOVOL = 0.96 (whole-brain volume also 30% below later scans)
     HIPPOCAMPUS = if_else(HIPPOCAMPUS < 1.5, NA_real_, HIPPOCAMPUS)) %>%
-  select(PROJECT, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV) %>%
+  # WMH: white matter hyperintensity volume (cm3), SCAN/CLARiTI MRI only
+  select(PROJECT, NACCID, DATE = SCANDT, HIPPOCAMPUS, ICV, WMH) %>%
   distinct(NACCID, DATE, .keep_all = TRUE)
 
 NACCETPR_levels <- names(rev(sort(table(uds_ftldlbd$NACCETPR))))
@@ -85,7 +86,7 @@ make_etiology <- function(NACCETPR, NACCLBDS) {
 dd_atn <- clariti_edc %>%
   select(NACCID) %>% distinct() %>% mutate(`CLARiTI EDC` = 'Yes') %>%
   full_join(mri_hipp %>%                 # Hippocampal volumes
-      select(NACCID, MRI_PROJECT = PROJECT, DATE, HIPPOCAMPUS, ICV),
+      select(NACCID, MRI_PROJECT = PROJECT, DATE, HIPPOCAMPUS, ICV, WMH),
     by = 'NACCID') %>%
   full_join(taupetnpdka %>%
       arrange(NACCID, SCANDATE, desc(PROCESSDATE)) %>%
@@ -246,8 +247,9 @@ dd_cross <- dd %>%
     AMYLOID_STATUS = structure(AMYLOID_STATUS, label = 'Amyloid status'),
     CENTILOIDS = structure(CENTILOIDS, label = 'Amyloid (CL)'),
     HIPPOCAMPUS = structure(HIPPOCAMPUS, label = 'Hippocampal volume (cm3)'),
-    Tau_PET = structure(Tau_PET, label = 'Tau PET (SUVR)'),
-    Tau_PET_ComBat = structure(Tau_PET_ComBat, label = 'Tau PET (SUVR)'),
+    Tau_PET = structure(Tau_PET, label = 'Tau PET, raw (SUVR)'),
+    Tau_PET_ComBat = structure(Tau_PET_ComBat, label = 'Tau PET, ComBat-harmonized (SUVR)'),
+    WMH = structure(WMH, label = 'WMH volume (cm3)'),
     Tau_TRACER = structure(Tau_TRACER, label = 'Tau PET tracer'),
     NACCETPR = structure(NACCETPR, label = 'Primary etiologic diagnosis'),
     NACCUDSD = structure(NACCUDSD, label = 'Cognitive status at UDS visit'))
@@ -286,6 +288,69 @@ clariti_n <- list(
 clariti_n$pending_uds <- clariti_n$edc - clariti_n$uds
 clariti_n$pending_imaging <- clariti_n$edc - clariti_n$imaging
 clariti_n$uds_pending_imaging <- clariti_n$uds - clariti_n$imaging_uds
+```
+
+```{r atv-status}
+#| code-fold: true
+
+## A/T/V status from quantitative cut-offs ----
+# A+: amyloid PET >= 25 CL. T+: ComBat-harmonized meta-temporal tau PET
+# SUVR >= 1.40. V+: WMH volume in the top quartile (>= 75th percentile) of
+# participants with SCAN/CLARiTI MRI, one scan per participant. No consensus
+# WMH cut-off exists; Gaussian mixtures on log WMH found no separate high-WMH
+# component. For reference, Fazekas-equivalent volumes are about 3.4 mL (any
+# WMH) and 9.6 mL (moderate/severe; Joo et al. 2022, PLOS ONE,
+# doi:10.1371/journal.pone.0274562). WMH is not age-adjusted.
+wmh_threshold <- unname(quantile(dd_cross$WMH, 0.75, na.rm = TRUE))
+
+atv_cutoffs <- c(amyloid_CL = 25, tau_SUVR = 1.40, wmh_cc = wmh_threshold)
+
+pos_neg <- function(x, cutoff, letter) {
+  factor(if_else(x >= cutoff, paste0(letter, "+"), paste0(letter, "-")),
+    levels = paste0(letter, c("-", "+")))
+}
+
+dd_cross <- dd_cross %>%
+  mutate(
+    A_status = pos_neg(CENTILOIDS, atv_cutoffs[["amyloid_CL"]], "A") %>%
+      structure(label = 'Amyloid PET (>= 25 CL)'),
+    T_status = pos_neg(Tau_PET_ComBat, atv_cutoffs[["tau_SUVR"]], "T") %>%
+      structure(label = 'Tau PET (>= 1.40 SUVR)'),
+    V_status = pos_neg(WMH, atv_cutoffs[["wmh_cc"]], "V") %>%
+      structure(label = sprintf('WMH (>= %.1f cm3, top quartile)',
+        atv_cutoffs[["wmh_cc"]])),
+    # A/T/V profile, for participants with all three measures
+    ATV = if_else(!is.na(A_status) & !is.na(T_status) & !is.na(V_status),
+      paste0(A_status, T_status, V_status), NA_character_) %>%
+      factor(levels = as.vector(outer(outer(c("A-", "A+"), c("T-", "T+"),
+        paste0), c("V-", "V+"), paste0))) %>%
+      structure(label = 'A/T/V profile'))
+
+## Anti-amyloid treatment (UDS v4 form A4a) ----
+# A treatment with amyloid-beta as a primary drug target (TARGETAB<k>) in any
+# A4a slot at any visit, excluding treatment known to be placebo in a trial.
+# Participants without a UDS v4 visit have no A4a data ("None reported").
+# A4a treatment slots, one row per visit and slot with a treatment
+a4a_slots <- uds_ftldlbd %>%
+  select(NACCID, VISITDATE, matches(paste0(
+    "^(TARGETAB|TARGETTAU|TARGETINF|TARGETSYN|TARGETOTH|CARETRIAL|TRIALGRP)",
+    "[0-9]$"))) %>%
+  mutate(across(-c(NACCID, VISITDATE), as.character)) %>%
+  pivot_longer(-c(NACCID, VISITDATE), names_to = c(".value", "slot"),
+    names_pattern = "^([A-Z]+?)([0-9])$") %>%
+  filter(if_any(c(TARGETAB, TARGETTAU, TARGETINF, TARGETSYN, TARGETOTH),
+    ~ .x %in% "Yes"))
+
+# participants reporting any biomarker-modifying treatment at any visit
+trtbiomark_ids <- unique(uds_ftldlbd$NACCID[uds_ftldlbd$TRTBIOMARK %in% "Yes"])
+
+anti_amyloid <- a4a_slots %>%
+  filter(TARGETAB %in% "Yes", !TRIALGRP %in% "Placebo") %>%
+  group_by(NACCID) %>%
+  summarise(`Anti-amyloid` = case_when(
+    any(CARETRIAL %in% "Clinical care") ~ "Clinical care",
+    any(grepl("trial", CARETRIAL)) ~ "Clinical trial",
+    TRUE ~ "Unknown setting"), .groups = "drop")
 ```
 
 ```{r plot-functions}
@@ -342,10 +407,17 @@ clariti_completers <- function(dd_cross) {
       NACCID %in% scan_mri_id, !is.na(CENTILOIDS), !is.na(Tau_PET))
 }
 
+# Panels: amyloid, tau, hippocampus, and WMH (log10 cm3). Dashed lines mark
+# the A/T/V cut-offs. Panel labels put units on their own line; n per
+# diagnosis is part of each panel's x-axis labels.
 plot_clariti_imaging <- function(dd_cross, complete_only = FALSE) {
-  measures <- c("Amyloid (CL)", "Tau PET MTL (SUVR)", "Hippocampal volume (cm3)")
+  measures <- c(
+    amyloid = "Amyloid PET\n(CL)",
+    tau     = "Tau PET MTL\n(SUVR)",
+    hipp    = "Hippocampal volume\n(cm3)",
+    wmh     = "WMH volume\n(log10 cm3)")
   if (complete_only) dd_cross <- clariti_completers(dd_cross)
-  dd_cross %>%
+  pd <- dd_cross %>%
     filter(Cohort == 'CLARiTI') %>%
     filter(NACCUDSD != 'Unknown') %>%
     mutate(
@@ -355,19 +427,34 @@ plot_clariti_imaging <- function(dd_cross, complete_only = FALSE) {
         NACCETPR == "Alzheimer's disease (AD)" ~ "CI-AD",
         TRUE ~ "CI-nonAD") %>% factor(c("NC", "CI-AD", "CI-nonAD"))) %>%
     filter(!is.na(Diagnosis)) %>%
-    select(NACCID, Diagnosis,
-      `Amyloid (CL)` = CENTILOIDS,
-      `Tau PET MTL (SUVR)` = Tau_PET_ComBat,
-      `Hippocampal volume (cm3)` = HIPPOCAMPUS) %>%
-    pivot_longer(all_of(measures), names_to = 'Measure', values_to = 'Value') %>%
-    filter(!is.na(Value)) %>%
-    mutate(Measure = factor(Measure, levels = measures)) %>%  # panel order
-  ggplot(aes(x = Diagnosis, y = Value)) +
+    transmute(NACCID, Diagnosis,
+      amyloid = CENTILOIDS, tau = Tau_PET_ComBat, hipp = HIPPOCAMPUS,
+      wmh = log10(WMH)) %>%
+    pivot_longer(names(measures), names_to = 'key', values_to = 'Value') %>%
+    filter(is.finite(Value)) %>%
+    mutate(Measure = factor(measures[key], levels = measures)) %>%  # panel order
+    # x-axis label per panel: diagnosis with its n on a second line
+    add_count(Measure, Diagnosis) %>%
+    arrange(Measure, Diagnosis) %>%
+    # panel-specific levels (prefix stripped in the axis labels) keep the
+    # NC, CI-AD, CI-nonAD order in every panel even when labels repeat
+    mutate(Group = paste0(as.integer(Measure), "|", Diagnosis, "\nn=", n),
+      Group = factor(Group, levels = unique(Group)))
+  cutoffs <- tibble(Measure = factor(measures[c("amyloid", "tau", "wmh")],
+      levels = measures),
+    Value = c(atv_cutoffs[["amyloid_CL"]], atv_cutoffs[["tau_SUVR"]],
+      log10(atv_cutoffs[["wmh_cc"]])))
+  ggplot(pd, aes(x = Group, y = Value)) +
     geom_violin(fill = "gray80", color = "gray50") +
-    ggbeeswarm::geom_beeswarm(color = "blue", alpha = 0.5) +
-    facet_wrap(vars(Measure), nrow = 1, scales = 'free', strip.position = "left") +
+    ggbeeswarm::geom_quasirandom(color = "blue", alpha = 0.4, size = 0.8) +
+    geom_hline(data = cutoffs, aes(yintercept = Value), linetype = "dashed",
+      color = "gray30") +
+    facet_wrap(vars(Measure), nrow = 1, scales = 'free',
+      strip.position = "left") +
+    scale_x_discrete(labels = function(x) sub("^[0-9]+\\|", "", x)) +
     labs(x = "", y = "") +
-    theme(legend.position = "none", strip.placement = "outside")
+    theme(legend.position = "none", strip.placement = "outside",
+      axis.text.x = element_text(size = 8, lineheight = 0.9))
 }
 
 # Counts by etiology and UDS diagnosis, stacked by cohort ----
@@ -478,7 +565,10 @@ plot_spaghetti <- function(dd, value, project, ylab, alpha = 1) {
 # Scans before the CLARiTI visit (e.g. earlier SCAN or legacy scans) have
 # negative times. Panels are UDS diagnosis at the visit closest to the CLARiTI
 # visit.
-plot_spaghetti_clariti <- function(dd, value, project, ylab, alpha = 1) {
+# color_by_treatment = TRUE colors participants by anti-amyloid treatment
+# (A4a) instead of imaging source.
+plot_spaghetti_clariti <- function(dd, value, project, ylab, alpha = 1,
+  color_by_treatment = FALSE) {
   pd <- dd %>%
     filter(NACCID %in% clariti_visit$NACCID) %>%
     select(NACCID, DATE, PROJECT = all_of(project), Etiology,
@@ -490,6 +580,44 @@ plot_spaghetti_clariti <- function(dd, value, project, ylab, alpha = 1) {
     mutate(Years = as.numeric(DATE - CLARITI_DATE) / 365.25) %>%
     known_initial_dx(dx = "CLARiTI Dx",
       dx_label = "diagnosis at CLARiTI visit")
+
+  if (color_by_treatment) {
+    pd <- pd %>%
+      left_join(anti_amyloid, by = "NACCID") %>%
+      mutate(`Anti-amyloid` = coalesce(`Anti-amyloid`, "None reported") %>%
+        factor(levels = c("Clinical care", "Clinical trial",
+          "Unknown setting", "None reported")))
+    treated <- pd %>% filter(`Anti-amyloid` != "None reported")
+    n_treated <- n_distinct(treated$NACCID)
+    ids <- clariti_visit$NACCID
+    n_any <- sum(ids %in% trtbiomark_ids)
+    n_ab <- sum(ids %in% anti_amyloid$NACCID)
+    n_ab_placebo <- sum(ids %in% setdiff(
+      a4a_slots$NACCID[a4a_slots$TARGETAB %in% "Yes"], anti_amyloid$NACCID))
+    treatment_note <- sprintf(paste0(
+      "UDS v4 form A4a, any visit: %d CLARiTI participants reported any ",
+      "biomarker-modifying treatment;\n",
+      "%d an amyloid-targeting treatment (%d placebo-only excluded); ",
+      "%d of these have amyloid PET (colored).\n",
+      "Gray: no anti-amyloid treatment reported."),
+      n_any, n_ab, n_ab_placebo, n_treated)
+    return(ggplot(pd, aes(x = Years, y = value)) +
+      geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
+      geom_line(data = pd %>% filter(`Anti-amyloid` == "None reported"),
+        aes(group = NACCID), alpha = 0.1) +
+      geom_point(data = pd %>% filter(`Anti-amyloid` == "None reported"),
+        color = "gray70", alpha = 0.4, size = 0.8) +
+      geom_line(data = treated, aes(group = NACCID, color = `Anti-amyloid`),
+        linewidth = 0.7) +
+      geom_point(data = treated, aes(color = `Anti-amyloid`), size = 1.6) +
+      facet_grid(. ~ `CLARiTI Dx`, labeller = label_wrap_gen(width = 15)) +
+      scale_color_manual(values = c("Clinical care" = "#C02126",
+        "Clinical trial" = "#173058", "Unknown setting" = "#DF8F44")) +
+      labs(x = "Years from CLARiTI visit", y = ylab,
+        color = sprintf("Anti-amyloid treatment (n = %d)", n_treated),
+        caption = paste(c(dropped_dx_caption(pd), treatment_note),
+          collapse = "\n")))
+  }
 
   ggplot(pd, aes(x = Years, y = value)) +
     geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +

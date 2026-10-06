@@ -45,7 +45,14 @@ pkgFilename <- paste0('NACCADRC_', packageVersion('NACCADRC'), '.tar.gz')
 
 ```{r fig-clariti-imaging}
 #| code-fold: true
-#| fig-cap: "Distribution of imaging summaries among CLARiTI participants with known UDS cognitive status, amyloid PET (CL), tau PET (SUVR), and hippocampal volume (cm$^3$). Tau PET is shown as SUVR harmonized across tracers by ComBat."
+#| fig-cap: "Imaging summaries of CLARiTI completers (participants with UDS diagnosis, SCAN/CLARiTI MRI, amyloid PET, and tau PET) by diagnosis at the CLARiTI visit: amyloid PET (CL), tau PET (SUVR, harmonized across tracers by ComBat), hippocampal volume (cm$^3$), and WMH volume (log$_{10}$ cm$^3$). Dashed lines: A/T/V cut-offs (25 CL, 1.40 SUVR, WMH top quartile)."
+
+plot_clariti_imaging(dd_cross, complete_only = TRUE)
+```
+
+```{r fig-clariti-imaging-all}
+#| code-fold: true
+#| fig-cap: "Imaging summaries of all CLARiTI participants with each measure, by diagnosis at the CLARiTI visit (n per group under each violin). Dashed lines: A/T/V cut-offs."
 
 plot_clariti_imaging(dd_cross)
 ```
@@ -202,7 +209,7 @@ tbl_summary(
   data = dd_cross %>% filter(Cohort == 'CLARiTI') %>%
     mutate(across(where(is.factor), fct_drop)),
   by = NACCUDSD,
-  include = c("CLARiTI EDC", "Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "HIPPOCAMPUS", "Tau_PET", "Tau_TRACER", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
+  include = c("CLARiTI EDC", "Etiology", "Age", "SEX", "EDUC", "RACE", "HISPANIC", "AMYLOID_STATUS", "CENTILOIDS", "A_status", "Tau_PET", "Tau_PET_ComBat", "T_status", "Tau_TRACER", "HIPPOCAMPUS", "WMH", "V_status", "ATV", "PHC_MEM", "PHC_EXF", "PHC_LAN"),
   type = all_continuous() ~ "continuous2",
   statistic = list(
     all_continuous() ~ c(
@@ -211,13 +218,13 @@ tbl_summary(
       "{min}, {max}"),
     all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
-  percent = "row",
+  percent = "column",
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
-  modify_caption(caption = "Characteristics of CLARiTI participants by UDS diagnosis at the visit closest to the CLARiTI visit (first consent date). Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files.") %>%
+  modify_caption(caption = paste0("Characteristics of CLARiTI participants by UDS diagnosis at the visit closest to the CLARiTI visit (first consent date). Note CLARiTI participants are those with a NACCID in clariti_edc or any of the CLARiTI imaging summary files. Amyloid status: SCAN/CLARiTI positivity from tracer-specific thresholds on the GAAIN summary cortical SUVR (not a visual read). A/T/V: amyloid PET >= 25 CL; ComBat-harmonized meta-temporal tau PET >= 1.40 SUVR; WMH in the top quartile of SCAN/CLARiTI participants (", sprintf("%.1f", atv_cutoffs[["wmh_cc"]]), " cm3). A/T/V profile for participants with all three measures.")) %>%
   modify_footnote_header(
-    footnote = "Row-wise percentage; n (%)",
+    footnote = "n (%) within diagnosis (column)",
     columns = all_stat_cols(),
     replace = TRUE) %>%
   bold_labels()
@@ -241,13 +248,13 @@ tbl_summary(
     "{min}, {max}"),
     all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
-  percent = "row",
+  percent = "column",
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of participants with any imaging by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
-    footnote = "Row-wise percentage; n (%)",
+    footnote = "n (%) within diagnosis (column)",
     columns = all_stat_cols(),
     replace = TRUE) %>%
   bold_labels()
@@ -270,13 +277,13 @@ tbl_summary(
     "{min}, {max}"),
     all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
-  percent = "row",
+  percent = "column",
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of all participants by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
-    footnote = "Row-wise percentage; n (%)",
+    footnote = "n (%) within diagnosis (column)",
     columns = all_stat_cols(),
     replace = TRUE) %>%
   bold_labels()
@@ -300,14 +307,14 @@ tbl_summary(
   ),
     all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
-  percent = "row",
+  percent = "column",
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", 
     "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of all participants with MRI data by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
-    footnote = "Row-wise percentage; n (%)",
+    footnote = "n (%) within diagnosis (column)",
     columns = all_stat_cols(),
     replace = TRUE) %>%
   bold_labels()
@@ -330,13 +337,13 @@ tbl_summary(
     "{min}, {max}"),
     all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
-  percent = "row",
+  percent = "column",
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of all participants with tau PET data by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
-    footnote = "Row-wise percentage; n (%)",
+    footnote = "n (%) within diagnosis (column)",
     columns = all_stat_cols(),
     replace = TRUE) %>%
   bold_labels()
@@ -360,13 +367,13 @@ tbl_summary(
   ),
     all_categorical() ~ "{n} ({p}%)"),
   digits = all_continuous() ~ 1,
-  percent = "row",
+  percent = "column",
   missing_text = "(Missing)") %>%
   add_overall(last = TRUE) %>%
   add_stat_label(label = all_continuous2() ~ c("Mean (SD)", "Median (Q1, Q3)", "Range")) %>%
   modify_caption(caption = "Characteristics of NACC ADRC participants with amyloid PET data by baseline UDS diagnosis (for CLARiTI participants, the UDS visit closest to the CLARiTI visit).") %>%
   modify_footnote_header(
-    footnote = "Row-wise percentage; n (%)",
+    footnote = "n (%) within diagnosis (column)",
     columns = all_stat_cols(),
     replace = TRUE) %>%
   bold_labels()
